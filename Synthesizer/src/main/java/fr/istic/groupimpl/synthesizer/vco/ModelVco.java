@@ -1,7 +1,20 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
-import fr.istic.groupimpl.synthesizer.component.IModelComponent;
+import com.jsyn.unitgen.UnitGenerator;
 
-public class ModelVco implements IModelComponent {
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 
+public class ModelVco extends ModelComponent {
+		
+	public ModelVco() {
+		super();
+		
+	}
+
+	@Override
+	public UnitGenerator getUnitGenerator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+		
 }
