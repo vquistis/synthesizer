@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+
+.button {
+    -fx-background-color: transparent;
+}
+.button .knob {
+    -fx-background-image: url("knob.png");
+    -fx-background-size: stretch; 
+}
+
+.inout {
+    -fx-background-image: url("inout60.png");
+    -fx-background-size: stretch; 
+}

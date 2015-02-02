@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ViewCtlVCO">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="300.0">
+         <top>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="36.0" text="VCO" textAlignment="CENTER" BorderPane.alignment="CENTER" />
+         </top>
+         <bottom>
+            <GridPane prefHeight="100.0" prefWidth="300.0">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="70.0" prefWidth="60.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="60.0" minWidth="70.0" prefWidth="60.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="24.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Circle fx:id="fm" fill="#ffffff" radius="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="inout" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Region fx:id="rg_fm" prefHeight="50.0" prefWidth="50.0" styleClass="inout" GridPane.rowIndex="1" />
+                  <Circle fx:id="square" fill="WHITE" layoutX="55.0" layoutY="72.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Region prefHeight="76.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Circle fx:id="triangle" fill="WHITE" radius="25.0" stroke="#c30c0c" strokeType="INSIDE" strokeWidth="10.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Region prefHeight="76.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Circle fx:id="sawTooth" fill="#10d06a" radius="25.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Label text="fm" GridPane.halignment="CENTER" />
+                  <Label text="square" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Label text="triangle" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                  <Label text="sawTooth" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                  <Region layoutX="170.0" layoutY="34.0" prefHeight="76.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </bottom>
+         <center>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox fx:id="hb_left" alignment="CENTER" prefHeight="145.0" prefWidth="150.0" />
+                  <HBox fx:id="hb_right" alignment="CENTER" layoutX="150.0" prefHeight="150.0" prefWidth="150.0" />
+                  <VBox alignment="CENTER" layoutY="150.0" prefHeight="50.0" prefWidth="300.0">
+                     <children>
+                        <Text fx:id="display" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="90.7294921875" />
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="350.0" opacity="0.11" stroke="BLACK" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="3.0" width="300.0" />
+   </children>
+</Pane>
