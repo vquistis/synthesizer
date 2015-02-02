@@ -10,27 +10,58 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import fr.groupimpl.Synthesizer.Component;
 
 public class ViewCtlBoard implements Initializable {
 
+	private static final int SHELF_HEIGHT = 200;
+
+	@FXML
+	private ScrollPane scrollpane;
+
+	@FXML
+	private BorderPane borderpane;
+
+	@FXML
+	private SplitPane splitpane;
+
+	
+	
+	
 	@FXML
 	private Label source;
 
 	@FXML
 	private HBox target;
-	
+
 	Point2D lastXY = null;
-	
-	private Component component; 
+
+	private Component component;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
+		scrollpane.pannableProperty().set(true);
+		int nbShelves = (int) SHELF_HEIGHT + 3;
+		for(int i=0;i<nbShelves;i++) {
+			HBox box = new HBox();
+			box.setPrefHeight(SHELF_HEIGHT);
+			box.setMinHeight(SHELF_HEIGHT);
+			box.setMaxHeight(SHELF_HEIGHT);
+			splitpane.getItems().add(box);
+		}
+		for(int i=0; i<nbShelves;i++) {
+			splitpane.setDividerPosition(i, (i+1) * 1.0 / (nbShelves - 1));
+		}
+
+
 		component = new Component();
 
 		source.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -102,39 +133,39 @@ public class ViewCtlBoard implements Initializable {
 				if (db.hasString()) {
 					Node node = component.show();					
 					target.getChildren().add(node);
-					
-					System.out.println(node);
-										
-					node.setOnMouseDragged(new EventHandler<MouseEvent>() {
- 
-				        @Override
-				        public void handle(MouseEvent event) {
-				        	 System.out.println("Move");
-					            event.setDragDetect(false);
-					            
-					            if (lastXY == null) {
-					                lastXY = new Point2D(event.getSceneX(), event.getSceneY());
-					            }
-					            double dx = event.getSceneX() - lastXY.getX();
-					            double dy = event.getSceneY() - lastXY.getY();
-					            node.setTranslateX(node.getTranslateX()+dx);
-					            node.setTranslateY(node.getTranslateY()+dy);
-					            lastXY = new Point2D(event.getSceneX(), event.getSceneY());
-					            if (!target.intersects(event.getSceneX(), event.getSceneY(), 1, 1)) event.setDragDetect(true);
-					            event.consume();
-				        }
-				    });
 
-			        node.setOnDragDetected(new EventHandler<Event>() {
+					System.out.println(node);
+
+					node.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
 						@Override
-						public void handle(Event event) {
-				            Node on = (Node)event.getTarget();
-				            Dragboard db = on.startDragAndDrop(TransferMode.COPY);
-				            event.consume();							
+						public void handle(MouseEvent event) {
+							System.out.println("Move");
+							event.setDragDetect(false);
+
+							if (lastXY == null) {
+								lastXY = new Point2D(event.getSceneX(), event.getSceneY());
+							}
+							double dx = event.getSceneX() - lastXY.getX();
+							double dy = event.getSceneY() - lastXY.getY();
+							node.setTranslateX(node.getTranslateX()+dx);
+							node.setTranslateY(node.getTranslateY()+dy);
+							lastXY = new Point2D(event.getSceneX(), event.getSceneY());
+							if (!target.intersects(event.getSceneX(), event.getSceneY(), 1, 1)) event.setDragDetect(true);
+							event.consume();
 						}
 					});
 
-			        node.setOnMouseReleased(d ->  lastXY = null);
+					node.setOnDragDetected(new EventHandler<Event>() {
+						@Override
+						public void handle(Event event) {
+							Node on = (Node)event.getTarget();
+							Dragboard db = on.startDragAndDrop(TransferMode.COPY);
+							event.consume();							
+						}
+					});
+
+					node.setOnMouseReleased(d ->  lastXY = null);
 					success = true;
 				}
 				/*
