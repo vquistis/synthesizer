@@ -24,23 +24,23 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 public class ViewVco implements IViewComponent, Initializable {
 
 	@FXML
-	BorderPane paneVco;
+	private BorderPane paneVco;
 	@FXML
-	HBox hbLeft;
+	private HBox hbLeft;
 	@FXML
-	HBox hbRight;
+	private HBox hbRight;
 	@FXML
-	Circle fm;
+	private Circle fm;
 	@FXML
-	Circle square;
+	private Circle square;
 	@FXML
-	Circle triangle;
+	private Circle triangle;
 	@FXML
-	Circle sawTooth;
+	private Circle sawTooth;
 	@FXML
-	Text display;
+	private Text display;
 	@FXML
-	Region rgFm;
+	private Region rgFm;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -57,7 +57,11 @@ public class ViewVco implements IViewComponent, Initializable {
 		potentiometre.setTitle(new Text("Octave"));
 		Potentiometre potentiometre1 = new Potentiometre("Tone");
 	   	hbRight.getChildren().add(potentiometre1);
-
+	   	
+	   	
+	   	ControllerVco vcoControl = new ControllerVco();	   	
+	   	potentiometre1.valueProperty().addListener((p, newVal, oldVal) -> vcoControl.handleViewOctaveChange(newVal));
+	   	
 	}
 
 	@Override
