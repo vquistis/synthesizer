@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="view.ViewCtlBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <Accordion BorderPane.alignment="CENTER">
         <panes>
@@ -57,10 +57,6 @@
             <SplitPane dividerPositions="0.33, 0.66" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="367.0" prefWidth="394.0">
               <items>
                   <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button mnemonicParsing="false" prefHeight="198.0" prefWidth="62.0" text="Button" />
-                        <Button mnemonicParsing="false" prefHeight="329.0" prefWidth="62.0" text="Button" />
-                     </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0" />
