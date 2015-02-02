@@ -15,9 +15,9 @@ import javafx.scene.text.Text;
 public class ViewCtlVCO implements Initializable {
 
 	@FXML
-	HBox hb_left;
+	HBox hbLeft;
 	@FXML
-	HBox hb_right;
+	HBox hbRight;
 	@FXML
 	Circle fm;
 	@FXML
@@ -29,17 +29,16 @@ public class ViewCtlVCO implements Initializable {
 	@FXML
 	Text display;
 	@FXML
-	Region rg_fm;
+	Region rgFm;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fm.getStyleClass().add("inout");
-		//fm.getStyleClass().add("inout");
 		Potentiometre potentiometre = new Potentiometre("Octave");
-		potentiometre.setTitle(new Text("Octave"));
+	//	potentiometre.setTitle(new Text("Octave"));
 //		Potentiometre potentiometre1 = new Potentiometre("Tone");
 //		hb_left.getChildren().add(potentiometre);
-    	hb_right.getChildren().add(potentiometre);
+    	hbRight.getChildren().add(potentiometre);
 //	//	fm.getStyleClass().add(e);
 
 	}
