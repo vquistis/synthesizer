@@ -5,11 +5,15 @@ import java.util.List;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
 
+import fr.istic.groupimpl.synthesizer.command.ICommand;
 import fr.istic.groupimpl.synthesizer.component.IModelComponent;
 
 
 public class ModelGlobal {
+	
+	private ICommand handleConnectCmd;
 
 	private List<IModelComponent> modules = new ArrayList<IModelComponent>();
 	
