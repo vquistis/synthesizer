@@ -4,11 +4,11 @@
     -fx-background-color: transparent;
 }
 .button .knob {
-    -fx-background-image: url("knob.png");
+    -fx-background-image: url("../img/knob.png");
     -fx-background-size: stretch; 
 }
 
 .inout {
-    -fx-background-image: url("inout60.png");
+    -fx-background-image: url("../img/inout60.png");
     -fx-background-size: stretch; 
 }

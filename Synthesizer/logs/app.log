@@ -1,0 +1,117 @@
+15:58:12.851 [JavaFX Application Thread] TRACE - layoutChildren()
+15:58:12.852 [JavaFX Application Thread] TRACE - value=0.0 angle=-4.71238898038469
+15:58:12.853 [JavaFX Application Thread] TRACE - locAngle=1.5707963267948966
+15:58:14.823 [JavaFX Application Thread] TRACE - event OnMousePressed x=58.0 y=48.0
+15:58:16.397 [JavaFX Application Thread] TRACE - event MouseReleased x=124.0 y=95.0
+15:58:16.398 [JavaFX Application Thread] TRACE - 1deltaAngle=-1.5467046033699754
+15:58:16.398 [JavaFX Application Thread] TRACE - 2deltaAngle=-1.5467046033699754
+15:58:16.399 [JavaFX Application Thread] TRACE - 1value=0.0
+15:58:16.399 [JavaFX Application Thread] TRACE - 1angle=-4.71238898038469
+15:58:16.399 [JavaFX Application Thread] TRACE - 2angle=-4.71238898038469
+15:58:16.400 [JavaFX Application Thread] TRACE - 2value=0.0
+15:58:16.400 [JavaFX Application Thread] TRACE - event MouseReleased delta=1.5467046033699754 value=0.0
+15:58:16.694 [JavaFX Application Thread] TRACE - event OnMousePressed x=25.0 y=34.0
+15:58:16.997 [JavaFX Application Thread] TRACE - event MouseReleased x=32.0 y=14.0
+15:58:16.997 [JavaFX Application Thread] TRACE - 1deltaAngle=-0.2606234830092278
+15:58:16.997 [JavaFX Application Thread] TRACE - 2deltaAngle=-0.2606234830092278
+15:58:16.997 [JavaFX Application Thread] TRACE - 1value=0.0
+15:58:16.997 [JavaFX Application Thread] TRACE - 1angle=-4.71238898038469
+15:58:16.997 [JavaFX Application Thread] TRACE - 2angle=-4.71238898038469
+15:58:16.997 [JavaFX Application Thread] TRACE - 2value=0.0
+15:58:16.998 [JavaFX Application Thread] TRACE - event MouseReleased delta=0.2606234830092278 value=0.0
+15:58:19.126 [JavaFX Application Thread] TRACE - event OnMousePressed x=57.0 y=48.0
+15:58:19.487 [JavaFX Application Thread] TRACE - event MouseReleased x=105.0 y=60.0
+15:58:19.488 [JavaFX Application Thread] TRACE - 1deltaAngle=-1.0508701815053287
+15:58:19.489 [JavaFX Application Thread] TRACE - 2deltaAngle=-1.0508701815053287
+15:58:19.489 [JavaFX Application Thread] TRACE - 1value=0.0
+15:58:19.490 [JavaFX Application Thread] TRACE - 1angle=-4.71238898038469
+15:58:19.490 [JavaFX Application Thread] TRACE - 2angle=-4.71238898038469
+15:58:19.490 [JavaFX Application Thread] TRACE - 2value=0.0
+15:58:19.491 [JavaFX Application Thread] TRACE - event MouseReleased delta=1.0508701815053287 value=0.0
+16:07:32.217 [JavaFX Application Thread] TRACE - layoutChildren()
+16:07:32.218 [JavaFX Application Thread] TRACE - value=0.0 angle=-4.71238898038469
+16:07:32.219 [JavaFX Application Thread] TRACE - locAngle=1.5707963267948966
+16:07:33.672 [JavaFX Application Thread] TRACE - event OnMousePressed x=77.0 y=73.0
+16:07:34.671 [JavaFX Application Thread] TRACE - event MouseReleased x=121.0 y=34.0
+16:07:34.671 [JavaFX Application Thread] TRACE - 1deltaAngle=0.44974562333830287
+16:07:34.672 [JavaFX Application Thread] TRACE - 2deltaAngle=0.44974562333830287
+16:07:34.672 [JavaFX Application Thread] TRACE - 1value=0.0
+16:07:34.673 [JavaFX Application Thread] TRACE - 1angle=-4.71238898038469
+16:07:34.673 [JavaFX Application Thread] TRACE - 2angle=-4.262643357046387
+16:07:34.674 [JavaFX Application Thread] TRACE - 2value=7.1579239088236575
+16:07:34.675 [JavaFX Application Thread] TRACE - event MouseReleased delta=-0.44974562333830287 value=7.1579239088236575
+16:07:34.687 [JavaFX Application Thread] TRACE - layoutChildren()
+16:07:34.688 [JavaFX Application Thread] TRACE - value=7.1579239088236575 angle=-4.262643357046387
+16:07:34.688 [JavaFX Application Thread] TRACE - locAngle=2.0205419501331994
+16:07:35.203 [JavaFX Application Thread] TRACE - event OnMousePressed x=41.0 y=51.0
+16:07:35.695 [JavaFX Application Thread] TRACE - event MouseReleased x=9.0 y=138.0
+16:07:35.696 [JavaFX Application Thread] TRACE - 1deltaAngle=-4.077296268877826
+16:07:35.696 [JavaFX Application Thread] TRACE - 2deltaAngle=2.20588903830176
+16:07:35.697 [JavaFX Application Thread] TRACE - 1value=7.1579239088236575
+16:07:35.697 [JavaFX Application Thread] TRACE - 1angle=-4.262643357046387
+16:07:35.697 [JavaFX Application Thread] TRACE - 2angle=-2.056754318744627
+16:07:35.698 [JavaFX Application Thread] TRACE - 2value=42.265738344618896
+16:07:35.698 [JavaFX Application Thread] TRACE - event MouseReleased delta=4.077296268877826 value=42.265738344618896
+16:07:35.701 [JavaFX Application Thread] TRACE - layoutChildren()
+16:07:35.702 [JavaFX Application Thread] TRACE - value=42.265738344618896 angle=-2.056754318744627
+16:07:35.702 [JavaFX Application Thread] TRACE - locAngle=4.226430988434959
+16:07:36.075 [JavaFX Application Thread] TRACE - event OnMousePressed x=39.0 y=104.00000000000003
+16:07:36.181 [JavaFX Application Thread] TRACE - event MouseReleased x=144.0 y=116.0
+16:07:36.182 [JavaFX Application Thread] TRACE - 1deltaAngle=1.5220468165818732
+16:07:36.182 [JavaFX Application Thread] TRACE - 2deltaAngle=1.5220468165818732
+16:07:36.183 [JavaFX Application Thread] TRACE - 1value=42.265738344618896
+16:07:36.184 [JavaFX Application Thread] TRACE - 1angle=-2.056754318744627
+16:07:36.184 [JavaFX Application Thread] TRACE - 2angle=-0.5347075021627536
+16:07:36.184 [JavaFX Application Thread] TRACE - 2value=66.48986579224776
+16:07:36.184 [JavaFX Application Thread] TRACE - event MouseReleased delta=-1.5220468165818732 value=66.48986579224776
+16:07:36.190 [JavaFX Application Thread] TRACE - layoutChildren()
+16:07:36.191 [JavaFX Application Thread] TRACE - value=66.48986579224776 angle=-0.5347075021627532
+16:07:36.191 [JavaFX Application Thread] TRACE - locAngle=5.748477805016833
+16:07:37.125 [JavaFX Application Thread] TRACE - event OnMousePressed x=46.0 y=78.0
+16:07:37.665 [JavaFX Application Thread] TRACE - event MouseReleased x=100.0 y=52.0
+16:07:37.665 [JavaFX Application Thread] TRACE - 1deltaAngle=2.929230285515291
+16:07:37.665 [JavaFX Application Thread] TRACE - 2deltaAngle=2.929230285515291
+16:07:37.666 [JavaFX Application Thread] TRACE - 1value=66.48986579224776
+16:07:37.666 [JavaFX Application Thread] TRACE - 1angle=-0.5347075021627532
+16:07:37.667 [JavaFX Application Thread] TRACE - 2angle=1.5707963267948966
+16:07:37.667 [JavaFX Application Thread] TRACE - 2value=100.0
+16:07:37.668 [JavaFX Application Thread] TRACE - event MouseReleased delta=-2.929230285515291 value=100.0
+16:07:37.670 [JavaFX Application Thread] TRACE - layoutChildren()
+16:07:37.670 [JavaFX Application Thread] TRACE - value=100.0 angle=1.5707963267948966
+16:07:37.671 [JavaFX Application Thread] TRACE - locAngle=7.853981633974483
+16:07:38.033 [JavaFX Application Thread] TRACE - event OnMousePressed x=83.0 y=52.0
+16:07:38.445 [JavaFX Application Thread] TRACE - event MouseReleased x=50.0 y=114.0
+16:07:38.446 [JavaFX Application Thread] TRACE - 1deltaAngle=-2.179485634122308
+16:07:38.446 [JavaFX Application Thread] TRACE - 2deltaAngle=-2.179485634122308
+16:07:38.446 [JavaFX Application Thread] TRACE - 1value=100.0
+16:07:38.447 [JavaFX Application Thread] TRACE - 1angle=1.5707963267948966
+16:07:38.447 [JavaFX Application Thread] TRACE - 2angle=-0.6086893073274116
+16:07:38.447 [JavaFX Application Thread] TRACE - 2value=65.31240879316606
+16:07:38.448 [JavaFX Application Thread] TRACE - event MouseReleased delta=2.179485634122308 value=65.31240879316606
+16:07:38.461 [JavaFX Application Thread] TRACE - layoutChildren()
+16:07:38.462 [JavaFX Application Thread] TRACE - value=65.31240879316606 angle=-0.6086893073274124
+16:07:38.462 [JavaFX Application Thread] TRACE - locAngle=5.674495999852174
+16:07:38.753 [JavaFX Application Thread] TRACE - event OnMousePressed x=47.0 y=105.0
+16:07:39.475 [JavaFX Application Thread] TRACE - event MouseReleased x=-2.0 y=66.0
+16:07:39.476 [JavaFX Application Thread] TRACE - 1deltaAngle=4.640678506486344
+16:07:39.476 [JavaFX Application Thread] TRACE - 2deltaAngle=-1.6425068006932424
+16:07:39.476 [JavaFX Application Thread] TRACE - 1value=65.31240879316606
+16:07:39.477 [JavaFX Application Thread] TRACE - 1angle=-0.6086893073274124
+16:07:39.477 [JavaFX Application Thread] TRACE - 2angle=-2.251196108020655
+16:07:39.477 [JavaFX Application Thread] TRACE - 2value=39.171101153927644
+16:07:39.478 [JavaFX Application Thread] TRACE - event MouseReleased delta=-4.640678506486344 value=39.171101153927644
+16:07:39.483 [JavaFX Application Thread] TRACE - layoutChildren()
+16:07:39.483 [JavaFX Application Thread] TRACE - value=39.171101153927644 angle=-2.2511961080206544
+16:07:39.484 [JavaFX Application Thread] TRACE - locAngle=4.031989199158932
+16:07:39.895 [JavaFX Application Thread] TRACE - event OnMousePressed x=45.0 y=100.0
+16:07:40.371 [JavaFX Application Thread] TRACE - event MouseReleased x=30.0 y=31.0
+16:07:40.372 [JavaFX Application Thread] TRACE - 1deltaAngle=3.7656157065665505
+16:07:40.372 [JavaFX Application Thread] TRACE - 2deltaAngle=-2.5175696006130357
+16:07:40.373 [JavaFX Application Thread] TRACE - 1value=39.171101153927644
+16:07:40.373 [JavaFX Application Thread] TRACE - 1angle=-2.2511961080206544
+16:07:40.374 [JavaFX Application Thread] TRACE - 2angle=-4.71238898038469
+16:07:40.374 [JavaFX Application Thread] TRACE - 2value=0.0
+16:07:40.374 [JavaFX Application Thread] TRACE - event MouseReleased delta=-3.7656157065665505 value=0.0
+16:07:40.376 [JavaFX Application Thread] TRACE - layoutChildren()
+16:07:40.377 [JavaFX Application Thread] TRACE - value=0.0 angle=-4.71238898038469
+16:07:40.377 [JavaFX Application Thread] TRACE - locAngle=1.5707963267948966

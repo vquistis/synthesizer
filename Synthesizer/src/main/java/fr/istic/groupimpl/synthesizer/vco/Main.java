@@ -1,4 +1,4 @@
-package view;
+package fr.istic.groupimpl.synthesizer.vco;
 
 import java.net.URL;
 
@@ -17,11 +17,11 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 
 		//Group root = new Group();
-	    Parent root = FXMLLoader.load(getClass().getResource("/vco.fxml"));
 		ClassLoader loader = getClass().getClassLoader();
+	    Parent root = FXMLLoader.load(loader.getResource("fxml/vco.fxml"));		
 	 
 		Scene scene = new Scene(root, 400,400);
-		URL cssURL = loader.getResource("Style.css");
+		URL cssURL = loader.getResource("css/style.css");
 		
 		primaryStage.setScene(scene);
 		scene.getStylesheets().add(cssURL.toExternalForm());

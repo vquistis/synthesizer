@@ -1,6 +1,7 @@
-package view;
+package fr.istic.groupimpl.synthesizer.vco;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -16,10 +17,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import fr.istic.groupimpl.synthesizer.component.IViewComponent;
+import fr.istic.groupimpl.synthesizer.component.Port;
+import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 
-
-
-public class ViewCtlVCO implements Initializable {
+public class ViewVco implements IViewComponent, Initializable {
 
 	@FXML
 	BorderPane paneVco;
@@ -56,6 +58,12 @@ public class ViewCtlVCO implements Initializable {
 		Potentiometre potentiometre1 = new Potentiometre("Tone");
 	   	hbRight.getChildren().add(potentiometre1);
 
+	}
+
+	@Override
+	public List<Port> getAllPorts() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
