@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
@@ -30,13 +31,13 @@ public class ViewVco implements IViewComponent, Initializable {
 	@FXML
 	private HBox hbRight;
 	@FXML
-	private Circle fm;
+	private ImageView fm;
 	@FXML
-	private Circle square;
+	private ImageView square;
 	@FXML
-	private Circle triangle;
+	private ImageView triangle;
 	@FXML
-	private Circle sawTooth;
+	private ImageView sawTooth;
 	@FXML
 	private Text display;
 	@FXML
