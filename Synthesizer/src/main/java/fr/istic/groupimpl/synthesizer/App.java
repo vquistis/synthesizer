@@ -1,4 +1,4 @@
-package fr.groupimpl.synthesizer;
+package fr.istic.groupimpl.synthesizer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
