@@ -11,7 +11,7 @@
 
 <Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ViewCtlVCO">
    <children>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="300.0">
+      <BorderPane fx:id="paneVco" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="300.0">
          <top>
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="36.0" text="VCO" textAlignment="CENTER" BorderPane.alignment="CENTER" />
          </top>
@@ -57,6 +57,5 @@
             </Pane>
          </center>
       </BorderPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="350.0" opacity="0.11" stroke="BLACK" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="3.0" width="300.0" />
    </children>
 </Pane>
