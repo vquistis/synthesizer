@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import fr.groupimpl.Synthesizer.Component;
 
 public class ViewCtlBoard implements Initializable {
 
