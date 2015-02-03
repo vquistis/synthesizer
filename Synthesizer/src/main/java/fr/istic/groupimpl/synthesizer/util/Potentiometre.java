@@ -1,42 +1,83 @@
 package fr.istic.groupimpl.synthesizer.util;
 
-import java.text.MessageFormat;
-
-import org.apache.logging.log4j.LogManager;
 
 import fr.istic.groupimpl.synthesizer.logger.Log;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
-import javafx.geometry.VPos;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
-
 /**
  * Implémentation d'un bouton tournant (knob) avec graduations paramétrables
+ * 
+ * To create a Potentiometre object, you must use PotentiometreFactory
+ * 
+ * Example :
+ * 
+ * PotentiometreFactory potentiometreFactory = PotentiometreFactory.getFactoryInstance();
+ * 
+ **** initialisations on the factory object
+ *
+ *	Potentiometre potentiometre = potentiometreFactory.getPotentiometre();
+ * 
  * 
  * @author groupImpl
  *
  */
 public class Potentiometre extends Region {
 
+	final public static double RAYON_REF=50.;
+	
 	private Region rgKnob = new Region();
 
-	// angle en Radian
-	private final double minAngle = -Math.PI;
-	private final double maxAngle = Math.PI;
 	private Rotate rotate = new Rotate();
-	private Text title = new Text("");
+	private final Text title = new Text("");
+
+	// valeur venant de initPotentiometre
+	private final double rayon;
+	private final double minValue;
+	private final double maxValue;
+	private final boolean discret;
+	private final double nbSpins;
+
+	private final boolean showTickMarks;
+	private final boolean showTickLabels;
+	private final double majorTickUnit;
+
+	// angle en Radian
+	private final double minAngle;
+	private final double maxAngle;
+
+	
+	/**
+	 * @return show Tick Marks flag
+	 */
+	public boolean isShowTickMarks() {
+		return showTickMarks;
+	}
+
+	/**
+	 * @return show Tick Labels flag
+	 */
+	public boolean isShowTickLabels() {
+		return showTickLabels;
+	}
+
+
+	/**
+	 * @return Major Tick Unit
+	 */
+	public double getMajorTickUnit() {
+		return majorTickUnit;
+	}
+
+	// value interne differente de value que si discret
+	private double val;
 
 	/**
 	 * Constructeur
@@ -45,75 +86,81 @@ public class Potentiometre extends Region {
 	private double debDragAngle;
 	boolean dragOK = false;
 
-	private void memPosAngle(double x, double y) {
-		double centerX = getWidth() / 2.0;
-		double centerY = getHeight() / 2.0;
-		debDragAngle = Math.atan2((y - centerY), (x - centerX));
-		dragOK = true;
-
-	}
-
 	private void traitePosAngle(double x, double y) {
 		double centerX = getWidth() / 2.0;
 		double centerY = getHeight() / 2.0;
 		double ang = Math.atan2((y - centerY), (x - centerX));
-		double delta = ang - debDragAngle;
-		debDragAngle = ang;
+		Log.getInstance().trace("traitePosAngle ang="+ang);
+		if (dragOK) {
+			double delta = ang - debDragAngle;
 
-		addValue(delta);
+			addValue(delta);
+		}
+		dragOK = true;
+		debDragAngle = ang;
+		
+		
 	}
 
-	public Potentiometre(String title) {
-		super();
+	Potentiometre(PotentiometreFactory initPot ) {
 
-		this.setPrefSize(200, 200);
+		super();
+		rayon = initPot.getRayon();
+		minValue = initPot.getMinValue();
+		maxValue = initPot.getMaxValue();
+		discret = initPot.isDiscret();
+		nbSpins = initPot.getNbSpins();
+		minAngle = -Math.PI * nbSpins;
+		maxAngle = Math.PI * nbSpins;
+
+
+		showTickMarks = initPot.isShowTickMarks();
+		showTickLabels = initPot.isShowTickLabels();
+		majorTickUnit = initPot.getMajorTickUnit();
+	
+		this.setPrefSize(2. * rayon, 2. * rayon);
+		this.setShape(new Circle(2.*rayon));
 
 		getStyleClass().add("button"); // NOI18N.
-		rgKnob.setPrefSize(100, 100);
-		rgKnob.getStyleClass().add("knob"); // NOI18N.
+		rgKnob.setPrefSize(2.*RAYON_REF, 2.*RAYON_REF);
+		rgKnob.getStyleClass().add("knob");
 		rgKnob.getTransforms().add(rotate);
-		rgKnob.setShape(new Circle(50));
+		rgKnob.setShape(new Circle(RAYON_REF));
+		
+		rgKnob.setScaleX(rayon/RAYON_REF);
+		rgKnob.setScaleY(rayon/RAYON_REF);
 
-		setOnDragDetected((event) -> {
-			Log.getInstance().debug(
-					"event OnDragDetected x=" + event.getX() + " y="
-							+ event.getY());
-			startFullDrag();
-			dragOK = true;
-			memPosAngle(event.getX(), event.getY());
 
-			event.consume();
-		});
-
+		
 		setOnMouseDragged((event) -> {
 			Log.getInstance().debug(
 					"event MouseDragged x=" + event.getX() + " y="
 							+ event.getY());
-
-			if (dragOK) {
-				traitePosAngle(event.getX(), event.getY());
-			} else {
-				memPosAngle(event.getX(), event.getY());
-				dragOK = true;
-			}
+			traitePosAngle(event.getX(), event.getY());
 			event.consume();
 
 		});
-		setOnDragDone((event) -> {
-			Log.getInstance().trace(
-					"event DragDone x=" + event.getX() + " y=" + event.getY());
-
-			if (dragOK) {
-				traitePosAngle(event.getX(), event.getY());
-			}
+		setOnMouseReleased((event) -> {
+			Log.getInstance().debug(
+					"event MouseReleased x=" + event.getX() + " y="
+							+ event.getY());
+			traitePosAngle(event.getX(), event.getY());
 			dragOK = false;
 			event.consume();
 
 		});
-		this.title.setText(title);
+		setOnMouseDragExited((event) -> {
+			Log.getInstance().debug(
+					"event MouseDragExited x=" + event.getX() + " y="
+							+ event.getY());
+			traitePosAngle(event.getX(), event.getY());
+			dragOK = false;
+			event.consume();
+
+		});
+		this.title.setText(initPot.getTitle());
 		getChildren().add(this.title);
 		getChildren().add(rgKnob);
-		setPrefSize(100, 100);
 		valueProperty().addListener(new ChangeListener<Number>() {
 
 			@Override
@@ -123,22 +170,8 @@ public class Potentiometre extends Region {
 				requestLayout();
 			}
 		});
-		minProperty().addListener(new ChangeListener<Number>() {
+		setValue(initPot.getValueDef());
 
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0,
-					Number arg1, Number arg2) {
-				requestLayout();
-			}
-		});
-		maxProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0,
-					Number arg1, Number arg2) {
-				requestLayout();
-			}
-		});
 	}
 
 	private void addValue(double deltaAngle) {
@@ -153,9 +186,9 @@ public class Potentiometre extends Region {
 		}
 		Log.getInstance().trace("2deltaAngle=" + deltaAngle);
 
-		double angle = valueToAngle(value.get());
+		double angle = valueToAngle(val);
 
-		Log.getInstance().trace("1value=" + getValue());
+		Log.getInstance().trace("1value=" + val);
 
 		Log.getInstance().trace("1angle=" + angle);
 
@@ -170,10 +203,22 @@ public class Potentiometre extends Region {
 		}
 		Log.getInstance().trace("2angle=" + angle);
 
-		value.set(angleToValue(angle));
+		val = angleToValue(angle);
+
+		if (isDiscret()) {
+			if (discret(val) != getValue()) {
+				value.set(discret(val));
+			}
+		} else {
+			value.set(val);
+		}
 
 		Log.getInstance().trace("2value=" + getValue());
 
+	}
+
+	private double discret(double v) {
+		return Math.floor(v + 0.5);
 	}
 
 	/**
@@ -184,113 +229,150 @@ public class Potentiometre extends Region {
 		super.layoutChildren();
 
 		Log.getInstance().trace("layoutChildren()");
-		double centerX = getWidth() / 2.0;
-		double centerY = getHeight() / 2.0;
 		double knobX = (getWidth() - rgKnob.getPrefWidth()) / 2.0;
 		double knobY = (getHeight() - rgKnob.getPrefHeight()) / 2.0;
 		rgKnob.setLayoutX(knobX);
 		rgKnob.setLayoutY(knobY);
 		double value = getValue();
-
-		if (isDiscret()) {
-			value = Math.floor(value + 0.5);
-		}
-
 		double angle = valueToAngle(value);
-
+		affTickMarks();
 		Log.getInstance().trace("value=" + value + " angle=" + angle);
 		if (minAngle <= angle && angle <= maxAngle) {
 			rotate.setPivotX(rgKnob.getWidth() / 2.0);
 			rotate.setPivotY(rgKnob.getHeight() / 2.0);
-			double locAngle = (angle < Math.PI) ? angle + 2. * Math.PI
+			double locAngle = (angle < -Math.PI) ? angle + 2. * Math.PI
 					: (angle > Math.PI) ? angle - 2. * Math.PI : angle;
 			Log.getInstance().debug("locAngle=" + locAngle);
 			rotate.setAngle(180. * locAngle / Math.PI);
 		}
 	}
+	private int nbAffTickMarks=0;
+	private void affTickMarks() {
+		if ( nbAffTickMarks++ > 1 )
+			return;
+		
+		double centerX = getWidth() / 2.0;
+		double centerY = getHeight() / 2.0;
 
-	double valueToAngle(double value) {
-		double maxValue = getMax();
-		double minValue = getMin();
+		if (isShowTickMarks()) {
+
+			double rayonExt = rayon + rayon / 8.;
+
+			for (double v = minValue; v <= maxValue; v += majorTickUnit) {
+
+				double ang = valueToAngle(v)-Math.PI/2.;
+				double debX = Math.cos(ang) * rayon + centerX;
+				double endX = Math.cos(ang) * rayonExt + centerX;
+				double debY = Math.sin(ang) * rayon + centerY;
+				double endY = Math.sin(ang) * rayonExt + centerY;
+				Line line = new Line();
+				getChildren().add(line);
+				line.setStartX(debX);
+				line.setEndX(endX);
+				line.setStartY(debY);
+				line.setEndY(endY);
+				Log.getInstance().trace("TRACE1");
+				if ( isShowTickLabels() )
+				{
+					Log.getInstance().trace("TRACE2");
+					Text label=null;
+					if ( Math.floor(majorTickUnit) == majorTickUnit )
+						label = new Text(""+(int)v);
+					else
+						label = new Text(""+ v);
+					getChildren().add(label);
+					double d = 10;
+					
+					double x = Math.cos(ang) * (rayonExt+d) -5+ centerX;
+					double y = Math.sin(ang) * (rayonExt+d) +5+ centerY;
+					label.setTranslateX(x);
+					label.setTranslateY(y);
+					
+				}
+				
+				
+
+			}
+		}
+	}
+
+	private double valueToAngle(double value) {
 		double angle = minAngle + (maxAngle - minAngle) * (value - minValue)
 				/ (maxValue - minValue);
-		// System.out.printf("valueToAngle %f => %f", value, angle).println();
 		return angle;
 	}
 
-	double angleToValue(double angle) {
-		double maxValue = getMax();
-		double minValue = getMin();
+	private double angleToValue(double angle) {
 		double value = minValue + (maxValue - minValue) * (angle - minAngle)
 				/ (maxAngle - minAngle);
 		value = Math.max(minValue, value);
 		value = Math.min(maxValue, value);
-		// System.out.printf("angleToValue %f => %f", angle, value).println();
 		return value;
 	}
 
 	private final DoubleProperty value = new SimpleDoubleProperty(this,
-			"value", 0); // NOI18N.
+			"value", 0);
 
+	/**
+	 * set the value
+	 * @param v
+	 * 		Value for initialization
+	 */
 	public final void setValue(double v) {
 		value.set(v);
+		val = v;
 	}
 
+	/**
+	 * get the value
+	 * @return
+	 * 		value
+	 */
 	public final double getValue() {
 		return value.get();
 	}
 
+	/**
+	 * @return the value Property
+	 */
 	public final DoubleProperty valueProperty() {
 		return value;
 	}
 
-	private final DoubleProperty min = new SimpleDoubleProperty(this, "min",
-			-100); // NOI18N.
-
-	public final void setMin(double v) {
-		min.set(v);
-	}
-
+	/**
+	 * get the minimum value
+	 * @return
+	 * 	the minimum value
+	 */
 	public final double getMin() {
-		return min.get();
+		return minValue;
 	}
 
-	public final DoubleProperty minProperty() {
-		return min;
-	}
-
-	private final DoubleProperty max = new SimpleDoubleProperty(this, "max",
-			100); // NOI18N.
-
-	public final void setMax(double v) {
-		max.set(v);
-	}
-
+	/**
+	 * get the maximum value
+	 * @return
+	 * the maximum value
+	 */
 	public final double getMax() {
-		return max.get();
+		return maxValue;
 	}
 
-	public final DoubleProperty maxProperty() {
-		return max;
-	}
-
-	public void setTitle(Text title) {
-		this.title = title;
-	}
-
-	private final BooleanProperty discret = new SimpleBooleanProperty(this,
-			"discret", false);
-
-	public final void setDiscret(boolean d) {
-		discret.set(d);
-	}
-
+	/**
+	 * get the discret flag ( to have only integer values )
+	 * @return
+	 * the discret flag
+	 */
 	public final boolean isDiscret() {
-		return discret.get();
+		return discret;
 	}
 
-	public final BooleanProperty discretProperty() {
-		return discret;
+	/**
+	 * get the number of spins
+	 * @return
+	 * 	The spin number
+	 */
+	public double getNbSpins() {
+		return nbSpins;
 	}
 
 }

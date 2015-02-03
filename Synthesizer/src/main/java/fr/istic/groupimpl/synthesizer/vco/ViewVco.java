@@ -1,35 +1,27 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
-import fr.istic.groupimpl.synthesizer.component.Port;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
+import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 public class ViewVco implements IViewComponent, Initializable {
 
 	@FXML
 	private BorderPane paneVco;
 	@FXML
-	private HBox hbLeft;
+	private VBox knobOctavePane;
 	@FXML
-	private HBox hbRight;
+	private VBox knobFreqPane;
 	@FXML
 	private ImageView fm;
 	@FXML
@@ -46,29 +38,33 @@ public class ViewVco implements IViewComponent, Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		CornerRadii radii = new CornerRadii(5.00);
-		BorderWidths widths = new BorderWidths(1.00);
-		BorderStroke bs = new BorderStroke(Paint.valueOf("BLACK"), BorderStrokeStyle.SOLID, radii, widths);
-		Border border = new Border(bs);
-		paneVco.setBorder(border);
+		PotentiometreFactory pf = PotentiometreFactory.getFactoryInstance();
+		pf.setMinValue(0);
+		pf.setMaxValue(8);
+		pf.setDiscret(true);
+		pf.setShowTickMarks(true);
+		pf.setShowTickLabels(true);
+		pf.setMajorTickUnit(1);
+		pf.setNbSpins(0.88);
+		pf.setRayon(40);
+		pf.setValueDef(0);
 		
-		fm.getStyleClass().add("inout");
+		Potentiometre octaveKnob = pf.getPotentiometre();
+		knobOctavePane.getChildren().add(octaveKnob);
+	   	
+		pf.setNbSpins(0.80);
+		pf.setDiscret(false);
+		pf.setMinValue(-1);
+		pf.setMaxValue(1);
 		
-		Potentiometre potentiometre = new Potentiometre("Octave");
-		potentiometre.setTitle(new Text("Octave"));
-		Potentiometre potentiometre1 = new Potentiometre("Tone");
-	   	hbRight.getChildren().add(potentiometre1);
+	   	Potentiometre precisionKnob = pf.getPotentiometre();
+	   	knobFreqPane.getChildren().add(precisionKnob);
 	   	
-	   	
-	   	ControllerVco vcoControl = new ControllerVco();	   	
-	   	potentiometre1.valueProperty().addListener((p, newVal, oldVal) -> vcoControl.handleViewOctaveChange(newVal));
-	   	
-	}
-
-	@Override
-	public List<Port> getAllPorts() {
-		// TODO Auto-generated method stub
-		return null;
+	   	ControllerVco vcoControl = new ControllerVco();
+	   	octaveKnob.valueProperty().addListener((p, oldVal, newVal) ->
+	   		vcoControl.handleViewOctaveChange((double) newVal, precisionKnob.getValue()));
+	   	precisionKnob.valueProperty().addListener((p, oldVal, newVal) ->
+   			vcoControl.handleViewOctaveChange(octaveKnob.getValue(), (double) newVal));
 	}
 
 }

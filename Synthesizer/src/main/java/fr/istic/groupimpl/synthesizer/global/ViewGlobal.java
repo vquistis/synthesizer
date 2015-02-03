@@ -6,72 +6,177 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
+
 
 public class ViewGlobal implements Initializable {
 
+
+	@FXML
+	private Button vcoBtn;
+	
+	@FXML
+	private Button outBtn;
+
 	@FXML
 	private SplitPane splitpane;
-	
+
 	@FXML
 	private ScrollPane scrollpane;
-	
+
 	List<HBox> hboxes = new ArrayList<HBox>();
 	List<Pair<Node,IViewComponent>> listAssoc = new ArrayList<Pair<Node,IViewComponent>>();
-	
+	Point2D lastXY = null;
+
+	private HBox h;
+	private HBox h1;
+	private HBox h2;
+	private HBox h3;
+	private Node n;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		h1 = new HBox();
+		h2 = new HBox();
+		h3 = new HBox();
+		h1.setPrefSize(800, 300);
+		h2.setPrefSize(800, 300);
+		h3.setPrefSize(800, 300);
+		h1.getStyleClass().add("background");
+		h2.getStyleClass().add("background");
+		h3.getStyleClass().add("background");
+		vcoBtn.getStyleClass().add("btnClass");
+		outBtn.getStyleClass().add("btnClass");
+
+		splitpane.getItems().addAll(h1, h2, h3);
+//		splitpane.getDividers().get(0).set
+//		splitpane.getStyleClass().add("")
+//		splitpane.setStyle("-fx-background-color: #1d1d1d; "
+//				+ "-fx-text-fill: black; " + "-fx-border-color: black;");
+//		
+//		vcoBtn.setStyle("-fx-background-color: derive(-fx-focus-color,30%);"
+//				+ "-fx-font-size: 14pt;"
+//				+ "    -fx-font-family: \"Segoe UI Light\";"
+//						+ "    -fx-text-fill: white;"
+//						+ "    -fx-opacity: 0.9;-fx-background-color: #1d1d1d;");
+		vcoBtn.setMaxWidth(300);
+
+		for(Node n : splitpane.getItems()) {
+			n.setOnDragOver((e) -> {
+				e.acceptTransferModes(TransferMode.ANY);
+				e.consume();
+			});
+			n.setOnDragDropped((e) -> {
+				
+				e.acceptTransferModes(TransferMode.ANY);
+				e.consume();
+				
+				
+				Dragboard db = e.getDragboard();
+				boolean success = false;
+				if (db.hasString()) {
+					Log.getInstance().debug("----DROPPED: "+db.getString());
+					
+					String []pos=db.getString().split(";");
+					
+					Node node = ((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().get(Integer.parseInt(pos[1]));
+					HBox box=(HBox) n;
+					((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().remove(Integer.parseInt(pos[1]));
+
+					int index =0;
+					for(Node child : box.getChildren()){	
+						if (child.contains(e.getX(), e.getY())) {
+							break;
+							
+						}
+						index++;
+					}
+					box.getChildren().add(index,node);
+				}
+			});
+		}
 	}
 
 	public void addModule(Node node, int i, int j) {
 		hboxes.get(i).getChildren().add(j, node);
-		setupListeners(node);
 	}
 
-	public void deleteModule(Node node, int i) {
-		int idx = 0;
-		for(Pair<Node, IViewComponent> p : listAssoc) {
-			if(p.getKey().equals(node)) {
-				break;
-			}
-			idx++;
-		}
-		listAssoc.remove(idx);
-		hboxes.get(i).getChildren().remove(node);
-	}
-	
-	public void removeModule(Node node, int i) {
-		hboxes.get(i).getChildren().remove(node);
-	}
-	
+	//	public void deleteModule(Node node, int i) {
+	//		int idx = 0;
+	//		for(Pair<Node, IViewComponent> p : listAssoc) {
+	//			if(p.getKey().equals(node)) {
+	//				break;
+	//			}
+	//			idx++;
+	//		}
+	//		listAssoc.remove(idx);
+	//		hboxes.get(i).getChildren().remove(node);
+	//	}
+
+	//	public void removeModule(Node node, int i) {
+	//		hboxes.get(i).getChildren().remove(node);
+	//	}
+
 	public void createModule(String filename) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
 			IViewComponent view = loader.getController();
 			Node root = loader.load();
 			listAssoc.add(new Pair<Node, IViewComponent>(root, view));
-			hboxes.get(0).getChildren().add(root);
-			
+			((HBox)splitpane.getItems().get(0)).getChildren().add(root);
+			enableDrag(root);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	private void setupListeners(Node node) {
-		
+	private String getString(Node node) {
+		int i=0;
+		String res = "";
+		for(Node hbox : splitpane.getItems()) {
+			ObservableList<Node> nodes = ((HBox) hbox).getChildren();
+			if(nodes.contains(node)) {
+				res = res + i + ";" + nodes.indexOf(node);
+				break;
+			}
+			i++;
+		}
+		return res;
 	}
 	
+	private void enableDrag(Node node) {
+		node.setOnDragDetected((event) -> {
+			ClipboardContent content = new ClipboardContent();
+			content.putString(getString(node));
+			Dragboard db = scrollpane.startDragAndDrop(TransferMode.ANY);
+			db.setContent(content);
+			event.consume();
+		});
+	}
+
+	@FXML
+	public void handleAddVco(){
+		createModule("fxml/vco.fxml");		
+	}
 	
-	
+	@FXML
+	public void handleAddOut(){
+		createModule("fxml/out.fxml");		
+	}	
 }

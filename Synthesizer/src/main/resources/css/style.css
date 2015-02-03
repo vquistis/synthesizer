@@ -1,5 +1,46 @@
 @CHARSET "UTF-8";
 
+
+.background {
+    -fx-background-color: #1d1d1d;
+}
+
+.btnClass{
+	-fx-background-color: derive(-fx-focus-color,30%);
+	-fx-font-family: "Segoe UI Light";
+	-fx-text-fill: white;
+	-fx-opacity: 0.9;
+	-fx-background-color: #1d1d1d;
+	-fx-font-size: 14pt;
+}
+
+
+.moduleBox {
+	-fx-border-color: #9a9a9a;
+	-fx-border-width: 1;
+	-fx-border-style: solid;
+    -fx-border-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+.titlePane {
+	-fx-background-color: linear-gradient(#bbb, #E3E3E3);
+	-fx-border-color: #bbb;
+	-fx-border-width: 0 0 1 0;
+	-fx-border-style: solid;
+}
+
+.portPane {
+	-fx-background-color: linear-gradient(#E3E3E3, #bbb);
+	-fx-border-color: #bbb;
+	-fx-border-width: 1 0 0 0;
+	-fx-border-style: solid;
+}
+
+.inputPort:hover {
+    -fx-effect: dropshadow(gaussian, #00ae00, 4,0,0,0);
+}
+
 .button {
     -fx-background-color: transparent;
 }
@@ -7,4 +48,3 @@
     -fx-background-image: url("../img/knob.png");
     -fx-background-size: stretch; 
 }
-
