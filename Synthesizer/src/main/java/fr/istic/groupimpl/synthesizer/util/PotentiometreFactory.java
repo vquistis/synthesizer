@@ -23,7 +23,8 @@ public class PotentiometreFactory {
 	private double maxValue = 100.;
 	private boolean discret = false;
 	private double nbSpins = 1.;
-	private double valueDef = 50.;
+	private double valueDef;
+	private boolean valueDefInit;
 
 	private boolean showTickMarks = false;
 	private boolean showTickLabels = false;
@@ -62,11 +63,15 @@ public class PotentiometreFactory {
 	}
 
 	public double getValueDef() {
-		return valueDef;
+		if ( valueDefInit )
+			return valueDef;
+		else
+			return (minValue+maxValue)/2.;
 	}
 
 	public void setValueDef(double valueDef) {
 		this.valueDef = valueDef;
+		valueDefInit = true;
 	}
 
 	public boolean isShowTickMarks() {

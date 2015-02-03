@@ -18,7 +18,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
-import fr.istic.groupimpl.synthesizer.component.Port;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 
 public class ViewTestPot implements IViewComponent, Initializable {
@@ -80,10 +79,5 @@ public class ViewTestPot implements IViewComponent, Initializable {
 
 	}
 
-	@Override
-	public List<Port> getAllPorts() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
