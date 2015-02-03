@@ -15,14 +15,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
-import fr.istic.groupimpl.synthesizer.component.Port;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 
@@ -147,8 +145,5 @@ public class ViewGlobal implements Initializable {
 		createModule("fxml/vco.fxml");		
 	}
 
-	public void handlePortClicked(IViewComponent component, Port port) {
-
-	}
-
+	
 }
