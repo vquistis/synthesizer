@@ -71,7 +71,14 @@ public class ViewGlobal implements Initializable {
 				Dragboard db = e.getDragboard();
 				boolean success = false;
 				if (db.hasString()) {
-					Log.getInstance().debug("DROPPED: "+db.getString());
+					Log.getInstance().debug("----DROPPED: "+db.getString());
+					
+					String []pos=db.getString().split(";");
+					
+					Node node = ((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().get(Integer.parseInt(pos[1]));
+					HBox box=(HBox) n;
+					((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().remove(Integer.parseInt(pos[1]));
+					box.getChildren().add(node);
 					
 				}
 			});
