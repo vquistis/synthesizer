@@ -17,12 +17,12 @@ public class ModelGlobal {
 
 	private List<IModelComponent> modules = new ArrayList<IModelComponent>();
 	
-	public void addModule(IModelComponent module) {
-		modules.add(module);
+	public void addModule(IModelComponent model) {
+		modules.add(model);
 	}
 	
-	public void removeModule(IModelComponent module) {
-		modules.remove(module);
+	public void removeModule(IModelComponent model) {
+		modules.remove(model);
 	}
 	
 	public void connectModules(IModelComponent moduleIn, String inputPort, IModelComponent moduleOut, String outputPort) {

@@ -5,6 +5,11 @@ import fr.istic.groupimpl.synthesizer.command.ICommand;
 public class Port {
 	
 	private ICommand cmd;
+	private String name;
+	
+	public Port(String name) {
+		this.name = name;
+	}
 	
 	public boolean isInput() {
 		return false;		
@@ -18,6 +23,10 @@ public class Port {
 		if (cmd != null) {
 			cmd.execute();
 		}
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }
