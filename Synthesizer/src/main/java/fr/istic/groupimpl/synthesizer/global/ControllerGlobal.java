@@ -16,9 +16,13 @@ public class ControllerGlobal {
 	public void addComponentModel(IModelComponent model) {
 		this.model.addModule(model);
 	}
-	
+
 	public void handleConnectModules() {
 		//TODO notify the view to bind the cable.
+	}
+	
+	public void handleDisconnectModules() {
+		//TODO notify the view to unbind the cable.
 	}
 	
 	public void handlePortClicked(IModelComponent model, Port port) {
