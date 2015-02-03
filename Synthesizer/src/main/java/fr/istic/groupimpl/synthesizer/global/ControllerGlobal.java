@@ -1,5 +1,8 @@
 package fr.istic.groupimpl.synthesizer.global;
 
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 public class ControllerGlobal {
@@ -9,8 +12,7 @@ public class ControllerGlobal {
 
 	private CableMode cableMode;
 	
-	private UnitGenerator currentUnitGen;
-	private String currentPort;
+	private UnitPort currentPort;
 
 	public void handleConnectModules() {
 		//TODO notify the view to bind the cable.
@@ -24,35 +26,35 @@ public class ControllerGlobal {
 		model.addUnitGenerator(unitGen);
 	}
 
-	public void handleInputClicked(UnitGenerator unitGen, String port) {
+	public void handleInputClicked(UnitInputPort port) {
 		switch(cableMode) {
 		case NONE_CONNECTED:
 			cableMode = CableMode.IN_CONNECTED;
-			currentUnitGen = unitGen;
+			currentPort = port;
 			//TODO notify the view to create a new, unbound cable.
 			break;
 		case IN_CONNECTED:
 			break;
 		case OUT_CONNECTED:
 			cableMode = CableMode.NONE_CONNECTED;
-			this.model.connectModules(currentUnitGen, currentPort, unitGen, port);
-			currentUnitGen = null; currentPort = null;
+			this.model.connectPorts(currentPort, port);
+			currentPort = null;
 			break;
 		default:
 		}
 	}
 
-	public void handleOutputClicked(UnitGenerator unitGen, String port) {
+	public void handleOutputClicked(UnitOutputPort port) {
 		switch(cableMode) {
 		case NONE_CONNECTED:
 			cableMode = CableMode.OUT_CONNECTED;
-			currentUnitGen = unitGen;
+			currentPort = port;
 			//TODO notify the view to create a new, unbound cable.
 			break;
 		case IN_CONNECTED:
 			cableMode = CableMode.NONE_CONNECTED;
-			this.model.connectModules(unitGen, port, currentUnitGen, currentPort);
-			currentUnitGen = null; currentPort = null;
+			this.model.connectPorts(port, currentPort);
+			currentPort = null;
 			break;
 		case OUT_CONNECTED:
 			break;
@@ -62,7 +64,7 @@ public class ControllerGlobal {
 
 	public void handleLeftButtonClicked() {
 		cableMode = CableMode.NONE_CONNECTED;
-		currentUnitGen = null; currentPort = null;
+		currentPort = null;
 		//TODO notify the view to stop displaying the cable.
 	}
 

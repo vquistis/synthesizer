@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
@@ -24,17 +23,15 @@ public class ViewOut implements IViewComponent, Initializable {
 	@FXML private TextField valueVolumeFx;
 	@FXML private CheckBox muteVolumeFx;
 	
-	private Double convVal( Double val )
-	{
-		if ( val >= 0 )
+	private Double convVal( Double val ){
+		if (val >= 0) {
 			return val;
-		if ( val < -11.9 )
-		{
+		}
+		if (val < -11.9) {
 			val = -11.9;
 		}
 		return (-1./(12.+val)+1./12.)*132 ;
 	}
-	
 	private DoubleProperty knobInfValue = new SimpleDoubleProperty();
 	
 	
@@ -46,16 +43,14 @@ public class ViewOut implements IViewComponent, Initializable {
 		knobFact.setMinValue(-12);
 		knobFact.setMaxValue(12);
 		Potentiometre volumeKnob = knobFact.getPotentiometre();
-		
+		volumeKnob.valueProperty().addListener((obsVal, oldVal, newVal) -> knobInfValue.set(convVal((Double)newVal)));
 		knobVolumePane.getChildren().add(volumeKnob);
 
 		StringConverter<Number> converter = new NumberStringConverter();
 		Bindings.bindBidirectional(valueVolumeFx.textProperty(), knobInfValue, converter);
 		
 		ControllerOut controller = new ControllerOut();
-		volumeKnob.valueProperty().addListener((obsVal, newVal, oldVal) ->knobInfValue.set(convVal((Double)newVal)));
-		knobInfValue.addListener((obsVal, newVal, oldVal) ->controller.handleViewVolumeChange(newVal));
-		muteVolumeFx.selectedProperty().addListener((obsVal, newVal, oldVal) -> controller.handleViewMuteChange(newVal));
+		knobInfValue.addListener((obsVal, oldVal, newVal) -> controller.handleViewVolumeChange(newVal));
+		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewMuteChange(newVal));
 	}
-
 }
