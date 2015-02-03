@@ -13,15 +13,16 @@ public class ControllerVco implements IControllerComponent {
 	}
 	
 	
-	/* =================== Event handles FROM the view =================== */
+	/* =================== Event handles FROM the view TO the model =================== */
 	
-	public void handleViewOctaveChange(Number value) {
-		System.err.println("Octave (view) Potentiomètre changed : " + value);
-		modelVco.setValProperty("octave", value);
+	public void handleViewOctaveChange(double octave, double precision) {
+		System.err.println("Octave (view) Potentiomètre changed : " + octave + " / " + precision);
+		modelVco.setValProperty("octave", octave + precision);
+		modelVco.setJsynOctave(octave + precision);
 	}
 	
 	
-	/* =================== Event handles FROM the model =================== */
+	/* =================== Event handles FROM the model TO the view =================== */
 	
 	/* (TEST, à suppr) */
 	public void handleModelOctaveChange() {
