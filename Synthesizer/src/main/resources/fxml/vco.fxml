@@ -97,19 +97,25 @@
                <children>
                   <Label text="Octave">
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="28.0" />
                      </VBox.margin>
                   </Label>
                </children>
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding>
             </VBox>
             <VBox fx:id="knobFreqPane" alignment="CENTER" GridPane.columnIndex="1">
                <children>
                   <Label text="Précision">
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="28.0" />
                      </VBox.margin>
                   </Label>
                </children>
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding>
             </VBox>
          </children>
          <BorderPane.margin>
