@@ -7,8 +7,11 @@ import java.util.Map;
 
 import javafx.util.Pair;
 
+import com.jsyn.JSyn;
+import com.jsyn.Synthesizer;
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.IModelComponent;
 
@@ -17,6 +20,8 @@ public class ModelGlobal {
 	private ControllerGlobal controller;
 
 	private List<IModelComponent> modules = new ArrayList<IModelComponent>();
+	
+	private Synthesizer synth;
 
 	/*
 	 * f(output) -> input
@@ -29,10 +34,15 @@ public class ModelGlobal {
 
 	public ModelGlobal(ControllerGlobal controller) {
 		this.controller = controller;
+		this.synth = JSyn.createSynthesizer();
+		this.synth.start();
 	}
 
 	public void addModule(IModelComponent model) {
 		modules.add(model);
+		UnitGenerator unitGen = model.getUnitGenerator();
+		synth.add(unitGen);
+		unitGen.start();
 	}
 
 	public void removeModule(IModelComponent model) {
