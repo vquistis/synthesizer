@@ -20,7 +20,7 @@ public class Main extends Application{
 		ClassLoader loader = getClass().getClassLoader();
 	    Parent root = FXMLLoader.load(loader.getResource("fxml/vco.fxml"));		
 	 
-		Scene scene = new Scene(root, 400,400);
+		Scene scene = new Scene(root);
 		URL cssURL = loader.getResource("css/style.css");
 		
 		primaryStage.setScene(scene);

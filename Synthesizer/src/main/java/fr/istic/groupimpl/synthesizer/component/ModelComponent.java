@@ -7,8 +7,8 @@ import fr.istic.groupimpl.synthesizer.component.IModelComponent;
 
 public abstract class ModelComponent implements IModelComponent {
 	
-	private Properties propsVals;
-	private Properties commands;
+	protected Properties propsVals;
+	protected Properties commands;
 		
 	public ModelComponent() {
 		propsVals = new Properties();
