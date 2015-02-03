@@ -16,6 +16,16 @@ import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitSource;
 import com.jsyn.unitgen.WhiteNoise;
 
+/**
+ * VCO oscillator with a frequency modulation input.
+ * 
+ * <pre>
+ * output = TODO
+ * </pre>
+ * 
+ * @author GoupImpl
+ */
+
 public class VCOCircuit extends Circuit implements UnitSource
 {
 	/* Declare units that will be part of the circuit. */
@@ -32,12 +42,11 @@ public class VCOCircuit extends Circuit implements UnitSource
 	private UnitInputPort octave;
 	private UnitInputPort shape;
 	private UnitInputPort amplitude;
-	private UnitOutputPort output;
-
-	public UnitOutputPort getOutput()
-	{
-		return output;
-	}
+	private UnitOutputPort output; // fonction du sélecteur de la forme (shape)
+	
+	private UnitOutputPort outputSquare;
+	private UnitOutputPort outputSawtooth;
+	private UnitOutputPort outputTriangle;
 
 	public UnitInputPort getFm() {
 		return fm;
@@ -57,6 +66,23 @@ public class VCOCircuit extends Circuit implements UnitSource
 
 	public UnitInputPort getAmplitude() {
 		return amplitude;
+	}
+
+	public UnitOutputPort getOutput()
+	{
+		return output;
+	}
+	
+	public UnitOutputPort getOutputSquare() {
+		return outputSquare;
+	}
+
+	public UnitOutputPort getOutputSawtooth() {
+		return outputSawtooth;
+	}
+
+	public UnitOutputPort getOutputTriangle() {
+		return outputTriangle;
 	}
 	
 	public VCOCircuit()
@@ -81,7 +107,10 @@ public class VCOCircuit extends Circuit implements UnitSource
 		
 		addPort(amplitude = passThroughAmplitude.getInput(), "inputAmplitude");
 		
-		addPort(output = selectFrom3.getOutput());
+		addPort(output = selectFrom3.getOutput()); // fct sélecteur
+		addPort(outputSquare = squareOscillator.getOutput());
+		addPort(outputSawtooth = sawtoothOscillator.getOutput());
+		addPort(outputTriangle = triangleOscillator.getOutput());
 		
 		/* Connect SynthUnits to make control signal path. */
 		vcFreq.getFrequencyOut().connect(triangleOscillator.frequency);

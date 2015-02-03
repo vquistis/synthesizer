@@ -90,7 +90,11 @@ public class App
     	// Connect the oscillator to both channels of the output.
     	oscVCO.getOutput().connect( 0, lineOut.input, 0 );
     	oscVCO.getOutput().connect( 0, lineOut.input, 1 );
-
+    	/* or choose ce shape directly
+    	oscVCO.getOutputSquare().connect( 0, lineOut.input, 0 );
+    	oscVCO.getOutputSquare().connect( 0, lineOut.input, 1 );
+    	*/
+    	 
     	// Set the frequency and amplitude for the sine wave.
     	oscVCO.getFo().set(440);
     	oscVCO.getFm().set(1);
@@ -102,7 +106,6 @@ public class App
     	// We only need to start the LineOut. It will pull data from the oscillator.
     	lineOut.start();
     	    	
-    	
 	    try {
 	    	for (int i=0; i<=10 ; i++) {
 	    		time = synth.getCurrentTime() + 0.3;

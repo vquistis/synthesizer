@@ -22,17 +22,16 @@ import com.jsyn.ports.UnitVariablePort;
 import com.jsyn.unitgen.UnitGenerator;
 
 /**
- * Frequency Voltage Controller 
+ * Frequency Voltage Controller
  * +1 Volt = +1 Octave
  * -1 Volt = -1 Octave
  *  
  * <pre>
  * output = TODO;
- * 
  * <pre>
  * 
  * 
- * @author Team CourpImp
+ * @author Team GroupImpl
  */
 
 public class VcFreq extends UnitGenerator {
