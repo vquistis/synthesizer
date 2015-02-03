@@ -1,9 +1,12 @@
 package fr.istic.groupimpl.synthesizer.out;
 
+import java.util.Collection;
+
 import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.UnitGenerator;
 
@@ -55,5 +58,10 @@ public class ModelOut extends ModelComponent {
 	public UnitOutputPort getOutputPort(String portName) {
 		//This module doesn't have output port
 		return null;
+	}
+
+	@Override
+	public Collection<UnitPort> getAllPorts() {
+		return out.getPorts();
 	}
 }
