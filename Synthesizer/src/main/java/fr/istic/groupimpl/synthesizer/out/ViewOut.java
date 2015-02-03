@@ -42,7 +42,37 @@ public class ViewOut implements IViewComponent, Initializable {
 		return (-1./(12.+val)+1./12.)*132 ;
 	}
 	private DoubleProperty knobInfValue = new SimpleDoubleProperty();
-	
+	private class StringConverterInf extends StringConverter<Number> {
+
+		final private String STR_INF = "-inf";
+		final private double DOUBLE_INF = -1000.;
+
+		StringConverter<Number> defConverter = new NumberStringConverter();
+
+		@Override
+		public String toString(Number object) {
+
+			if (object instanceof Double) {
+				double d = (Double) object;
+				if (d <= DOUBLE_INF) {
+					return STR_INF;
+				}
+			}
+			return defConverter.toString(object);
+
+		}
+
+		@Override
+		public Number fromString(String string) {
+
+			if (string.equals(STR_INF)) {
+				return -1000.;
+			}
+			return defConverter.fromString(string);
+		}
+
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
@@ -53,7 +83,7 @@ public class ViewOut implements IViewComponent, Initializable {
 		knobVolumePane.getChildren().add(volumeKnob);
 		
 		// Bind knob value and text field value
-		StringConverter<Number> converter = new NumberStringConverter();
+		StringConverter<Number> converter = new StringConverterInf();
 		Bindings.bindBidirectional(valueVolumeFx.textProperty(), knobInfValue, converter);
 
 		// Creation du controller
