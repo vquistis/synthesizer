@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="200.0" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.out.ViewOut">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <Label fx:id="titleModuleFx" text="OUT" />
+            <Pane prefWidth="120.0" />
+          <Button fx:id="closeModuleFx" mnemonicParsing="false" text="x" />
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <VBox fx:id="knobVolumePane" alignment="CENTER">
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Label text="Volume" />
+               </children>
+            </VBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <TextField fx:id="valueVolumeFx" prefWidth="100.0">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin></TextField>
+                  <Label text="db">
+                     <HBox.margin>
+                        <Insets left="2.0" />
+                     </HBox.margin></Label>
+               </children>
+            </HBox>
+            <CheckBox fx:id="muteVolumeFx" mnemonicParsing="false" text="Mute">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin></CheckBox>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" styleClass="portPane">
+         <children>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label text="in" />
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
+                     <image>
+                        <Image url="@../img/inoutRouge.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </bottom>
+</BorderPane>
