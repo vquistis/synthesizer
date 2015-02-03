@@ -15,14 +15,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
-import fr.istic.groupimpl.synthesizer.component.Port;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 
@@ -71,7 +69,14 @@ public class ViewGlobal implements Initializable {
 				Dragboard db = e.getDragboard();
 				boolean success = false;
 				if (db.hasString()) {
-					Log.getInstance().debug("DROPPED: "+db.getString());
+					Log.getInstance().debug("----DROPPED: "+db.getString());
+					
+					String []pos=db.getString().split(";");
+					
+					Node node = ((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().get(Integer.parseInt(pos[1]));
+					HBox box=(HBox) n;
+					((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().remove(Integer.parseInt(pos[1]));
+					box.getChildren().add(node);
 					
 				}
 			});
@@ -140,8 +145,5 @@ public class ViewGlobal implements Initializable {
 		createModule("fxml/vco.fxml");		
 	}
 
-	public void handlePortClicked(IViewComponent component, Port port) {
-
-	}
-
+	
 }
