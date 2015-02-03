@@ -29,7 +29,10 @@ public class ViewGlobal implements Initializable {
 
 
 	@FXML
-	private Button vcoModule;
+	private Button vcoBtn;
+	
+	@FXML
+	private Button outBtn;
 
 	@FXML
 	private SplitPane splitpane;
@@ -55,8 +58,24 @@ public class ViewGlobal implements Initializable {
 		h1.setPrefSize(800, 300);
 		h2.setPrefSize(800, 300);
 		h3.setPrefSize(800, 300);
+		h1.getStyleClass().add("background");
+		h2.getStyleClass().add("background");
+		h3.getStyleClass().add("background");
+		vcoBtn.getStyleClass().add("btnClass");
+		outBtn.getStyleClass().add("btnClass");
 
 		splitpane.getItems().addAll(h1, h2, h3);
+//		splitpane.getDividers().get(0).set
+//		splitpane.getStyleClass().add("")
+//		splitpane.setStyle("-fx-background-color: #1d1d1d; "
+//				+ "-fx-text-fill: black; " + "-fx-border-color: black;");
+//		
+//		vcoBtn.setStyle("-fx-background-color: derive(-fx-focus-color,30%);"
+//				+ "-fx-font-size: 14pt;"
+//				+ "    -fx-font-family: \"Segoe UI Light\";"
+//						+ "    -fx-text-fill: white;"
+//						+ "    -fx-opacity: 0.9;-fx-background-color: #1d1d1d;");
+		vcoBtn.setMaxWidth(300);
 
 		for(Node n : splitpane.getItems()) {
 			n.setOnDragOver((e) -> {
@@ -64,8 +83,11 @@ public class ViewGlobal implements Initializable {
 				e.consume();
 			});
 			n.setOnDragDropped((e) -> {
+				
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();
+				
+				
 				Dragboard db = e.getDragboard();
 				boolean success = false;
 				if (db.hasString()) {
@@ -76,8 +98,16 @@ public class ViewGlobal implements Initializable {
 					Node node = ((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().get(Integer.parseInt(pos[1]));
 					HBox box=(HBox) n;
 					((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().remove(Integer.parseInt(pos[1]));
-					box.getChildren().add(node);
-					
+
+					int index =0;
+					for(Node child : box.getChildren()){	
+						if (child.contains(e.getX(), e.getY())) {
+							break;
+							
+						}
+						index++;
+					}
+					box.getChildren().add(index,node);
 				}
 			});
 		}
@@ -141,9 +171,12 @@ public class ViewGlobal implements Initializable {
 	}
 
 	@FXML
-	public void handleAddComponent(){
+	public void handleAddVco(){
 		createModule("fxml/vco.fxml");		
 	}
-
 	
+	@FXML
+	public void handleAddOut(){
+		createModule("fxml/out.fxml");		
+	}	
 }
