@@ -3,8 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
-
+<?import javafx.scene.control.Button?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.global.ViewGlobal">
    <left>
@@ -16,7 +15,7 @@
                      <children>
                         <VBox prefHeight="21.0" prefWidth="201.0">
                            <children>
-                              <Label fx:id="source" text="Component" />
+                              <Button  fx:id="vcoModule" text="VCO" onAction="#handleAddComponent" />
                            </children>
                         </VBox>
                      </children>
