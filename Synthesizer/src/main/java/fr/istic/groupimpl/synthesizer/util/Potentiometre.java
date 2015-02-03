@@ -29,6 +29,10 @@ import javafx.scene.transform.Rotate;
  * @author groupImpl
  *
  */
+/**
+ * @author mocquard
+ *
+ */
 public class Potentiometre extends Region {
 
 	final public static double RAYON_REF=50.;
@@ -54,15 +58,24 @@ public class Potentiometre extends Region {
 	private final double maxAngle;
 
 	
+	/**
+	 * @return show Tick Marks flag
+	 */
 	public boolean isShowTickMarks() {
 		return showTickMarks;
 	}
 
+	/**
+	 * @return show Tick Labels flag
+	 */
 	public boolean isShowTickLabels() {
 		return showTickLabels;
 	}
 
 
+	/**
+	 * @return Major Tick Unit
+	 */
 	public double getMajorTickUnit() {
 		return majorTickUnit;
 	}
@@ -165,11 +178,6 @@ public class Potentiometre extends Region {
 
 	}
 
-//	public void refresh()
-//	{
-//		layoutChildren();
-//	}
-	
 	private void addValue(double deltaAngle) {
 
 		Log.getInstance().trace("1deltaAngle=" + deltaAngle);
@@ -307,29 +315,56 @@ public class Potentiometre extends Region {
 	}
 
 	private final DoubleProperty value = new SimpleDoubleProperty(this,
-			"value", 0); // NOI18N.
+			"value", 0);
 
+	/**
+	 * set the value
+	 * @param v
+	 * 		Value for initialization
+	 */
 	public final void setValue(double v) {
 		value.set(v);
 		val = v;
 	}
 
+	/**
+	 * get the value
+	 * @return
+	 * 		value
+	 */
 	public final double getValue() {
 		return value.get();
 	}
 
+	/**
+	 * @return the value Property
+	 */
 	public final DoubleProperty valueProperty() {
 		return value;
 	}
 
+	/**
+	 * get the minimum value
+	 * @return
+	 * 	the minimum value
+	 */
 	public final double getMin() {
 		return minValue;
 	}
 
+	/**
+	 * get the maximum value
+	 * @return
+	 * the maximum value
+	 */
 	public final double getMax() {
 		return maxValue;
 	}
 
+	/**
+	 * get the discret flag ( to have only
+	 * @return
+	 */
 	public final boolean isDiscret() {
 		return discret;
 	}
