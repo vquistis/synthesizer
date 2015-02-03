@@ -7,16 +7,9 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
 import fr.istic.groupimpl.synthesizer.component.Port;
@@ -27,9 +20,9 @@ public class ViewVco implements IViewComponent, Initializable {
 	@FXML
 	private BorderPane paneVco;
 	@FXML
-	private HBox hbLeft;
+	private VBox knobOctavePane;
 	@FXML
-	private HBox hbRight;
+	private VBox knobFreqPane;
 	@FXML
 	private ImageView fm;
 	@FXML
@@ -46,23 +39,21 @@ public class ViewVco implements IViewComponent, Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		CornerRadii radii = new CornerRadii(5.00);
-		BorderWidths widths = new BorderWidths(1.00);
-		BorderStroke bs = new BorderStroke(Paint.valueOf("BLACK"), BorderStrokeStyle.SOLID, radii, widths);
-		Border border = new Border(bs);
-		paneVco.setBorder(border);
-		
-		fm.getStyleClass().add("inout");
-		
-		Potentiometre potentiometre = new Potentiometre("Octave");
-		potentiometre.setTitle(new Text("Octave"));
-		Potentiometre potentiometre1 = new Potentiometre("Tone");
-	   	hbRight.getChildren().add(potentiometre1);
+		Potentiometre octaveKnob = new Potentiometre("");
+		octaveKnob.setMin(-32);
+		octaveKnob.setMax(0);
+		knobOctavePane.getChildren().add(octaveKnob);
 	   	
+	   	Potentiometre precisionKnob = new Potentiometre("");
+	   	precisionKnob.setMin(-1);
+	   	precisionKnob.setMax(1);
+	   	knobFreqPane.getChildren().add(precisionKnob);
 	   	
-	   	ControllerVco vcoControl = new ControllerVco();	   	
-	   	potentiometre1.valueProperty().addListener((p, newVal, oldVal) -> vcoControl.handleViewOctaveChange(newVal));
-	   	
+	   	ControllerVco vcoControl = new ControllerVco();
+	   	octaveKnob.valueProperty().addListener((p, newVal, oldVal) ->
+	   		vcoControl.handleViewOctaveChange((double) newVal, precisionKnob.getValue()));
+	   	precisionKnob.valueProperty().addListener((p, newVal, oldVal) ->
+   			vcoControl.handleViewOctaveChange(octaveKnob.getValue(), (double) newVal));
 	}
 
 	@Override

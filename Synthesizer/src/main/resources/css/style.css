@@ -8,8 +8,18 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
+.titlePane {
+	-fx-background-color: linear-gradient(#bbb, #E3E3E3);
+	-fx-border-color: #bbb;
+	-fx-border-width: 0 0 1 0;
+	-fx-border-style: solid;
+}
+
 .portPane {
-	-fx-background-color: #bbb;
+	-fx-background-color: linear-gradient(#E3E3E3, #bbb);
+	-fx-border-color: #bbb;
+	-fx-border-width: 1 0 0 0;
+	-fx-border-style: solid;
 }
 
 .inputPort:hover {
