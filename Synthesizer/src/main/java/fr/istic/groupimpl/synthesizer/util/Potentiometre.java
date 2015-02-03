@@ -1,23 +1,12 @@
 package fr.istic.groupimpl.synthesizer.util;
 
-import java.text.MessageFormat;
-
-import org.apache.logging.log4j.LogManager;
 
 import fr.istic.groupimpl.synthesizer.logger.Log;
-import javafx.beans.binding.DoubleExpression;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
-import javafx.geometry.VPos;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -26,11 +15,18 @@ import javafx.scene.transform.Rotate;
 /**
  * Implémentation d'un bouton tournant (knob) avec graduations paramétrables
  * 
- * @author groupImpl
+ * To create a Potentiometre object, you must use PotentiometreFactory
+ * 
+ * Example :
+ * 
+ * PotentiometreFactory potentiometreFactory = PotentiometreFactory.getFactoryInstance();
+ * 
+ **** initialisations on the factory object
  *
- */
-/**
- * @author mocquard
+ *	Potentiometre potentiometre = potentiometreFactory.getPotentiometre();
+ * 
+ * 
+ * @author groupImpl
  *
  */
 public class Potentiometre extends Region {
@@ -362,13 +358,19 @@ public class Potentiometre extends Region {
 	}
 
 	/**
-	 * get the discret flag ( to have only
+	 * get the discret flag ( to have only integer values )
 	 * @return
+	 * the discret flag
 	 */
 	public final boolean isDiscret() {
 		return discret;
 	}
 
+	/**
+	 * get the number of spins
+	 * @return
+	 * 	The spin number
+	 */
 	public double getNbSpins() {
 		return nbSpins;
 	}
