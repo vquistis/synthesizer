@@ -18,7 +18,7 @@ public class ControllerGlobal {
 	}
 	
 	public void handleConnectModules() {
-		//TODO generate cable.
+		//TODO notify the view to bind the cable.
 	}
 	
 	public void handlePortClicked(IModelComponent model, Port port) {
@@ -31,23 +31,30 @@ public class ControllerGlobal {
 			}
 			currentModel = model;
 			currentPort = port;
+			//TODO notify the view to create a new, unbound cable.
 			break;
 		case IN_CONNECTED:
 			if(!port.isInput()) {
 				cableMode = CableMode.NONE_CONNECTED;
-				this.model.connectModules(currentModel, currentPort.getName(), model, port.getName());
+				this.model.connectModules(model, port.getName(), currentModel, currentPort.getName());
 				currentModel = null; currentPort = null;
 			}
 			break;
 		case OUT_CONNECTED:
 			if(port.isInput()) {
 				cableMode = CableMode.NONE_CONNECTED;
-				this.model.connectModules(model, port.getName(), currentModel, currentPort.getName());
+				this.model.connectModules(currentModel, currentPort.getName(), model, port.getName());
 				currentModel = null; currentPort = null;
 			}
 			break;
 		default:
 		}
+	}
+	
+	public void handleLeftButtonClicked() {
+		cableMode = CableMode.NONE_CONNECTED;
+		currentModel = null; currentPort = null;
+		//TODO notify the view to stop displaying the cable.
 	}
 	
 	private enum CableMode {

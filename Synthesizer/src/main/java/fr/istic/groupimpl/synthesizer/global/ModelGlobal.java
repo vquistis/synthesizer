@@ -12,8 +12,6 @@ import fr.istic.groupimpl.synthesizer.component.IModelComponent;
 
 
 public class ModelGlobal {
-	
-	private ICommand handleConnectCmd;
 
 	private List<IModelComponent> modules = new ArrayList<IModelComponent>();
 	
@@ -25,13 +23,13 @@ public class ModelGlobal {
 		modules.remove(model);
 	}
 	
-	public void connectModules(IModelComponent moduleIn, String inputPort, IModelComponent moduleOut, String outputPort) {
+	public void connectModules(IModelComponent moduleOut, String outputPort, IModelComponent moduleIn, String inputPort) {
 		UnitOutputPort out = (UnitOutputPort) moduleIn.getUnitGenerator().getPortByName(outputPort);
 		UnitInputPort in = (UnitInputPort) moduleIn.getUnitGenerator().getPortByName(inputPort);
 		out.connect(in);
 	}
 	
-	public void disconnectModules(IModelComponent moduleIn, String inputPort, IModelComponent moduleOut, String outputPort) {
+	public void disconnectModules(IModelComponent moduleOut, String outputPort, IModelComponent moduleIn, String inputPort) {
 		UnitOutputPort out = (UnitOutputPort) moduleIn.getUnitGenerator().getPortByName(outputPort);
 		UnitInputPort in = (UnitInputPort) moduleIn.getUnitGenerator().getPortByName(inputPort);
 		out.disconnect(in);
