@@ -1,6 +1,7 @@
 package fr.istic.groupimpl.synthesizer.global;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -92,5 +93,19 @@ public class ModelGlobal {
 
 	private void putInputConnexion(UnitInputPort inputPort, UnitOutputPort outputPort) {
 		inputConnexions.put(inputPort, outputPort);
+	}
+	
+	public void removeAllConnexions(Collection<UnitPort> unitports) {
+		unitports.forEach((p1) -> {
+			if(inputConnexions.containsKey(p1)) {
+				UnitPort p2 = inputConnexions.get(p1);
+				inputConnexions.remove(p1);
+				outputConnexions.remove(p2);
+			} else if(outputConnexions.containsKey(p1)) {
+				UnitPort p2 = outputConnexions.get(p1);
+				outputConnexions.remove(p1);
+				inputConnexions.remove(p2);
+			}
+		});
 	}
 }

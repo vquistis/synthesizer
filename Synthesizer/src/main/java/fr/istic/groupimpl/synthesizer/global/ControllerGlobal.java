@@ -1,5 +1,7 @@
 package fr.istic.groupimpl.synthesizer.global;
 
+import java.util.Collection;
+
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
@@ -25,6 +27,10 @@ public class ControllerGlobal {
 	public void registerUnitGenerator(UnitGenerator unitGen) {
 		model.addUnitGenerator(unitGen);
 	}
+	
+	public void removeAllConnexions(Collection<UnitPort> unitports) {
+		model.removeAllConnexions(unitports);
+	}
 
 	public void handleInputClicked(UnitInputPort port) {
 		switch(cableMode) {
@@ -38,6 +44,7 @@ public class ControllerGlobal {
 		case OUT_CONNECTED:
 			cableMode = CableMode.NONE_CONNECTED;
 			this.model.connectPorts(currentPort, port);
+			//TODO notify the view to connect the unbound cable to parameter port.
 			currentPort = null;
 			break;
 		default:
@@ -54,6 +61,7 @@ public class ControllerGlobal {
 		case IN_CONNECTED:
 			cableMode = CableMode.NONE_CONNECTED;
 			this.model.connectPorts(port, currentPort);
+			//TODO notify the view to connect the unbound cable to parameter port.
 			currentPort = null;
 			break;
 		case OUT_CONNECTED:
