@@ -17,9 +17,9 @@ public class ControllerOut implements IControllerComponent{
 
 	public void handleViewMuteChange(Boolean newVal) {
 		if (newVal) {
-			model.start();
-		} else {
 			model.stop();
+		} else {
+			model.start();
 		}
 	}
 
