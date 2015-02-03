@@ -20,7 +20,7 @@ public class ModelGlobal {
 	private ControllerGlobal controller;
 
 	private List<IModelComponent> modules = new ArrayList<IModelComponent>();
-	
+
 	private Synthesizer synth;
 
 	/*
@@ -38,21 +38,25 @@ public class ModelGlobal {
 		this.synth.start();
 	}
 
-	public void addModule(IModelComponent model) {
-		modules.add(model);
-		UnitGenerator unitGen = model.getUnitGenerator();
+	public void addModule(IModelComponent module) {
+		modules.add(module);
+		UnitGenerator unitGen = module.getUnitGenerator();
 		synth.add(unitGen);
 		unitGen.start();
 	}
 
-	public void removeModule(IModelComponent model) {
+	public void removeModule(IModelComponent module) {
 		/* 
 		 * TODO disconnect every modules from this one before removing it:
 		 * forall input of the module -> search modules connected to the input in the inputConnexions map and disconnect them
 		 * forall output of the module -> search modules connected to the output in the outputConnexions map and disconnect them
 		 */
-
-		modules.remove(model);
+		disconnectAllInputPort(module);
+		disconnectAllOutputPort(module);
+		UnitGenerator unitGen = module.getUnitGenerator();
+		unitGen.stop();
+		synth.remove(unitGen);
+		modules.remove(module);
 	}
 
 	public void connectModules(IModelComponent moduleOut, String outputPort, IModelComponent moduleIn, String inputPort) {
@@ -63,14 +67,13 @@ public class ModelGlobal {
 		putInputConnexion(moduleIn, inputPort, moduleOut, outputPort);
 		controller.handleConnectModules();
 	}
-	
+
 	public void disconnectModules(IModelComponent moduleOut, String outputPort, IModelComponent moduleIn, String inputPort) {
 		UnitOutputPort out = (UnitOutputPort) moduleOut.getUnitGenerator().getPortByName(outputPort);
 		UnitInputPort in = (UnitInputPort) moduleIn.getUnitGenerator().getPortByName(inputPort);
 		out.disconnect(in);
-		
 	}
-	
+
 	/*
 	 * Called by the controller whenever a cable is disconnected but not deleted.
 	 * Disconnects the output port connected to the given input port, if any.
@@ -81,12 +84,15 @@ public class ModelGlobal {
 			Pair<IModelComponent,String> p = tmp.get(port);
 			UnitOutputPort out = (UnitOutputPort) p.getKey().getUnitGenerator().getPortByName(p.getValue());
 			UnitInputPort in = (UnitInputPort) module.getUnitGenerator().getPortByName(port);
+
+
+
 			out.disconnect(in);
 			tmp.remove(port);
 			inputConnexions.put(module, tmp);
 		}
 	}
-	
+
 	public void disconnectAllInputPort(IModelComponent module) {
 		Map<String,Pair<IModelComponent,String>> tmp = inputConnexions.get(module);
 		if(tmp != null) {
@@ -95,10 +101,11 @@ public class ModelGlobal {
 				UnitInputPort in = (UnitInputPort) module.getUnitGenerator().getPortByName(s);
 				out.disconnect(in);
 			});
+
 			inputConnexions.remove(module);
 		}
 	}
-	
+
 	/*
 	 * Called by the controller whenever a cable is disconnected but not deleted.
 	 */
@@ -116,7 +123,33 @@ public class ModelGlobal {
 			outputConnexions.put(module, tmp);
 		}
 	}
-	
+
+	public void disconnectAllOutputPort(IModelComponent module) {
+		Map<String,Pair<IModelComponent,String>> tmp = outputConnexions.get(module);
+		if(tmp != null) {
+			tmp.forEach((s,p) -> {
+				UnitOutputPort out = (UnitOutputPort) module.getUnitGenerator().getPortByName(s);
+				UnitInputPort in = (UnitInputPort) p.getKey().getUnitGenerator().getPortByName(p.getValue());
+				out.disconnect(in);
+			});
+			outputConnexions.remove(module);
+		}
+	}
+
+	private void removeConnexion(IModelComponent moduleOut, String outputPort, IModelComponent moduleIn, String inputPort) {
+		Map<String,Pair<IModelComponent,String>> tmpOut = outputConnexions.get(moduleOut);
+		if(tmpOut != null) {
+			tmpOut.remove(outputPort);
+			outputConnexions.put(moduleOut, tmpOut);
+		}
+		Map<String,Pair<IModelComponent,String>> tmpIn = inputConnexions.get(moduleIn);
+		if(tmpIn != null) {
+			tmpIn.remove(inputPort);
+			inputConnexions.put(moduleIn, tmpIn);
+		}
+
+	}
+
 	private void putOutputConnexion(IModelComponent moduleOut, String outputPort, IModelComponent moduleIn, String inputPort) {
 		Map<String,Pair<IModelComponent,String>> tmp = outputConnexions.get(moduleOut);
 		if(tmp == null) {

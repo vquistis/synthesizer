@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,160 +15,133 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
+import fr.istic.groupimpl.synthesizer.component.Port;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
+
 
 public class ViewGlobal implements Initializable {
 
-	
+
 	@FXML
 	private Button vcoModule;
-	
+
 	@FXML
 	private SplitPane splitpane;
-	
+
 	@FXML
 	private ScrollPane scrollpane;
-	
+
 	List<HBox> hboxes = new ArrayList<HBox>();
 	List<Pair<Node,IViewComponent>> listAssoc = new ArrayList<Pair<Node,IViewComponent>>();
 	Point2D lastXY = null;
 
 	private HBox h;
+	private HBox h1;
+	private HBox h2;
+	private HBox h3;
+	private Node n;
 
-	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		HBox h1 = new HBox();
-		HBox h2 = new HBox();
-		HBox h3 = new HBox();
+		h1 = new HBox();
+		h2 = new HBox();
+		h3 = new HBox();
 		h1.setPrefSize(800, 300);
 		h2.setPrefSize(800, 300);
 		h3.setPrefSize(800, 300);
-		
-		splitpane.getItems().add(h1);
-		splitpane.getItems().add(h2);
-		splitpane.getItems().add(h3);;
 
-		
-		for (Node hBox : splitpane.getItems()) {
-			hBox.setOnMouseExited(new EventHandler<Event>() {
-				@Override
-				public void handle(Event event) {
-					System.out.println("sss ");
-//					listHbox.get(0).getChildren().remove(h);
+		splitpane.getItems().addAll(h1, h2, h3);
+
+		for(Node n : splitpane.getItems()) {
+			n.setOnDragOver((e) -> {
+				e.acceptTransferModes(TransferMode.ANY);
+				e.consume();
+			});
+			n.setOnDragDropped((e) -> {
+				e.acceptTransferModes(TransferMode.ANY);
+				e.consume();
+				Dragboard db = e.getDragboard();
+				boolean success = false;
+				if (db.hasString()) {
+					Log.getInstance().debug("DROPPED: "+db.getString());
 					
 				}
 			});
-			
-//			hBox.setonmouseen(new EventHandler<Event>() {
-//				@Override
-//				public void handle(Event event) {
-//					System.out.println("sss "+listHbox.indexOf(hBox));
-//					listHbox.get(1).getChildren().add(h);
-//					
-//				}
-//			});
 		}
-		
-		
 	}
 
 	public void addModule(Node node, int i, int j) {
 		hboxes.get(i).getChildren().add(j, node);
 	}
 
-	public void deleteModule(Node node, int i) {
-		int idx = 0;
-		for(Pair<Node, IViewComponent> p : listAssoc) {
-			if(p.getKey().equals(node)) {
-				break;
-			}
-			idx++;
-		}
-		listAssoc.remove(idx);
-		hboxes.get(i).getChildren().remove(node);
-	}
-	
-	public void removeModule(Node node, int i) {
-		hboxes.get(i).getChildren().remove(node);
-	}
-	
+	//	public void deleteModule(Node node, int i) {
+	//		int idx = 0;
+	//		for(Pair<Node, IViewComponent> p : listAssoc) {
+	//			if(p.getKey().equals(node)) {
+	//				break;
+	//			}
+	//			idx++;
+	//		}
+	//		listAssoc.remove(idx);
+	//		hboxes.get(i).getChildren().remove(node);
+	//	}
+
+	//	public void removeModule(Node node, int i) {
+	//		hboxes.get(i).getChildren().remove(node);
+	//	}
+
 	public void createModule(String filename) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
 			IViewComponent view = loader.getController();
 			Node root = loader.load();
 			listAssoc.add(new Pair<Node, IViewComponent>(root, view));
-//			hboxes.get(0).getChildren().add(root);
 			((HBox)splitpane.getItems().get(0)).getChildren().add(root);
-			setupListeners(root);
+			enableDrag(root);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	private void setupListeners(Node node) {
-		node.setOnMouseDragged(new EventHandler<MouseEvent>() {			 
-	        @Override
-	        public void handle(MouseEvent event) {
-	        	if (lastXY == null) {
-	                lastXY = new Point2D(event.getSceneX(), event.getSceneY());
-	            }
-	        	
-//	        		 HBox hBox=null;
-//	        		 for (Node h : listHbox) {	        			 
-//	        			 if (listHbox.get(0).intersects(lastXY.getX(), lastXY.getY(),1,1)) {
-//	        				 hBox = (HBox) listHbox.get(0);
-//	        				 hBox.getChildren().remove(node);
-//	        				 
-//	        				 
-//	        				 System.out.println("pane1");
-//	        				 break;
-//						}						
-//					}
-//	        		 for (Node h : listHbox) {	        			 
-//	        			 if (listHbox.get(1).contains(event.getX(), event.getY())) {
-//	        				 hBox = (HBox) listHbox.get(1);
-//	        				 hBox.getChildren().add(node);
-//	        				 System.out.println("pane2");
-////	        				 break;
-//						}						
-//					}
-		            event.setDragDetect(false);		            
-		            
-		            double dx = event.getSceneX() - lastXY.getX();
-		            double dy = event.getSceneY() - lastXY.getY();
-		            node.setTranslateX(node.getTranslateX()+dx);
-		            node.setTranslateY(node.getTranslateY()+dy);
-		            lastXY = new Point2D(event.getSceneX(), event.getSceneY());
-		            if (!splitpane.intersects(event.getSceneX(), event.getSceneY(), 1, 1)) event.setDragDetect(true);
-		            event.consume();
-	        }
-	    });
-
-        node.setOnDragDetected(new EventHandler<Event>() {
-			@Override
-			public void handle(Event event) {
-	            Node on = (Node)event.getTarget();
-	            
-	            System.out.println("--"+on.getId());
-	            Dragboard db = on.startDragAndDrop(TransferMode.COPY);
-	            event.consume();							
+	private String getString(Node node) {
+		int i=0;
+		String res = "";
+		for(Node hbox : splitpane.getItems()) {
+			ObservableList<Node> nodes = ((HBox) hbox).getChildren();
+			if(nodes.contains(node)) {
+				res = res + i + ";" + nodes.indexOf(node);
+				break;
 			}
-		});
+			i++;
+		}
+		return res;
 	}
 	
+	private void enableDrag(Node node) {
+		node.setOnDragDetected((event) -> {
+			ClipboardContent content = new ClipboardContent();
+			content.putString(getString(node));
+			Dragboard db = scrollpane.startDragAndDrop(TransferMode.ANY);
+			db.setContent(content);
+			event.consume();
+		});
+	}
+
 	@FXML
 	public void handleAddComponent(){
 		createModule("fxml/vco.fxml");		
 	}
-	
-	
-	
+
+	public void handlePortClicked(IViewComponent component, Port port) {
+
+	}
+
 }
