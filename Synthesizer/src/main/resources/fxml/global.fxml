@@ -15,7 +15,7 @@
                      <children>
                         <VBox prefHeight="21.0" prefWidth="201.0">
                            <children>
-                              <Button  fx:id="vcoModule" text="VCO" onAction="#handleAddComponent" />
+                              <Button fx:id="outBtn" minWidth="250.0" onAction="#handleAddOut" text="OUT" />
                            </children>
                         </VBox>
                      </children>
@@ -26,7 +26,11 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <VBox prefHeight="27.0" prefWidth="157.0" />
+                        <VBox prefHeight="21.0" prefWidth="201.0">
+                           <children>
+                              <Button fx:id="vcoBtn" contentDisplay="RIGHT" graphicTextGap="0.0" minWidth="250.0" onAction="#handleAddVco" text="VCO" />
+                           </children>
+                        </VBox>
                      </children>
                   </AnchorPane>
                </content>
@@ -56,8 +60,7 @@
       </MenuBar>
    </top>
    <center>
-      <ScrollPane fx:id="scrollpane" 
-      prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="scrollpane" prefHeight="200.0" prefWidth="200.0" styleClass="background" BorderPane.alignment="CENTER">
          <content>
             <SplitPane fx:id="splitpane" orientation="VERTICAL" />
          </content>

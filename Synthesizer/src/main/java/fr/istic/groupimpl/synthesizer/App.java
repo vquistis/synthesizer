@@ -1,5 +1,7 @@
 package fr.istic.groupimpl.synthesizer;
 
+import java.net.URL;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +21,12 @@ public class App extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/global.fxml"));
-		primaryStage.setScene(new Scene(root,800,600));
+		
+		URL cssURL = getClass().getClassLoader().getResource("css/style.css");
+		
+		Scene scene = new Scene(root,800,600);
+		scene.getStylesheets().add(cssURL.toExternalForm());
+		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 }
