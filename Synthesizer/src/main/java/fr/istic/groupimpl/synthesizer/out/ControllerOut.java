@@ -22,8 +22,14 @@ public class ControllerOut implements IControllerComponent{
 			model.stop();
 		}
 	}
-	
+
+	@Override
 	public void handleViewInputClick(String portName) {
 		//ControllerGlobal.handleInputClick(model.getInputPort(portName));
+	}
+
+	@Override
+	public void handleViewOutpuClick(String portName) {
+		//This module doesn't have output port
 	}
 }
