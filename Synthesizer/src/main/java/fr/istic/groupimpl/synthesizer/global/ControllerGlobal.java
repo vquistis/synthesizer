@@ -2,8 +2,6 @@ package fr.istic.groupimpl.synthesizer.global;
 
 import com.jsyn.unitgen.UnitGenerator;
 
-import fr.istic.groupimpl.synthesizer.component.IModelComponent;
-
 public class ControllerGlobal {
 
 	private ModelGlobal model;
