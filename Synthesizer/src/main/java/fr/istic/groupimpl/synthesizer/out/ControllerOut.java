@@ -1,11 +1,14 @@
 package fr.istic.groupimpl.synthesizer.out;
 
-public class ControllerOut {
+import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
-	private ModelOut model;
+public class ControllerOut implements IControllerComponent{
+
+	private ModelOut model = new ModelOut();
 	
 	public ControllerOut() {
-		model = new ModelOut();
+		//ControllerGlobal.registerUnitGenerator(model.getUnitGenerator());
 	}
 	
 	public void handleViewVolumeChange(Number newVal) {
@@ -18,5 +21,9 @@ public class ControllerOut {
 		} else {
 			model.stop();
 		}
+	}
+	
+	public void handleViewInputClick(String portName) {
+		//ControllerGlobal.handleInputClick(model.getInputPort(portName));
 	}
 }

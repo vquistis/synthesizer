@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
@@ -9,11 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
-import fr.istic.groupimpl.synthesizer.component.Port;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 
 public class ViewOut implements IViewComponent, Initializable {
@@ -21,6 +21,8 @@ public class ViewOut implements IViewComponent, Initializable {
 	@FXML private VBox knobVolumePane;
 	@FXML private TextField valueVolumeFx;
 	@FXML private CheckBox muteVolumeFx;
+	@FXML private ImageView input;
+	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
@@ -29,17 +31,14 @@ public class ViewOut implements IViewComponent, Initializable {
 		volumeKnob.setMax(12);
 		knobVolumePane.getChildren().add(volumeKnob);
 
+		// Bind knob value and text field value
 		StringConverter<Number> converter = new NumberStringConverter();
 		Bindings.bindBidirectional(valueVolumeFx.textProperty(), volumeKnob.valueProperty(), converter);
 		
+		// Listener volume & mute
 		ControllerOut controller = new ControllerOut();
 		volumeKnob.valueProperty().addListener((obsVal, newVal, oldVal) -> controller.handleViewVolumeChange(newVal));
 		muteVolumeFx.selectedProperty().addListener((obsVal, newVal, oldVal) -> controller.handleViewMuteChange(newVal));
-	}
-
-	@Override
-	public List<Port> getAllPorts() {
-		// TODO Auto-generated method stub
-		return null;
+		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick("input_out"));
 	}
 }

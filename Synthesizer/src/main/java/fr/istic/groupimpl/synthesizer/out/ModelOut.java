@@ -2,32 +2,28 @@ package fr.istic.groupimpl.synthesizer.out;
 
 import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
-import com.jsyn.unitgen.LineOut;
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.util.AttenuatorFilter;
 
 public class ModelOut extends ModelComponent {
 
-	private LineOut out;
-	private AttenuatorFilter attenuator;
+	private JsynAttenuationOut out;
 	
 	public ModelOut() {
 		super();
 
-		out = new LineOut();
-		attenuator = new AttenuatorFilter();
-		attenuator.output.connect(out.input);
-
-		// Default value
-		setAttenuation(0);
+		out = new JsynAttenuationOut();
+		out.input.setName("input_out"); // this name have to be the same as the name defined in the view
+		setAttenuation(0); // Default value
 
 		/* Test */
 		Synthesizer synth = JSyn.createSynthesizer();
 		SineOscillator osc = new SineOscillator();
-		osc.output.connect(attenuator.input);
+		osc.output.connect(out.input);
 		synth.add(osc);
 		synth.add(out);
 		synth.start();
@@ -35,7 +31,7 @@ public class ModelOut extends ModelComponent {
 	}
 
 	public void setAttenuation(double value) {
-		attenuator.set(value);
+		out.set(value);
 	}
 
 	public void start() {
@@ -44,9 +40,20 @@ public class ModelOut extends ModelComponent {
 	public void stop() {
 		out.stop();
 	}
-	
+
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return out;
+	}
+	
+	@Override
+	public UnitInputPort getInputPort(String portName) {
+		return (UnitInputPort) out.getPortByName(portName);
+	}
+
+	@Override
+	public UnitOutputPort getOutputPort(String portName) {
+		//This module doesn't have output port
+		return null;
 	}
 }

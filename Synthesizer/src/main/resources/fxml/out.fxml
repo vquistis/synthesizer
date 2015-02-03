@@ -10,13 +10,27 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="200.0" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.out.ViewOut">
    <top>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <items>
-            <Label fx:id="titleModuleFx" text="OUT" />
-            <Pane prefWidth="120.0" />
-          <Button fx:id="closeModuleFx" mnemonicParsing="false" text="x" />
-        </items>
-      </ToolBar>
+      <GridPane alignment="CENTER" styleClass="titlePane">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label fx:id="titleModuleFx" text="OUT">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@../img/close.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
    </top>
    <center>
       <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
@@ -54,7 +68,7 @@
             <VBox alignment="CENTER">
                <children>
                   <Label text="in" />
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
+                  <ImageView fx:id="input" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
                      <image>
                         <Image url="@../img/inoutRouge.png" />
                      </image>
