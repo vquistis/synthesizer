@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -26,6 +25,8 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
 /**
  * The Class ViewGlobal.
  * Implements all the FXML components and sets them their corresponding commands.
+ * @version 1.0
+ * @since 1.0
  */
 public class ViewGlobal implements Initializable {
 
@@ -55,12 +56,12 @@ public class ViewGlobal implements Initializable {
 	 * Initializes the controller class.
 	 * This method is automatically called after the FXML file has been loaded. It creates a new view and set all the button with new created buttons.
 	 *
-	 * @param arg0 the arg0
-	 * @param arg1 the arg1
+	 * @param url the url
+	 * @param resourceBundle the resourceBundle
 	 * @see View
 	 */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL url, ResourceBundle resourceBundle) {
 		for (int i = 0; i < 3; i++) {
 			HBox h1 = new HBox();
 			h1.setPrefSize(600, 200);
@@ -119,10 +120,10 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-	 * Delete module.
+	 * Delete the i th module which is in the list hbox
 	 *
-	 * @param node the node
-	 * @param i the i
+	 * @param node the node delete
+	 * @param i the position
 	 */
 	public void deleteModule(Node node, int i) {
 		int idx = 0;
@@ -185,7 +186,8 @@ public class ViewGlobal implements Initializable {
 	}
 	
 	/**
-	 * Enable drag.
+	 * Add enableDrag event to a node.
+	 * This event is called when the drag event is enabled
 	 *
 	 * @param node the node
 	 */
