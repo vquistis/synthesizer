@@ -23,88 +23,123 @@ public class ModelGlobal {
 	/*
 	 * f(output) -> input
 	 */
-	private Map<UnitOutputPort, UnitInputPort> outputConnexions;
+	private Map<UnitOutputPort, UnitInputPort> outputConnections;
 	/*
 	 * f(input) -> output
 	 */
-	private Map<UnitInputPort, UnitOutputPort> inputConnexions;
+	private Map<UnitInputPort, UnitOutputPort> inputConnections;
 
+	/**
+	 * Instanciates the underlying JSyn synthesizer and starts it.
+	 * @param controller
+	 */
 	public ModelGlobal(ControllerGlobal controller) {
 		this.controller = controller;
 		this.synth = JSyn.createSynthesizer();
 		this.synth.start();
 	}
-	
+
+	/**
+	 * Adds the given UnitGenerator to the underlying JSyn synthesizer.
+	 * @param unitGen
+	 */
 	public void addUnitGenerator(UnitGenerator unitGen) {
 		unitGenerators.add(unitGen);
 		synth.add(unitGen);
 	}
 	
+	/**
+	 * Adds the given UnitGenerator as an output module to the underlying
+	 * JSyn synthesizer.
+	 * @param unitGen
+	 */
 	public void addOutUnit(UnitGenerator unitGen) {
 		unitGenerators.add(unitGen);
 		synth.add(unitGen);
 		unitGen.start();
 	}
 
-	public void removeModule(UnitGenerator unitGen) {
-		/* 
-		 * TODO disconnect every modules from this one before removing it:
-		 * forall input of the module -> search modules connected to the input in the inputConnexions map and disconnect them
-		 * forall output of the module -> search modules connected to the output in the outputConnexions map and disconnect them
-		 */
-		unitGen.stop();
+	/**
+	 * Removes the given UnitGenerator from the underlying JSyn synthesizer.
+	 * @param unitGen
+	 */
+	public void removeUnitGenerator(UnitGenerator unitGen) {
 		synth.remove(unitGen);
 		unitGenerators.remove(unitGen);
 	}
 
+	/**
+	 * Connects the two given output and input ports.
+	 * @param outputPort
+	 * @param inputPort
+	 */
 	public void connectPorts(UnitPort outputPort, UnitPort inputPort) {
 		UnitOutputPort out = (UnitOutputPort) outputPort;
 		UnitInputPort in = (UnitInputPort) inputPort;
 		out.connect(in);
-		putOutputConnexion(out, in);
-		putInputConnexion(in, out);
+		putOutputConnection(out, in);
+		putInputConnection(in, out);
 		controller.handleConnectModules();
 	}
 
-	/*
-	 * Called by the controller whenever a cable is disconnected but not deleted.
-	 * Disconnects the output port connected to the given input port, if any.
+	/**
+	 * Retrieve the output port connected to the given input port
+	 * and disconnects them.
+	 * @param port
 	 */
 	public void disconnectInputPort(UnitInputPort port) {
-		UnitOutputPort out = inputConnexions.get(port);
+		UnitOutputPort out = inputConnections.get(port);
 		out.disconnect(port);
-		inputConnexions.remove(port);
-		outputConnexions.remove(out);
+		inputConnections.remove(port);
+		outputConnections.remove(out);
 	}
 
-	/*
-	 * Called by the controller whenever a cable is disconnected but not deleted.
+	/**
+	 * Retrieve the input port connected to the given output port
+	 * and disconnects them.
+	 * @param port
 	 */
 	public void disconnectOutputPort(UnitOutputPort port) {
-		UnitInputPort in = outputConnexions.get(port);
+		UnitInputPort in = outputConnections.get(port);
 		port.disconnect(in);
-		inputConnexions.remove(in);
-		outputConnexions.remove(port);
+		inputConnections.remove(in);
+		outputConnections.remove(port);
 	}
 
-	private void putOutputConnexion(UnitOutputPort outputPort, UnitInputPort inputPort) {
-		outputConnexions.put(outputPort, inputPort);
+	/**
+	 * Adds an entry in the output connexions map with the output port as a key
+	 * and the input port as a value.
+	 * @param outputPort
+	 * @param inputPort
+	 */
+	private void putOutputConnection(UnitOutputPort outputPort, UnitInputPort inputPort) {
+		outputConnections.put(outputPort, inputPort);
 	}
 
-	private void putInputConnexion(UnitInputPort inputPort, UnitOutputPort outputPort) {
-		inputConnexions.put(inputPort, outputPort);
+	/**
+	 * Adds an entry in the input connexions map with the output port as a key
+	 * and the output port as a value.
+	 * @param inputPort
+	 * @param outputPort
+	 */
+	private void putInputConnection(UnitInputPort inputPort, UnitOutputPort outputPort) {
+		inputConnections.put(inputPort, outputPort);
 	}
 	
-	public void removeAllConnexions(Collection<UnitPort> unitports) {
+	/**
+	 * Removes every connection originating from each port in the given list.
+	 * @param unitports
+	 */
+	public void removeAllConnections(Collection<UnitPort> unitports) {
 		unitports.forEach((p1) -> {
-			if(inputConnexions.containsKey(p1)) {
-				UnitPort p2 = inputConnexions.get(p1);
-				inputConnexions.remove(p1);
-				outputConnexions.remove(p2);
-			} else if(outputConnexions.containsKey(p1)) {
-				UnitPort p2 = outputConnexions.get(p1);
-				outputConnexions.remove(p1);
-				inputConnexions.remove(p2);
+			if(inputConnections.containsKey(p1)) {
+				UnitPort p2 = inputConnections.get(p1);
+				inputConnections.remove(p1);
+				outputConnections.remove(p2);
+			} else if(outputConnections.containsKey(p1)) {
+				UnitPort p2 = outputConnections.get(p1);
+				outputConnections.remove(p1);
+				inputConnections.remove(p2);
 			}
 		});
 	}

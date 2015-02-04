@@ -23,59 +23,61 @@ import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
-
-
+/**
+ * The Class ViewGlobal.
+ */
 public class ViewGlobal implements Initializable {
 
-
+	/** The vco btn. */
 	@FXML
 	private Button vcoBtn;
 	
+	/** The out btn. */
 	@FXML
 	private Button outBtn;
 
+	/** The splitpane. */
 	@FXML
 	private SplitPane splitpane;
 
+	/** The scrollpane. */
 	@FXML
 	private ScrollPane scrollpane;
 
+	/** The hboxes. */
 	List<HBox> hboxes = new ArrayList<HBox>();
+	
+	/** The list assoc. */
 	List<Pair<Node,IViewComponent>> listAssoc = new ArrayList<Pair<Node,IViewComponent>>();
+	
+	/** The last xy. */
 	Point2D lastXY = null;
 
+	/** The h. */
 	private HBox h;
+	
+	/** The h1. */
 	private HBox h1;
-	private HBox h2;
-	private HBox h3;
+	
+	/** The n. */
 	private Node n;
 
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		h1 = new HBox();
-		h2 = new HBox();
-		h3 = new HBox();
-		h1.setPrefSize(800, 300);
-		h2.setPrefSize(800, 300);
-		h3.setPrefSize(800, 300);
-		h1.getStyleClass().add("background");
-		h2.getStyleClass().add("background");
-		h3.getStyleClass().add("background");
+		for (int i = 0; i < 3; i++) {
+			h1 = new HBox();
+			h1.setPrefSize(600, 200);
+			h1.setMinSize(600, 200);
+			h1.setMaxSize(600, 200);
+			h1.getStyleClass().add("hboxStyle");
+			splitpane.getItems().add(h1);
+		}
+		
 		vcoBtn.getStyleClass().add("btnClass");
 		outBtn.getStyleClass().add("btnClass");
-
-		splitpane.getItems().addAll(h1, h2, h3);
-//		splitpane.getDividers().get(0).set
-//		splitpane.getStyleClass().add("")
-//		splitpane.setStyle("-fx-background-color: #1d1d1d; "
-//				+ "-fx-text-fill: black; " + "-fx-border-color: black;");
-//		
-//		vcoBtn.setStyle("-fx-background-color: derive(-fx-focus-color,30%);"
-//				+ "-fx-font-size: 14pt;"
-//				+ "    -fx-font-family: \"Segoe UI Light\";"
-//						+ "    -fx-text-fill: white;"
-//						+ "    -fx-opacity: 0.9;-fx-background-color: #1d1d1d;");
-		vcoBtn.setMaxWidth(300);
 
 		for(Node n : splitpane.getItems()) {
 			n.setOnDragOver((e) -> {
@@ -85,9 +87,7 @@ public class ViewGlobal implements Initializable {
 			n.setOnDragDropped((e) -> {
 				
 				e.acceptTransferModes(TransferMode.ANY);
-				e.consume();
-				
-				
+				e.consume();				
 				Dragboard db = e.getDragboard();
 				boolean success = false;
 				if (db.hasString()) {
@@ -113,6 +113,13 @@ public class ViewGlobal implements Initializable {
 		}
 	}
 
+	/**
+	 * Adds the module.
+	 *
+	 * @param node the node
+	 * @param i the i
+	 * @param j the j
+	 */
 	public void addModule(Node node, int i, int j) {
 		hboxes.get(i).getChildren().add(j, node);
 	}
@@ -133,6 +140,11 @@ public class ViewGlobal implements Initializable {
 	//		hboxes.get(i).getChildren().remove(node);
 	//	}
 
+	/**
+	 * Creates the module.
+	 *
+	 * @param filename the filename
+	 */
 	public void createModule(String filename) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
@@ -146,6 +158,12 @@ public class ViewGlobal implements Initializable {
 		}
 	}
 	
+	/**
+	 * Gets the string.
+	 *
+	 * @param node the node
+	 * @return the string
+	 */
 	private String getString(Node node) {
 		int i=0;
 		String res = "";
@@ -160,6 +178,11 @@ public class ViewGlobal implements Initializable {
 		return res;
 	}
 	
+	/**
+	 * Enable drag.
+	 *
+	 * @param node the node
+	 */
 	private void enableDrag(Node node) {
 		node.setOnDragDetected((event) -> {
 			ClipboardContent content = new ClipboardContent();
@@ -170,11 +193,17 @@ public class ViewGlobal implements Initializable {
 		});
 	}
 
+	/**
+	 * Handle add vco.
+	 */
 	@FXML
 	public void handleAddVco(){
 		createModule("fxml/vco.fxml");		
 	}
 	
+	/**
+	 * Handle add out.
+	 */
 	@FXML
 	public void handleAddOut(){
 		createModule("fxml/out.fxml");		

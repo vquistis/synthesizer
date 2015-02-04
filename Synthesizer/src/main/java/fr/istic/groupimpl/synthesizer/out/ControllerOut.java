@@ -8,7 +8,7 @@ public class ControllerOut implements IControllerComponent{
 	private ModelOut model = new ModelOut();
 	
 	public ControllerOut() {
-		//ControllerGlobal.registerUnitGenerator(model.getUnitGenerator());
+		ControllerGlobal.getInstance().registerOutUnitGenerator(model.getUnitGenerator());
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class ControllerOut implements IControllerComponent{
 
 	@Override
 	public void handleViewInputClick(String portName) {
-		//ControllerGlobal.handleInputClick(model.getInputPort(portName));
+		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(portName));
 	}
 
 	@Override
@@ -43,6 +43,7 @@ public class ControllerOut implements IControllerComponent{
 
 	@Override
 	public void handleViewClose() {
-		//ControllerGlobal.handleInputClick(model.getAllPorts());
+		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
+		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 }

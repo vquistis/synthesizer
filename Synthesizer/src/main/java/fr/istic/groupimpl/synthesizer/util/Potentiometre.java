@@ -1,5 +1,6 @@
 package fr.istic.groupimpl.synthesizer.util;
 
+import java.util.Date;
 
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.beans.property.DoubleProperty;
@@ -19,11 +20,12 @@ import javafx.scene.transform.Rotate;
  * 
  * Example :
  * 
- * PotentiometreFactory potentiometreFactory = PotentiometreFactory.getFactoryInstance();
+ * PotentiometreFactory potentiometreFactory =
+ * PotentiometreFactory.getFactoryInstance();
  * 
  **** initialisations on the factory object
  *
- *	Potentiometre potentiometre = potentiometreFactory.getPotentiometre();
+ * Potentiometre potentiometre = potentiometreFactory.getPotentiometre();
  * 
  * 
  * @author groupImpl
@@ -31,8 +33,8 @@ import javafx.scene.transform.Rotate;
  */
 public class Potentiometre extends Region {
 
-	final public static double RAYON_REF=50.;
-	
+	final public static double RAYON_REF = 50.;
+
 	private Region rgKnob = new Region();
 
 	private Rotate rotate = new Rotate();
@@ -52,8 +54,8 @@ public class Potentiometre extends Region {
 	// angle en Radian
 	private final double minAngle;
 	private final double maxAngle;
+	private final double valueDef;
 
-	
 	/**
 	 * @return show Tick Marks flag
 	 */
@@ -67,7 +69,6 @@ public class Potentiometre extends Region {
 	public boolean isShowTickLabels() {
 		return showTickLabels;
 	}
-
 
 	/**
 	 * @return Major Tick Unit
@@ -90,7 +91,7 @@ public class Potentiometre extends Region {
 		double centerX = getWidth() / 2.0;
 		double centerY = getHeight() / 2.0;
 		double ang = Math.atan2((y - centerY), (x - centerX));
-		Log.getInstance().trace("traitePosAngle ang="+ang);
+		Log.getInstance().trace("traitePosAngle ang=" + ang);
 		if (dragOK) {
 			double delta = ang - debDragAngle;
 
@@ -98,11 +99,12 @@ public class Potentiometre extends Region {
 		}
 		dragOK = true;
 		debDragAngle = ang;
-		
-		
+
 	}
 
-	Potentiometre(PotentiometreFactory initPot ) {
+	private long timeRelease = 0;
+
+	Potentiometre(PotentiometreFactory initPot) {
 
 		super();
 		rayon = initPot.getRayon();
@@ -112,26 +114,24 @@ public class Potentiometre extends Region {
 		nbSpins = initPot.getNbSpins();
 		minAngle = -Math.PI * nbSpins;
 		maxAngle = Math.PI * nbSpins;
-
+		valueDef = initPot.getValueDef();
 
 		showTickMarks = initPot.isShowTickMarks();
 		showTickLabels = initPot.isShowTickLabels();
 		majorTickUnit = initPot.getMajorTickUnit();
-	
+
 		this.setPrefSize(2. * rayon, 2. * rayon);
-		this.setShape(new Circle(2.*rayon));
+		this.setShape(new Circle(2. * rayon));
 
 		getStyleClass().add("button"); // NOI18N.
-		rgKnob.setPrefSize(2.*RAYON_REF, 2.*RAYON_REF);
+		rgKnob.setPrefSize(2. * RAYON_REF, 2. * RAYON_REF);
 		rgKnob.getStyleClass().add("knob");
 		rgKnob.getTransforms().add(rotate);
 		rgKnob.setShape(new Circle(RAYON_REF));
-		
-		rgKnob.setScaleX(rayon/RAYON_REF);
-		rgKnob.setScaleY(rayon/RAYON_REF);
 
+		rgKnob.setScaleX(rayon / RAYON_REF);
+		rgKnob.setScaleY(rayon / RAYON_REF);
 
-		
 		setOnMouseDragged((event) -> {
 			Log.getInstance().debug(
 					"event MouseDragged x=" + event.getX() + " y="
@@ -144,8 +144,18 @@ public class Potentiometre extends Region {
 			Log.getInstance().debug(
 					"event MouseReleased x=" + event.getX() + " y="
 							+ event.getY());
-			traitePosAngle(event.getX(), event.getY());
-			dragOK = false;
+
+			long t = (new Date()).getTime();
+
+			if (t >= timeRelease && (t - timeRelease) < 500) {
+				// double clic detecté
+				Log.getInstance().debug("Double Clic");
+				setValue(valueDef);
+			} else {
+				traitePosAngle(event.getX(), event.getY());
+				dragOK = false;
+			}
+			timeRelease = t;
 			event.consume();
 
 		});
@@ -158,6 +168,14 @@ public class Potentiometre extends Region {
 			event.consume();
 
 		});
+	    setOnScroll( (event)-> {
+	    	double v = ((double)event.getDeltaY())/100.;
+	    	Log.getInstance().debug(
+					"event OnScroll deltaY="+event.getDeltaY()+" v="+v);
+	        	addValue(v);
+	    });
+
+
 		this.title.setText(initPot.getTitle());
 		getChildren().add(this.title);
 		getChildren().add(rgKnob);
@@ -170,7 +188,7 @@ public class Potentiometre extends Region {
 				requestLayout();
 			}
 		});
-		setValue(initPot.getValueDef());
+		setValue(valueDef);
 
 	}
 
@@ -246,11 +264,13 @@ public class Potentiometre extends Region {
 			rotate.setAngle(180. * locAngle / Math.PI);
 		}
 	}
-	private int nbAffTickMarks=0;
+
+	private int nbAffTickMarks = 0;
+
 	private void affTickMarks() {
-		if ( nbAffTickMarks++ > 1 )
+		if (nbAffTickMarks++ > 1)
 			return;
-		
+
 		double centerX = getWidth() / 2.0;
 		double centerY = getHeight() / 2.0;
 
@@ -260,7 +280,7 @@ public class Potentiometre extends Region {
 
 			for (double v = minValue; v <= maxValue; v += majorTickUnit) {
 
-				double ang = valueToAngle(v)-Math.PI/2.;
+				double ang = valueToAngle(v) - Math.PI / 2.;
 				double debX = Math.cos(ang) * rayon + centerX;
 				double endX = Math.cos(ang) * rayonExt + centerX;
 				double debY = Math.sin(ang) * rayon + centerY;
@@ -272,25 +292,22 @@ public class Potentiometre extends Region {
 				line.setStartY(debY);
 				line.setEndY(endY);
 				Log.getInstance().trace("TRACE1");
-				if ( isShowTickLabels() )
-				{
+				if (isShowTickLabels()) {
 					Log.getInstance().trace("TRACE2");
-					Text label=null;
-					if ( Math.floor(majorTickUnit) == majorTickUnit )
-						label = new Text(""+(int)v);
+					Text label = null;
+					if (Math.floor(majorTickUnit) == majorTickUnit)
+						label = new Text("" + (int) v);
 					else
-						label = new Text(""+ v);
+						label = new Text("" + v);
 					getChildren().add(label);
 					double d = 10;
-					
-					double x = Math.cos(ang) * (rayonExt+d) -5+ centerX;
-					double y = Math.sin(ang) * (rayonExt+d) +5+ centerY;
+
+					double x = Math.cos(ang) * (rayonExt + d) - 5 + centerX;
+					double y = Math.sin(ang) * (rayonExt + d) + 5 + centerY;
 					label.setTranslateX(x);
 					label.setTranslateY(y);
-					
+
 				}
-				
-				
 
 			}
 		}
@@ -315,8 +332,9 @@ public class Potentiometre extends Region {
 
 	/**
 	 * set the value
+	 * 
 	 * @param v
-	 * 		Value for initialization
+	 *            Value for initialization
 	 */
 	public final void setValue(double v) {
 		value.set(v);
@@ -325,8 +343,8 @@ public class Potentiometre extends Region {
 
 	/**
 	 * get the value
-	 * @return
-	 * 		value
+	 * 
+	 * @return value
 	 */
 	public final double getValue() {
 		return value.get();
@@ -341,8 +359,8 @@ public class Potentiometre extends Region {
 
 	/**
 	 * get the minimum value
-	 * @return
-	 * 	the minimum value
+	 * 
+	 * @return the minimum value
 	 */
 	public final double getMin() {
 		return minValue;
@@ -350,8 +368,8 @@ public class Potentiometre extends Region {
 
 	/**
 	 * get the maximum value
-	 * @return
-	 * the maximum value
+	 * 
+	 * @return the maximum value
 	 */
 	public final double getMax() {
 		return maxValue;
@@ -359,8 +377,8 @@ public class Potentiometre extends Region {
 
 	/**
 	 * get the discret flag ( to have only integer values )
-	 * @return
-	 * the discret flag
+	 * 
+	 * @return the discret flag
 	 */
 	public final boolean isDiscret() {
 		return discret;
@@ -368,8 +386,8 @@ public class Potentiometre extends Region {
 
 	/**
 	 * get the number of spins
-	 * @return
-	 * 	The spin number
+	 * 
+	 * @return The spin number
 	 */
 	public double getNbSpins() {
 		return nbSpins;
