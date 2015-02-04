@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,7 +21,9 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.util.Pair;
+import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
@@ -30,6 +35,9 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
  */
 public class ViewGlobal implements Initializable {
 
+	@FXML
+	private Pane contentpane;
+	
 	/** The vco btn. */
 	@FXML
 	private Button vcoBtn;
@@ -52,6 +60,15 @@ public class ViewGlobal implements Initializable {
 	/** The list assoc. */
 	private List<Pair<Node,IViewComponent>> listAssoc = new ArrayList<Pair<Node,IViewComponent>>();
 
+	private DoubleProperty mouseX = new SimpleDoubleProperty(0);
+	
+	private DoubleProperty mouseY = new SimpleDoubleProperty(0);
+	
+	public void addCable(Cable cable) {
+		contentpane.getChildren().add(contentpane.getChildren().size()-1, cable);
+		cable.toFront();
+	}
+
 	/**
 	 * Initializes the controller class.
 	 * This method is automatically called after the FXML file has been loaded. It creates a new view and set all the button with new created buttons.
@@ -73,7 +90,7 @@ public class ViewGlobal implements Initializable {
 		
 		vcoBtn.getStyleClass().add("btnClass");
 		outBtn.getStyleClass().add("btnClass");
-
+		
 		for(Node n : splitpane.getItems()) {
 			n.setOnDragOver((e) -> {
 				e.acceptTransferModes(TransferMode.ANY);
@@ -108,6 +125,82 @@ public class ViewGlobal implements Initializable {
 				}
 			});
 		}
+		
+		splitpane.setOnMouseMoved((e) -> {
+			mouseX.set(e.getX());
+			mouseY.set(e.getY());
+			Event.fireEvent(scrollpane, e);
+		});
+		
+		scrollpane.setOnMouseMoved((e) -> {
+			double spXMin = scrollpane.getViewportBounds().getMinX();
+			double spYMin = scrollpane.getViewportBounds().getMinY();
+			double spXMax = scrollpane.getViewportBounds().getMaxX();
+			double spYMax = scrollpane.getViewportBounds().getMaxY();
+			double x = e.getX();
+			double y = e.getY();
+
+			if ((x >= spXMin  && x <= spXMin + 50) &&
+					(y >= spYMin  && y <= spYMax))  
+			{
+				scrollpane.setHvalue(scrollpane.getHvalue() - 0.01);
+				
+			} else if ((x >= spXMax -50  && x <= spXMax) &&
+					(y >= spYMin  && y <= spYMax))  
+			{
+				scrollpane.setHvalue(scrollpane.getHvalue() + 0.01);
+				
+			}
+
+			if ((x >= spXMin  && x <= spXMax) &&
+					(y >= spYMin  && y <= spYMin+50))  
+			{
+				scrollpane.setVvalue(scrollpane.getVvalue() - 0.01);
+				
+			} else if ((x >= spXMin  && x <= spXMax) &&
+					(y >= spYMax-50  && y <= spYMax))  
+			{
+				scrollpane.setVvalue(scrollpane.getVvalue() + 0.01);
+			}
+
+		});
+		
+		splitpane.setOnDragOver((e) -> {
+			double spXMin = scrollpane.getViewportBounds().getMinX();
+			double spYMin = scrollpane.getViewportBounds().getMinY();
+			double spXMax = scrollpane.getViewportBounds().getMaxX();
+			double spYMax = scrollpane.getViewportBounds().getMaxY();
+			double x = e.getX();
+			double y = e.getY();
+
+			Log.getInstance().debug("!! Test ");
+			if ((x >= spXMin  && x <= spXMin + 50) &&
+					(y >= spYMin  && y <= spYMax))  
+			{
+				scrollpane.setHvalue(scrollpane.getHvalue() - 0.01);
+				
+			} else if ((x >= spXMax -50  && x <= spXMax) &&
+					(y >= spYMin  && y <= spYMax))  
+			{
+				scrollpane.setHvalue(scrollpane.getHvalue() + 0.01);
+				
+			}
+
+			if ((x >= spXMin  && x <= spXMax) &&
+					(y >= spYMin  && y <= spYMin+50))  
+			{
+				scrollpane.setVvalue(scrollpane.getVvalue() - 0.01);
+				
+			} else if ((x >= spXMin  && x <= spXMax) &&
+					(y >= spYMax-50  && y <= spYMax))  
+			{
+				scrollpane.setVvalue(scrollpane.getVvalue() + 0.01);
+			}
+
+		});
+		
+		ControllerGlobal ctl = ControllerGlobal.getInstance();
+		ctl.setView(this);
 	}
 
 	/**
@@ -217,5 +310,13 @@ public class ViewGlobal implements Initializable {
 	@FXML
 	public void handleAddOut(){
 		createModule("fxml/out.fxml");		
-	}	
+	}
+
+	public DoubleProperty mouseXProperty() {
+		return mouseX;
+	}
+	
+	public DoubleProperty mouseYProperty() {
+		return mouseY;
+	}
 }
