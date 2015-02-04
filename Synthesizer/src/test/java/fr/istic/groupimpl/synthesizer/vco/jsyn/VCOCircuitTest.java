@@ -55,6 +55,7 @@ public class VCOCircuitTest extends TestCase {
 	    	for (int i=-10; i<=10 ; i++) {
 	    		synthesisEngine.sleepUntil( synthesisEngine.getCurrentTime() + 0.1 );
 	    		oVCOCircuit.getInputFM().set(0.1*i);
+	    		
 	    		//assertEquals("select ouput value", 1.0, oVCOCircuit.getOutput().get(), tolerance);
 	    	}
 		} catch (InterruptedException e) {
@@ -66,4 +67,24 @@ public class VCOCircuitTest extends TestCase {
         	lineOut.stop();
         }
     }
+    /*
+    public void testVCOCircuit_NamedPort() throws InterruptedException {
+    	LineOut lineOut = null;
+        double tolerance = 0.002;
+        boolean activelineOut = true;
+    	double time;
+    	
+        VCOCircuit oVCOCircuit = new VCOCircuit();
+        synthesisEngine.add(oVCOCircuit);
+        
+        
+        
+        oVCOCircuit.getOutput().setName("vco_output");
+        
+        oVCOCircuit.getPorts().contains(oVCOCircuit.getOutput());
+        assertEquals("vco_output", oVCOCircuit.getPortByName("outputAmplitude").getName());
+        assertEquals("vco_output", oVCOCircuit.getPortByName("vco_output").getName());
+        
+    }
+    */
 }

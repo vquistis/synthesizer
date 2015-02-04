@@ -2,22 +2,24 @@ package fr.istic.groupimpl.synthesizer.vco.jsyn;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.Circuit;
-import com.jsyn.unitgen.FilterStateVariable;
-import com.jsyn.unitgen.MultiplyAdd;
 import com.jsyn.unitgen.PassThrough;
-import com.jsyn.unitgen.RedNoise;
 import com.jsyn.unitgen.SawtoothOscillator;
-import com.jsyn.unitgen.SawtoothOscillatorBL;
-import com.jsyn.unitgen.SawtoothOscillatorDPW;
 import com.jsyn.unitgen.SquareOscillator;
-import com.jsyn.unitgen.SquareOscillatorBL;
 import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitSource;
-import com.jsyn.unitgen.WhiteNoise;
 
 /**
- * VCO oscillator with a frequency modulation input.
+ * VCO oscillator Circuit with a frequency modulation input.
+ * 
+ * UnitGenerator included :
+ * - TriangleOscillator
+ * - SawtoothOscillator
+ * - SquareOscillator
+ * - VCFrequency
+ * - SelectFrom3Input
+ * - PassThrough
  * 
  * <pre>
  * output = TODO
@@ -48,10 +50,17 @@ public class VCOCircuit extends Circuit implements UnitSource
 	private UnitOutputPort outputSawtooth;
 	private UnitOutputPort outputTriangle;
 
+	/**
+	 * Frequency modulation 
+	 * @return
+	 */
 	public UnitInputPort getInputFM() {
 		return inputFM;
 	}
 
+	/**
+	 * @return
+	 */
 	public UnitInputPort getInputF0() {
 		return inputF0;
 	}
@@ -100,17 +109,17 @@ public class VCOCircuit extends Circuit implements UnitSource
 		
 		/* Make ports on internal units appear as ports on circuit. */
 		/* Optionally give some circuit ports more meaningful names. */	
-		addPort(inputFM = vcFreq.getInputfm(), "inputfm");
-		addPort(inputF0 = vcFreq.getInputf0(), "inputf0");
-		addPort(inputOctave = vcFreq.getInputOctave(), "inputOctave");
-		addPort(inputShape = selectFrom3.getInputSelect(), "inputSelectShape");
+		inputFM = (UnitInputPort) addNamedPort(vcFreq.getInputfm(), "inputfm");
+		inputF0 = (UnitInputPort) addNamedPort(vcFreq.getInputf0(), "inputf0");
+		inputOctave = (UnitInputPort) addNamedPort(vcFreq.getInputOctave(), "inputOctave");
+		inputShape = (UnitInputPort) addNamedPort(selectFrom3.getInputSelect(), "inputSelectShape");
 		
-		addPort(inputAmplitude = passThroughAmplitude.getInput(), "inputAmplitude");
+		inputAmplitude = (UnitInputPort) addNamedPort(passThroughAmplitude.getInput(), "inputAmplitude");
 		
-		addPort(output = selectFrom3.getOutput()); // fct sélecteur
-		addPort(outputSquare = squareOscillator.getOutput());
-		addPort(outputSawtooth = sawtoothOscillator.getOutput());
-		addPort(outputTriangle = triangleOscillator.getOutput());
+		output = (UnitOutputPort) addNamedPort(selectFrom3.getOutput(), "outputAmplitude"); // fct sélecteur
+		outputSquare = (UnitOutputPort) addNamedPort(squareOscillator.getOutput(), "outputSquareOscillator");
+		outputSawtooth = (UnitOutputPort) addNamedPort(sawtoothOscillator.getOutput(), "outputSawtoothOscillator");
+		outputTriangle = (UnitOutputPort) addNamedPort(triangleOscillator.getOutput(), "outputTriangleOscillator");
 		
 		/* Connect SynthUnits to make control signal path. */
 		vcFreq.getOutput().connect(triangleOscillator.frequency);
@@ -124,5 +133,21 @@ public class VCOCircuit extends Circuit implements UnitSource
 		triangleOscillator.output.connect(selectFrom3.getInput1());
 		sawtoothOscillator.output.connect(selectFrom3.getInput2());
 		squareOscillator.output.connect(selectFrom3.getInput3());	
+	}
+	
+	/**
+	 * 
+	 *
+	 * 
+	 * @param UnitPort
+	 *   instance to add
+	 * @param name
+	 *   Port Name
+	 * @return
+	 *   Instance named port
+	 */
+	private UnitPort addNamedPort(UnitPort UnitPort, String name) {
+		addPort(UnitPort, name);
+		return getPortByName(name);
 	}
 }

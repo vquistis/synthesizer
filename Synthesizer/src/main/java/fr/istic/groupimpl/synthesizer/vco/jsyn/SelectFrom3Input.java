@@ -26,25 +26,48 @@ public class SelectFrom3Input extends UnitGenerator {
 	private UnitInputPort inputSelect;  // 1 | 2 | 3
 	private UnitOutputPort output;
     
+    /**
+     * Input 1
+     * @return
+     */
     public UnitInputPort getInput1() {
 		return input1;
 	}
+	/**
+	 * Input 2
+	 * @return
+	 */
 	public UnitInputPort getInput2() {
 		return input2;
 	}
 
+	/**
+	 * Input 3
+	 * @return
+	 */
 	public UnitInputPort getInput3() {
 		return input3;
 	}
 
+	/**
+	 * Input source selected
+	 * @return
+	 */
 	public UnitInputPort getInputSelect() {
 		return inputSelect;
 	}
 
+	/**
+	 * Output selected source
+	 * @return
+	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}
 
+    /**
+     * Constructor
+     */
     public SelectFrom3Input() {
         addPort(input1 = new UnitInputPort("Input1"));
         addPort(input2 = new UnitInputPort("Input2"));
