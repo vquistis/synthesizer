@@ -11,24 +11,24 @@ public class ControllerVco implements IControllerComponent {
 	
 	public ControllerVco() {
 		modelVco = new ModelVco();
-		//ctrlGlob = ControllerGlobal.getInstance();
-		//ctrlGlob.registerUnitGenerator(modelVco.getUnitGenerator());
+		ctrlGlob = ControllerGlobal.getInstance();
+		ctrlGlob.registerUnitGenerator(modelVco.getUnitGenerator());
 	}
 		
 	@Override
 	public void handleViewInputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
-		//ctrlGlob.handleInputClicked(modelVco.getInputPort(portName), xCoord, yCoord);
+		ctrlGlob.handleInputClicked(modelVco.getInputPort(portName), xCoord, yCoord);
 	}
 
 	@Override
 	public void handleViewOutputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
-		//ctrlGlob.handleOutputClicked(modelVco.getOutputPort(portName), xCoord, yCoord);
+		ctrlGlob.handleOutputClicked(modelVco.getOutputPort(portName), xCoord, yCoord);
 	}
 
 	@Override
 	public void handleViewClose() {
-		//ctrlGlob.removeAllConnections(modelVco.getAllPorts());
-		//ctrlGlob.unregisterUnitGenerator(modelVco.getUnitGenerator());
+		ctrlGlob.removeAllConnections(modelVco.getAllPorts());
+		ctrlGlob.unregisterUnitGenerator(modelVco.getUnitGenerator());
 	}
 	
 	/**
