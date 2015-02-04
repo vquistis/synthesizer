@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
@@ -29,11 +31,9 @@ public class ViewVco implements IViewComponent, Initializable {
 	@FXML
 	private ImageView fm;
 	@FXML
-	private ImageView square;
+	private ImageView out;
 	@FXML
-	private ImageView triangle;
-	@FXML
-	private ImageView sawTooth;
+	private ToggleGroup typeOutput;
 	@FXML
 	private Text display;
 	@FXML
@@ -54,7 +54,7 @@ public class ViewVco implements IViewComponent, Initializable {
 		pf.setShowTickLabels(true);
 		pf.setMajorTickUnit(1);
 		pf.setNbSpins(0.88);
-		pf.setRayon(40);
+		pf.setRayon(32);
 		pf.setValueDef(0);		
 		Potentiometre octaveKnob = pf.getPotentiometre();
 		knobOctavePane.getChildren().add(octaveKnob);
@@ -73,34 +73,23 @@ public class ViewVco implements IViewComponent, Initializable {
 	   		vcoControl.handleViewOctaveChange((double) newVal, precisionKnob.getValue()));
 	   	precisionKnob.valueProperty().addListener((p, oldVal, newVal) ->
    			vcoControl.handleViewOctaveChange(octaveKnob.getValue(), (double) newVal));
+	   	
+	   	typeOutput.selectedToggleProperty().addListener((obs, oldVal, newVal) ->
+	   		vcoControl.handleViewOutputTypeChange(((RadioButton)newVal).getText()));
 	}
 	
 	/**
 	 * Handles the click on the FM input port
 	 */
 	public void handleFmClick() {
-		vcoControl.handleViewInputClick("vco_inputFm");
+		vcoControl.handleViewInputClick("vco_inputFm", fm.xProperty(), fm.yProperty());
 	}
 	
 	/**
-	 * Handles the click on the SQUARE output port
+	 * Handles the click on the output port
 	 */
-	public void handleSquareClick() {
-		vcoControl.handleViewOutputClick("vco_outputSquare");
-	}
-	
-	/**
-	 * Handles the click on the TRIANGLE output port
-	 */
-	public void handleTriangleClick() {
-		vcoControl.handleViewOutputClick("vco_outputTriangle");
-	}
-	
-	/**
-	 * Handles the click on the SAWTOOTH output port
-	 */
-	public void handleSawToothClick() {
-		vcoControl.handleViewOutputClick("vco_outputSawTooth");
+	public void handleOutputClick() {
+		vcoControl.handleViewOutputClick("vco_output", out.xProperty(), out.yProperty());
 	}
 	
 	/**

@@ -43,8 +43,7 @@
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="70.0" prefWidth="70.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="70.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="70.0" prefWidth="70.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="70.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="100.0" minHeight="20.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -53,19 +52,15 @@
          <children>
             <Label text="fm" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <font>
-                  <Font size="11.0" />
+                  <Font size="12.0" />
                </font></Label>
-            <Label text="square" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+            <Label text="out" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <font>
-                  <Font size="11.0" />
+                  <Font size="12.0" />
                </font></Label>
-            <Label text="triangle" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+            <Label text="type" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <font>
-                  <Font size="11.0" />
-               </font></Label>
-            <Label text="sawTooth" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-               <font>
-                  <Font size="11.0" />
+                  <Font size="12.0" />
                </font></Label>
             <ImageView fx:id="fm" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleFmClick" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.rowIndex="1">
                <image>
@@ -75,7 +70,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="square" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleSquareClick" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <ImageView fx:id="out" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleOutputClick" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../img/inoutRouge.png" />
                </image>
@@ -83,22 +78,43 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="triangle" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleTriangleClick" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../img/inoutVert.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView fx:id="sawTooth" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleSawToothClick" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../img/inoutBlanc.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
+            <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <RadioButton mnemonicParsing="false" selected="true" text="square" textFill="#444444">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="typeOutput" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="triangle" textFill="#444444" toggleGroup="$typeOutput">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="2.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="sawtooth" textFill="#444444" toggleGroup="$typeOutput">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="2.0" />
+                     </VBox.margin>
+                  </RadioButton>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <padding>
+                  <Insets left="6.0" right="6.0" />
+               </padding>
+            </VBox>
          </children>
       </GridPane>
    </bottom>
@@ -121,7 +137,7 @@
                   </Label>
                </children>
                <padding>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="13.0" />
                </padding>
             </VBox>
             <VBox fx:id="knobFreqPane" alignment="CENTER" GridPane.columnIndex="1">
@@ -133,7 +149,7 @@
                   </Label>
                </children>
                <padding>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="13.0" />
                </padding>
             </VBox>
          </children>

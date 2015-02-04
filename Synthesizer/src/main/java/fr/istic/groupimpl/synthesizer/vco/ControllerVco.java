@@ -1,5 +1,6 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
+import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
@@ -15,15 +16,13 @@ public class ControllerVco implements IControllerComponent {
 	}
 		
 	@Override
-	public void handleViewInputClick(String portName) {
-		System.err.println(modelVco.getInputPort(portName));
-		ctrlGlob.handleInputClicked(modelVco.getInputPort(portName));
+	public void handleViewInputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
+		ctrlGlob.handleInputClicked(modelVco.getInputPort(portName), xCoord, yCoord);
 	}
 
 	@Override
-	public void handleViewOutputClick(String portName) {
-		System.err.println(modelVco.getOutputPort(portName));
-		ctrlGlob.handleOutputClicked(modelVco.getOutputPort(portName));
+	public void handleViewOutputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
+		ctrlGlob.handleOutputClicked(modelVco.getOutputPort(portName), xCoord, yCoord);
 	}
 
 	@Override
@@ -44,6 +43,14 @@ public class ControllerVco implements IControllerComponent {
 			realOctave+= precision;
 		}
 		modelVco.setOctave(realOctave);
+	}
+	
+	/**
+	 * @param typeName : square | triangle | sawtooth
+	 * Sets in the model the type of output signal
+	 */
+	public void handleViewOutputTypeChange(String typeName) {
+		modelVco.setOutputType(typeName);
 	}
 
 }

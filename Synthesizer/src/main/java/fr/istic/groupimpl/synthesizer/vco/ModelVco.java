@@ -19,6 +19,7 @@ public class ModelVco extends ModelComponent {
 		vcoCirc = new VCOCircuit();
 		vcoCirc.getInputF0().set(440); // Default F0
 		vcoCirc.getInputOctave().set(0.0);
+		vcoCirc.getInputShape().set(3); // Default type : square
 	}
 
 	@Override
@@ -33,15 +34,39 @@ public class ModelVco extends ModelComponent {
 	protected void setOctave(double octave) {
 		vcoCirc.getInputOctave().set(octave);
 	}
+	
+	/**
+	 * @param typeName The name of the output type : square | triangle | sawtooth
+	 * Sets the type of output signal
+	 */
+	protected void setOutputType(String typeName) {		
+		switch(typeName) {
+			case "square":
+				vcoCirc.getInputShape().set(3);
+				break;
+			case "triangle":
+				vcoCirc.getInputShape().set(1);
+				break;
+			case "sawtooth":
+				vcoCirc.getInputShape().set(2);
+				break;
+		}
+	}
 
 	@Override
 	public UnitInputPort getInputPort(String portName) {
-		return (UnitInputPort) vcoCirc.getPortByName(portName);
+		if (portName.equals("vco_inputFm")) {
+			return vcoCirc.getInputFM();
+		}
+		return null;
 	}
 
 	@Override
 	public UnitOutputPort getOutputPort(String portName) {
-		return (UnitOutputPort) vcoCirc.getPortByName(portName);
+		if (portName.equals("vco_output")) {
+			return vcoCirc.getOutput();
+		}
+		return null;
 	}
 
 	@Override
