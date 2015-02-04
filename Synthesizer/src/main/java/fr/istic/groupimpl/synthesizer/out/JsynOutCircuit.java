@@ -5,6 +5,8 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.Circuit;
 import com.jsyn.unitgen.LineOut;
 
+import fr.istic.groupimpl.synthesizer.util.jsyn.JsynAttenuationFilter;
+
 /**
  * OUT Circuit with a decibel attenuation input.
  * 

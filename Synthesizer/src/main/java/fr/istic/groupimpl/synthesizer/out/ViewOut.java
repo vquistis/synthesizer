@@ -1,9 +1,13 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -49,7 +53,23 @@ public class ViewOut implements IViewComponent, Initializable {
 		// Listener mute
 		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewMuteChange(newVal));
 		// Listener input
-		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick("out_input", input.xProperty(), input.yProperty()));
+		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+			DoubleProperty propX = new SimpleDoubleProperty();
+			propX.bind(new DoubleBinding() {
+				@Override
+				protected double computeValue() {
+					return input.localToScene(input.getBoundsInLocal()).getMinX();
+				}
+			});
+			DoubleProperty propY = new SimpleDoubleProperty();
+			propY.bind(new DoubleBinding() {
+				@Override
+				protected double computeValue() {
+					return input.localToScene(input.getBoundsInLocal()).getMinY();
+				}
+			});
+			controller.handleViewInputClick("out_input", propX, propY);
+		});
 		// Listener close module
 		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			controller.handleViewClose();
