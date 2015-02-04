@@ -2,6 +2,7 @@ package fr.istic.groupimpl.synthesizer.global;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,8 @@ public class ModelGlobal {
 	 * @param controller
 	 */
 	public ModelGlobal(ControllerGlobal controller) {
+		this.outputConnections = new HashMap<UnitOutputPort, UnitInputPort>();
+		this.inputConnections = new HashMap<UnitInputPort, UnitOutputPort>();
 		this.controller = controller;
 		this.synth = JSyn.createSynthesizer();
 		this.synth.start();
@@ -63,6 +66,20 @@ public class ModelGlobal {
 		unitGenerators.remove(unitGen);
 	}
 
+	public boolean isPortConnected(UnitPort port) {
+		return inputConnections.containsKey(port) || outputConnections.containsKey(port);
+	}
+	
+	public UnitPort getConnectedPort(UnitPort port) {
+		UnitPort res = null;
+		if(inputConnections.containsKey(port)) {
+			res = inputConnections.get(port);
+		} else if(outputConnections.containsKey(port)) {
+			res = outputConnections.get(port);
+		}		
+		return res;
+	}
+	
 	/**
 	 * Connects the two given output and input ports.
 	 * @param outputPort
