@@ -8,11 +8,9 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 public class ControllerGlobal {
-	
+
 	private static ControllerGlobal instance;
-	
-	private ControllerGlobal() {}
-	
+
 	public static ControllerGlobal getInstance() {
 		if(instance == null) {
 			instance = new ControllerGlobal();
@@ -24,8 +22,12 @@ public class ControllerGlobal {
 	private ViewGlobal view;
 
 	private CableMode cableMode = CableMode.NONE_CONNECTED;
-	
+
 	private UnitPort currentPort;
+
+	private ControllerGlobal() {
+		model = new ModelGlobal(this);
+	}
 
 	/**
 	 * Signals the view that a visual connection must be made between
@@ -51,6 +53,10 @@ public class ControllerGlobal {
 	public void registerUnitGenerator(UnitGenerator unitGen) {
 		model.addUnitGenerator(unitGen);
 	}
+
+	public void registerOutUnitGenerator(UnitGenerator unitGen) {
+		model.addOutUnit(unitGen);
+	}
 	
 	/**
 	 * Signals the model that the given UnitGenerator must be removed
@@ -60,7 +66,7 @@ public class ControllerGlobal {
 	public void unregisterUnitGenerator(UnitGenerator unitGen) {
 		model.removeUnitGenerator(unitGen);
 	}
-	
+
 	/**
 	 * Signals the model that any connection originating from each port in
 	 * the given collection must be removed.
@@ -126,5 +132,5 @@ public class ControllerGlobal {
 	private enum CableMode {
 		NONE_CONNECTED,IN_CONNECTED,OUT_CONNECTED
 	}
-	
+
 }
