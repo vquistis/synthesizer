@@ -7,6 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -131,7 +132,24 @@ public class Potentiometre extends Region {
 
 		rgKnob.setScaleX(rayon / RAYON_REF);
 		rgKnob.setScaleY(rayon / RAYON_REF);
+		setOnDragOver((event) -> {
+			traitePosAngle(event.getX(), event.getY());
+			event.consume();
+		});
+		setOnDragDropped((event) -> {
+			traitePosAngle(event.getX(), event.getY());
+			event.consume();
+		});
 
+		setOnMousePressed((event) -> {
+			Log.getInstance().debug(
+					"event MousePressed x=" + event.getX() + " y="
+							+ event.getY());
+			dragOK = false;
+			traitePosAngle(event.getX(), event.getY());
+			event.consume();
+
+		});
 		setOnMouseDragged((event) -> {
 			Log.getInstance().debug(
 					"event MouseDragged x=" + event.getX() + " y="
@@ -173,6 +191,7 @@ public class Potentiometre extends Region {
 	    	Log.getInstance().debug(
 					"event OnScroll deltaY="+event.getDeltaY()+" v="+v);
 	        	addValue(v);
+	        event.consume();
 	    });
 
 
@@ -209,7 +228,7 @@ public class Potentiometre extends Region {
 		Log.getInstance().trace("1value=" + val);
 
 		Log.getInstance().trace("1angle=" + angle);
-
+		
 		angle += deltaAngle;
 		if (angle < minAngle) {
 			angle = minAngle;
@@ -239,6 +258,19 @@ public class Potentiometre extends Region {
 		return Math.floor(v + 0.5);
 	}
 
+	// rend un angle equivalent mais entre -Math.PI et Math.PI
+	private double correctAngle( double angle )
+	{
+		double sens = Math.signum(angle);	
+		int n = (int)Math.floor(Math.abs(angle)/Math.PI);
+		
+		n = (n+1)/2;
+		
+		double correct = -sens*((double)n)*2.*Math.PI;
+				
+		return angle + correct;		
+				
+	}
 	/**
 	 * {@inheritDoc}
 	 */
@@ -258,10 +290,12 @@ public class Potentiometre extends Region {
 		if (minAngle <= angle && angle <= maxAngle) {
 			rotate.setPivotX(rgKnob.getWidth() / 2.0);
 			rotate.setPivotY(rgKnob.getHeight() / 2.0);
-			double locAngle = (angle < -Math.PI) ? angle + 2. * Math.PI
-					: (angle > Math.PI) ? angle - 2. * Math.PI : angle;
+//			double locAngle = (angle < -Math.PI) ? angle + 2. * Math.PI
+//					: (angle > Math.PI) ? angle - 2. * Math.PI : angle;
+			double locAngle = correctAngle(angle);
 			Log.getInstance().debug("locAngle=" + locAngle);
 			rotate.setAngle(180. * locAngle / Math.PI);
+			val = value;
 		}
 	}
 
