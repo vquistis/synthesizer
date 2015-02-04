@@ -17,7 +17,7 @@ public class ModelOut extends ModelComponent {
 		super();
 
 		out = new JsynAttenuationOut();
-		out.input.setName("input_out"); // this name have to be the same as the name defined in the view
+		out.input.setName("out_input"); // this name have to be the same as the name defined in the view
 		setAttenuation(0); // Default value
 	}
 

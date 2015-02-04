@@ -51,7 +51,7 @@
 	-fx-border-style: solid;
 }
 
-.inputPort:hover {
+.inputPort:hover, .outputPort:hover {
     -fx-effect: dropshadow(gaussian, #00ae00, 4,0,0,0);
 }
 

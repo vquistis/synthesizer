@@ -7,39 +7,63 @@ import com.jsyn.unitgen.UnitGenerator;
 
 /**
  * Frequency Voltage Controller
+ * 
+ * f0 default frequency
+ *  
+ * fm frequency modulation
  * +1 Volt = +1 Octave
  * -1 Volt = -1 Octave
- *  
+ *    
+ * octave value
+ * minus or plus sign
+ *    
  * <pre>
  * output = f0*Math.pow(2, octave + fm);
  * <pre>
  * 
- * 
  * @author Team GroupImpl
  */
-
 public class VCFrequency extends UnitGenerator {
 	private UnitInputPort inputfm; 		//Volt
 	private UnitInputPort inputf0; 		//HZ
 	private UnitInputPort inputOctave; 	//UnitVariablePort 
 	private UnitOutputPort output; 		//HZ
     
+    /**
+     * Modulation frequency input
+     * @return
+     */
     public UnitInputPort getInputfm() {
 		return inputfm;
 	}
 
+	/**
+	 * Default Frequency input
+	 * @return
+	 */
 	public UnitInputPort getInputf0() {
 		return inputf0;
 	}
 
+	/**
+	 * Octave value input
+	 * @return
+	 */
 	public UnitInputPort getInputOctave() {
 		return inputOctave;
 	}
 	
+	/**
+	 * Frequency Output
+	 * @return
+	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}
 
+	/**
+	 * Constructor
+	 */
     public VCFrequency() {
         addPort(inputfm = new UnitInputPort("Inputfm"));
         addPort(inputf0 = new UnitInputPort("Inputf0"));
@@ -59,6 +83,16 @@ public class VCFrequency extends UnitGenerator {
         }
     }
     
+    /**
+     * @param fm
+     *   Modulation Frequency 
+     * @param f0
+     *   Default frequency
+     * @param octave
+     *   octave value
+     * @return
+     *   Frequency
+     */
     public double converter(double fm, double f0, double octave) {
     	return f0*Math.pow(2, octave + fm);
     }
