@@ -2,10 +2,14 @@ package fr.istic.groupimpl.synthesizer.global;
 
 import java.util.Collection;
 
+import javafx.beans.property.DoubleProperty;
+
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.logger.Log;
 
 public class ControllerGlobal {
 
@@ -86,7 +90,7 @@ public class ControllerGlobal {
 	 * Handles the process of connection creation when an input port is clicked.
 	 * @param port
 	 */
-	public void handleInputClicked(UnitInputPort port) {
+	public void handleInputClicked(UnitInputPort port, DoubleProperty x, DoubleProperty y) {
 		switch(cableMode) {
 		case NONE_CONNECTED:
 			/*
@@ -103,14 +107,16 @@ public class ControllerGlobal {
 			 */
 			if(model.isPortConnected(port)) {
 				cableMode = CableMode.OUT_CONNECTED;
-				currentPort = model.getConnectedPort(currentPort);
+				currentPort = model.getConnectedPort(port);
 				model.disconnectInputPort(port);
 				previousPort = port;
 				//TODO notify the view to bind the input end of the cable to the mouse.
+				Log.getInstance().debug("INPUT PORT DISCONNECTED");
 			} else {
 				cableMode = CableMode.IN_CONNECTED;
 				currentPort = port;
 				//TODO notify the view to create a new, unbound cable originating from the given port.
+				Log.getInstance().debug("CREATING CABLE FROM INPUT PORT");
 			}
 			break;
 		case IN_CONNECTED:
@@ -128,6 +134,7 @@ public class ControllerGlobal {
 			if(!model.isPortConnected(port)) {
 				cableMode = CableMode.NONE_CONNECTED;
 				this.model.connectPorts(currentPort, port);
+				Log.getInstance().debug("INPUT PORT CONNECTED TO OUTPUT PORT");
 				currentPort = null;
 				previousPort = null;
 			}
@@ -140,20 +147,25 @@ public class ControllerGlobal {
 	 * Handles the process of connection creation when an output port is clicked.
 	 * @param port
 	 */
-	public void handleOutputClicked(UnitOutputPort port) {
+	public void handleOutputClicked(UnitOutputPort port, DoubleProperty x, DoubleProperty y) {
 		switch(cableMode) {
 		case NONE_CONNECTED:
 			//TODO notify the view to create a new, unbound cable originating from the given port.
 			if(model.isPortConnected(port)) {
 				cableMode = CableMode.IN_CONNECTED;
-				currentPort = model.getConnectedPort(currentPort);
+				currentPort = model.getConnectedPort(port);
+				if(currentPort == null) {
+					Log.getInstance().debug("CURRENT PORT IS NULL");
+				}
 				model.disconnectOutputPort(port);
 				previousPort = port;
 				//TODO notify the view to bind the input end of the cable to the mouse.
+				Log.getInstance().debug("OUTPUT PORT DISCONNECTED");
 			} else {
 				cableMode = CableMode.OUT_CONNECTED;
 				currentPort = port;
 				//TODO notify the view to create a new, unbound cable originating from the given port.
+				Log.getInstance().debug("CREATING CABLE FROM OUTPUT PORT");
 			}
 			break;
 		case IN_CONNECTED:
@@ -162,6 +174,7 @@ public class ControllerGlobal {
 				this.model.connectPorts(port, currentPort);
 				currentPort = null;
 				previousPort = null;
+				Log.getInstance().debug("OUTPUT PORT CONNECTED TO INPUT PORT");
 			}
 			break;
 		case OUT_CONNECTED:
