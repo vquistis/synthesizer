@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +21,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
@@ -33,6 +35,9 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
  */
 public class ViewGlobal implements Initializable {
 
+	@FXML
+	private Pane contentpane;
+	
 	/** The vco btn. */
 	@FXML
 	private Button vcoBtn;
@@ -54,12 +59,15 @@ public class ViewGlobal implements Initializable {
 	
 	/** The list assoc. */
 	private List<Pair<Node,IViewComponent>> listAssoc = new ArrayList<Pair<Node,IViewComponent>>();
-	
-	private Cable currentCable = null;
 
 	private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 	
 	private DoubleProperty mouseY = new SimpleDoubleProperty(0);
+	
+	public void addCable(Cable cable) {
+		contentpane.getChildren().add(contentpane.getChildren().size()-1, cable);
+		cable.toFront();
+	}
 
 	/**
 	 * Initializes the controller class.
@@ -121,7 +129,15 @@ public class ViewGlobal implements Initializable {
 		splitpane.setOnMouseMoved((e) -> {
 			mouseX.set(e.getX());
 			mouseY.set(e.getY());
+			Event.fireEvent(scrollpane, e);
 		});
+		
+		scrollpane.setOnMouseMoved((e) -> {
+			//TODO récupérer e.getX(), e.getY(), scroll en fonction.
+		});
+		
+		ControllerGlobal ctl = ControllerGlobal.getInstance();
+		ctl.setView(this);
 	}
 
 	/**

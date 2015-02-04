@@ -136,7 +136,10 @@ public class ControllerGlobal {
 				Cable cable = new Cable();
 				cables.put(port, cable);
 				cable.bindInput(x, y);
+				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
 				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
+				//TODO add the cable to the view.
+				view.addCable(cable);
 				Log.getInstance().debug("CREATING CABLE FROM INPUT PORT");
 				
 				//----------------------
@@ -164,6 +167,7 @@ public class ControllerGlobal {
 				Cable cable = cables.get(currentPort);
 				cables.put(port,cable);
 				cable.bindInput(x, y);
+				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
 				Log.getInstance().debug("INPUT PORT CONNECTED TO OUTPUT PORT");
 				
 				//----------------------
@@ -209,8 +213,10 @@ public class ControllerGlobal {
 				
 				Cable cable = new Cable();
 				cables.put(port, cable);
-				cable.bindInput(x, y);
-				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
+				cable.bindOutput(x, y);
+				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
+				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());
+				view.addCable(cable);
 				Log.getInstance().debug("CREATING CABLE FROM OUTPUT PORT");
 				
 				//----------------------
@@ -227,6 +233,7 @@ public class ControllerGlobal {
 				Cable cable = cables.get(currentPort);
 				cables.put(port,cable);
 				cable.bindOutput(x, y);
+				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
 				
 				//----------------------
 				
