@@ -2,16 +2,24 @@
 
 
 .background {
-    -fx-background-color: #1d1d1d;
+   /* -fx-background-color: #1d1d1d;*/
 }
 
+
 .btnClass{
-	-fx-background-color: derive(-fx-focus-color,30%);
+	-fx-background-color: #9ACD32;
+/*	-fx-background-color: derive(-fx-focus-color,30%);
 	-fx-font-family: "Segoe UI Light";
 	-fx-text-fill: white;
 	-fx-opacity: 0.9;
 	-fx-background-color: #1d1d1d;
 	-fx-font-size: 14pt;
+	-fx-background-color: #000000;*/
+	-fx-cursor: pointer;
+}
+
+.btnClass:hover {
+    -fx-background-color: #9ACD32;
 }
 
 

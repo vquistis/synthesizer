@@ -7,7 +7,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.global.ViewGlobal">
    <left>
-      <Accordion BorderPane.alignment="CENTER">
+      <Accordion prefHeight="220.0" prefWidth="220.0" BorderPane.alignment="CENTER">
         <panes>
           <TitledPane animated="true" text="Output modules">
             <content>
@@ -15,7 +15,7 @@
                      <children>
                         <VBox prefHeight="21.0" prefWidth="201.0">
                            <children>
-                              <Button fx:id="outBtn" minWidth="250.0" onAction="#handleAddOut" text="OUT" />
+                              <Button fx:id="outBtn" minWidth="221.0" onAction="#handleAddOut" text="OUT" />
                            </children>
                         </VBox>
                      </children>
@@ -24,11 +24,11 @@
           </TitledPane>
           <TitledPane animated="true" text="VCO modules">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane>
                      <children>
                         <VBox prefHeight="21.0" prefWidth="201.0">
                            <children>
-                              <Button fx:id="vcoBtn" contentDisplay="RIGHT" graphicTextGap="0.0" minWidth="250.0" onAction="#handleAddVco" text="VCO" />
+                              <Button fx:id="vcoBtn" contentDisplay="RIGHT" graphicTextGap="0.0" minWidth="221.0" onAction="#handleAddVco" text="VCO" />
                            </children>
                         </VBox>
                      </children>
@@ -39,7 +39,7 @@
       </Accordion>
    </left>
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -60,7 +60,7 @@
       </MenuBar>
    </top>
    <center>
-      <ScrollPane fx:id="scrollpane" prefHeight="200.0" prefWidth="200.0" styleClass="background" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="scrollpane" prefHeight="375.0" prefWidth="375.0" styleClass="background" BorderPane.alignment="CENTER">
          <content>
             <SplitPane fx:id="splitpane" orientation="VERTICAL" />
          </content>
