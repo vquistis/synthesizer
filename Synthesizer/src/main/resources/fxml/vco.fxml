@@ -13,7 +13,7 @@
 
 <BorderPane fx:id="paneVco" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.vco.ViewVco">
    <top>
-      <GridPane maxHeight="32.0" minHeight="32.0" prefHeight="32.0" styleClass="titlePane">
+      <GridPane maxHeight="33.0" minHeight="33.0" prefHeight="33.0" styleClass="titlePane">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
@@ -137,7 +137,7 @@
                   </Label>
                </children>
                <padding>
-                  <Insets bottom="13.0" />
+                  <Insets bottom="13.0" left="12.0" />
                </padding>
             </VBox>
             <VBox fx:id="knobFreqPane" alignment="CENTER" GridPane.columnIndex="1">
