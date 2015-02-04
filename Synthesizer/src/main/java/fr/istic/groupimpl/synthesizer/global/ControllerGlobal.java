@@ -7,8 +7,6 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
-import fr.istic.groupimpl.synthesizer.logger.Log;
-
 public class ControllerGlobal {
 
 	private static ControllerGlobal instance;
@@ -94,7 +92,13 @@ public class ControllerGlobal {
 			/*
 			 * No connection is currently in the process of creation.
 			 * If the input port that was clicked is already part of a connection,
-			 * we should enter in a "move" move.
+			 * we should enter in a "move" move:
+			 *   - set the "previousPort" field to remember which port was connected, 
+			 *   in order to restore the connection in case of cancellation,
+			 *   - set the "currentPort" field to the port currently connected to the
+			 *   parameter "port",
+			 *   - disconnect the currentPort and the previousPort in the model.
+			 *   - change mode to OUT_CONNECTED.
 			 * If not, we should enter in a "create" mode.
 			 */
 			if(model.isPortConnected(port)) {
@@ -139,15 +143,26 @@ public class ControllerGlobal {
 	public void handleOutputClicked(UnitOutputPort port) {
 		switch(cableMode) {
 		case NONE_CONNECTED:
-			cableMode = CableMode.OUT_CONNECTED;
-			currentPort = port;
 			//TODO notify the view to create a new, unbound cable originating from the given port.
+			if(model.isPortConnected(port)) {
+				cableMode = CableMode.IN_CONNECTED;
+				currentPort = model.getConnectedPort(currentPort);
+				model.disconnectOutputPort(port);
+				previousPort = port;
+				//TODO notify the view to bind the input end of the cable to the mouse.
+			} else {
+				cableMode = CableMode.OUT_CONNECTED;
+				currentPort = port;
+				//TODO notify the view to create a new, unbound cable originating from the given port.
+			}
 			break;
 		case IN_CONNECTED:
-			cableMode = CableMode.NONE_CONNECTED;
-			this.model.connectPorts(port, currentPort);
-			currentPort = null;
-			previousPort = null;
+			if(!model.isPortConnected(port)) {
+				cableMode = CableMode.NONE_CONNECTED;
+				this.model.connectPorts(port, currentPort);
+				currentPort = null;
+				previousPort = null;
+			}
 			break;
 		case OUT_CONNECTED:
 			break;
@@ -169,7 +184,7 @@ public class ControllerGlobal {
 		}
 		currentPort = null;
 		previousPort = null;
-		
+
 		//TODO notify the view to stop displaying the cable.
 	}
 
