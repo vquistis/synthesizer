@@ -64,9 +64,9 @@ public class ViewGlobal implements Initializable {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		for (int i = 0; i < 3; i++) {
 			HBox h1 = new HBox();
-			h1.setPrefSize(600, 200);
-			h1.setMinSize(600, 200);
-			h1.setMaxSize(600, 200);
+			h1.setPrefSize(1000, 200);
+			h1.setMinSize(1000, 200);
+			h1.setMaxSize(1000, 200);
 			h1.getStyleClass().add("hboxStyle");
 			splitpane.getItems().add(h1);
 		}
@@ -95,7 +95,9 @@ public class ViewGlobal implements Initializable {
 					((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().remove(Integer.parseInt(pos[1]));
 
 					int index =0;
+					System.out.println("e-->"+e.getX()+","+ e.getY());
 					for(Node child : box.getChildren()){	
+						
 						if (child.contains(e.getX(), e.getY())) {
 							break;
 							
