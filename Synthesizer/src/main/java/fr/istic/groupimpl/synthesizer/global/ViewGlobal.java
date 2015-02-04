@@ -70,7 +70,9 @@ public class ViewGlobal implements Initializable {
 		for (int i = 0; i < 3; i++) {
 			h1 = new HBox();
 			h1.setPrefSize(600, 200);
-			h1.getStyleClass().add("background");
+			h1.setMinSize(600, 200);
+			h1.setMaxSize(600, 200);
+			h1.getStyleClass().add("hboxStyle");
 			splitpane.getItems().add(h1);
 		}
 		
