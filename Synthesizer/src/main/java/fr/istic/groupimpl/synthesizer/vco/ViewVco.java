@@ -34,6 +34,8 @@ public class ViewVco implements IViewComponent, Initializable {
 	private Text display;
 	@FXML
 	private Region rgFm;
+	
+	private ControllerVco vcoControl;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -60,11 +62,31 @@ public class ViewVco implements IViewComponent, Initializable {
 	   	Potentiometre precisionKnob = pf.getPotentiometre();
 	   	knobFreqPane.getChildren().add(precisionKnob);
 	   	
-	   	ControllerVco vcoControl = new ControllerVco();
+	   	vcoControl = new ControllerVco();
 	   	octaveKnob.valueProperty().addListener((p, oldVal, newVal) ->
 	   		vcoControl.handleViewOctaveChange((double) newVal, precisionKnob.getValue()));
 	   	precisionKnob.valueProperty().addListener((p, oldVal, newVal) ->
    			vcoControl.handleViewOctaveChange(octaveKnob.getValue(), (double) newVal));
+	}
+	
+	public void handleFmClick() {
+		vcoControl.handleViewInputClick("fm_vco");
+	}
+	
+	public void handleSquareClick() {
+		vcoControl.handleViewOutputClick("square_vco");
+	}
+	
+	public void handleTriangleClick() {
+		vcoControl.handleViewOutputClick("triangle_vco");
+	}
+	
+	public void handleSawToothClick() {
+		vcoControl.handleViewOutputClick("sawtooth_vco");
+	}
+	
+	public void handleCloseClick() {
+		vcoControl.handleViewClose();
 	}
 
 }

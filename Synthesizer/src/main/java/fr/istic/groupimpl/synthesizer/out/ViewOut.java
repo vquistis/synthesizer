@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.WritableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -76,20 +78,30 @@ public class ViewOut implements IViewComponent, Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
-		knobFact.setMinValue(-12);
+		knobFact.setMinValue(-60);
 		knobFact.setMaxValue(12);
-		Potentiometre volumeKnob = knobFact.getPotentiometre();
-		volumeKnob.valueProperty().addListener((obsVal, oldVal, newVal) -> knobInfValue.set(convVal((Double)newVal)));
-		knobVolumePane.getChildren().add(volumeKnob);
+		knobFact.setValueDef(0);
+		knobFact.setNbSpins(3);
+		Potentiometre knobVolume = knobFact.getPotentiometre();
+		//volumeKnob.valueProperty().addListener((obsVal, oldVal, newVal) -> knobInfValue.set(convVal((Double)newVal)));
+		knobVolumePane.getChildren().add(knobVolume);
+		
+		valueVolumeFx.textProperty().addListener((observable, oldValue, newValue) -> {
+			try {
+				Integer.valueOf(newValue);
+			} catch (Exception e) {
+				((StringProperty) observable).setValue(oldValue);
+			}
+		});
 		
 		// Bind knob value and text field value
-		StringConverter<Number> converter = new StringConverterInf();
-		Bindings.bindBidirectional(valueVolumeFx.textProperty(), knobInfValue, converter);
+		StringConverter<Number> converter = new NumberStringConverter();
+		Bindings.bindBidirectional(valueVolumeFx.textProperty(), knobVolume.valueProperty(), converter);
 
 		// Creation du controller
 		ControllerOut controller = new ControllerOut();
 		// Listener volume
-		knobInfValue.addListener((obsVal, oldVal, newVal) -> controller.handleViewVolumeChange(newVal));
+		knobVolume.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewVolumeChange(newVal));
 		// Listener mute
 		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewMuteChange(newVal));
 		// Listener input
