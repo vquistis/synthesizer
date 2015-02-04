@@ -39,7 +39,7 @@ public class VCOCircuitTest extends TestCase {
         oVCOCircuit.getInputF0().set(440);
         oVCOCircuit.getInputFM().set(-1.1);
         oVCOCircuit.getInputOctave().set(0.0);
-        oVCOCircuit.getInputAmplitude().set(10);
+        oVCOCircuit.getInputAmplitude().set(1);
         oVCOCircuit.getInputShape().set(3); // 1 | 2 | 3
        
         synthesisEngine.start();

@@ -8,6 +8,7 @@ import com.jsyn.unitgen.PassThrough;
 import com.jsyn.unitgen.SawtoothOscillator;
 import com.jsyn.unitgen.SquareOscillator;
 import com.jsyn.unitgen.TriangleOscillator;
+import com.jsyn.unitgen.UnitOscillator;
 import com.jsyn.unitgen.UnitSource;
 
 /**
@@ -157,6 +158,7 @@ public class VCOCircuit extends Circuit implements UnitSource
 		vcFreq.getOutput().connect(sawtoothOscillator.frequency);
 		vcFreq.getOutput().connect(squareOscillator.frequency);
 		 
+		passThroughAmplitude.getInput().set(UnitOscillator.DEFAULT_AMPLITUDE);
 		passThroughAmplitude.output.connect(triangleOscillator.amplitude);
 		passThroughAmplitude.output.connect(sawtoothOscillator.amplitude);
 		passThroughAmplitude.output.connect(squareOscillator.amplitude);
