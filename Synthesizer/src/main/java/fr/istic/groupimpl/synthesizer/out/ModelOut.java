@@ -17,7 +17,6 @@ public class ModelOut extends ModelComponent {
 		super();
 
 		out = new JsynAttenuationOut();
-		out.input.setName("out_input"); // this name have to be the same as the name defined in the view
 		setAttenuation(0); // Default value
 	}
 
@@ -51,7 +50,7 @@ public class ModelOut extends ModelComponent {
 	
 	@Override
 	public UnitInputPort getInputPort(String portName) {
-		return (UnitInputPort) out.getPortByName(portName);
+		return out.input;
 	}
 
 	@Override
