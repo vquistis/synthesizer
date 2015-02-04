@@ -23,7 +23,6 @@ public class ModelOutTest {
 		synth.add(model.getUnitGenerator());
 		synth.add(osc);
 		synth.start();
-		osc.start();
 	}
 	
 	@Test

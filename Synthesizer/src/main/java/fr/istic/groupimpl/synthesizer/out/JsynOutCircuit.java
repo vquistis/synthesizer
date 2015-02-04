@@ -1,6 +1,7 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.Circuit;
 import com.jsyn.unitgen.LineOut;
 
@@ -18,6 +19,16 @@ public class JsynOutCircuit extends Circuit {
 	private JsynAttenuationFilter attenuator;
 	private LineOut out;
 
+	/* Declare ports. */
+	private UnitInputPort input;
+	
+	/**
+	 * Get the input of OUT module.
+	 */
+	public UnitInputPort getInput() {
+		return input;
+	}
+	
 	public JsynOutCircuit() {
 		/* Create various unit generators. */
 		attenuator = new JsynAttenuationFilter();
@@ -27,17 +38,14 @@ public class JsynOutCircuit extends Circuit {
 		add(attenuator);
 		add(out);
 
+		/* Make ports on internal units appear as ports on circuit. */
+		/* Optionally give some circuit ports more meaningful names. */	
+		input = (UnitInputPort) addNamedPort(attenuator.getInput(), "out_input");
+		
 		/* Connect SynthUnits to make control signal path. */
 		out.input.connect(attenuator.output);
 	}
 	
-	/**
-	 * Get the input of OUT module.
-	 */
-	public UnitInputPort getInput() {
-		return attenuator.input;
-	}
-
 	/**
 	 * Set an attenuation decibel value
 	 */
@@ -45,10 +53,19 @@ public class JsynOutCircuit extends Circuit {
 		attenuator.set(dbValue);
 	}
 	
-//	public void start() {
-//		out.start();
-//	}
-//	public void stop() {
-//		out.stop();
-//	}
+	/**
+	 * 
+	 * add a named port to the circuit and return its instance
+	 * 
+	 * @param UnitPort
+	 *   instance to add
+	 * @param name
+	 *   Port Name
+	 * @return
+	 *   Instance named port
+	 */
+	private UnitPort addNamedPort(UnitPort UnitPort, String name) {
+		addPort(UnitPort, name);
+		return getPortByName(name);
+	}
 }
