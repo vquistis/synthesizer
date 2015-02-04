@@ -46,13 +46,12 @@ public class ModelGlobal {
 		unitGen.start();
 	}
 
-	public void removeModule(UnitGenerator unitGen) {
+	public void removeUnitGenerator(UnitGenerator unitGen) {
 		/* 
 		 * TODO disconnect every modules from this one before removing it:
 		 * forall input of the module -> search modules connected to the input in the inputConnexions map and disconnect them
 		 * forall output of the module -> search modules connected to the output in the outputConnexions map and disconnect them
 		 */
-		unitGen.stop();
 		synth.remove(unitGen);
 		unitGenerators.remove(unitGen);
 	}

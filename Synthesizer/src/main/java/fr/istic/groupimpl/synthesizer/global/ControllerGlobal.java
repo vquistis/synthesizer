@@ -8,6 +8,17 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 public class ControllerGlobal {
+	
+	private static ControllerGlobal instance;
+	
+	private ControllerGlobal() {}
+	
+	public static ControllerGlobal getInstance() {
+		if(instance == null) {
+			instance = new ControllerGlobal();
+		}
+		return instance;
+	}
 
 	private ModelGlobal model;
 	private ViewGlobal view;
@@ -28,6 +39,10 @@ public class ControllerGlobal {
 		model.addUnitGenerator(unitGen);
 	}
 	
+	public void unregisterUnitGenerator(UnitGenerator unitGen) {
+		model.removeUnitGenerator(unitGen);
+	}
+	
 	public void removeAllConnexions(Collection<UnitPort> unitports) {
 		model.removeAllConnexions(unitports);
 	}
@@ -44,7 +59,6 @@ public class ControllerGlobal {
 		case OUT_CONNECTED:
 			cableMode = CableMode.NONE_CONNECTED;
 			this.model.connectPorts(currentPort, port);
-			//TODO notify the view to connect the unbound cable to parameter port.
 			currentPort = null;
 			break;
 		default:
@@ -61,7 +75,6 @@ public class ControllerGlobal {
 		case IN_CONNECTED:
 			cableMode = CableMode.NONE_CONNECTED;
 			this.model.connectPorts(port, currentPort);
-			//TODO notify the view to connect the unbound cable to parameter port.
 			currentPort = null;
 			break;
 		case OUT_CONNECTED:
@@ -79,5 +92,7 @@ public class ControllerGlobal {
 	private enum CableMode {
 		NONE_CONNECTED,IN_CONNECTED,OUT_CONNECTED
 	}
+	
+	
 
 }
