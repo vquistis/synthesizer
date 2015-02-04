@@ -64,9 +64,9 @@ public class ViewGlobal implements Initializable {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		for (int i = 0; i < 3; i++) {
 			HBox h1 = new HBox();
-			h1.setPrefSize(1000, 200);
-			h1.setMinSize(1000, 200);
-			h1.setMaxSize(1000, 200);
+			h1.setPrefSize(1000, 300);
+			h1.setMinSize(1000, 300);
+			h1.setMaxSize(1000, 300);
 			h1.getStyleClass().add("hboxStyle");
 			splitpane.getItems().add(h1);
 		}
