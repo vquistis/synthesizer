@@ -129,6 +129,10 @@ public class ControllerGlobal {
 		//TODO notify the view to stop displaying the cable.
 	}
 
+	public void setView(ViewGlobal view) {
+		this.view = view;
+	}
+
 	private enum CableMode {
 		NONE_CONNECTED,IN_CONNECTED,OUT_CONNECTED
 	}
