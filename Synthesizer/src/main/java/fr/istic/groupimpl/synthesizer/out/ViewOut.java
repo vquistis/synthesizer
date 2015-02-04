@@ -10,6 +10,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
@@ -19,6 +20,7 @@ import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 public class ViewOut implements IViewComponent, Initializable {
 
+	@FXML private Pane rootModulePane;
 	@FXML private ImageView closeModuleFx;
 	@FXML private VBox knobVolumePane;
 	@FXML private TextField valueVolumeFx;
@@ -46,8 +48,12 @@ public class ViewOut implements IViewComponent, Initializable {
 		// Listener mute
 		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewMuteChange(newVal));
 		// Listener input
-		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick("input_out"));
+		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick("out_input"));
 		// Listener close module
-		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewClose());
+		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+			controller.handleViewClose();
+			Pane parent = (Pane) rootModulePane.getParent();
+			parent.getChildren().remove(rootModulePane);
+		});
 	}
 }
