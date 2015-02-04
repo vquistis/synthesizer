@@ -1,5 +1,6 @@
 package fr.istic.groupimpl.synthesizer.out;
 
+import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
@@ -25,19 +26,19 @@ public class ControllerOut implements IControllerComponent{
 	 */
 	public void handleViewMuteChange(Boolean newVal) {
 		if (newVal) {
-			model.stop();
+			model.getUnitGenerator().stop();
 		} else {
-			model.start();
+			model.getUnitGenerator().start();
 		}
 	}
 
 	@Override
-	public void handleViewInputClick(String portName) {
-		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(portName));
+	public void handleViewInputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
+		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(portName), xCoord, yCoord);
 	}
 
 	@Override
-	public void handleViewOutputClick(String portName) {
+	public void handleViewOutputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
 		//This module doesn't have output port
 	}
 

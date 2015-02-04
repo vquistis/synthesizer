@@ -17,10 +17,13 @@ public class ModelOutTest {
 		
 		Synthesizer synth = JSyn.createSynthesizer();
 		SineOscillator osc = new SineOscillator();
+		osc.amplitude.set(1);
+		osc.frequency.set(440);
 		model.getInputPort("out_input").connect(osc.output);
-		synth.add(osc);
 		synth.add(model.getUnitGenerator());
+		synth.add(osc);
 		synth.start();
+		osc.start();
 	}
 	
 	@Test

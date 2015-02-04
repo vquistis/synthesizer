@@ -25,5 +25,7 @@ public class AppOut extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+        primaryStage.setOnCloseRequest((event) -> System.exit(0));
 	}
 } 

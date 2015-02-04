@@ -11,12 +11,12 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 
 public class ModelOut extends ModelComponent {
 
-	private JsynAttenuationOut out;
+	private JsynOutCircuit out;
 	
 	public ModelOut() {
 		super();
 
-		out = new JsynAttenuationOut();
+		out = new JsynOutCircuit();
 		setAttenuation(0); // Default value
 	}
 
@@ -25,22 +25,10 @@ public class ModelOut extends ModelComponent {
 	 * @param value - attenuation in db
 	 */
 	public void setAttenuation(double dbValue) {
-		double coef = Math.pow(2, dbValue/6);
-		out.set(coef);
-	}
-
-	/**
-	 * Start sound emission
-	 */
-	public void start() {
-		out.start();
-	}
-	
-	/**
-	 * Stop sound emission
-	 */
-	public void stop() {
-		out.stop();
+		if (dbValue > 12) {
+			dbValue = 12;
+		}
+		out.setAttenuation(dbValue);
 	}
 
 	@Override
@@ -50,7 +38,7 @@ public class ModelOut extends ModelComponent {
 	
 	@Override
 	public UnitInputPort getInputPort(String portName) {
-		return out.input;
+		return out.getInput();
 	}
 
 	@Override

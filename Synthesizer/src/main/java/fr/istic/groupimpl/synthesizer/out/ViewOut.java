@@ -49,7 +49,7 @@ public class ViewOut implements IViewComponent, Initializable {
 		// Listener mute
 		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewMuteChange(newVal));
 		// Listener input
-		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick("out_input"));
+		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick("out_input", input.xProperty(), input.yProperty()));
 		// Listener close module
 		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			controller.handleViewClose();
