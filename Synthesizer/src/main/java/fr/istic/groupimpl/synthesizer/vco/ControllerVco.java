@@ -1,53 +1,41 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 public class ControllerVco implements IControllerComponent {
 	
-	private ModelVco modelVco;	
+	private ModelVco modelVco;
+	private ControllerGlobal ctrlGlob;
 	
 	public ControllerVco() {
 		modelVco = new ModelVco();
-		// Test, à suppr
-		modelVco.setCommandProperty("octave", () -> handleModelOctaveChange());
-	}
-	
-	
-	/* =================== Event handles FROM the view TO the model =================== */
-	
+		ctrlGlob = ControllerGlobal.getInstance();
+	}	
+		
 	@Override
 	public void handleViewInputClick(String portName) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException();
+		ctrlGlob.handleInputClicked(modelVco.getInputPort(portName));
 	}
 
+	@Override
+	public void handleViewOutputClick(String portName) {
+		ctrlGlob.handleOutputClicked(modelVco.getOutputPort(portName));
+	}
 
 	@Override
-	public void handleViewOutpuClick(String portName) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException();
+	public void handleViewClose() {
+		ctrlGlob.removeAllConnections(modelVco.getAllPorts());
+		ctrlGlob.unregisterUnitGenerator(modelVco.getUnitGenerator());
 	}
 	
 	public void handleViewOctaveChange(double octave, double precision) {
 		double realOctave = octave;
 		// Test precision : No negative values
-		if (octave >= 1.0 || (octave <= 1.0 && precision >= 0.0)) {
+		if (octave + precision >= 0.0) {
 			realOctave+= precision;
 		}
-		System.err.println("Octave (view) Potentiomètre changed : " + realOctave);
-		modelVco.setValProperty("octave", realOctave);
 		modelVco.setJsynOctave(realOctave);
-	}
-	
-	
-	
-	
-	/* =================== Event handles FROM the model TO the view =================== */
-	
-	/* (TEST, à suppr) */
-	public void handleModelOctaveChange() {
-		System.err.println("Octave (modèle) Potentiomètre changed : " + modelVco.getValProperty("octave"));
 	}
 
 }

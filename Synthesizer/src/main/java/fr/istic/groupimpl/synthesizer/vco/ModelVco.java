@@ -1,7 +1,10 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
+import java.util.Collection;
+
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
@@ -16,6 +19,7 @@ public class ModelVco extends ModelComponent {
 		vcoCirc = new VCOCircuit();
 		vcoCirc.getInputF0().set(440); // Default F0
 		vcoCirc.getInputOctave().set(0.0);
+		vcoCirc.getInputFM().setName("fm_vco");
 		vcoCirc.getOutputSquare().setName("square_vco");
 		vcoCirc.getOutputTriangle().setName("triangle_vco");
 		vcoCirc.getOutputSawtooth().setName("sawtooth_vco");
@@ -38,6 +42,11 @@ public class ModelVco extends ModelComponent {
 	@Override
 	public UnitOutputPort getOutputPort(String portName) {
 		return (UnitOutputPort) vcoCirc.getPortByName(portName);
+	}
+
+	@Override
+	public Collection<UnitPort> getAllPorts() {
+		return this.vcoCirc.getPorts();
 	}
 		
 }
