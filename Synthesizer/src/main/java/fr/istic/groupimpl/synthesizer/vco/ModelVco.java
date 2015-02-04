@@ -1,42 +1,43 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
-import com.jsyn.JSyn;
-import com.jsyn.Synthesizer;
-import com.jsyn.unitgen.LineOut;
-import com.jsyn.unitgen.SineOscillator;
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.vco.jsyn.VCOCircuit;
 
 public class ModelVco extends ModelComponent {
 	
-	private UnitGenerator sineOsc;
+	private VCOCircuit vcoCirc;
 		
 	public ModelVco() {
 		super();		
-		sineOsc = new SineOscillator();
-		// TODO : Remplacer par le composant Jsyn (UnitGenerator, à créer)		
-		
-		// TEST
-//		Synthesizer synth = JSyn.createSynthesizer();    	
-//    	synth.start();
-//		SineOscillator sineOsc = new SineOscillator();
-//		LineOut lineOut = new LineOut();		
-//		sineOsc.output.connect(0, lineOut.input, 0);   // connect to left channel
-//		sineOsc.output.connect(0, lineOut.input, 1);   // connect to right channel
-//		synth.add(sineOsc);
-//		synth.add(lineOut);
-//		lineOut.start();
-				
+		vcoCirc = new VCOCircuit();
+		vcoCirc.getInputF0().set(440); // Default F0
+		vcoCirc.getInputOctave().set(0.0);
+		vcoCirc.getOutputSquare().setName("square_vco");
+		vcoCirc.getOutputTriangle().setName("triangle_vco");
+		vcoCirc.getOutputSawtooth().setName("sawtooth_vco");
 	}
 
 	@Override
 	public UnitGenerator getUnitGenerator() {
-		return sineOsc;
+		return this.vcoCirc;
 	}
 	
 	protected void setJsynOctave(double octave) {
-		// TODO
+		vcoCirc.getInputOctave().set(octave);
+	}
+
+	@Override
+	public UnitInputPort getInputPort(String portName) {
+		return (UnitInputPort) vcoCirc.getPortByName(portName);
+	}
+
+	@Override
+	public UnitOutputPort getOutputPort(String portName) {
+		return (UnitOutputPort) vcoCirc.getPortByName(portName);
 	}
 		
 }

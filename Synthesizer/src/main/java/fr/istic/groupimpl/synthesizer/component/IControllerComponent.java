@@ -11,5 +11,10 @@ public interface IControllerComponent {
 	 * Click listener for output port.
 	 * @param portName - name of clicked port
 	 */
-	public void handleViewOutpuClick(String portName);
+	public void handleViewOutputClick(String portName);
+	
+	/**
+	 * Click listener for close the component.
+	 */
+	public void handleViewClose();
 }

@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -12,8 +11,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
-import fr.istic.groupimpl.synthesizer.component.Port;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
+import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 public class ViewVco implements IViewComponent, Initializable {
 
@@ -39,27 +38,33 @@ public class ViewVco implements IViewComponent, Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		Potentiometre octaveKnob = new Potentiometre("");
-		octaveKnob.setMin(-32);
-		octaveKnob.setMax(0);
+		PotentiometreFactory pf = PotentiometreFactory.getFactoryInstance();
+		pf.setMinValue(0);
+		pf.setMaxValue(8);
+		pf.setDiscret(true);
+		pf.setShowTickMarks(true);
+		pf.setShowTickLabels(true);
+		pf.setMajorTickUnit(1);
+		pf.setNbSpins(0.88);
+		pf.setRayon(40);
+		pf.setValueDef(0);
+		
+		Potentiometre octaveKnob = pf.getPotentiometre();
 		knobOctavePane.getChildren().add(octaveKnob);
 	   	
-	   	Potentiometre precisionKnob = new Potentiometre("");
-	   	precisionKnob.setMin(-1);
-	   	precisionKnob.setMax(1);
+		pf.setNbSpins(0.80);
+		pf.setDiscret(false);
+		pf.setMinValue(-1);
+		pf.setMaxValue(1);
+		
+	   	Potentiometre precisionKnob = pf.getPotentiometre();
 	   	knobFreqPane.getChildren().add(precisionKnob);
 	   	
 	   	ControllerVco vcoControl = new ControllerVco();
-	   	octaveKnob.valueProperty().addListener((p, newVal, oldVal) ->
+	   	octaveKnob.valueProperty().addListener((p, oldVal, newVal) ->
 	   		vcoControl.handleViewOctaveChange((double) newVal, precisionKnob.getValue()));
-	   	precisionKnob.valueProperty().addListener((p, newVal, oldVal) ->
+	   	precisionKnob.valueProperty().addListener((p, oldVal, newVal) ->
    			vcoControl.handleViewOctaveChange(octaveKnob.getValue(), (double) newVal));
-	}
-
-	@Override
-	public List<Port> getAllPorts() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

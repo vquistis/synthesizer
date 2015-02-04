@@ -11,10 +11,18 @@ public class ControllerOut implements IControllerComponent{
 		//ControllerGlobal.registerUnitGenerator(model.getUnitGenerator());
 	}
 	
+	/**
+	 * Change listener for sound attenuation (volume).
+	 * @param newVal - new value of attenuation in db
+	 */
 	public void handleViewVolumeChange(Number newVal) {
 		model.setAttenuation((double) newVal);
 	}
 
+	/**
+	 * Change listener for mute choice
+	 * @param newVal - true for mute
+	 */
 	public void handleViewMuteChange(Boolean newVal) {
 		if (newVal) {
 			model.stop();
@@ -29,7 +37,12 @@ public class ControllerOut implements IControllerComponent{
 	}
 
 	@Override
-	public void handleViewOutpuClick(String portName) {
+	public void handleViewOutputClick(String portName) {
 		//This module doesn't have output port
+	}
+
+	@Override
+	public void handleViewClose() {
+		//ControllerGlobal.handleInputClick(model.getAllPorts());
 	}
 }
