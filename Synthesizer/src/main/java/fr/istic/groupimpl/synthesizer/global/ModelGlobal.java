@@ -20,13 +20,8 @@ public class ModelGlobal {
 	
 	private Synthesizer synth;
 
-	/*
-	 * f(output) -> input
-	 */
 	private Map<UnitOutputPort, UnitInputPort> outputConnections;
-	/*
-	 * f(input) -> output
-	 */
+	
 	private Map<UnitInputPort, UnitOutputPort> inputConnections;
 
 	/**
@@ -117,7 +112,7 @@ public class ModelGlobal {
 	}
 
 	/**
-	 * Adds an entry in the input connexions map with the output port as a key
+	 * Adds an entry in the input connections map with the output port as a key
 	 * and the output port as a value.
 	 * @param inputPort
 	 * @param outputPort
