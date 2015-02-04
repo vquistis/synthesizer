@@ -126,12 +126,19 @@ public class PotentiometreFactory {
 	public double getValueDef() {
 		if (valueDefInit)
 			return valueDef;
-		else
-			return (minValue + maxValue) / 2.;
+		else {
+			double v = (minValue + maxValue) / 2.;
+			if (isDiscret()) {
+				return Math.floor(v + 0.5);
+			} else {
+				return v;
+			}
+		}
 	}
 
 	/**
 	 * set the default value
+	 * 
 	 * @param valueDef
 	 */
 	public void setValueDef(double valueDef) {
@@ -141,6 +148,7 @@ public class PotentiometreFactory {
 
 	/**
 	 * get the show tick marks flag
+	 * 
 	 * @return the show tick marks flag
 	 */
 	public boolean isShowTickMarks() {
@@ -149,8 +157,9 @@ public class PotentiometreFactory {
 
 	/**
 	 * set the show tick marks flag
+	 * 
 	 * @param showTickMarks
-	 * the show tick marks flag
+	 *            the show tick marks flag
 	 */
 	public void setShowTickMarks(boolean showTickMarks) {
 		this.showTickMarks = showTickMarks;
@@ -158,6 +167,7 @@ public class PotentiometreFactory {
 
 	/**
 	 * get the show tick labels flag
+	 * 
 	 * @return the show tick labels flag
 	 */
 	public boolean isShowTickLabels() {
@@ -166,8 +176,9 @@ public class PotentiometreFactory {
 
 	/**
 	 * set the show tick labels flag
+	 * 
 	 * @param showTickLabels
-	 * the show tick labels flag
+	 *            the show tick labels flag
 	 */
 	public void setShowTickLabels(boolean showTickLabels) {
 		this.showTickLabels = showTickLabels;
@@ -175,17 +186,18 @@ public class PotentiometreFactory {
 
 	/**
 	 * get the major tick unit
-	 * @return 
-	 * the major tick unit
+	 * 
+	 * @return the major tick unit
 	 */
 	public double getMajorTickUnit() {
 		return majorTickUnit;
 	}
 
 	/**
-	 * set the major tick unit 
+	 * set the major tick unit
+	 * 
 	 * @param majorTickUnit
-	 *	 the major tick unit 
+	 *            the major tick unit
 	 */
 	public void setMajorTickUnit(double majorTickUnit) {
 		this.majorTickUnit = majorTickUnit;
@@ -193,6 +205,7 @@ public class PotentiometreFactory {
 
 	/**
 	 * get the title
+	 * 
 	 * @return the title
 	 */
 	public String getTitle() {
@@ -201,8 +214,9 @@ public class PotentiometreFactory {
 
 	/**
 	 * set the title
+	 * 
 	 * @param title
-	 * the title
+	 *            the title
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -210,8 +224,8 @@ public class PotentiometreFactory {
 
 	/**
 	 * get the rayon
-	 * @return
-	 * the rayon
+	 * 
+	 * @return the rayon
 	 */
 	public double getRayon() {
 		return rayon;
@@ -219,8 +233,9 @@ public class PotentiometreFactory {
 
 	/**
 	 * set the rayon
+	 * 
 	 * @param rayon
-	 * 	the rayon
+	 *            the rayon
 	 */
 	public void setRayon(double rayon) {
 		this.rayon = rayon;
