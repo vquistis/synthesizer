@@ -8,25 +8,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application{
+public class AppVco extends Application {
+	
 	public static void main(String[] arg0) {
 		launch(arg0);
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
-		//Group root = new Group();
-		ClassLoader loader = getClass().getClassLoader();
-	    Parent root = FXMLLoader.load(loader.getResource("fxml/vco.fxml"));		
-	 
+	    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/vco.fxml"));
+		URL cssURL = getClass().getClassLoader().getResource("css/style.css");
+		
 		Scene scene = new Scene(root);
-		URL cssURL = loader.getResource("css/style.css");
+		scene.getStylesheets().add(cssURL.toExternalForm());
 		
 		primaryStage.setScene(scene);
-		scene.getStylesheets().add(cssURL.toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
 	}
 } 
