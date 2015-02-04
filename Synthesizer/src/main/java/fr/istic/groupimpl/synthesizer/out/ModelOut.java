@@ -25,8 +25,9 @@ public class ModelOut extends ModelComponent {
 	 * Set an attenuation to the output signal
 	 * @param value - attenuation in db
 	 */
-	public void setAttenuation(double value) {
-		out.set(value);
+	public void setAttenuation(double dbValue) {
+		double coef = Math.pow(2, dbValue/6);
+		out.set(coef);
 	}
 
 	/**

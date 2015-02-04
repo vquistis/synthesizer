@@ -43,7 +43,7 @@ public class ControllerOut implements IControllerComponent{
 
 	@Override
 	public void handleViewClose() {
-		ControllerGlobal.getInstance().removeAllConnexions(model.getAllPorts());
+		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 }
