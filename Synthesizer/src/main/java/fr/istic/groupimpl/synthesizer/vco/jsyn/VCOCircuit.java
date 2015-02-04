@@ -21,10 +21,6 @@ import com.jsyn.unitgen.UnitSource;
  * - SelectFrom3Input
  * - PassThrough
  * 
- * <pre>
- * output = TODO
- * </pre>
- * 
  * @author GoupImpl
  */
 
@@ -51,7 +47,7 @@ public class VCOCircuit extends Circuit implements UnitSource
 	private UnitOutputPort outputTriangle;
 
 	/**
-	 * Frequency modulation 
+	 * Frequency modulation input (Volt)
 	 * @return
 	 */
 	public UnitInputPort getInputFM() {
@@ -59,41 +55,76 @@ public class VCOCircuit extends Circuit implements UnitSource
 	}
 
 	/**
+	 * Default Frequency input (Hz)
 	 * @return
 	 */
 	public UnitInputPort getInputF0() {
 		return inputF0;
 	}
 
+	/**
+	 * Select shape input (1 | 2 | 3)
+	 * - 1 triangleOscillator
+	 * - 2 sawtoothOscillator
+	 * - 3 squareOscillator
+	 * @return
+	 */
 	public UnitInputPort getInputShape() {
 		return inputShape;
 	}
 
+	/**
+	 * Octave input
+	 * @return
+	 */
 	public UnitInputPort getInputOctave() {
 		return inputOctave;
 	}
 
+	/**
+	 * Amplitude input
+	 * @return
+	 */
 	public UnitInputPort getInputAmplitude() {
 		return inputAmplitude;
 	}
 
+	/** 
+	 * Output of the selected shape
+	 * @return
+	 */
 	public UnitOutputPort getOutput()
 	{
 		return output;
 	}
 	
+	/**
+	 * Output Square shape
+	 * @return
+	 */
 	public UnitOutputPort getOutputSquare() {
 		return outputSquare;
 	}
 
+	/**
+	 * Output Sawtooth shape
+	 * @return
+	 */
 	public UnitOutputPort getOutputSawtooth() {
 		return outputSawtooth;
 	}
 
+	/**
+	 * Output Triangle shape
+	 * @return
+	 */
 	public UnitOutputPort getOutputTriangle() {
 		return outputTriangle;
 	}
 	
+	/**
+	 * Constructor
+	 */
 	public VCOCircuit()
 	{
 		/*
@@ -137,7 +168,7 @@ public class VCOCircuit extends Circuit implements UnitSource
 	
 	/**
 	 * 
-	 *
+	 * add a named port to the circuit and return its instance
 	 * 
 	 * @param UnitPort
 	 *   instance to add
