@@ -22,12 +22,16 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" text="X" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
             <Label alignment="CENTER" text="VCO">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
+            <ImageView fitHeight="32.0" fitWidth="32.0" onMouseClicked="#handleCloseClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@../img/close.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
    </top>
@@ -60,22 +64,22 @@
                <font>
                   <Font size="11.0" />
                </font></Label>
-            <ImageView fx:id="fm" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+            <ImageView fx:id="fm" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleFmClick" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
                   <Image url="@../img/inoutBleu.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="square" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <ImageView fx:id="square" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleSquareClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../img/inoutRouge.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="triangle" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <ImageView fx:id="triangle" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleTriangleClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../img/inoutVert.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="sawTooth" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <ImageView fx:id="sawTooth" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleSawToothClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../img/inoutBlanc.png" />
                </image>
