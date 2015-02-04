@@ -33,7 +33,7 @@
                      <children>
                         <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
-                              <Button fx:id="vcoBtn" minWidth="215.0" onAction="#handleAddOut" prefHeight="25.0" prefWidth="215.0" text="VCO">
+                              <Button fx:id="vcoBtn" minWidth="215.0" onAction="#handleAddVco" prefHeight="25.0" prefWidth="215.0" text="VCO">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
