@@ -133,7 +133,70 @@ public class ViewGlobal implements Initializable {
 		});
 		
 		scrollpane.setOnMouseMoved((e) -> {
-			//TODO récupérer e.getX(), e.getY(), scroll en fonction.
+			double spXMin = scrollpane.getViewportBounds().getMinX();
+			double spYMin = scrollpane.getViewportBounds().getMinY();
+			double spXMax = scrollpane.getViewportBounds().getMaxX();
+			double spYMax = scrollpane.getViewportBounds().getMaxY();
+			double x = e.getX();
+			double y = e.getY();
+
+			if ((x >= spXMin  && x <= spXMin + 50) &&
+					(y >= spYMin  && y <= spYMax))  
+			{
+				scrollpane.setHvalue(scrollpane.getHvalue() - 0.01);
+				
+			} else if ((x >= spXMax -50  && x <= spXMax) &&
+					(y >= spYMin  && y <= spYMax))  
+			{
+				scrollpane.setHvalue(scrollpane.getHvalue() + 0.01);
+				
+			}
+
+			if ((x >= spXMin  && x <= spXMax) &&
+					(y >= spYMin  && y <= spYMin+50))  
+			{
+				scrollpane.setVvalue(scrollpane.getVvalue() - 0.01);
+				
+			} else if ((x >= spXMin  && x <= spXMax) &&
+					(y >= spYMax-50  && y <= spYMax))  
+			{
+				scrollpane.setVvalue(scrollpane.getVvalue() + 0.01);
+			}
+
+		});
+		
+		splitpane.setOnDragOver((e) -> {
+			double spXMin = scrollpane.getViewportBounds().getMinX();
+			double spYMin = scrollpane.getViewportBounds().getMinY();
+			double spXMax = scrollpane.getViewportBounds().getMaxX();
+			double spYMax = scrollpane.getViewportBounds().getMaxY();
+			double x = e.getX();
+			double y = e.getY();
+
+			Log.getInstance().debug("!! Test ");
+			if ((x >= spXMin  && x <= spXMin + 50) &&
+					(y >= spYMin  && y <= spYMax))  
+			{
+				scrollpane.setHvalue(scrollpane.getHvalue() - 0.01);
+				
+			} else if ((x >= spXMax -50  && x <= spXMax) &&
+					(y >= spYMin  && y <= spYMax))  
+			{
+				scrollpane.setHvalue(scrollpane.getHvalue() + 0.01);
+				
+			}
+
+			if ((x >= spXMin  && x <= spXMax) &&
+					(y >= spYMin  && y <= spYMin+50))  
+			{
+				scrollpane.setVvalue(scrollpane.getVvalue() - 0.01);
+				
+			} else if ((x >= spXMin  && x <= spXMax) &&
+					(y >= spYMax-50  && y <= spYMax))  
+			{
+				scrollpane.setVvalue(scrollpane.getVvalue() + 0.01);
+			}
+
 		});
 		
 		ControllerGlobal ctl = ControllerGlobal.getInstance();
