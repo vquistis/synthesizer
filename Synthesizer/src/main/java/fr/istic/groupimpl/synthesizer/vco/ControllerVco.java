@@ -11,8 +11,8 @@ public class ControllerVco implements IControllerComponent {
 	public ControllerVco() {
 		modelVco = new ModelVco();
 		ctrlGlob = ControllerGlobal.getInstance();
-		//ctrlGlob.registerUnitGenerator(modelVco.getUnitGenerator());
-	}	
+		ctrlGlob.registerUnitGenerator(modelVco.getUnitGenerator());
+	}
 		
 	@Override
 	public void handleViewInputClick(String portName) {
