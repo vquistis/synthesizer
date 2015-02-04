@@ -11,8 +11,9 @@ public class JsynAttenuationOut extends UnitGenerator implements UnitSink {
 	
     public UnitInputPort input;
     
-    // Attenuation value in volts
-	private double volt = 0;
+    // Attenuation value in decibel
+	private double attenuationDB = 0.;
+	private double coefAttenuation = 1.;
 
     public JsynAttenuationOut() {
         addPort(input = new UnitInputPort(2, "Input"));
@@ -26,8 +27,8 @@ public class JsynAttenuationOut extends UnitGenerator implements UnitSink {
         double[] buffer1 = synthesisEngine.getOutputBuffer(1);
         for (int i = start; i < limit; i++) {
         	//attenuation of the input signal
-        	double out0 = inputs0[i]+volt;
-        	double out1 = inputs1[i]+volt;
+        	double out0 = inputs0[i]*coefAttenuation;
+        	double out1 = inputs1[i]*coefAttenuation;
             buffer0[i] += out0;
             buffer1[i] += out1;
         }
@@ -39,9 +40,13 @@ public class JsynAttenuationOut extends UnitGenerator implements UnitSink {
     }
     
 	/**
-	 * Set the attenuation value in volts
+	 * Set the attenuation value in decibel
 	 */
 	public void set(double dbValue) {
-		this.volt = dbValue;
+		this.attenuationDB = dbValue;
+		if ( dbValue < -1000.)
+			coefAttenuation = 0.;
+		else
+			coefAttenuation = Math.pow(2., dbValue/6.);
 	}
 }
