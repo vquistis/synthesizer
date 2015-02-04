@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.util.Pair;
+import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.IViewComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
@@ -51,6 +54,12 @@ public class ViewGlobal implements Initializable {
 	
 	/** The list assoc. */
 	private List<Pair<Node,IViewComponent>> listAssoc = new ArrayList<Pair<Node,IViewComponent>>();
+	
+	private Cable currentCable = null;
+
+	private DoubleProperty mouseX = new SimpleDoubleProperty(0);
+	
+	private DoubleProperty mouseY = new SimpleDoubleProperty(0);
 
 	/**
 	 * Initializes the controller class.
@@ -73,7 +82,7 @@ public class ViewGlobal implements Initializable {
 		
 		vcoBtn.getStyleClass().add("btnClass");
 		outBtn.getStyleClass().add("btnClass");
-
+		
 		for(Node n : splitpane.getItems()) {
 			n.setOnDragOver((e) -> {
 				e.acceptTransferModes(TransferMode.ANY);
@@ -108,6 +117,11 @@ public class ViewGlobal implements Initializable {
 				}
 			});
 		}
+		
+		splitpane.setOnMouseMoved((e) -> {
+			mouseX.set(e.getX());
+			mouseY.set(e.getY());
+		});
 	}
 
 	/**
@@ -217,5 +231,13 @@ public class ViewGlobal implements Initializable {
 	@FXML
 	public void handleAddOut(){
 		createModule("fxml/out.fxml");		
-	}	
+	}
+
+	public DoubleProperty mouseXProperty() {
+		return mouseX;
+	}
+	
+	public DoubleProperty mouseYProperty() {
+		return mouseY;
+	}
 }

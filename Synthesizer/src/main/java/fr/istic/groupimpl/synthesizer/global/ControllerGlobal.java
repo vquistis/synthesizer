@@ -1,6 +1,8 @@
 package fr.istic.groupimpl.synthesizer.global;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.beans.property.DoubleProperty;
 
@@ -9,6 +11,7 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
+import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 public class ControllerGlobal {
@@ -34,6 +37,8 @@ public class ControllerGlobal {
 	private UnitPort previousPort;
 
 	private UnitPort currentPort;
+	
+	private Map<UnitPort,Cable> cables = new HashMap<UnitPort,Cable>();
 
 	private ControllerGlobal() {
 		model = new ModelGlobal(this);
@@ -110,13 +115,32 @@ public class ControllerGlobal {
 				currentPort = model.getConnectedPort(port);
 				model.disconnectInputPort(port);
 				previousPort = port;
+				
+				//----------------------
 				//TODO notify the view to bind the input end of the cable to the mouse.
+				
+				Cable cable = cables.get(port);
+				cables.remove(port);
+				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());
 				Log.getInstance().debug("INPUT PORT DISCONNECTED");
+				
+				//----------------------
+				
 			} else {
 				cableMode = CableMode.IN_CONNECTED;
 				currentPort = port;
+				
+				//----------------------
 				//TODO notify the view to create a new, unbound cable originating from the given port.
+				
+				Cable cable = new Cable();
+				cables.put(port, cable);
+				cable.bindInput(x, y);
+				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
 				Log.getInstance().debug("CREATING CABLE FROM INPUT PORT");
+				
+				//----------------------
+				
 			}
 			break;
 		case IN_CONNECTED:
@@ -134,7 +158,16 @@ public class ControllerGlobal {
 			if(!model.isPortConnected(port)) {
 				cableMode = CableMode.NONE_CONNECTED;
 				this.model.connectPorts(currentPort, port);
+				
+				//----------------------
+				//TODO
+				Cable cable = cables.get(currentPort);
+				cables.put(port,cable);
+				cable.bindInput(x, y);
 				Log.getInstance().debug("INPUT PORT CONNECTED TO OUTPUT PORT");
+				
+				//----------------------
+				
 				currentPort = null;
 				previousPort = null;
 			}
@@ -154,27 +187,51 @@ public class ControllerGlobal {
 			if(model.isPortConnected(port)) {
 				cableMode = CableMode.IN_CONNECTED;
 				currentPort = model.getConnectedPort(port);
-				if(currentPort == null) {
-					Log.getInstance().debug("CURRENT PORT IS NULL");
-				}
 				model.disconnectOutputPort(port);
 				previousPort = port;
+				
+				//----------------------
 				//TODO notify the view to bind the input end of the cable to the mouse.
+				
+				Cable cable = cables.get(port);
+				cables.remove(port);
 				Log.getInstance().debug("OUTPUT PORT DISCONNECTED");
+				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
+				
+				//----------------------
+				
 			} else {
 				cableMode = CableMode.OUT_CONNECTED;
 				currentPort = port;
+				
+				//----------------------
 				//TODO notify the view to create a new, unbound cable originating from the given port.
+				
+				Cable cable = new Cable();
+				cables.put(port, cable);
+				cable.bindInput(x, y);
+				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
 				Log.getInstance().debug("CREATING CABLE FROM OUTPUT PORT");
+				
+				//----------------------
+				
 			}
 			break;
 		case IN_CONNECTED:
 			if(!model.isPortConnected(port)) {
 				cableMode = CableMode.NONE_CONNECTED;
 				this.model.connectPorts(port, currentPort);
+				
+				//----------------------
+				//TODO
+				Cable cable = cables.get(currentPort);
+				cables.put(port,cable);
+				cable.bindOutput(x, y);
+				
+				//----------------------
+				
 				currentPort = null;
 				previousPort = null;
-				Log.getInstance().debug("OUTPUT PORT CONNECTED TO INPUT PORT");
 			}
 			break;
 		case OUT_CONNECTED:
