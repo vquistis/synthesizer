@@ -109,7 +109,7 @@ public class VCOCircuit extends Circuit implements UnitSource
 		
 		/* Make ports on internal units appear as ports on circuit. */
 		/* Optionally give some circuit ports more meaningful names. */	
-		inputFM = (UnitInputPort) addNamedPort(vcFreq.getInputfm(), "inputfm");
+		inputFM = (UnitInputPort) addNamedPort(vcFreq.getInputfm(), "vco_inputFm");
 		inputF0 = (UnitInputPort) addNamedPort(vcFreq.getInputf0(), "inputf0");
 		inputOctave = (UnitInputPort) addNamedPort(vcFreq.getInputOctave(), "inputOctave");
 		inputShape = (UnitInputPort) addNamedPort(selectFrom3.getInputSelect(), "inputSelectShape");
@@ -117,9 +117,9 @@ public class VCOCircuit extends Circuit implements UnitSource
 		inputAmplitude = (UnitInputPort) addNamedPort(passThroughAmplitude.getInput(), "inputAmplitude");
 		
 		output = (UnitOutputPort) addNamedPort(selectFrom3.getOutput(), "outputAmplitude"); // fct sélecteur
-		outputSquare = (UnitOutputPort) addNamedPort(squareOscillator.getOutput(), "outputSquareOscillator");
-		outputSawtooth = (UnitOutputPort) addNamedPort(sawtoothOscillator.getOutput(), "outputSawtoothOscillator");
-		outputTriangle = (UnitOutputPort) addNamedPort(triangleOscillator.getOutput(), "outputTriangleOscillator");
+		outputSquare = (UnitOutputPort) addNamedPort(squareOscillator.getOutput(), "vco_outputSquare");
+		outputSawtooth = (UnitOutputPort) addNamedPort(sawtoothOscillator.getOutput(), "vco_outputSawTooth");
+		outputTriangle = (UnitOutputPort) addNamedPort(triangleOscillator.getOutput(), "vco_outputTriangle");
 		
 		/* Connect SynthUnits to make control signal path. */
 		vcFreq.getOutput().connect(triangleOscillator.frequency);

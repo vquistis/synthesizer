@@ -19,10 +19,6 @@ public class ModelVco extends ModelComponent {
 		vcoCirc = new VCOCircuit();
 		vcoCirc.getInputF0().set(440); // Default F0
 		vcoCirc.getInputOctave().set(0.0);
-		vcoCirc.getInputFM().setName("fm_vco");
-		vcoCirc.getOutputSquare().setName("square_vco");
-		vcoCirc.getOutputTriangle().setName("triangle_vco");
-		vcoCirc.getOutputSawtooth().setName("sawtooth_vco");
 	}
 
 	@Override
@@ -30,7 +26,11 @@ public class ModelVco extends ModelComponent {
 		return this.vcoCirc;
 	}
 	
-	protected void setJsynOctave(double octave) {
+	/**
+	 * @param octave
+	 * Sets the octave value to the VCO Circuit
+	 */
+	protected void setOctave(double octave) {
 		vcoCirc.getInputOctave().set(octave);
 	}
 

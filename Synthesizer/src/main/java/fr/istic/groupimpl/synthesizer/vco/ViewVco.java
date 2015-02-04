@@ -14,6 +14,10 @@ import fr.istic.groupimpl.synthesizer.component.IViewComponent;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
+/**
+ * @authors GroupImpl
+ * VCO module - JavaFX Controller
+ */
 public class ViewVco implements IViewComponent, Initializable {
 
 	@FXML
@@ -41,6 +45,8 @@ public class ViewVco implements IViewComponent, Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		PotentiometreFactory pf = PotentiometreFactory.getFactoryInstance();
+		
+		// Octave knob
 		pf.setMinValue(0);
 		pf.setMaxValue(8);
 		pf.setDiscret(true);
@@ -49,19 +55,19 @@ public class ViewVco implements IViewComponent, Initializable {
 		pf.setMajorTickUnit(1);
 		pf.setNbSpins(0.88);
 		pf.setRayon(40);
-		pf.setValueDef(0);
-		
+		pf.setValueDef(0);		
 		Potentiometre octaveKnob = pf.getPotentiometre();
 		knobOctavePane.getChildren().add(octaveKnob);
 	   	
+		// Precision knob
 		pf.setNbSpins(0.80);
 		pf.setDiscret(false);
 		pf.setMinValue(-1);
-		pf.setMaxValue(1);
-		
+		pf.setMaxValue(1);		
 	   	Potentiometre precisionKnob = pf.getPotentiometre();
 	   	knobFreqPane.getChildren().add(precisionKnob);
 	   	
+	   	// VcoController creation and listeners on knob values
 	   	vcoControl = new ControllerVco();
 	   	octaveKnob.valueProperty().addListener((p, oldVal, newVal) ->
 	   		vcoControl.handleViewOctaveChange((double) newVal, precisionKnob.getValue()));
@@ -69,22 +75,37 @@ public class ViewVco implements IViewComponent, Initializable {
    			vcoControl.handleViewOctaveChange(octaveKnob.getValue(), (double) newVal));
 	}
 	
+	/**
+	 * Handles the click on the FM input port
+	 */
 	public void handleFmClick() {
-		vcoControl.handleViewInputClick("fm_vco");
+		vcoControl.handleViewInputClick("vco_inputFm");
 	}
 	
+	/**
+	 * Handles the click on the SQUARE output port
+	 */
 	public void handleSquareClick() {
-		vcoControl.handleViewOutputClick("square_vco");
+		vcoControl.handleViewOutputClick("vco_outputSquare");
 	}
 	
+	/**
+	 * Handles the click on the TRIANGLE output port
+	 */
 	public void handleTriangleClick() {
-		vcoControl.handleViewOutputClick("triangle_vco");
+		vcoControl.handleViewOutputClick("vco_outputTriangle");
 	}
 	
+	/**
+	 * Handles the click on the SAWTOOTH output port
+	 */
 	public void handleSawToothClick() {
-		vcoControl.handleViewOutputClick("sawtooth_vco");
+		vcoControl.handleViewOutputClick("vco_outputSawTooth");
 	}
 	
+	/**
+	 * Handles the click on the close button
+	 */
 	public void handleCloseClick() {
 		vcoControl.handleViewClose();
 	}
