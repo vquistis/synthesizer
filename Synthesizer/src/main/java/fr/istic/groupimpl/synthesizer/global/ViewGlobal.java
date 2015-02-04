@@ -25,6 +25,7 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * The Class ViewGlobal.
+ * Implements all the FXML components and sets them their corresponding commands.
  */
 public class ViewGlobal implements Initializable {
 
@@ -44,31 +45,24 @@ public class ViewGlobal implements Initializable {
 	@FXML
 	private ScrollPane scrollpane;
 
-	/** The hboxes. */
-	List<HBox> hboxes = new ArrayList<HBox>();
+	/** The hboxe list. */
+	private List<HBox> hboxes = new ArrayList<HBox>();
 	
 	/** The list assoc. */
-	List<Pair<Node,IViewComponent>> listAssoc = new ArrayList<Pair<Node,IViewComponent>>();
-	
-	/** The last xy. */
-	Point2D lastXY = null;
+	private List<Pair<Node,IViewComponent>> listAssoc = new ArrayList<Pair<Node,IViewComponent>>();
 
-	/** The h. */
-	private HBox h;
-	
-	/** The h1. */
-	private HBox h1;
-	
-	/** The n. */
-	private Node n;
-
-	/* (non-Javadoc)
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	/**
+	 * Initializes the controller class.
+	 * This method is automatically called after the FXML file has been loaded. It creates a new view and set all the button with new created buttons.
+	 *
+	 * @param arg0 the arg0
+	 * @param arg1 the arg1
+	 * @see View
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		for (int i = 0; i < 3; i++) {
-			h1 = new HBox();
+			HBox h1 = new HBox();
 			h1.setPrefSize(600, 200);
 			h1.setMinSize(600, 200);
 			h1.setMaxSize(600, 200);
@@ -114,7 +108,7 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-	 * Adds the module.
+	 * add the node in the i position HBOX.
 	 *
 	 * @param node the node
 	 * @param i the i
@@ -124,26 +118,38 @@ public class ViewGlobal implements Initializable {
 		hboxes.get(i).getChildren().add(j, node);
 	}
 
-	//	public void deleteModule(Node node, int i) {
-	//		int idx = 0;
-	//		for(Pair<Node, IViewComponent> p : listAssoc) {
-	//			if(p.getKey().equals(node)) {
-	//				break;
-	//			}
-	//			idx++;
-	//		}
-	//		listAssoc.remove(idx);
-	//		hboxes.get(i).getChildren().remove(node);
-	//	}
-
-	//	public void removeModule(Node node, int i) {
-	//		hboxes.get(i).getChildren().remove(node);
-	//	}
+	/**
+	 * Delete module.
+	 *
+	 * @param node the node
+	 * @param i the i
+	 */
+	public void deleteModule(Node node, int i) {
+		int idx = 0;
+		for(Pair<Node, IViewComponent> p : listAssoc) {
+			if(p.getKey().equals(node)) {
+				break;
+			}
+			idx++;
+		}
+		listAssoc.remove(idx);
+		hboxes.get(i).getChildren().remove(node);
+	}
 
 	/**
-	 * Creates the module.
+	 * Removes the module.
 	 *
-	 * @param filename the filename
+	 * @param node the node
+	 * @param i the i
+	 */
+	public void removeModule(Node node, int i) {
+		hboxes.get(i).getChildren().remove(node);
+	}
+
+	/**
+	 * Creates a new module.
+	 *
+	 * @param filename the filename component fxml
 	 */
 	public void createModule(String filename) {
 		try {
@@ -159,10 +165,10 @@ public class ViewGlobal implements Initializable {
 	}
 	
 	/**
-	 * Gets the string.
+	 * This method is used to return the position of a component in the container splitPane.
 	 *
 	 * @param node the node
-	 * @return the string
+	 * @return the string. position the component
 	 */
 	private String getString(Node node) {
 		int i=0;
@@ -194,7 +200,7 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-	 * Handle add vco.
+	 * Handle add vco. Plus click. This method adds a new VCO component VCO
 	 */
 	@FXML
 	public void handleAddVco(){
@@ -202,7 +208,7 @@ public class ViewGlobal implements Initializable {
 	}
 	
 	/**
-	 * Handle add out.
+	 * Handle add out. This method adds a new OUT components
 	 */
 	@FXML
 	public void handleAddOut(){

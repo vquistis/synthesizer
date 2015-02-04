@@ -10,7 +10,7 @@ import javafx.scene.shape.StrokeLineCap;
  * 
  * Permet de relier 2 composants par un câble
  *    
- * @author groupImpl
+ * @author Team groupImpl
  *
  */
 public class Cable extends CubicCurve {
@@ -46,7 +46,7 @@ public class Cable extends CubicCurve {
 	 * @param startX
 	 * @param startY
 	 */
-	public void bindOuput(DoubleProperty startX, DoubleProperty startY) {
+	public void bindOutput(DoubleProperty startX, DoubleProperty startY) {
 		startXProperty().bind(startX);
 		startYProperty().bind(startY);
 		controlX1Property().bind(startX);
@@ -70,7 +70,7 @@ public class Cable extends CubicCurve {
 		protected double computeValue() {
 			double xCarre = Math.pow(startXProperty().get()-endXProperty().get(), 2) ;
 			double yCarre = Math.pow(startYProperty().get()-endYProperty().get(), 2) ;
-			return Math.sqrt(xCarre + yCarre);
+			return Math.sqrt(xCarre + yCarre)*0.50;
 		}
 	};
 }
