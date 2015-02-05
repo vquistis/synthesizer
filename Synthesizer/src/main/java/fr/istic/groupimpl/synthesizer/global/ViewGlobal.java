@@ -115,6 +115,7 @@ public class ViewGlobal implements Initializable {
 					String []pos=db.getString().split(";");
 					
 					Node node = ((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().get(Integer.parseInt(pos[1]));
+					node.setMouseTransparent(false);
 					HBox box=(HBox) n;
 					((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().remove(Integer.parseInt(pos[1]));
 
@@ -123,8 +124,7 @@ public class ViewGlobal implements Initializable {
 					for(Node child : box.getChildren()){	
 						
 						if (child.contains(e.getX(), e.getY())) {
-							break;
-							
+							break;	
 						}
 						index++;
 					}
@@ -180,6 +180,8 @@ public class ViewGlobal implements Initializable {
 			}
 
 		});
+		
+		createModule("fxml/out.fxml");
 		
 		ControllerGlobal ctl = ControllerGlobal.getInstance();
 		ctl.setView(this);
@@ -270,6 +272,7 @@ public class ViewGlobal implements Initializable {
 	 */
 	private void enableDrag(Node node) {
 		node.setOnDragDetected((event) -> {
+			node.setMouseTransparent(true);
 			ClipboardContent content = new ClipboardContent();
 			content.putString(getString(node));
 			Dragboard db = scrollpane.startDragAndDrop(TransferMode.ANY);

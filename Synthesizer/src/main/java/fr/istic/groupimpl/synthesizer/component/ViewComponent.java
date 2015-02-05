@@ -12,9 +12,9 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 public abstract class ViewComponent {
-	
+
 	public static final double COMPONENT_HEIGHT = 300;
-	
+
 	private List<ChangeListener> portBindings = new ArrayList<ChangeListener>();
 
 	/**
@@ -39,14 +39,14 @@ public abstract class ViewComponent {
 			portX.set(computeNodeCenter(node).getX());
 			portY.set(computeNodeCenter(node).getY());
 		});
-		
+
 		portBindings.add(posChangeListener);
 		Node root = getComponentRoot();
-		
+
 		root.parentProperty().addListener(posChangeListener);
 		root.boundsInParentProperty().addListener(posChangeListener);
 	}
-	
+
 	final protected void cleanupPorts() {
 		Node root = getComponentRoot();
 		for(ChangeListener c : portBindings) {
@@ -54,7 +54,7 @@ public abstract class ViewComponent {
 			root.boundsInParentProperty().removeListener(c);
 		}
 	}
-	
+
 	private Bounds getNodeBoundsInComponent(Node node) {
 		Bounds res = node.getBoundsInParent();
 
@@ -68,13 +68,17 @@ public abstract class ViewComponent {
 				currentParent = currentParent.getParent();
 				bounds = currentParent.localToParent(bounds);
 			}
-			// recomputes the bounds of the node in the HBox containing the component
-			bounds = currentParent.getParent().localToParent(bounds);
-			// recomputes the bounds of the node in the SplitPane containing HBox containing the component
-			bounds = currentParent.getParent().getParent().localToParent(bounds);
+			if(currentParent.getParent() != null) {
+				// recomputes the bounds of the node in the HBox containing the component
+				bounds = currentParent.getParent().localToParent(bounds);
+				// recomputes the bounds of the node in the SplitPane containing HBox containing the component
+				if(currentParent.getParent().getParent() != null) {
+					bounds = currentParent.getParent().getParent().localToParent(bounds);  
+
+				} 
+			}
 			res = bounds;
 		}
-
 		return res;
 	}
 
@@ -82,5 +86,5 @@ public abstract class ViewComponent {
 		Bounds bounds = getNodeBoundsInComponent(node);
 		return new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2);
 	}
-	
+
 }

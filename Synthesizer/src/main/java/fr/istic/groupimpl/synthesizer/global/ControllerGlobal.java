@@ -79,6 +79,7 @@ public class ControllerGlobal {
 	 * @param unitGen
 	 */
 	public void unregisterUnitGenerator(UnitGenerator unitGen) {
+		
 		model.removeUnitGenerator(unitGen);
 	}
 
