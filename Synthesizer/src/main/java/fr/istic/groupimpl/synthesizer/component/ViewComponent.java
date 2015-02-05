@@ -72,13 +72,13 @@ public abstract class ViewComponent {
 				// recomputes the bounds of the node in the HBox containing the component
 				bounds = currentParent.getParent().localToParent(bounds);
 				// recomputes the bounds of the node in the SplitPane containing HBox containing the component
-				bounds = currentParent.getParent().getParent().localToParent(bounds);
-			} else {
-				
+				if(currentParent.getParent().getParent() != null) {
+					bounds = currentParent.getParent().getParent().localToParent(bounds);  
+
+				} 
 			}
 			res = bounds;
 		}
-
 		return res;
 	}
 

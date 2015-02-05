@@ -181,6 +181,8 @@ public class ViewGlobal implements Initializable {
 
 		});
 		
+		createModule("fxml/out.fxml");
+		
 		ControllerGlobal ctl = ControllerGlobal.getInstance();
 		ctl.setView(this);
 	}
