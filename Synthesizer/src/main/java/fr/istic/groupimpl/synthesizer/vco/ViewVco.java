@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
@@ -45,6 +46,8 @@ public class ViewVco extends CopyOfIViewComponent implements Initializable {
 	private Text display;
 	@FXML
 	private Region rgFm;
+	@FXML
+	private Label freqLabel;
 
 	private ControllerVco vcoControl;
 
@@ -82,7 +85,7 @@ public class ViewVco extends CopyOfIViewComponent implements Initializable {
 		knobFreqPane.getChildren().add(precisionKnob);
 
 		// VcoController creation and listeners on knob values
-		vcoControl = new ControllerVco();
+		vcoControl = new ControllerVco(freqLabel);
 		octaveKnob.valueProperty().addListener((p, oldVal, newVal) ->
 		vcoControl.handleViewOctaveChange((double) newVal, precisionKnob.getValue()));
 		precisionKnob.valueProperty().addListener((p, oldVal, newVal) ->
