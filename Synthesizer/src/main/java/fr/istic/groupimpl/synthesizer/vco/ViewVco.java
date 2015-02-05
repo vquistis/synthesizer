@@ -8,7 +8,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -24,6 +26,8 @@ public class ViewVco implements IViewComponent, Initializable {
 
 	@FXML
 	private BorderPane paneVco;
+	@FXML
+	private ImageView closeVco;
 	@FXML
 	private VBox knobOctavePane;
 	@FXML
@@ -76,12 +80,22 @@ public class ViewVco implements IViewComponent, Initializable {
 	   	
 	   	typeOutput.selectedToggleProperty().addListener((obs, oldVal, newVal) ->
 	   		vcoControl.handleViewOutputTypeChange(((RadioButton)newVal).getText()));
+	   	
+	   	// Listener close VCO
+	   	closeVco.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+			vcoControl.handleViewClose();
+			Pane parent = (Pane) paneVco.getParent();
+			parent.getChildren().remove(paneVco);
+		});
+	   	
+	   	
 	}
 	
 	/**
 	 * Handles the click on the FM input port
 	 */
 	public void handleFmClick() {
+		System.err.println(fm.localToScene(fm.getBoundsInParent()));
 		vcoControl.handleViewInputClick("vco_inputFm", fm.xProperty(), fm.yProperty());
 	}
 	
@@ -90,13 +104,6 @@ public class ViewVco implements IViewComponent, Initializable {
 	 */
 	public void handleOutputClick() {
 		vcoControl.handleViewOutputClick("vco_output", out.xProperty(), out.yProperty());
-	}
-	
-	/**
-	 * Handles the click on the close button
-	 */
-	public void handleCloseClick() {
-		vcoControl.handleViewClose();
 	}
 
 }

@@ -37,12 +37,7 @@ public class ControllerVco implements IControllerComponent {
 	 * Computes the total octave value and changes it in the model
 	 */
 	public void handleViewOctaveChange(double octave, double precision) {
-		double realOctave = octave;
-		// Test precision : No negative values
-		if (octave + precision >= 0.0) {
-			realOctave+= precision;
-		}
-		modelVco.setOctave(realOctave);
+		modelVco.setOctave(octave + precision);
 	}
 	
 	/**
