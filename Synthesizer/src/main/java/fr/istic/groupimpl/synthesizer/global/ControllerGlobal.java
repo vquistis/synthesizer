@@ -82,6 +82,10 @@ public class ControllerGlobal {
 		model.removeUnitGenerator(unitGen);
 	}
 
+	public void unregisterOutUnitGenerator(UnitGenerator unitGen) {
+		model.removeOutUnitGenerator(unitGen);
+	}
+	
 	/**
 	 * Signals the model that any connection originating from each port in
 	 * the given collection must be removed.

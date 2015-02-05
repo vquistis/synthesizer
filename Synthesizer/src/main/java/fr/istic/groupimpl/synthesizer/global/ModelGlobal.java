@@ -66,6 +66,12 @@ public class ModelGlobal {
 		unitGenerators.remove(unitGen);
 	}
 
+	public void removeOutUnitGenerator(UnitGenerator unitGen) {
+		unitGen.stop();
+		synth.remove(unitGen);
+		unitGenerators.remove(unitGen);
+	}
+	
 	public boolean isPortConnected(UnitPort port) {
 		return inputConnections.containsKey(port) || outputConnections.containsKey(port);
 	}
@@ -145,13 +151,9 @@ public class ModelGlobal {
 	public void removeAllConnections(Collection<UnitPort> unitports) {
 		unitports.forEach((p1) -> {
 			if(inputConnections.containsKey(p1)) {
-				UnitPort p2 = inputConnections.get(p1);
-				inputConnections.remove(p1);
-				outputConnections.remove(p2);
+				disconnectInputPort((UnitInputPort) p1);
 			} else if(outputConnections.containsKey(p1)) {
-				UnitPort p2 = outputConnections.get(p1);
-				outputConnections.remove(p1);
-				inputConnections.remove(p2);
+				disconnectOutputPort((UnitOutputPort) p1);
 			}
 		});
 	}
