@@ -17,7 +17,7 @@ public class ModelVco extends ModelComponent {
 	public ModelVco() {
 		super();		
 		vcoCirc = new VCOCircuit();
-		vcoCirc.getInputF0().set(440); // Default F0
+		vcoCirc.getInputF0().set(32); // Default F0
 		vcoCirc.getInputOctave().set(0.0);
 		vcoCirc.getInputShape().set(3); // Default type : square
 	}

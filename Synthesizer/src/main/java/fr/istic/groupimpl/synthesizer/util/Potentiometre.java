@@ -1,6 +1,7 @@
 package fr.istic.groupimpl.synthesizer.util;
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.beans.property.DoubleProperty;
@@ -299,10 +300,11 @@ public class Potentiometre extends Region {
 		}
 	}
 
-	private int nbAffTickMarks = 0;
+	private AtomicBoolean flagAffTickMarks = new AtomicBoolean(false);
 
 	private void affTickMarks() {
-		if (nbAffTickMarks++ > 1)
+		
+		if( flagAffTickMarks.getAndSet(true) )
 			return;
 
 		double centerX = getWidth() / 2.0;

@@ -11,7 +11,9 @@ import javafx.geometry.Bounds;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -28,6 +30,8 @@ public class ViewVco implements IViewComponent, Initializable {
 
 	@FXML
 	private BorderPane paneVco;
+	@FXML
+	private ImageView closeVco;
 	@FXML
 	private VBox knobOctavePane;
 	@FXML
@@ -47,7 +51,7 @@ public class ViewVco implements IViewComponent, Initializable {
 
 	private DoubleProperty fmX = new SimpleDoubleProperty(0);
 	private DoubleProperty fmY = new SimpleDoubleProperty(0);
-	
+
 	private DoubleProperty outX = new SimpleDoubleProperty(0);
 	private DoubleProperty outY = new SimpleDoubleProperty(0);
 
@@ -73,7 +77,8 @@ public class ViewVco implements IViewComponent, Initializable {
 		pf.setNbSpins(0.80);
 		pf.setDiscret(false);
 		pf.setMinValue(-1);
-		pf.setMaxValue(1);		
+		pf.setMaxValue(1);
+
 		Potentiometre precisionKnob = pf.getPotentiometre();
 		knobFreqPane.getChildren().add(precisionKnob);
 
@@ -86,7 +91,13 @@ public class ViewVco implements IViewComponent, Initializable {
 
 		typeOutput.selectedToggleProperty().addListener((obs, oldVal, newVal) ->
 		vcoControl.handleViewOutputTypeChange(((RadioButton)newVal).getText()));
-		
+
+		// Listener close VCO
+		closeVco.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+			vcoControl.handleViewClose();
+			Pane parent = (Pane) paneVco.getParent();
+			parent.getChildren().remove(paneVco);
+		});
 
 		paneVco.parentProperty().addListener((a,b,c) -> {
 			Log.getInstance().debug("PARENT CHANGE : Bounds = " + paneVco.boundsInParentProperty().get());
@@ -135,7 +146,7 @@ public class ViewVco implements IViewComponent, Initializable {
 		Bounds b4 = out.getParent().getParent().getParent().getParent().localToParent(b3);
 		return b4.getMinY() + b4.getHeight() / 2;
 	}
-	
+
 	/**
 	 * Handles the click on the FM input port
 	 */
