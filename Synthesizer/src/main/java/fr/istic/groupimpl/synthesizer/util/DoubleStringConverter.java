@@ -10,7 +10,7 @@ public class DoubleStringConverter extends StringConverter<Number> {
 	@Override
 	public String toString(Number value) {
 		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.ENGLISH);
-		df.applyPattern("#0.000");
+		df.applyPattern("#.###");
 		return df.format(value);
 	}
 

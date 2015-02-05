@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.out;
+package fr.istic.groupimpl.synthesizer.util.jsyn;
 
 import com.jsyn.unitgen.UnitFilter;
 

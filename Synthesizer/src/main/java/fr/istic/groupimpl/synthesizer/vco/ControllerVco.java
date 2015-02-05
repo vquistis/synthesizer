@@ -1,6 +1,7 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.scene.control.Label;
 import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
@@ -9,8 +10,12 @@ public class ControllerVco implements IControllerComponent {
 	private ModelVco modelVco;
 	private ControllerGlobal ctrlGlob;
 	
-	public ControllerVco() {
+	public ControllerVco(Label uiFreqLabel) {
 		modelVco = new ModelVco();
+		modelVco.setCommandProperty("freq", () ->
+			uiFreqLabel.setText(modelVco.getValProperty("freq") + " Hz")
+		);
+		modelVco.setOctave(0.0);
 		ctrlGlob = ControllerGlobal.getInstance();
 		ctrlGlob.registerUnitGenerator(modelVco.getUnitGenerator());
 	}
@@ -37,12 +42,7 @@ public class ControllerVco implements IControllerComponent {
 	 * Computes the total octave value and changes it in the model
 	 */
 	public void handleViewOctaveChange(double octave, double precision) {
-		double realOctave = octave;
-		// Test precision : No negative values
-		if (octave + precision >= 0.0) {
-			realOctave+= precision;
-		}
-		modelVco.setOctave(realOctave);
+		modelVco.setOctave(octave + precision);
 	}
 	
 	/**

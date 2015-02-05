@@ -8,17 +8,18 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.vco.jsyn.VCOCircuit;
 
 public class ModelVco extends ModelComponent {
 	
 	private VCOCircuit vcoCirc;
+	private int f0 = 32;
 		
 	public ModelVco() {
 		super();		
 		vcoCirc = new VCOCircuit();
-		vcoCirc.getInputF0().set(440); // Default F0
-		vcoCirc.getInputOctave().set(0.0);
+		vcoCirc.getInputF0().set(f0); // Default F0
 		vcoCirc.getInputShape().set(3); // Default type : square
 	}
 
@@ -33,6 +34,7 @@ public class ModelVco extends ModelComponent {
 	 */
 	protected void setOctave(double octave) {
 		vcoCirc.getInputOctave().set(octave);
+		computeFrequency(octave);
 	}
 	
 	/**
@@ -72,6 +74,12 @@ public class ModelVco extends ModelComponent {
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return this.vcoCirc.getPorts();
+	}
+	
+	private void computeFrequency(double octave) {
+		double frequency = f0 * Math.pow(2, octave);
+		DoubleStringConverter dsc = new DoubleStringConverter();
+		this.setValProperty("freq", dsc.toString(frequency));
 	}
 		
 }
