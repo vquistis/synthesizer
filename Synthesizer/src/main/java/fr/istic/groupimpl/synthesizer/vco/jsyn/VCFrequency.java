@@ -2,8 +2,9 @@ package fr.istic.groupimpl.synthesizer.vco.jsyn;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
-import com.jsyn.ports.UnitVariablePort;
 import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
  * Frequency Voltage Controller
@@ -24,10 +25,12 @@ import com.jsyn.unitgen.UnitGenerator;
  * @author Team GroupImpl
  */
 public class VCFrequency extends UnitGenerator {
+	
 	private UnitInputPort inputfm; 		//Volt
 	private UnitInputPort inputf0; 		//HZ
 	private UnitInputPort inputOctave; 	//UnitVariablePort 
 	private UnitOutputPort output; 		//HZ
+	
     
     /**
      * Modulation frequency input
@@ -78,10 +81,13 @@ public class VCFrequency extends UnitGenerator {
         double[] inputOctaves = inputOctave.getValues();
         double[] outputs = output.getValues();
 
-        for (int i = start; i < limit; i++) {	
-        	outputs[i] = converter(inputfms[i], inputf0s[i], inputOctaves[i]);
+        for (int i = start; i < limit; i++) {
+        	double freq=converter(SignalUtil.verifyFms(inputfms[i]), inputf0s[i], inputOctaves[i]);        	
+        	outputs[i]=SignalUtil.verifyFrequence(freq);
         }
     }
+    
+    
     
     /**
      * @param fm
