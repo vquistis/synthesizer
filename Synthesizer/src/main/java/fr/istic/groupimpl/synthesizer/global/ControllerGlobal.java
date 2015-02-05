@@ -89,6 +89,12 @@ public class ControllerGlobal {
 	 */
 	public void removeAllConnections(Collection<UnitPort> unitports) {
 		model.removeAllConnections(unitports);
+		for(UnitPort p : unitports) {
+			Cable c = cables.remove(p);
+			if(c != null) {
+				view.removeCable(c);
+			}
+		}
 	}
 
 	/**

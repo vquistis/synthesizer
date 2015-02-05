@@ -69,6 +69,12 @@ public class ViewGlobal implements Initializable {
 		cable.toFront();
 	}
 
+
+	public void removeCable(Cable cable) {
+		contentpane.getChildren().remove(cable);
+		cable.toFront();
+	}
+	
 	/**
 	 * Initializes the controller class.
 	 * This method is automatically called after the FXML file has been loaded. It creates a new view and set all the button with new created buttons.

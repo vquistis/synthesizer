@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
@@ -92,27 +93,25 @@ public class ViewVco implements IViewComponent, Initializable {
 		typeOutput.selectedToggleProperty().addListener((obs, oldVal, newVal) ->
 		vcoControl.handleViewOutputTypeChange(((RadioButton)newVal).getText()));
 
-		// Listener close VCO
-		closeVco.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			vcoControl.handleViewClose();
-			Pane parent = (Pane) paneVco.getParent();
-			parent.getChildren().remove(paneVco);
-		});
-
-		paneVco.parentProperty().addListener((a,b,c) -> {
+		ChangeListener posChangeListener = ((a,b,c) -> {
 			Log.getInstance().debug("PARENT CHANGE : Bounds = " + paneVco.boundsInParentProperty().get());
 			fmX.set(computeFmX());
 			fmY.set(computeFmY());
 			outX.set(computeOutX());
 			outY.set(computeOutY());
 		});
-		paneVco.boundsInParentProperty().addListener((a,b,c) -> {
-			Log.getInstance().debug("BOUNDS CHANGE : Bounds = " + paneVco.boundsInParentProperty().get());
-			fmX.set(computeFmX());
-			fmY.set(computeFmY());
-			outX.set(computeOutX());
-			outY.set(computeOutY());
+		
+		// Listener close VCO
+		closeVco.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+			paneVco.parentProperty().removeListener(posChangeListener);
+			paneVco.boundsInParentProperty().removeListener(posChangeListener);
+			vcoControl.handleViewClose();
+			Pane parent = (Pane) paneVco.getParent();
+			parent.getChildren().remove(paneVco);
 		});
+
+		paneVco.parentProperty().addListener(posChangeListener);
+		paneVco.boundsInParentProperty().addListener(posChangeListener);
 	}
 
 	private double computeFmX() {
