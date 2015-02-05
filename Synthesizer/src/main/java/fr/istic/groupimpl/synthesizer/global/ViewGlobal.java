@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
@@ -26,7 +25,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
-import fr.istic.groupimpl.synthesizer.component.IViewComponent;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
@@ -60,7 +59,7 @@ public class ViewGlobal implements Initializable {
 	private List<HBox> hboxes = new ArrayList<HBox>();
 	
 	/** The list assoc. */
-	private List<Pair<Node,IViewComponent>> listAssoc = new ArrayList<Pair<Node,IViewComponent>>();
+	private List<Pair<Node,ViewComponent>> listAssoc = new ArrayList<Pair<Node,ViewComponent>>();
 
 	private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 	
@@ -205,7 +204,7 @@ public class ViewGlobal implements Initializable {
 	 */
 	public void deleteModule(Node node, int i) {
 		int idx = 0;
-		for(Pair<Node, IViewComponent> p : listAssoc) {
+		for(Pair<Node, ViewComponent> p : listAssoc) {
 			if(p.getKey().equals(node)) {
 				break;
 			}
@@ -233,9 +232,9 @@ public class ViewGlobal implements Initializable {
 	public void createModule(String filename) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
-			IViewComponent view = loader.getController();
+			ViewComponent view = loader.getController();
 			Node root = loader.load();
-			listAssoc.add(new Pair<Node, IViewComponent>(root, view));
+			listAssoc.add(new Pair<Node, ViewComponent>(root, view));
 			((HBox)splitpane.getItems().get(0)).getChildren().add(root);
 			enableDrag(root);
 		} catch (IOException e) {

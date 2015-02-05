@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.util;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -17,10 +16,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import fr.istic.groupimpl.synthesizer.component.IViewComponent;
-import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 
-public class ViewTestPot implements IViewComponent, Initializable {
+public class ViewTestPot implements Initializable {
 
 	@FXML
 	BorderPane paneVco;

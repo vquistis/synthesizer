@@ -18,7 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import fr.istic.groupimpl.synthesizer.component.CopyOfIViewComponent;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
@@ -26,7 +26,7 @@ import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
  * @authors GroupImpl
  * VCO module - JavaFX Controller
  */
-public class ViewVco extends CopyOfIViewComponent implements Initializable {
+public class ViewVco extends ViewComponent implements Initializable {
 
 	@FXML
 	private BorderPane paneVco;
@@ -93,66 +93,17 @@ public class ViewVco extends CopyOfIViewComponent implements Initializable {
 
 		typeOutput.selectedToggleProperty().addListener((obs, oldVal, newVal) ->
 		vcoControl.handleViewOutputTypeChange(((RadioButton)newVal).getText()));
-
-//		ChangeListener posChangeListener = ((a,b,c) -> {
-//			Log.getInstance().debug("PARENT CHANGE : Bounds = " + paneVco.boundsInParentProperty().get());
-//			fmX.set(computeFmX());
-//			fmY.set(computeFmY());
-//			outX.set(computeOutX());
-//			outY.set(computeOutY());
-//		});
 		
 		// Listener close VCO
 		closeVco.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-//			paneVco.parentProperty().removeListener(posChangeListener);
-//			paneVco.boundsInParentProperty().removeListener(posChangeListener);
-
-			//---
 			cleanupPorts();
-			//---
 			vcoControl.handleViewClose();
 			Pane parent = (Pane) paneVco.getParent();
 			parent.getChildren().remove(paneVco);
 		});
 
-		//---
 		addPort(fm, fmX, fmY);
 		addPort(out, outX, outY);
-		//---
-//		paneVco.parentProperty().addListener(posChangeListener);
-//		paneVco.boundsInParentProperty().addListener(posChangeListener);
-	}
-
-	private double computeFmX() {
-		Bounds b1 = fm.getParent().localToParent(fm.getBoundsInParent());
-		Bounds b2 = fm.getParent().getParent().localToParent(b1);
-		Bounds b3 = fm.getParent().getParent().getParent().localToParent(b2);
-		Bounds b4 = fm.getParent().getParent().getParent().getParent().localToParent(b3);
-		return b4.getMinX() + b4.getWidth() / 2;
-	}
-
-	private double computeFmY() {
-		Bounds b1 = fm.getParent().localToParent(fm.getBoundsInParent());
-		Bounds b2 = fm.getParent().getParent().localToParent(b1);
-		Bounds b3 = fm.getParent().getParent().getParent().localToParent(b2);
-		Bounds b4 = fm.getParent().getParent().getParent().getParent().localToParent(b3);
-		return b4.getMinY() + b4.getHeight() / 2;
-	}
-
-	private double computeOutX() {
-		Bounds b1 = out.getParent().localToParent(out.getBoundsInParent());
-		Bounds b2 = out.getParent().getParent().localToParent(b1);
-		Bounds b3 = out.getParent().getParent().getParent().localToParent(b2);
-		Bounds b4 = out.getParent().getParent().getParent().getParent().localToParent(b3);
-		return b4.getMinX() + b4.getWidth() / 2;
-	}
-
-	private double computeOutY() {
-		Bounds b1 = out.getParent().localToParent(out.getBoundsInParent());
-		Bounds b2 = out.getParent().getParent().localToParent(b1);
-		Bounds b3 = out.getParent().getParent().getParent().localToParent(b2);
-		Bounds b4 = out.getParent().getParent().getParent().getParent().localToParent(b3);
-		return b4.getMinY() + b4.getHeight() / 2;
 	}
 
 	/**

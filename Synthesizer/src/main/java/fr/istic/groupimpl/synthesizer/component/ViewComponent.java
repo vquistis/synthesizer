@@ -11,7 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
-public abstract class CopyOfIViewComponent {
+public abstract class ViewComponent {
 	
 	public static final double COMPONENT_HEIGHT = 300;
 	
@@ -65,7 +65,6 @@ public abstract class CopyOfIViewComponent {
 			Bounds bounds = currentParent.localToParent(node.getBoundsInParent());
 
 			while(currentParent != componentParent) {
-				Log.getInstance().debug(""+currentParent.getClass());
 				currentParent = currentParent.getParent();
 				bounds = currentParent.localToParent(bounds);
 			}

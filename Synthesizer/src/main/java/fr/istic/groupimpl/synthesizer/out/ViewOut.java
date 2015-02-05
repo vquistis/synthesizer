@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import java.net.URL;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
@@ -17,12 +16,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
-import fr.istic.groupimpl.synthesizer.component.IViewComponent;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
-public class ViewOut implements IViewComponent, Initializable {
+public class ViewOut extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;
 	@FXML private ImageView closeModuleFx;
@@ -30,6 +29,9 @@ public class ViewOut implements IViewComponent, Initializable {
 	@FXML private TextField valueVolumeFx;
 	@FXML private CheckBox muteVolumeFx;
 	@FXML private ImageView input;
+
+	private DoubleProperty inputX = new SimpleDoubleProperty(0);
+	private DoubleProperty inputY = new SimpleDoubleProperty(0);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
@@ -54,27 +56,20 @@ public class ViewOut implements IViewComponent, Initializable {
 		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewMuteChange(newVal));
 		// Listener input
 		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			DoubleProperty propX = new SimpleDoubleProperty();
-			propX.bind(new DoubleBinding() {
-				@Override
-				protected double computeValue() {
-					return input.localToScene(input.getBoundsInLocal()).getMinX();
-				}
-			});
-			DoubleProperty propY = new SimpleDoubleProperty();
-			propY.bind(new DoubleBinding() {
-				@Override
-				protected double computeValue() {
-					return input.localToScene(input.getBoundsInLocal()).getMinY();
-				}
-			});
-			controller.handleViewInputClick("out_input", propX, propY);
+			controller.handleViewInputClick("out_input", inputX, inputY);
 		});
 		// Listener close module
 		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+			cleanupPorts();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
 		});
+		addPort(input, inputX, inputY);
+	}
+
+	@Override
+	protected Pane getComponentRoot() {
+		return rootModulePane;
 	}
 }
