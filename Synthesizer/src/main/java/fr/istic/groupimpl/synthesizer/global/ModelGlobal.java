@@ -13,6 +13,8 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
 public class ModelGlobal {
 
 	private ControllerGlobal controller;
@@ -154,6 +156,8 @@ public class ModelGlobal {
 				disconnectInputPort((UnitInputPort) p1);
 			} else if(outputConnections.containsKey(p1)) {
 				disconnectOutputPort((UnitOutputPort) p1);
+			} else {
+				Log.getInstance().debug("BUG");
 			}
 		});
 	}
