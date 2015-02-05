@@ -35,6 +35,8 @@ public class ControllerGlobal {
 	 * cable should be in a "move" state.
 	 */
 	private UnitPort previousPort;
+	private DoubleProperty previousX;
+	private DoubleProperty previousY;
 
 	private UnitPort currentPort;
 	
@@ -126,15 +128,14 @@ public class ControllerGlobal {
 				currentPort = model.getConnectedPort(port);
 				model.disconnectInputPort(port);
 				previousPort = port;
+				previousX = x;
+				previousY = y;
 				
 				//----------------------
-				//TODO notify the view to bind the input end of the cable to the mouse.
-				
 				Cable cable = cables.get(port);
 				cables.remove(port);
 				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());
 				Log.getInstance().debug("INPUT PORT DISCONNECTED");
-				
 				//----------------------
 				
 			} else {
@@ -142,17 +143,13 @@ public class ControllerGlobal {
 				currentPort = port;
 				
 				//----------------------
-				//TODO notify the view to create a new, unbound cable originating from the given port.
-				
 				Cable cable = new Cable();
 				cables.put(port, cable);
 				cable.bindInput(x, y);
 				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
 				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
-				//TODO add the cable to the view.
 				view.addCable(cable);
 				Log.getInstance().debug("CREATING CABLE FROM INPUT PORT");
-				
 				//----------------------
 				
 			}
@@ -174,17 +171,17 @@ public class ControllerGlobal {
 				this.model.connectPorts(currentPort, port);
 				
 				//----------------------
-				//TODO
 				Cable cable = cables.get(currentPort);
 				cables.put(port,cable);
 				cable.bindInput(x, y);
 				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
 				Log.getInstance().debug("INPUT PORT CONNECTED TO OUTPUT PORT");
-				
 				//----------------------
 				
 				currentPort = null;
 				previousPort = null;
+				previousX = null;
+				previousY = null;
 			}
 			break;
 		default:
@@ -198,30 +195,26 @@ public class ControllerGlobal {
 	public void handleOutputClicked(UnitOutputPort port, DoubleProperty x, DoubleProperty y) {
 		switch(cableMode) {
 		case NONE_CONNECTED:
-			//TODO notify the view to create a new, unbound cable originating from the given port.
 			if(model.isPortConnected(port)) {
 				cableMode = CableMode.IN_CONNECTED;
 				currentPort = model.getConnectedPort(port);
 				model.disconnectOutputPort(port);
 				previousPort = port;
+				previousX = x;
+				previousY = y;
 				
 				//----------------------
-				//TODO notify the view to bind the input end of the cable to the mouse.
-				
 				Cable cable = cables.get(port);
 				cables.remove(port);
 				Log.getInstance().debug("OUTPUT PORT DISCONNECTED");
 				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
-				
 				//----------------------
 				
 			} else {
 				cableMode = CableMode.OUT_CONNECTED;
 				currentPort = port;
 				
-				//----------------------
-				//TODO notify the view to create a new, unbound cable originating from the given port.
-				
+				//----------------------				
 				Cable cable = new Cable();
 				cables.put(port, cable);
 				cable.bindOutput(x, y);
@@ -229,7 +222,6 @@ public class ControllerGlobal {
 				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());
 				view.addCable(cable);
 				Log.getInstance().debug("CREATING CABLE FROM OUTPUT PORT");
-				
 				//----------------------
 				
 			}
@@ -240,16 +232,16 @@ public class ControllerGlobal {
 				this.model.connectPorts(port, currentPort);
 				
 				//----------------------
-				//TODO
 				Cable cable = cables.get(currentPort);
 				cables.put(port,cable);
 				cable.bindOutput(x, y);
 				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
-				
 				//----------------------
 				
 				currentPort = null;
 				previousPort = null;
+				previousX = null;
+				previousY = null;
 			}
 			break;
 		case OUT_CONNECTED:
@@ -261,18 +253,23 @@ public class ControllerGlobal {
 	/**
 	 * Aborts the connection creation process.
 	 */
-	public void handleLeftButtonClicked() {
+	public void handleRightButtonClicked() {
 		cableMode = CableMode.NONE_CONNECTED;
 		if(previousPort != null) {
+			Cable cable = cables.get(currentPort);
+			cables.put(previousPort,cable);
 			if(previousPort instanceof UnitInputPort) {
+				cable.bindInput(previousX, previousY);
 				this.model.connectPorts(currentPort, previousPort);
 			} else {
+				cable.bindOutput(previousX, previousY);
 				this.model.connectPorts(previousPort, currentPort);
 			}
 		}
 		currentPort = null;
 		previousPort = null;
-
+		previousX = null;
+		previousY = null;
 		//TODO notify the view to stop displaying the cable.
 	}
 
