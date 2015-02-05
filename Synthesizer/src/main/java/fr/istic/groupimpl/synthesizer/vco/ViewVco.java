@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
@@ -18,8 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import fr.istic.groupimpl.synthesizer.component.IViewComponent;
-import fr.istic.groupimpl.synthesizer.logger.Log;
+import fr.istic.groupimpl.synthesizer.component.CopyOfIViewComponent;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
@@ -27,7 +25,7 @@ import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
  * @authors GroupImpl
  * VCO module - JavaFX Controller
  */
-public class ViewVco implements IViewComponent, Initializable {
+public class ViewVco extends CopyOfIViewComponent implements Initializable {
 
 	@FXML
 	private BorderPane paneVco;
@@ -93,25 +91,33 @@ public class ViewVco implements IViewComponent, Initializable {
 		typeOutput.selectedToggleProperty().addListener((obs, oldVal, newVal) ->
 		vcoControl.handleViewOutputTypeChange(((RadioButton)newVal).getText()));
 
-		ChangeListener posChangeListener = ((a,b,c) -> {
-			Log.getInstance().debug("PARENT CHANGE : Bounds = " + paneVco.boundsInParentProperty().get());
-			fmX.set(computeFmX());
-			fmY.set(computeFmY());
-			outX.set(computeOutX());
-			outY.set(computeOutY());
-		});
+//		ChangeListener posChangeListener = ((a,b,c) -> {
+//			Log.getInstance().debug("PARENT CHANGE : Bounds = " + paneVco.boundsInParentProperty().get());
+//			fmX.set(computeFmX());
+//			fmY.set(computeFmY());
+//			outX.set(computeOutX());
+//			outY.set(computeOutY());
+//		});
 		
 		// Listener close VCO
 		closeVco.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			paneVco.parentProperty().removeListener(posChangeListener);
-			paneVco.boundsInParentProperty().removeListener(posChangeListener);
+//			paneVco.parentProperty().removeListener(posChangeListener);
+//			paneVco.boundsInParentProperty().removeListener(posChangeListener);
+
+			//---
+			cleanupPorts();
+			//---
 			vcoControl.handleViewClose();
 			Pane parent = (Pane) paneVco.getParent();
 			parent.getChildren().remove(paneVco);
 		});
 
-		paneVco.parentProperty().addListener(posChangeListener);
-		paneVco.boundsInParentProperty().addListener(posChangeListener);
+		//---
+		addPort(fm, fmX, fmY);
+		addPort(out, outX, outY);
+		//---
+//		paneVco.parentProperty().addListener(posChangeListener);
+//		paneVco.boundsInParentProperty().addListener(posChangeListener);
 	}
 
 	private double computeFmX() {
@@ -165,6 +171,11 @@ public class ViewVco implements IViewComponent, Initializable {
 	 */
 	public void handleCloseClick() {
 		vcoControl.handleViewClose();
+	}
+
+	@Override
+	protected Pane getComponentRoot() {
+		return paneVco;
 	}
 
 }
