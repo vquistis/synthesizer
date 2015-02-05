@@ -133,6 +133,9 @@ public class Potentiometre extends Region {
 
 		rgKnob.setScaleX(rayon / RAYON_REF);
 		rgKnob.setScaleY(rayon / RAYON_REF);
+		setOnDragDetected((event) -> {
+			event.consume();
+		});
 		setOnDragOver((event) -> {
 			traitePosAngle(event.getX(), event.getY());
 			event.consume();
