@@ -28,5 +28,7 @@ public class App extends Application
 		scene.getStylesheets().add(cssURL.toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
+        primaryStage.setOnCloseRequest((event) -> System.exit(0));
 	}
 }

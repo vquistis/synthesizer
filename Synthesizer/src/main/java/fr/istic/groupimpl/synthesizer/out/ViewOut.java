@@ -40,7 +40,7 @@ public class ViewOut extends ViewComponent implements Initializable {
 		knobFact.setMaxValue(12);
 		knobFact.setValueDef(0);
 		knobFact.setNbSpins(3);
-		knobFact.setRayon(45);
+		knobFact.setRayon(32);
 		Potentiometre knobVolume = knobFact.getPotentiometre();
 		knobVolumePane.getChildren().add(knobVolume);
 		
