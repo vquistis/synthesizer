@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import java.net.URL;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
@@ -38,7 +37,7 @@ public class ViewOut implements IViewComponent, Initializable {
 		knobFact.setMaxValue(12);
 		knobFact.setValueDef(0);
 		knobFact.setNbSpins(3);
-		knobFact.setRayon(45);
+		knobFact.setRayon(32);
 		Potentiometre knobVolume = knobFact.getPotentiometre();
 		knobVolumePane.getChildren().add(knobVolume);
 		
@@ -56,6 +55,7 @@ public class ViewOut implements IViewComponent, Initializable {
 		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			DoubleProperty propX = new SimpleDoubleProperty();
 			propX.bind(new DoubleBinding() {
+				{ super.bind(propX); }
 				@Override
 				protected double computeValue() {
 					return input.localToScene(input.getBoundsInLocal()).getMinX();
@@ -63,6 +63,7 @@ public class ViewOut implements IViewComponent, Initializable {
 			});
 			DoubleProperty propY = new SimpleDoubleProperty();
 			propY.bind(new DoubleBinding() {
+				{ super.bind(propY); }
 				@Override
 				protected double computeValue() {
 					return input.localToScene(input.getBoundsInLocal()).getMinY();
