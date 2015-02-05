@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -129,72 +131,47 @@ public class ViewGlobal implements Initializable {
 		splitpane.setOnMouseMoved((e) -> {
 			mouseX.set(e.getX());
 			mouseY.set(e.getY());
-			Event.fireEvent(scrollpane, e);
+//			Event.fireEvent(scrollpane, e);
 		});
-		
-		scrollpane.setOnMouseMoved((e) -> {
-			double spXMin = scrollpane.getViewportBounds().getMinX();
-			double spYMin = scrollpane.getViewportBounds().getMinY();
-			double spXMax = scrollpane.getViewportBounds().getMaxX();
-			double spYMax = scrollpane.getViewportBounds().getMaxY();
-			double x = e.getX();
-			double y = e.getY();
-
-			if ((x >= spXMin  && x <= spXMin + 50) &&
-					(y >= spYMin  && y <= spYMax))  
-			{
-				scrollpane.setHvalue(scrollpane.getHvalue() - 0.01);
-				
-			} else if ((x >= spXMax -50  && x <= spXMax) &&
-					(y >= spYMin  && y <= spYMax))  
-			{
-				scrollpane.setHvalue(scrollpane.getHvalue() + 0.01);
-				
-			}
-
-			if ((x >= spXMin  && x <= spXMax) &&
-					(y >= spYMin  && y <= spYMin+50))  
-			{
-				scrollpane.setVvalue(scrollpane.getVvalue() - 0.01);
-				
-			} else if ((x >= spXMin  && x <= spXMax) &&
-					(y >= spYMax-50  && y <= spYMax))  
-			{
-				scrollpane.setVvalue(scrollpane.getVvalue() + 0.01);
-			}
-
-		});
-		
+						
 		splitpane.setOnDragOver((e) -> {
+			Event.fireEvent(scrollpane, e);
 			double spXMin = scrollpane.getViewportBounds().getMinX();
 			double spYMin = scrollpane.getViewportBounds().getMinY();
 			double spXMax = scrollpane.getViewportBounds().getMaxX();
 			double spYMax = scrollpane.getViewportBounds().getMaxY();
 			double x = e.getX();
 			double y = e.getY();
-
-			Log.getInstance().debug("!! Test ");
-			if ((x >= spXMin  && x <= spXMin + 50) &&
-					(y >= spYMin  && y <= spYMax))  
+			Point2D point = splitpane.localToParent(e.getX(), e.getY());
+			
+			double pX = point.getX();
+			double pY = point.getY();
+			Log.getInstance().debug("!! Scroll : " + x  + " " + y);
+			Log.getInstance().debug("!! Scroll : " + pX  + " " + pY);
+			
+			if ((pX >= spXMin  && pX <= spXMin+50) &&
+					(pY >= spYMin  && pY <= spYMax))  
 			{
-				scrollpane.setHvalue(scrollpane.getHvalue() - 0.01);
+				scrollpane.setHvalue(scrollpane.getHvalue() - 0.05);
+				Log.getInstance().debug("!!! Scroll Column left " + scrollpane.getHvalue() );
 				
-			} else if ((x >= spXMax -50  && x <= spXMax) &&
-					(y >= spYMin  && y <= spYMax))  
+			} else if ((pX >= spXMax-50  && pX <= spXMax) &&
+					(pY >= spYMin  && pY <= spYMax))  
 			{
-				scrollpane.setHvalue(scrollpane.getHvalue() + 0.01);
+				scrollpane.setHvalue(scrollpane.getHvalue() + 0.05);
+				Log.getInstance().debug("!!! Scroll Column right " + scrollpane.getHvalue() );
 				
 			}
 
-			if ((x >= spXMin  && x <= spXMax) &&
-					(y >= spYMin  && y <= spYMin+50))  
+			if ((pX >= spXMin  && pX <= spXMax) &&
+					(pY >= spYMin  && pY <= spYMin+50))  
 			{
-				scrollpane.setVvalue(scrollpane.getVvalue() - 0.01);
+				scrollpane.setVvalue(scrollpane.getVvalue() - 0.05);
 				
-			} else if ((x >= spXMin  && x <= spXMax) &&
-					(y >= spYMax-50  && y <= spYMax))  
+			} else if ((pX >= spXMin  && pX <= spXMax) &&
+					(pY >= spYMax-50  && pY <= spYMax))  
 			{
-				scrollpane.setVvalue(scrollpane.getVvalue() + 0.01);
+				scrollpane.setVvalue(scrollpane.getVvalue() + 0.05);
 			}
 
 		});
