@@ -2,6 +2,8 @@ package fr.istic.groupimpl.synthesizer.util.jsyn;
 
 import com.jsyn.unitgen.UnitFilter;
 
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
+
 /**
  * The input signal is attenuated by an decibel value.
  */
@@ -18,9 +20,9 @@ public class JsynAttenuationFilter extends UnitFilter {
 		
         for (int i = start; i < limit; i++) {
         	//attenuation of the input signal
-			double in = inputs[i];
+			double in = SignalUtil.verifyAmplitude(inputs[i]);
 			double out = in*coef;
-			outputs[i] = out;
+			outputs[i] = SignalUtil.verifyAmplitude(out);
         }
     }
 
