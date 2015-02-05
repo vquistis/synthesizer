@@ -119,43 +119,58 @@
       </GridPane>
    </bottom>
    <center>
-      <GridPane BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints vgrow="SOMETIMES" />
-        </rowConstraints>
+      <VBox alignment="TOP_CENTER">
          <children>
-            <VBox fx:id="knobOctavePane" alignment="CENTER">
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <Label text="Octave">
-                     <VBox.margin>
-                        <Insets bottom="28.0" />
-                     </VBox.margin>
-                  </Label>
+                  <VBox fx:id="knobOctavePane" alignment="CENTER">
+                     <children>
+                        <Label text="Octave">
+                           <VBox.margin>
+                              <Insets bottom="28.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="13.0" left="12.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets top="4.0" />
+                     </GridPane.margin>
+                  </VBox>
+                  <VBox fx:id="knobFreqPane" alignment="CENTER" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Précision">
+                           <VBox.margin>
+                              <Insets bottom="28.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="13.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets top="4.0" />
+                     </GridPane.margin>
+                  </VBox>
                </children>
-               <padding>
-                  <Insets bottom="13.0" left="12.0" />
-               </padding>
-            </VBox>
-            <VBox fx:id="knobFreqPane" alignment="CENTER" GridPane.columnIndex="1">
-               <children>
-                  <Label text="Précision">
-                     <VBox.margin>
-                        <Insets bottom="28.0" />
-                     </VBox.margin>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets bottom="13.0" />
-               </padding>
-            </VBox>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </BorderPane.margin>
+            </GridPane>
+            <Label fx:id="freqLabel">
+               <VBox.margin>
+                  <Insets bottom="7.0" top="9.0" />
+               </VBox.margin>
+            </Label>
          </children>
-         <BorderPane.margin>
-            <Insets bottom="10.0" top="10.0" />
-         </BorderPane.margin>
-      </GridPane>
+      </VBox>
    </center>
 </BorderPane>
