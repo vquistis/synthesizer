@@ -45,7 +45,7 @@ public class ModelOutTest {
 
 	@Test
 	public void testMute() throws InterruptedException {
-		for (int i = 10; i > 0; i--) {
+		for (int i = 5; i > 0; i--) {
 			model.getUnitGenerator().start();
 			Thread.sleep(1000);
 			model.getUnitGenerator().stop();
