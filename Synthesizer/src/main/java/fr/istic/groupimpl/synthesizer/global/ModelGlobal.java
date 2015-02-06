@@ -20,11 +20,11 @@ public class ModelGlobal {
 	private ControllerGlobal controller;
 
 	private List<UnitGenerator> unitGenerators = new ArrayList<UnitGenerator>();
-	
+
 	private Synthesizer synth;
 
 	private Map<UnitOutputPort, UnitInputPort> outputConnections;
-	
+
 	private Map<UnitInputPort, UnitOutputPort> inputConnections;
 
 	/**
@@ -47,7 +47,7 @@ public class ModelGlobal {
 		unitGenerators.add(unitGen);
 		synth.add(unitGen);
 	}
-	
+
 	/**
 	 * Adds the given UnitGenerator as an output module to the underlying
 	 * JSyn synthesizer.
@@ -73,11 +73,11 @@ public class ModelGlobal {
 		synth.remove(unitGen);
 		unitGenerators.remove(unitGen);
 	}
-	
+
 	public boolean isPortConnected(UnitPort port) {
 		return inputConnections.containsKey(port) || outputConnections.containsKey(port);
 	}
-	
+
 	public UnitPort getConnectedPort(UnitPort port) {
 		UnitPort res = null;
 		if(inputConnections.containsKey(port)) {
@@ -87,7 +87,7 @@ public class ModelGlobal {
 		}		
 		return res;
 	}
-	
+
 	/**
 	 * Connects the two given output and input ports.
 	 * @param outputPort
@@ -109,9 +109,11 @@ public class ModelGlobal {
 	 */
 	public void disconnectInputPort(UnitInputPort port) {
 		UnitOutputPort out = inputConnections.get(port);
-		out.disconnect(port);
-		inputConnections.remove(port);
-		outputConnections.remove(out);
+		if(out != null) {
+			out.disconnect(port);
+			inputConnections.remove(port);
+			outputConnections.remove(out);
+		}
 	}
 
 	/**
@@ -121,9 +123,11 @@ public class ModelGlobal {
 	 */
 	public void disconnectOutputPort(UnitOutputPort port) {
 		UnitInputPort in = outputConnections.get(port);
-		port.disconnect(in);
-		inputConnections.remove(in);
-		outputConnections.remove(port);
+		if(in != null) {
+			port.disconnect(in);
+			inputConnections.remove(in);
+			outputConnections.remove(port);
+		}
 	}
 
 	/**
@@ -145,7 +149,7 @@ public class ModelGlobal {
 	private void putInputConnection(UnitInputPort inputPort, UnitOutputPort outputPort) {
 		inputConnections.put(inputPort, outputPort);
 	}
-	
+
 	/**
 	 * Removes every connection originating from each port in the given list.
 	 * @param unitports

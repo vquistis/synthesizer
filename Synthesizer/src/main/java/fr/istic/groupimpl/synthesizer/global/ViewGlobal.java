@@ -19,8 +19,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
@@ -37,12 +41,15 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
 public class ViewGlobal implements Initializable {
 
 	@FXML
-	private Pane contentpane;
+	private BorderPane borderpane;
 	
+	@FXML
+	private Pane contentpane;
+
 	/** The vco btn. */
 	@FXML
 	private Button vcoBtn;
-	
+
 	/** The out btn. */
 	@FXML
 	private Button outBtn;
@@ -57,14 +64,16 @@ public class ViewGlobal implements Initializable {
 
 	/** The hboxe list. */
 	private List<HBox> hboxes = new ArrayList<HBox>();
-	
+
 	/** The list assoc. */
 	private List<Pair<Node,ViewComponent>> listAssoc = new ArrayList<Pair<Node,ViewComponent>>();
 
 	private DoubleProperty mouseX = new SimpleDoubleProperty(0);
-	
+
 	private DoubleProperty mouseY = new SimpleDoubleProperty(0);
 	
+	private ControllerGlobal ctl;
+
 	public void addCable(Cable cable) {
 		contentpane.getChildren().add(contentpane.getChildren().size()-1, cable);
 		cable.toFront();
@@ -75,17 +84,19 @@ public class ViewGlobal implements Initializable {
 		contentpane.getChildren().remove(cable);
 		cable.toFront();
 	}
-	
+
 	/**
 	 * Initializes the controller class.
 	 * This method is automatically called after the FXML file has been loaded. It creates a new view and set all the button with new created buttons.
 	 *
 	 * @param url the url
 	 * @param resourceBundle the resourceBundle
-	 * @see View
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		
+		ctl = ControllerGlobal.getInstance();
+		
 		for (int i = 0; i < 3; i++) {
 			HBox h1 = new HBox();
 			h1.setPrefSize(1000, 300);
@@ -95,34 +106,38 @@ public class ViewGlobal implements Initializable {
 			splitpane.getItems().add(h1);
 		}
 		
+		borderpane.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
+			if(event.getButton() == MouseButton.SECONDARY) {
+				event.consume();
+				ctl.handleRightButtonClicked();
+			}
+		});
+		
+		splitpane.setOnDragDone((e) -> {
+			setAllModulesTransparent(false);
+		});
+		
 		vcoBtn.getStyleClass().add("btnClass");
 		outBtn.getStyleClass().add("btnClass");
-		
+
 		for(Node n : splitpane.getItems()) {
 			n.setOnDragOver((e) -> {
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();
 			});
 			n.setOnDragDropped((e) -> {
-				
+
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();				
 				Dragboard db = e.getDragboard();
 				boolean success = false;
 				if (db.hasString()) {
-					Log.getInstance().debug("----DROPPED: "+db.getString());
-					
 					String []pos=db.getString().split(";");
-					
 					Node node = ((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().get(Integer.parseInt(pos[1]));
-					node.setMouseTransparent(false);
 					HBox box=(HBox) n;
 					((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().remove(Integer.parseInt(pos[1]));
-
 					int index =0;
-					System.out.println("e-->"+e.getX()+","+ e.getY());
 					for(Node child : box.getChildren()){	
-						
 						if (child.contains(e.getX(), e.getY())) {
 							break;	
 						}
@@ -130,15 +145,15 @@ public class ViewGlobal implements Initializable {
 					}
 					box.getChildren().add(index,node);
 				}
+				setAllModulesTransparent(false);
 			});
 		}
-		
+
 		splitpane.setOnMouseMoved((e) -> {
 			mouseX.set(e.getX());
 			mouseY.set(e.getY());
-//			Event.fireEvent(scrollpane, e);
 		});
-						
+
 		splitpane.setOnDragOver((e) -> {
 			Event.fireEvent(scrollpane, e);
 			double spXMin = scrollpane.getViewportBounds().getMinX();
@@ -148,31 +163,31 @@ public class ViewGlobal implements Initializable {
 			double x = e.getX();
 			double y = e.getY();
 			Point2D point = splitpane.localToParent(e.getX(), e.getY());
-			
+
 			double pX = point.getX();
 			double pY = point.getY();
 			Log.getInstance().debug("!! Scroll : " + x  + " " + y);
 			Log.getInstance().debug("!! Scroll : " + pX  + " " + pY);
-			
+
 			if ((pX >= spXMin  && pX <= spXMin+50) &&
 					(pY >= spYMin  && pY <= spYMax))  
 			{
 				scrollpane.setHvalue(scrollpane.getHvalue() - 0.05);
 				Log.getInstance().debug("!!! Scroll Column left " + scrollpane.getHvalue() );
-				
+
 			} else if ((pX >= spXMax-50  && pX <= spXMax) &&
 					(pY >= spYMin  && pY <= spYMax))  
 			{
 				scrollpane.setHvalue(scrollpane.getHvalue() + 0.05);
 				Log.getInstance().debug("!!! Scroll Column right " + scrollpane.getHvalue() );
-				
+
 			}
 
 			if ((pX >= spXMin  && pX <= spXMax) &&
 					(pY >= spYMin  && pY <= spYMin+50))  
 			{
 				scrollpane.setVvalue(scrollpane.getVvalue() - 0.05);
-				
+
 			} else if ((pX >= spXMin  && pX <= spXMax) &&
 					(pY >= spYMax-50  && pY <= spYMax))  
 			{
@@ -180,10 +195,10 @@ public class ViewGlobal implements Initializable {
 			}
 
 		});
-		
+
 		createModule("fxml/out.fxml");
+
 		
-		ControllerGlobal ctl = ControllerGlobal.getInstance();
 		ctl.setView(this);
 	}
 
@@ -243,7 +258,7 @@ public class ViewGlobal implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * This method is used to return the position of a component in the container splitPane.
 	 *
@@ -263,7 +278,7 @@ public class ViewGlobal implements Initializable {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Add enableDrag event to a node.
 	 * This event is called when the drag event is enabled
@@ -272,12 +287,20 @@ public class ViewGlobal implements Initializable {
 	 */
 	private void enableDrag(Node node) {
 		node.setOnDragDetected((event) -> {
-			node.setMouseTransparent(true);
+			setAllModulesTransparent(true);
 			ClipboardContent content = new ClipboardContent();
 			content.putString(getString(node));
 			Dragboard db = scrollpane.startDragAndDrop(TransferMode.ANY);
 			db.setContent(content);
 			event.consume();
+		});
+	}
+
+	private void setAllModulesTransparent(boolean t) {
+		splitpane.getItems().forEach((b) -> {
+			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
+				m.setMouseTransparent(t);
+			});
 		});
 	}
 
@@ -288,7 +311,7 @@ public class ViewGlobal implements Initializable {
 	public void handleAddVco(){
 		createModule("fxml/vco.fxml");		
 	}
-	
+
 	/**
 	 * Handle add out. This method adds a new OUT components
 	 */
@@ -300,8 +323,22 @@ public class ViewGlobal implements Initializable {
 	public DoubleProperty mouseXProperty() {
 		return mouseX;
 	}
-	
+
 	public DoubleProperty mouseYProperty() {
 		return mouseY;
+	}
+	
+	@FXML
+	public void handleDelete() {
+		for(Node n : contentpane.getChildren()) {
+			if(n instanceof Cable) {
+				n.setMouseTransparent(false);
+				n.setOnMouseClicked((event) -> {
+					if(event.getButton() == MouseButton.PRIMARY) {
+						ctl.handleRemoveCable((Cable)n);
+					}
+				});
+			}
+		}
 	}
 }
