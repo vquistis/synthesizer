@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 
-<BorderPane fx:id="borderpane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.global.ViewGlobal">
+<BorderPane fx:id="borderpane" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.global.ViewGlobal">
    <top>
       <MenuBar>
         <menus>
@@ -41,9 +41,9 @@
          <center>
             <ScrollPane fx:id="scrollpane" pannable="true" BorderPane.alignment="CENTER">
                <content>
-                  <Pane fx:id="contentpane">
+                  <Pane fx:id="contentpane" styleClass="workspace">
                      <children>
-                     <SplitPane fx:id="splitpane" dividerPositions="0.5, 0.5" orientation="VERTICAL" style="-fx-background-color: #4a4c4e;" AnchorPane.bottomAnchor="351.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="358.0" AnchorPane.topAnchor="0.0">
+                     <SplitPane fx:id="splitpane" dividerPositions="0.5, 0.5" orientation="VERTICAL" AnchorPane.bottomAnchor="351.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="358.0" AnchorPane.topAnchor="0.0">
                            <items>
                               <HBox fx:id="hb1" spacing="4.0">
                                  <padding>

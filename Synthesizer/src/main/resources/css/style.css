@@ -1,5 +1,10 @@
 @CHARSET "UTF-8";
 
+/* ===== CSS Dark theme ===== */
+.workspace, .split-pane {
+	-fx-background-color:  #4a4c4e;
+}
+
 .split-pane:vertical .split-pane-divider {
 	-fx-padding: 3px;
 	-fx-background-color: transparent, derive(#1d1d1d, 20%);
@@ -28,7 +33,6 @@
 	-fx-padding: 0px;
 }
 /* -------------------------- */
-
 
 /* ----- CSS Module ----- */
 .moduleBox {
@@ -60,6 +64,8 @@
 	-fx-effect: dropshadow(gaussian, #00ae00, 4, 0, 0, 0);
 }
 /* ---------------------- */
+/* ========================== */
+
 
 .knobButton {
 	-fx-background-color: transparent;
