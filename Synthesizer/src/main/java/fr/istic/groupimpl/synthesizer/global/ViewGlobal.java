@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.ClipboardContent;
@@ -39,8 +38,6 @@ public class ViewGlobal implements Initializable {
 	@FXML private Pane contentpane;
 	@FXML private ScrollPane scrollpane;
 	@FXML private SplitPane splitpane;
-	@FXML private Button vcoBtn;
-	@FXML private Button outBtn;
 	@FXML private HBox hb1;
 	@FXML private HBox hb2;
 	@FXML private HBox hb3;
@@ -90,9 +87,6 @@ public class ViewGlobal implements Initializable {
 				}
 			}
 		});
-		
-		vcoBtn.getStyleClass().add("btnClass");
-		outBtn.getStyleClass().add("btnClass");
 		
 		// automatic resizing
 		scrollpane.widthProperty().addListener((obs, oldWidth, newWidth) -> {

@@ -3,17 +3,16 @@ package fr.istic.groupimpl.synthesizer.util;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
+import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * Implémentation d'un bouton tournant (knob) avec graduations paramétrables
@@ -127,7 +126,7 @@ public class Potentiometre extends Region {
 		this.setPrefSize(2. * rayon, 2. * rayon);
 		this.setShape(new Circle(2. * rayon));
 
-		getStyleClass().add("button"); // NOI18N.
+		getStyleClass().add("knobButton"); // NOI18N.
 		rgKnob.setPrefSize(2. * RAYON_REF, 2. * RAYON_REF);
 		rgKnob.getStyleClass().add("knob");
 		rgKnob.getTransforms().add(rotate);
