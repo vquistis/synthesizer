@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -8,41 +9,31 @@
 
 <BorderPane fx:id="borderpane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.global.ViewGlobal">
    <left>
-      <Accordion prefHeight="220.0" prefWidth="220.0">
+      <Accordion>
         <panes>
-          <TitledPane animated="true" text="Output modules">
+          <TitledPane animated="true" text="Modules">
             <content>
-              <AnchorPane>
+                  <VBox alignment="TOP_CENTER" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                           <children>
-                              <Button fx:id="outBtn" minWidth="215.0" onAction="#handleAddOut" prefHeight="25.0" prefWidth="215.0" text="OUT">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                               </Button>
-                           </children>
-                        </VBox>
+                        <Button fx:id="outBtn" onAction="#handleAddOut" styleClass="btnClass" text="OUT">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                         </Button>
+                        <Button fx:id="vcoBtn" onAction="#handleAddVco" styleClass="btnClass" text="VCO">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                         </Button>
                      </children>
-                  </AnchorPane>
+                  </VBox>
             </content>
-          </TitledPane>
-          <TitledPane animated="true" text="VCO modules">
-               <content>
-                  <AnchorPane>
-                     <children>
-                        <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                           <children>
-                              <Button fx:id="vcoBtn" minWidth="215.0" onAction="#handleAddVco" prefHeight="25.0" prefWidth="215.0" text="VCO">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                               </Button>
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </content>
           </TitledPane>
         </panes>
       </Accordion>
@@ -75,10 +66,18 @@
       </MenuBar>
    </top>
    <center>
-      <ScrollPane fx:id="scrollpane" prefWidth="800.0" >
+      <ScrollPane fx:id="scrollpane" pannable="true">
          <content>
-         	<Pane fx:id="contentpane">
-            <SplitPane fx:id="splitpane" orientation="VERTICAL" />
+            <Pane fx:id="contentpane">
+               <children>
+               <SplitPane fx:id="splitpane" dividerPositions="0.5, 0.5" orientation="VERTICAL" AnchorPane.bottomAnchor="351.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="358.0" AnchorPane.topAnchor="0.0">
+                     <items>
+                        <HBox fx:id="hb1" />
+                        <HBox fx:id="hb2" />
+                        <HBox fx:id="hb3" />
+                     </items>
+                  </SplitPane>
+               </children>
             </Pane>
          </content>
       </ScrollPane>
