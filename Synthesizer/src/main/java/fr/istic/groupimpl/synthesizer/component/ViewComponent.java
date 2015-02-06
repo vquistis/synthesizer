@@ -35,6 +35,9 @@ public abstract class ViewComponent {
 	 * coordinate space of the parent node.
 	 */
 	final protected void addPort(Node node, DoubleProperty portX, DoubleProperty portY) {
+		portX.set(computeNodeCenter(node).getX());
+		portY.set(computeNodeCenter(node).getY());
+		
 		ChangeListener posChangeListener = ((a,b,c) -> {
 			portX.set(computeNodeCenter(node).getX());
 			portY.set(computeNodeCenter(node).getY());
@@ -84,6 +87,7 @@ public abstract class ViewComponent {
 
 	private Point2D computeNodeCenter(Node node) {
 		Bounds bounds = getNodeBoundsInComponent(node);
+		Log.getInstance().debug("Bounds =" + bounds);
 		return new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2);
 	}
 

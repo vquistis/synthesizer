@@ -39,7 +39,7 @@ public class ControllerGlobal {
 	private DoubleProperty previousY;
 
 	private UnitPort currentPort;
-	
+
 	private Map<UnitPort,Cable> cables = new HashMap<UnitPort,Cable>();
 
 	private ControllerGlobal() {
@@ -81,14 +81,14 @@ public class ControllerGlobal {
 	 * @param unitGen
 	 */
 	public void unregisterUnitGenerator(UnitGenerator unitGen) {
-		
+
 		model.removeUnitGenerator(unitGen);
 	}
 
 	public void unregisterOutUnitGenerator(UnitGenerator unitGen) {
 		model.removeOutUnitGenerator(unitGen);
 	}
-	
+
 	/**
 	 * Signals the model that any connection originating from each port in
 	 * the given collection must be removed.
@@ -130,18 +130,18 @@ public class ControllerGlobal {
 				previousPort = port;
 				previousX = x;
 				previousY = y;
-				
+
 				//----------------------
 				Cable cable = cables.get(port);
 				cables.remove(port);
 				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());
 				Log.getInstance().debug("INPUT PORT DISCONNECTED");
 				//----------------------
-				
+
 			} else {
 				cableMode = CableMode.IN_CONNECTED;
 				currentPort = port;
-				
+
 				//----------------------
 				Cable cable = new Cable();
 				cables.put(port, cable);
@@ -151,7 +151,7 @@ public class ControllerGlobal {
 				view.addCable(cable);
 				Log.getInstance().debug("CREATING CABLE FROM INPUT PORT");
 				//----------------------
-				
+
 			}
 			break;
 		case IN_CONNECTED:
@@ -169,7 +169,7 @@ public class ControllerGlobal {
 			if(!model.isPortConnected(port)) {
 				cableMode = CableMode.NONE_CONNECTED;
 				this.model.connectPorts(currentPort, port);
-				
+
 				//----------------------
 				Cable cable = cables.get(currentPort);
 				cables.put(port,cable);
@@ -177,7 +177,7 @@ public class ControllerGlobal {
 				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
 				Log.getInstance().debug("INPUT PORT CONNECTED TO OUTPUT PORT");
 				//----------------------
-				
+
 				currentPort = null;
 				previousPort = null;
 				previousX = null;
@@ -202,18 +202,18 @@ public class ControllerGlobal {
 				previousPort = port;
 				previousX = x;
 				previousY = y;
-				
+
 				//----------------------
 				Cable cable = cables.get(port);
 				cables.remove(port);
 				Log.getInstance().debug("OUTPUT PORT DISCONNECTED");
 				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
 				//----------------------
-				
+
 			} else {
 				cableMode = CableMode.OUT_CONNECTED;
 				currentPort = port;
-				
+
 				//----------------------				
 				Cable cable = new Cable();
 				cables.put(port, cable);
@@ -223,21 +223,21 @@ public class ControllerGlobal {
 				view.addCable(cable);
 				Log.getInstance().debug("CREATING CABLE FROM OUTPUT PORT");
 				//----------------------
-				
+
 			}
 			break;
 		case IN_CONNECTED:
 			if(!model.isPortConnected(port)) {
 				cableMode = CableMode.NONE_CONNECTED;
 				this.model.connectPorts(port, currentPort);
-				
+
 				//----------------------
 				Cable cable = cables.get(currentPort);
 				cables.put(port,cable);
 				cable.bindOutput(x, y);
 				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
 				//----------------------
-				
+
 				currentPort = null;
 				previousPort = null;
 				previousX = null;
@@ -255,22 +255,40 @@ public class ControllerGlobal {
 	 */
 	public void handleRightButtonClicked() {
 		cableMode = CableMode.NONE_CONNECTED;
-		if(previousPort != null) {
-			Cable cable = cables.get(currentPort);
-			cables.put(previousPort,cable);
-			if(previousPort instanceof UnitInputPort) {
-				cable.bindInput(previousX, previousY);
-				this.model.connectPorts(currentPort, previousPort);
+		Cable cable = cables.get(currentPort);
+		if(cable != null) {
+			if(previousPort != null) {
+				cables.put(previousPort,cable);
+				if(previousPort instanceof UnitInputPort) {
+					cable.bindInput(previousX, previousY);
+					this.model.connectPorts(currentPort, previousPort);
+				} else {
+					cable.bindOutput(previousX, previousY);
+					this.model.connectPorts(previousPort, currentPort);
+				}
 			} else {
-				cable.bindOutput(previousX, previousY);
-				this.model.connectPorts(previousPort, currentPort);
+				cables.remove(currentPort);
+				view.removeCable(cable);
 			}
 		}
+		
 		currentPort = null;
 		previousPort = null;
 		previousX = null;
 		previousY = null;
-		//TODO notify the view to stop displaying the cable.
+	}
+	
+	public void handleRemoveCable(Cable cable) {
+		view.removeCable(cable);
+		cables.forEach((k,v) -> {
+			if(v == cable) {
+				if(k instanceof UnitInputPort) {
+					model.disconnectInputPort((UnitInputPort) k);
+				} else if(k instanceof UnitOutputPort) {
+					model.disconnectOutputPort((UnitOutputPort) k);
+				}
+			}
+		});
 	}
 
 	public void setView(ViewGlobal view) {
