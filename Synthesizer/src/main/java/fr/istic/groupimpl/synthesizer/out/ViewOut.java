@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;

@@ -106,6 +106,8 @@ public class Potentiometre extends Region {
 
 	private long timeRelease = 0;
 
+	private boolean dragValid = false;
+
 	Potentiometre(PotentiometreFactory initPot) {
 
 		super();
@@ -137,11 +139,15 @@ public class Potentiometre extends Region {
 			event.consume();
 		});
 		setOnDragOver((event) -> {
-			traitePosAngle(event.getX(), event.getY());
+			if (dragValid) {
+				traitePosAngle(event.getX(), event.getY());
+			}
 			event.consume();
 		});
 		setOnDragDropped((event) -> {
-			traitePosAngle(event.getX(), event.getY());
+			if (dragValid) {
+				traitePosAngle(event.getX(), event.getY());
+			}
 			event.consume();
 		});
 
@@ -149,6 +155,7 @@ public class Potentiometre extends Region {
 			Log.getInstance().debug(
 					"event MousePressed x=" + event.getX() + " y="
 							+ event.getY());
+			dragValid = true;
 			dragOK = false;
 			traitePosAngle(event.getX(), event.getY());
 			event.consume();
@@ -158,7 +165,9 @@ public class Potentiometre extends Region {
 			Log.getInstance().debug(
 					"event MouseDragged x=" + event.getX() + " y="
 							+ event.getY());
-			traitePosAngle(event.getX(), event.getY());
+			if (dragValid) {
+				traitePosAngle(event.getX(), event.getY());
+			}
 			event.consume();
 
 		});
@@ -174,10 +183,13 @@ public class Potentiometre extends Region {
 				Log.getInstance().debug("Double Clic");
 				setValue(valueDef);
 			} else {
-				traitePosAngle(event.getX(), event.getY());
-				dragOK = false;
+				if (dragValid) {
+					traitePosAngle(event.getX(), event.getY());
+					dragOK = false;
+				}
 			}
 			timeRelease = t;
+			dragValid = false;
 			event.consume();
 
 		});
@@ -185,19 +197,23 @@ public class Potentiometre extends Region {
 			Log.getInstance().debug(
 					"event MouseDragExited x=" + event.getX() + " y="
 							+ event.getY());
-			traitePosAngle(event.getX(), event.getY());
-			dragOK = false;
+			if (dragValid) {
+				traitePosAngle(event.getX(), event.getY());
+				dragOK = false;
+				dragValid = false;
+			}
 			event.consume();
 
 		});
-	    setOnScroll( (event)-> {
-	    	double v = ((double)event.getDeltaY())/100.;
-	    	Log.getInstance().debug(
-					"event OnScroll deltaY="+event.getDeltaY()+" v="+v);
-	        	addValue(v);
-	        event.consume();
-	    });
-
+		setOnScroll((event) -> {
+			double v = ((double) event.getDeltaY()) / 100.;
+			Log.getInstance().debug(
+					"event OnScroll deltaY=" + event.getDeltaY() + " v=" + v);
+			if (dragValid) {
+				addValue(v);
+			}
+			event.consume();
+		});
 
 		this.title.setText(initPot.getTitle());
 		getChildren().add(this.title);
@@ -232,7 +248,7 @@ public class Potentiometre extends Region {
 		Log.getInstance().trace("1value=" + val);
 
 		Log.getInstance().trace("1angle=" + angle);
-		
+
 		angle += deltaAngle;
 		if (angle < minAngle) {
 			angle = minAngle;
@@ -263,18 +279,18 @@ public class Potentiometre extends Region {
 	}
 
 	// rend un angle equivalent mais entre -Math.PI et Math.PI
-	private double correctAngle( double angle )
-	{
-		double sens = Math.signum(angle);	
-		int n = (int)Math.floor(Math.abs(angle)/Math.PI);
-		
-		n = (n+1)/2;
-		
-		double correct = -sens*((double)n)*2.*Math.PI;
-				
-		return angle + correct;		
-				
+	private double correctAngle(double angle) {
+		double sens = Math.signum(angle);
+		int n = (int) Math.floor(Math.abs(angle) / Math.PI);
+
+		n = (n + 1) / 2;
+
+		double correct = -sens * ((double) n) * 2. * Math.PI;
+
+		return angle + correct;
+
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -294,8 +310,8 @@ public class Potentiometre extends Region {
 		if (minAngle <= angle && angle <= maxAngle) {
 			rotate.setPivotX(rgKnob.getWidth() / 2.0);
 			rotate.setPivotY(rgKnob.getHeight() / 2.0);
-//			double locAngle = (angle < -Math.PI) ? angle + 2. * Math.PI
-//					: (angle > Math.PI) ? angle - 2. * Math.PI : angle;
+			// double locAngle = (angle < -Math.PI) ? angle + 2. * Math.PI
+			// : (angle > Math.PI) ? angle - 2. * Math.PI : angle;
 			double locAngle = correctAngle(angle);
 			Log.getInstance().debug("locAngle=" + locAngle);
 			rotate.setAngle(180. * locAngle / Math.PI);
@@ -306,8 +322,8 @@ public class Potentiometre extends Region {
 	private AtomicBoolean flagAffTickMarks = new AtomicBoolean(false);
 
 	private void affTickMarks() {
-		
-		if( flagAffTickMarks.getAndSet(true) )
+
+		if (flagAffTickMarks.getAndSet(true))
 			return;
 
 		double centerX = getWidth() / 2.0;

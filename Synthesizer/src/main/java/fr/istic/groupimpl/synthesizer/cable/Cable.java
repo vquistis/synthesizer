@@ -2,6 +2,7 @@ package fr.istic.groupimpl.synthesizer.cable;
 
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.StrokeLineCap;

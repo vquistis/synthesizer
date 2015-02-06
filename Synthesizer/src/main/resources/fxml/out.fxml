@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.out.ViewOut">
+<BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.out.ViewOut">
    <top>
       <GridPane alignment="CENTER" styleClass="titlePane">
          <columnConstraints>
@@ -79,7 +79,7 @@
                   <Label text="in" />
                   <ImageView fx:id="input" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
                      <image>
-                        <Image url="@../img/inoutRouge.png" />
+                        <Image url="@../img/inoutBlanc.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
