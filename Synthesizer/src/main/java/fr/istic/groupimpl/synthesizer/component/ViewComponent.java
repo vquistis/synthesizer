@@ -35,6 +35,13 @@ public abstract class ViewComponent {
 	 * coordinate space of the parent node.
 	 */
 	final protected void addPort(Node node, DoubleProperty portX, DoubleProperty portY) {
+		Log.getInstance().debug("addPort : " + portX + "," + portY);
+		
+		portX.set(computeNodeCenter(node).getX());
+		portY.set(computeNodeCenter(node).getY());
+		
+		Log.getInstance().debug("addPort : " + portX + "," + portY);
+		
 		ChangeListener posChangeListener = ((a,b,c) -> {
 			portX.set(computeNodeCenter(node).getX());
 			portY.set(computeNodeCenter(node).getY());
@@ -56,26 +63,34 @@ public abstract class ViewComponent {
 	}
 
 	private Bounds getNodeBoundsInComponent(Node node) {
+		Log.getInstance().debug("getNodeBoundsInComponent : " + node.getId());
 		Bounds res = node.getBoundsInParent();
 
 		Node componentParent = getComponentRoot();
 		Node currentParent = node.getParent();
 
 		if(currentParent != null) {
+			Log.getInstance().debug("   getNodeBoundsInComponent [currentParent1] = " + currentParent.getId());
 			Bounds bounds = currentParent.localToParent(node.getBoundsInParent());
 
 			while(currentParent != componentParent) {
+				Log.getInstance().debug("   [currentParent-search] = " + currentParent);
 				currentParent = currentParent.getParent();
 				bounds = currentParent.localToParent(bounds);
 			}
+			Log.getInstance().debug("   [currentParent-found] = " + currentParent);
 			if(currentParent.getParent() != null) {
+				Log.getInstance().debug("   [currentParent.getParent()] = " + currentParent.getParent());
 				// recomputes the bounds of the node in the HBox containing the component
 				bounds = currentParent.getParent().localToParent(bounds);
 				// recomputes the bounds of the node in the SplitPane containing HBox containing the component
 				if(currentParent.getParent().getParent() != null) {
+					Log.getInstance().debug("   [currentParent.getParent().getParent()] = " + currentParent.getParent().getParent());
 					bounds = currentParent.getParent().getParent().localToParent(bounds);  
 
 				} 
+			} else {
+				Log.getInstance().debug("   [currentParent.getParent()-last] = null");
 			}
 			res = bounds;
 		}
