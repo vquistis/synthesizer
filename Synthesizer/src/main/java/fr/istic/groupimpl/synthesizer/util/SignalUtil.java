@@ -5,17 +5,6 @@ package fr.istic.groupimpl.synthesizer.util;
  */
 public class SignalUtil {
 	
-	public static boolean isValid() {
-		return valid;
-	}
-
-	public static void setValid(boolean valid) {
-		SignalUtil.valid = valid;
-	}
-
-	private static boolean valid = true;
-	
-	
 	/** The Constant AMPLITUDE_MAX. */
 	private static final int FREQUENCE_MAX = 22100;
 
@@ -30,6 +19,27 @@ public class SignalUtil {
 	
 	/** The freq min. */
 	private static  int MODULATION_MIN = -10;
+	
+	/** The valid. */
+	private static boolean valid = true;
+	
+	/**
+	 * Checks if is valid.
+	 *
+	 * @return true, if is valid
+	 */
+	public static boolean isValid() {
+		return valid;
+	}
+
+	/**
+	 * Sets the valid.
+	 *
+	 * @param valid the new valid
+	 */
+	public static void setValid(boolean valid) {
+		SignalUtil.valid = valid;
+	}
 	
 	/**
 	 * Verify frequence.

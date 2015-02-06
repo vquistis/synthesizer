@@ -11,7 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
-public abstract class ViewComponent {
+public abstract class ViewComponent implements IViewComponent {
 
 	public static final double COMPONENT_HEIGHT = 300;
 
