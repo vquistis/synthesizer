@@ -5,6 +5,17 @@ package fr.istic.groupimpl.synthesizer.util;
  */
 public class SignalUtil {
 	
+	public static boolean isValid() {
+		return valid;
+	}
+
+	public static void setValid(boolean valid) {
+		SignalUtil.valid = valid;
+	}
+
+	private static boolean valid = true;
+	
+	
 	/** The Constant AMPLITUDE_MAX. */
 	private static final int FREQUENCE_MAX = 22100;
 
@@ -27,6 +38,8 @@ public class SignalUtil {
 	 * @return the double
 	 */
 	public  static double verifyFrequence(double frequence){
+		if ( !valid )
+			return frequence;
     	if (frequence<FREQUENCE_MAX) {
     		return frequence;
 		} else {
@@ -41,6 +54,8 @@ public class SignalUtil {
      * @return the double
      */
     public static double verifyFms(double mod){    	
+		if ( !valid )
+			return mod;
 		if (mod>=MODULATION_MAX) {
     		return MODULATION_MAX;
 		} else if (mod<=MODULATION_MIN) {
@@ -56,7 +71,10 @@ public class SignalUtil {
      * @param amplitude the amplitude
      * @return the double
      */
-    public static double verifyAmplitude(double amplitude){    	
+    public static double verifyAmplitude(double amplitude){ 
+		if ( !valid )
+			return amplitude;
+
 		if (amplitude>=AMPLITUDE_MAX) {
     		return AMPLITUDE_MAX;
 		} else if (amplitude<=AMPLITUDE_MIN) {
