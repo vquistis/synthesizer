@@ -8,49 +8,54 @@ import org.junit.Test;
 public class JsynAttenuationFilterTest {
 
 	private JsynAttenuationFilter attenuator;
+	private int nbInput;
 
 	@Before
 	public void init() {
 		attenuator = new JsynAttenuationFilter();
+		attenuator.input.set(0.3);
+		attenuator.input.set(3.0);
+		attenuator.input.set(1.8);
+		attenuator.input.set(2.4);
+		attenuator.input.set(1.1);
+		attenuator.input.set(0.6);
+		nbInput = 6;
 	}
 
 	@Test
-	public void testGenerateDiv4() {
+	public void testAttenuationDiv4() {
 		attenuator.set(-12); // attenuation -12db = input/4
-		attenuator.input.set(3); // input = 3
-		attenuator.generate(0, 1);
-		assertEquals(attenuator.input.getValues()[0]/4, attenuator.output.getValues()[0], 0.001);
+		testGenerate(1.0/4);
 	}
 	
 	@Test
-	public void testGenerateDiv2() {
+	public void testAttenuationDiv2() {
 		attenuator.set(-6); // attenuation -6db = input/2
-		attenuator.input.set(3); // input = 3
-		attenuator.generate(0, 1);
-		assertEquals(attenuator.input.getValues()[0]/2, attenuator.output.getValues()[0], 0.001);
+		testGenerate(1.0/2);
 	}
 	
 	@Test
-	public void testGenerate0() {
+	public void testAttenuation0() {
 		attenuator.set(0); // pas d'attenuation
-		attenuator.input.set(3); // input = 3
-		attenuator.generate(0, 1);
-		assertEquals(attenuator.input.getValues()[0], attenuator.output.getValues()[0], 0.001);
+		testGenerate(1);
 	}
 	
 	@Test
-	public void testGenerateMul2() {
+	public void testAttenuationMul2() {
 		attenuator.set(6); // attenuation +6db = input*2
-		attenuator.input.set(3); // input = 3
-		attenuator.generate(0, 1);
-		assertEquals(attenuator.input.getValues()[0]*2, attenuator.output.getValues()[0], 0.001);
+		testGenerate(2);
 	}
 	
 	@Test
-	public void testGenerateMul4() {
+	public void testAttenuationMul4() {
 		attenuator.set(12); // attenuation +12db = input*4
-		attenuator.input.set(3); // input = 3
-		attenuator.generate(0, 1);
-		assertEquals(attenuator.input.getValues()[0]*4, attenuator.output.getValues()[0], 0.001);
+		testGenerate(4);
+	}
+	
+	private void testGenerate(double coef) {
+		attenuator.generate(0, nbInput+1);
+		for (int i = 0; i < nbInput+1; i++) {
+			assertEquals(attenuator.input.getValues()[i]*coef, attenuator.output.getValues()[i], 0.0001);
+		}
 	}
 }
