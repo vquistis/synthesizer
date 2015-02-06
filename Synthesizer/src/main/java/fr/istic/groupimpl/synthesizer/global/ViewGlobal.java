@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
@@ -23,6 +24,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
@@ -36,8 +38,13 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
  */
 public class ViewGlobal implements Initializable {
 
-	@FXML
-	private Pane contentpane;
+	/** The workspace to add module. */ 
+	@FXML private Pane contentpane;
+	/** The scrollpane for workspace. */
+	@FXML private ScrollPane scrollpane;
+	/** The splitpane shelf of workspace. */
+	@FXML private SplitPane splitpane;
+	
 	
 	/** The vco btn. */
 	@FXML
@@ -47,13 +54,10 @@ public class ViewGlobal implements Initializable {
 	@FXML
 	private Button outBtn;
 
-	/** The splitpane. */
-	@FXML
-	private SplitPane splitpane;
-
-	/** The scrollpane. */
-	@FXML
-	private ScrollPane scrollpane;
+	
+	@FXML private HBox hb1;
+	@FXML private HBox hb2;
+	@FXML private HBox hb3;
 
 	/** The hboxe list. */
 	private List<HBox> hboxes = new ArrayList<HBox>();
@@ -86,17 +90,22 @@ public class ViewGlobal implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		for (int i = 0; i < 3; i++) {
-			HBox h1 = new HBox();
-			h1.setPrefSize(1000, 300);
-			h1.setMinSize(1000, 300);
-			h1.setMaxSize(1000, 300);
-			h1.getStyleClass().add("hboxStyle");
-			splitpane.getItems().add(h1);
-		}
+//		for (int i = 0; i < 3; i++) {
+//			HBox h1 = new HBox();
+//			h1.setPrefSize(1000, 300);
+//			h1.setMinSize(1000, 300);
+//			h1.setMaxSize(1000, 300);
+//			h1.getStyleClass().add("hboxStyle");
+//			splitpane.getItems().add(h1);
+//		}
 		
-		vcoBtn.getStyleClass().add("btnClass");
-		outBtn.getStyleClass().add("btnClass");
+		// automatic resizing
+		scrollpane.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+			splitpane.setPrefWidth((double) newWidth);
+		});
+		scrollpane.heightProperty().addListener((obs, oldHeight, newHeight) -> {
+			splitpane.setPrefHeight((double) newHeight);
+		});
 		
 		for(Node n : splitpane.getItems()) {
 			n.setOnDragOver((e) -> {
@@ -237,7 +246,8 @@ public class ViewGlobal implements Initializable {
 			ViewComponent view = loader.getController();
 			Node root = loader.load();
 			listAssoc.add(new Pair<Node, ViewComponent>(root, view));
-			((HBox)splitpane.getItems().get(0)).getChildren().add(root);
+			HBox hb = (HBox) splitpane.getItems().get(0);
+			hb.getChildren().add(root);
 			enableDrag(root);
 		} catch (IOException e) {
 			e.printStackTrace();

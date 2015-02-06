@@ -24,7 +24,7 @@ public class App extends Application
 		
 		URL cssURL = getClass().getClassLoader().getResource("css/style.css");
 		
-		Scene scene = new Scene(root,800,600);
+		Scene scene = new Scene(root,1100,700);
 		scene.getStylesheets().add(cssURL.toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
