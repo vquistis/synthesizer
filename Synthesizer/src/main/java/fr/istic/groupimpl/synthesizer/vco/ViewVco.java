@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
  * @authors GroupImpl
