@@ -1,14 +1,12 @@
 package fr.istic.groupimpl.synthesizer.global;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
 
 public class ControllerGlobalTest {
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+	UnitOutputPort out;
+	UnitInputPort in;
+	ControllerGlobal ctl = ControllerGlobal.getInstance();
 
 }

@@ -22,6 +22,10 @@ public abstract class ViewComponent implements IViewComponent {
 	 * @return The root Pane of the component
 	 */
 	protected abstract Pane getComponentRoot();
+	
+	public void refreshComponent() {
+		portBindings.forEach((c) -> {c.changed(null, null, null);});
+	}
 
 	/**
 	 * This method adds the given node of the component as a port, and binds
@@ -65,9 +69,12 @@ public abstract class ViewComponent implements IViewComponent {
 		if(currentParent != null) {
 			Log.getInstance().debug("   getNodeBoundsInComponent [currentParent1] = " + currentParent.getId());
 			Bounds bounds = currentParent.localToParent(node.getBoundsInParent());
+			Log.getInstance().debug("   [bounds-initial] = " + bounds);
+			Log.getInstance().debug("   [bounds-initial-local] = " + node.getBoundsInParent());
 
 			while(currentParent != componentParent) {
 				Log.getInstance().debug("   [currentParent-search] = " + currentParent);
+				Log.getInstance().debug("   [bounds-search] = " + bounds);
 				currentParent = currentParent.getParent();
 				bounds = currentParent.localToParent(bounds);
 			}
@@ -80,7 +87,6 @@ public abstract class ViewComponent implements IViewComponent {
 				if(currentParent.getParent().getParent() != null) {
 					Log.getInstance().debug("   [currentParent.getParent().getParent()] = " + currentParent.getParent().getParent());
 					bounds = currentParent.getParent().getParent().localToParent(bounds);  
-
 				} 
 			} else {
 				Log.getInstance().debug("   [currentParent.getParent()-last] = null");

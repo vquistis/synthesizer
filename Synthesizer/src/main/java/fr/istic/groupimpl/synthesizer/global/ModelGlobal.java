@@ -13,8 +13,6 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
-import fr.istic.groupimpl.synthesizer.logger.Log;
-
 public class ModelGlobal {
 
 	private ControllerGlobal controller;
@@ -28,7 +26,7 @@ public class ModelGlobal {
 	private Map<UnitInputPort, UnitOutputPort> inputConnections;
 
 	/**
-	 * Instanciates the underlying JSyn synthesizer and starts it.
+	 * Instantiates the underlying JSyn synthesizer and starts it.
 	 * @param controller
 	 */
 	public ModelGlobal(ControllerGlobal controller) {
@@ -99,11 +97,10 @@ public class ModelGlobal {
 		out.connect(in);
 		putOutputConnection(out, in);
 		putInputConnection(in, out);
-		controller.handleConnectModules();
 	}
 
 	/**
-	 * Retrieve the output port connected to the given input port
+	 * Retrieves the output port connected to the given input port
 	 * and disconnects them.
 	 * @param port
 	 */
@@ -117,7 +114,7 @@ public class ModelGlobal {
 	}
 
 	/**
-	 * Retrieve the input port connected to the given output port
+	 * Retrieves the input port connected to the given output port
 	 * and disconnects them.
 	 * @param port
 	 */

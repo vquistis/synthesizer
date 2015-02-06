@@ -47,22 +47,6 @@ public class ControllerGlobal {
 	}
 
 	/**
-	 * Signals the view that a visual connection must be made between
-	 * two ports.
-	 */
-	public void handleConnectModules() {
-		//TODO notify the view to bind the cable.
-	}
-
-	/**
-	 * Signals the view that the visual connection must between two ports
-	 * must be removed.
-	 */
-	public void handleDisconnectModules() {
-		//TODO notify the view to unbind the cable.
-	}
-
-	/**
 	 * Signals the model that the given UnitGenerator must be added
 	 * to the synthesizer.
 	 * @param unitGen
@@ -289,6 +273,7 @@ public class ControllerGlobal {
 				}
 			}
 		});
+		
 	}
 
 	public void setView(ViewGlobal view) {

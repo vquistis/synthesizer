@@ -2,8 +2,6 @@ package fr.istic.groupimpl.synthesizer.global;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.DoubleProperty;
@@ -12,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -24,7 +23,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
@@ -48,13 +46,18 @@ public class ViewGlobal implements Initializable {
 	@FXML private HBox hb3;
 	
 //	private List<HBox> hboxes = new ArrayList<HBox>();
-	private List<Pair<Node,ViewComponent>> listAssoc = new ArrayList<Pair<Node,ViewComponent>>();
+//	private List<Pair<Node,ViewComponent>> listAssoc = new ArrayList<Pair<Node,ViewComponent>>();
 	private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 	private DoubleProperty mouseY = new SimpleDoubleProperty(0);
 	private ControllerGlobal ctl;
 
 	public void addCable(Cable cable) {
 		contentpane.getChildren().add(contentpane.getChildren().size()-1, cable);
+		cable.setOnMouseClicked((event) -> {
+			if(event.getButton() == MouseButton.PRIMARY) {
+				ctl.handleRemoveCable(cable);
+			}
+		});
 		cable.toFront();
 	}
 
@@ -75,10 +78,16 @@ public class ViewGlobal implements Initializable {
 		
 		ctl = ControllerGlobal.getInstance();
 		
-		borderpane.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
+		contentpane.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
 			if(event.getButton() == MouseButton.SECONDARY) {
 				event.consume();
 				ctl.handleRightButtonClicked();
+				contentpane.setCursor(Cursor.DEFAULT);
+				for(Node n : contentpane.getChildren()) {
+					if(n instanceof Cable) {
+						n.setMouseTransparent(true);
+					}
+				}
 			}
 		});
 		
@@ -104,6 +113,7 @@ public class ViewGlobal implements Initializable {
 				Dragboard db = e.getDragboard();
 				boolean success = false;
 				if (db.hasString()) {
+					Log.getInstance().debug("DROP DONE");
 					String []pos=db.getString().split(";");
 					Node node = ((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().get(Integer.parseInt(pos[1]));
 					HBox box=(HBox) n;
@@ -219,12 +229,13 @@ public class ViewGlobal implements Initializable {
 	public void createModule(String filename) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
-			ViewComponent view = loader.getController();
 			Node root = loader.load();
-			listAssoc.add(new Pair<Node, ViewComponent>(root, view));
+			ViewComponent view = loader.getController();
+//			listAssoc.add(new Pair<Node, ViewComponent>(root, view));
 			HBox hb = (HBox) splitpane.getItems().get(0);
 			hb.getChildren().add(root);
 			enableDrag(root);
+			view.refreshComponent();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -258,6 +269,7 @@ public class ViewGlobal implements Initializable {
 	 */
 	private void enableDrag(Node node) {
 		node.setOnDragDetected((event) -> {
+			Log.getInstance().debug("DROP STARTED");
 			ClipboardContent content = new ClipboardContent();
 			content.putString(getString(node));
 			Dragboard db = scrollpane.startDragAndDrop(TransferMode.ANY);
@@ -303,14 +315,10 @@ public class ViewGlobal implements Initializable {
 	
 	@FXML
 	public void handleDelete() {
+		contentpane.setCursor(Cursor.CROSSHAIR);
 		for(Node n : contentpane.getChildren()) {
 			if(n instanceof Cable) {
 				n.setMouseTransparent(false);
-				n.setOnMouseClicked((event) -> {
-					if(event.getButton() == MouseButton.PRIMARY) {
-						ctl.handleRemoveCable((Cable)n);
-					}
-				});
 			}
 		}
 	}
