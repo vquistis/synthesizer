@@ -298,6 +298,10 @@ public class ViewGlobal implements Initializable {
 	public void handleAddOut(){
 		createModule("fxml/out.fxml");		
 	}
+	@FXML
+	public void handleAddScope(){
+		createModule("fxml/oscillo.fxml");		
+	}
 
 	public DoubleProperty mouseXProperty() {
 		return mouseX;
