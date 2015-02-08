@@ -19,7 +19,7 @@ public class OscilloscopeFactory {
 	private double height;
 	private double width;
 	private Oscilloscope.GetBuffer cmdGetBuffer;
-	private long refreshPeriod;
+	private long refreshPeriod=1000;
 
 	public long getRefreshPeriod() {
 		return refreshPeriod;

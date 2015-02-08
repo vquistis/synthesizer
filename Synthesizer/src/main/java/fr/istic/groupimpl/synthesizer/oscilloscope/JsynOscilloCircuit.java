@@ -49,6 +49,10 @@ public class JsynOscilloCircuit extends UnitGenerator {
 	private int indBuf;
 	private int indice;
 	
+	/**
+	 * rend un nouvel index qui etait libre tout en le bloquant
+	 * @return indice
+	 */
 	private int newIndBuf()
 	{
 		int ind = indBuf;
@@ -64,6 +68,10 @@ public class JsynOscilloCircuit extends UnitGenerator {
 		return -1;
 	}
 
+	/**
+	 * fonction qui rend un buffer de donnee lu recemment
+	 * @return
+	 */
 	public double [] getBuffer()
 	{
 		int ind = newIndBuf();
@@ -75,7 +83,12 @@ public class JsynOscilloCircuit extends UnitGenerator {
 		return ret;
 	}	
 		
-    void storeBuf( double v )
+    /**
+     * Fonction qui stocke un élément de donné
+     * @param v
+     * 	Element de donnée
+     */
+    private void storeBuf( double v )
     {
     	buf[indBuf][indice++] = v;
     	if ( indice >= buf[indBuf].length )

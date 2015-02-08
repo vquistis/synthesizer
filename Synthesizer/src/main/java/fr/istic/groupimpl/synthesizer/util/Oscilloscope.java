@@ -3,19 +3,21 @@ package fr.istic.groupimpl.synthesizer.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.istic.groupimpl.synthesizer.logger.Log;
+import javafx.application.Platform;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Line;
 
 public class Oscilloscope extends Region {
-	boolean isRunning;
+	private boolean isRunning=false;
 
-	final GetBuffer cmdGetBuffer;
-	final long refreshPeriod;
-	Rectangle rectangle;
+	private final GetBuffer cmdGetBuffer;
+	private final long refreshPeriod;
+	private Rectangle rectangle;
 
-	Thread refreshThread;
+	private Thread refreshThread;
 
 	public interface GetBuffer {
 		double[] getBuffer();
@@ -27,26 +29,33 @@ public class Oscilloscope extends Region {
 
 		cmdGetBuffer = oscFact.getCmdGetBuffer();
 		refreshPeriod = oscFact.getRefreshPeriod();
-		rectangle = new Rectangle(0, 0, getWidth(), getHeight());
-		rectangle.setFill(Color.BLACK);
+//		rectangle = new Rectangle(0, 0, getWidth(), getHeight());
+//		rectangle.setFill(Color.BLACK);
 
-		getChildren().add(rectangle);
+//		getChildren().add(rectangle);
 
 		refreshThread = new Thread(() -> {
+			Log.getInstance().trace("Debut refreshThread");
 
 			while (isRunning) {
 				try {
-					Thread.sleep(100);
+					Thread.sleep(refreshPeriod);
 				} catch (InterruptedException e) {
 					isRunning = false;
 					Thread.currentThread().interrupt();
 				}
-				affBuf();
+				Log.getInstance().trace("Boucle dans refreshThread");
+				Platform.runLater(()->affBuf());
 			}
 		});
-		refreshThread.start();
 	}
 
+	public void start()
+	{
+		Log.getInstance().trace("Oscilloscope : start");
+		isRunning = true;
+		refreshThread.start();
+	}
 	void stop() {
 		isRunning = false;
 	}
@@ -56,7 +65,7 @@ public class Oscilloscope extends Region {
 	private double coefX;
 	private double coefY;
 
-	private class EltComp {
+	class EltComp {
 		public EltComp(int indice, double val) {
 			this.indice = indice;
 			this.val = val;
@@ -71,7 +80,7 @@ public class Oscilloscope extends Region {
 
 	}
 
-	private List<EltComp> compress(double[] buf) {
+	List<EltComp> compress(double[] buf) {
 		List<EltComp> result = new ArrayList<EltComp>();
 
 		EltComp elt = null;
@@ -81,7 +90,7 @@ public class Oscilloscope extends Region {
 		boolean flagBruit = false;
 
 		double coef = Double.NaN;
-		for (int i = 0; i < buf.length; i++) {
+		for (int i = 1; i < buf.length; i++) {
 			double newCoef = (buf[i] - elt.val) / (i - elt.indice);
 
 			if (coef == Double.NaN) {
@@ -117,22 +126,45 @@ public class Oscilloscope extends Region {
 	private void affBuf() {
 		
 		double[] buf = cmdGetBuffer.getBuffer();
-
-		List<EltComp> res = compress(buf);
-
-		for (Line l : memLine) {
-			l.setFill(Color.BLACK);
-			getChildren().remove(l);
-		}
-		Line line = null;
-		memLine.clear();
-		EltComp eltPres = null;
-		for (EltComp elt : res) {
-			if (eltPres != null) {
-				memLine.add(line = new Line(eltPres.x, eltPres.y, elt.x, elt.y));
+		int inc = 2; 
+		if ( memLine.size() == 0)
+		{
+			for ( int i = 0 ; i < 520 ; i++ )
+			{
+				Line line;
+				memLine.add(line = new Line(0,0,0,0));
+				line.setFill(Color.GREEN);
 				getChildren().add(line);
 			}
-			eltPres = elt;
 		}
+		for( int ind = inc, i= 0 ; ind < buf.length ; ind += inc, i++ )
+		{
+			Line line = memLine.get(i);
+			line.setStartX(0.4*(ind-inc));
+			line.setStartY(100.+50.*buf[ind-inc]);
+			line.setEndX(0.4*ind);
+			line.setEndY(100.+50.*buf[ind]);
+			
+		}
+		
+//
+//		List<EltComp> res = compress(buf);
+//		
+//		Log.getInstance().trace("buf.length="+buf.length+" res.size()="+res.size());
+//
+//		for (Line l : memLine) {
+//			l.setFill(Color.BLACK);
+//			getChildren().remove(l);
+//		}
+//		Line line = null;
+//		memLine.clear();
+//		EltComp eltPres = null;
+//		for (EltComp elt : res) {
+//			if (eltPres != null) {
+//				memLine.add(line = new Line(eltPres.x, eltPres.y, elt.x, elt.y));
+//				getChildren().add(line);
+//			}
+//			eltPres = elt;
+//		}
 	}
 }

@@ -36,8 +36,9 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 		ControllerOscillo controller = new ControllerOscillo();
 		
 		OscilloscopeFactory scopeFact = OscilloscopeFactory.getFactoryInstance();
-		scopeFact.setWidth(200);
-		scopeFact.setHeight(100);
+		scopeFact.setWidth(400);
+		scopeFact.setHeight(200);
+		scopeFact.setRefreshPeriod(1000);
 		scopeFact.setCmdGetBuffer(()->{return controller.getbufferData();});
 		
 		
@@ -65,6 +66,8 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 		
 		addPort(in, inX, inY);
 		addPort(out, outX, outY);
+		
+		scope.start();
 	}
 
 	@Override
