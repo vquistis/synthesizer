@@ -80,7 +80,7 @@ public class ViewEg extends ViewComponent implements Initializable {
 		
 		// Listener input & output
 		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			controller.handleViewInputClick("eg_input", inputX, inputY);
+			controller.handleViewInputClick("eg_gate", inputX, inputY);
 		});
 		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			controller.handleViewOutputClick("eg_output", outputX, outputY);

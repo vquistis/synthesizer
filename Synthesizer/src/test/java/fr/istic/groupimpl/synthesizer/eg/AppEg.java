@@ -13,7 +13,7 @@ public class AppEg extends Application{
 	public static void main(String[] arg0) {
 		launch(arg0);
 	}
-
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 	    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/eg.fxml"));

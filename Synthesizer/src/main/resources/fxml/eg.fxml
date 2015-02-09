@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -31,7 +32,7 @@
       </GridPane>
    </top>
    <bottom>
-      <HBox alignment="CENTER" spacing="10.0" styleClass="portPane" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" spacing="100.0" styleClass="portPane" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="5.0" top="5.0" />
          </padding>
@@ -39,20 +40,26 @@
             <VBox alignment="CENTER">
                <children>
                   <Label text="gate" />
-                  <ImageView fx:id="input" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="input" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
                      <image>
                         <Image url="@../img/inoutVert.png" />
                      </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                </children>
             </VBox>
             <VBox alignment="CENTER" layoutX="290.0" layoutY="15.0">
                <children>
                   <Label text="out" />
-                  <ImageView fx:id="output" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="output" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
                      <image>
                         <Image url="@../img/inoutRouge.png" />
                      </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                </children>
             </VBox>

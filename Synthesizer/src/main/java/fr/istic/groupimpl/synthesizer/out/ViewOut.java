@@ -34,6 +34,8 @@ public class ViewOut extends ViewComponent implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
+		addPort(input, inputX, inputY);
+		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setMinValue(-60);
 		knobFact.setMaxValue(12);
@@ -64,7 +66,6 @@ public class ViewOut extends ViewComponent implements Initializable {
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
 		});
-		addPort(input, inputX, inputY);
 	}
 
 	@Override
