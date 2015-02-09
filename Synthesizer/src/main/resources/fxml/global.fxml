@@ -8,132 +8,119 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 
-<BorderPane fx:id="borderpane" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.global.ViewGlobal">
-   <top>
-      <MenuBar>
-        <menus>
-<!--           <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Enregistrer" />
-            </items>
-            <items>
-              <MenuItem mnemonicParsing="false" text="Charger" />
-            </items>
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
- --> 
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleDelete" text="Delete cable" />
-            </items>
-          </Menu>
-  <!--         <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-  --> 
-          <Menu mnemonicParsing="false" text="devmode">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleMenuDevmodeNodeHierarchy_1" text="JavaFX Node Hierarchy dump 1" />
-            </items>
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleMenuDevmodeNodeHierarchy_2" text="JavaFX Node Hierarchy dump 2" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
-   <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <center>
-            <ScrollPane fx:id="scrollpane" BorderPane.alignment="CENTER">
-               <content>
-                  <Pane fx:id="contentpane" styleClass="workspace">
-                     <children>
-                     <SplitPane fx:id="splitpane" dividerPositions="0.5, 0.5" orientation="VERTICAL" AnchorPane.bottomAnchor="351.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="358.0" AnchorPane.topAnchor="0.0">
-                           <items>
-                              <HBox fx:id="hb1" spacing="4.0">
-                                 <padding>
-                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox fx:id="hb2" spacing="4.0">
-                                 <padding>
-                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox fx:id="hb3" spacing="4.0">
-                                 <padding>
-                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                 </padding>
-                              </HBox>
-                           </items>
-                        </SplitPane>
-                     </children>
-                  </Pane>
-               </content>
-            </ScrollPane>
-         </center>
-      </BorderPane>
-   </center>
-   <left>
-      <VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-background-color: #383838;" BorderPane.alignment="CENTER">
-         <children>
-            <Button onAction="#handleAddOut" styleClass="moduleButton" text="OUT">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-             </Button>
-            <Button onAction="#handleAddRep" styleClass="moduleButton" text="REP">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-             </Button>
-            <Button onAction="#handleAddVco" styleClass="moduleButton" text="VCO">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-             </Button>
-             <Button onAction="#handleAddVca" styleClass="moduleButton" text="VCA">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-             </Button>
-            <Button onAction="#handleAddScope" styleClass="moduleButton" text="Scope">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-             </Button>
-            <Button layoutX="20.0" layoutY="119.0" onAction="#handleAddEg" styleClass="moduleButton" text="Eg">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </VBox>
-   </left>
+<BorderPane fx:id="borderpane" minHeight="-Infinity"
+	minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="fr.istic.groupimpl.synthesizer.global.ViewGlobal">
+	<top>
+		<ToolBar fx:id="tools">
+			<items>
+				<ColorPicker fx:id="colorpicker" />
+				<Button text="Delete Mode" onAction="#handleDelete" />
+				<Button text="JavaFX Node Hierarchy dump 1" onAction="#handleMenuDevmodeNodeHierarchy_1" />
+				<Button text="JavaFX Node Hierarchy dump 2" onAction="#handleMenuDevmodeNodeHierarchy_2" />
+			</items>
+		</ToolBar>
+	</top>
+	<center>
+		<BorderPane prefHeight="200.0" prefWidth="200.0"
+			BorderPane.alignment="CENTER">
+			<center>
+				<ScrollPane fx:id="scrollpane" pannable="true"
+					BorderPane.alignment="CENTER">
+					<content>
+						<Pane fx:id="contentpane" styleClass="workspace">
+							<children>
+								<SplitPane fx:id="splitpane" dividerPositions="0.5, 0.5"
+									orientation="VERTICAL" AnchorPane.bottomAnchor="351.0"
+									AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="358.0"
+									AnchorPane.topAnchor="0.0">
+									<items>
+										<HBox fx:id="hb1" spacing="4.0">
+											<padding>
+												<Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+											</padding>
+										</HBox>
+										<HBox fx:id="hb2" spacing="4.0">
+											<padding>
+												<Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+											</padding>
+										</HBox>
+										<HBox fx:id="hb3" spacing="4.0">
+											<padding>
+												<Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+											</padding>
+										</HBox>
+									</items>
+								</SplitPane>
+							</children>
+						</Pane>
+					</content>
+				</ScrollPane>
+			</center>
+		</BorderPane>
+	</center>
+	<left>
+		<VBox alignment="TOP_CENTER" spacing="10.0"
+			style="-fx-background-color: #383838;" BorderPane.alignment="CENTER">
+			<children>
+				<Button onAction="#handleAddOut" styleClass="moduleButton"
+					text="OUT">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</Button>
+				<Button onAction="#handleAddRep" styleClass="moduleButton"
+					text="REP">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</Button>
+				<Button onAction="#handleAddVco" styleClass="moduleButton"
+					text="VCO">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</Button>
+				<Button onAction="#handleAddVca" styleClass="moduleButton"
+					text="VCA">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</Button>
+				<Button onAction="#handleAddScope" styleClass="moduleButton"
+					text="Scope">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</Button>
+				<Button layoutX="20.0" layoutY="119.0" onAction="#handleAddEg"
+					styleClass="moduleButton" text="Eg">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Button>
+			</children>
+			<padding>
+				<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+			</padding>
+		</VBox>
+	</left>
 </BorderPane>
