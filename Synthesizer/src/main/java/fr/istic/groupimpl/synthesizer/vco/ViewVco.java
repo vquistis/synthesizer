@@ -108,6 +108,7 @@ public class ViewVco extends ViewComponent implements Initializable {
 	/**
 	 * Handles the click on the FM input port
 	 */
+	@FXML
 	public void handleFmClick() {
 		vcoControl.handleViewInputClick("vco_inputFm", fmX, fmY);
 	}
@@ -115,6 +116,7 @@ public class ViewVco extends ViewComponent implements Initializable {
 	/**
 	 * Handles the click on the output port
 	 */
+	@FXML
 	public void handleOutputClick() {
 		vcoControl.handleViewOutputClick("vco_output", outX, outY);
 	}

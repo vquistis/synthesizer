@@ -1,5 +1,6 @@
 package fr.istic.groupimpl.synthesizer.component;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
@@ -39,15 +41,27 @@ public abstract class ViewComponent implements IViewComponent {
 	 * coordinate space of the parent node.
 	 */
 	final protected void addPort(Node node, DoubleProperty portX, DoubleProperty portY) {
+		
+		// Scene scene = source.getScene();
+		// Node nodeToFind = scene.lookup("#nodeToFindId");
+		
 		ChangeListener posChangeListener = ((a,b,c) -> {
-			portX.set(computeNodeCenter(node).getX());
-			portY.set(computeNodeCenter(node).getY());
+			Point2D point2D = computeNodeCenter(node);
+			portX.set(point2D.getX());
+			portY.set(point2D.getY());
 		});
 
+		// TODO a supprimer
+		ChangeListener posChangeListenerLog = ((a,b,c) -> {
+			Log.getInstance().debug("ViewComponent.addPort()->root.parentProperty().addListener : " + node.getId());
+		});
+		
 		portBindings.add(posChangeListener);
 		Node root = getComponentRoot();
 
 		root.parentProperty().addListener(posChangeListener);
+		// TODO a supprimer
+		root.parentProperty().addListener(posChangeListenerLog);
 		root.boundsInParentProperty().addListener(posChangeListener);
 	}
 
@@ -61,45 +75,70 @@ public abstract class ViewComponent implements IViewComponent {
 
 	private Bounds getNodeBoundsInComponent(Node node) {
 		Log.getInstance().debug("getNodeBoundsInComponent : " + node.getId());
+		Log.getInstance().debug("   [Scene] " + node.getScene());
+		Log.getInstance().debug("   [node-getBoundsInParent] = " + node.getBoundsInParent());
+		Log.getInstance().debug("   [node-getBoundsInLocal]  = " + node.getBoundsInLocal());
+		Log.getInstance().debug("   [node-getLayoutBounds]   = " + node.getLayoutBounds());
+		
 		Bounds res = node.getBoundsInParent();
 
 		Node componentParent = getComponentRoot();
 		Node currentParent = node.getParent();
-
+		Log.getInstance().debug("   [currentParent] = " + currentParent);
+		Log.getInstance().debug("      [currentParent-getBoundsInParent] = " + currentParent.getBoundsInParent());
+		Log.getInstance().debug("      [currentParent-getBoundsInLocal]  = " + currentParent.getBoundsInLocal());
+		Log.getInstance().debug("      [currentParent-getLayoutBounds]   = " + currentParent.getLayoutBounds());
+		
 		if(currentParent != null) {
-			Log.getInstance().debug("   getNodeBoundsInComponent [currentParent1] = " + currentParent.getId());
-			Bounds bounds = currentParent.localToParent(node.getBoundsInParent());
-			Log.getInstance().debug("   [bounds-initial] = " + bounds);
-			Log.getInstance().debug("   [bounds-initial-local] = " + node.getBoundsInParent());
+			Bounds bounds = currentParent.localToParent(node.getBoundsInParent()); // BUG de localToParent
+			Log.getInstance().debug("      [bounds] = " + bounds);
 
 			while(currentParent != componentParent) {
-				Log.getInstance().debug("   [currentParent-search] = " + currentParent);
-				Log.getInstance().debug("   [bounds-search] = " + bounds);
 				currentParent = currentParent.getParent();
 				bounds = currentParent.localToParent(bounds);
+				Log.getInstance().debug("   [currentParent] = " + currentParent);
+				Log.getInstance().debug("      [currentParent-getBoundsInParent] = " + currentParent.getBoundsInParent());
+				Log.getInstance().debug("      [currentParent-getBoundsInLocal]  = " + currentParent.getBoundsInLocal());
+				Log.getInstance().debug("      [currentParent-getLayoutBounds]   = " + currentParent.getLayoutBounds());
+				Log.getInstance().debug("      [bounds] = " + bounds);
 			}
-			Log.getInstance().debug("   [currentParent-found] = " + currentParent);
+
+			// if connected 
 			if(currentParent.getParent() != null) {
-				Log.getInstance().debug("   [currentParent.getParent()] = " + currentParent.getParent());
+				Log.getInstance().debug("   [CONNECTED]");
 				// recomputes the bounds of the node in the HBox containing the component
-				bounds = currentParent.getParent().localToParent(bounds);
+				currentParent = currentParent.getParent();
+				bounds = currentParent.localToParent(bounds);
+				Log.getInstance().debug("   [currentParent] = " + currentParent);
+				Log.getInstance().debug("      [currentParent-getBoundsInParent] = " + currentParent.getBoundsInParent());
+				Log.getInstance().debug("      [currentParent-getBoundsInLocal]  = " + currentParent.getBoundsInLocal());
+				Log.getInstance().debug("      [currentParent-getLayoutBounds]   = " + currentParent.getLayoutBounds());
+				Log.getInstance().debug("      [bounds] = " + bounds);
+				
 				// recomputes the bounds of the node in the SplitPane containing HBox containing the component
-				if(currentParent.getParent().getParent() != null) {
-					Log.getInstance().debug("   [currentParent.getParent().getParent()] = " + currentParent.getParent().getParent());
-					bounds = currentParent.getParent().getParent().localToParent(bounds);  
-				} 
+				if(currentParent.getParent() != null) {
+					currentParent = currentParent.getParent();
+					bounds = currentParent.localToParent(bounds);
+					Log.getInstance().debug("   [currentParent] = " + currentParent);
+					Log.getInstance().debug("      [currentParent-getBoundsInParent] = " + currentParent.getBoundsInParent());
+					Log.getInstance().debug("      [currentParent-getBoundsInLocal]  = " + currentParent.getBoundsInLocal());
+					Log.getInstance().debug("      [currentParent-getLayoutBounds]   = " + currentParent.getLayoutBounds());
+					Log.getInstance().debug("      [bounds] = " + bounds);
+				}
 			} else {
-				Log.getInstance().debug("   [currentParent.getParent()-last] = null");
+				Log.getInstance().debug("   [UNCONNECTED]");
 			}
 			res = bounds;
-		}
+		} 
 		return res;
 	}
 
 	private Point2D computeNodeCenter(Node node) {
 		Bounds bounds = getNodeBoundsInComponent(node);
-		Log.getInstance().debug("Bounds =" + bounds);
+		Log.getInstance().debug("computeNodeCenter : " + node.getId());
+		Log.getInstance().debug(" computeNodeCenter " + bounds);
+		Log.getInstance().debug(" computeNodeCenter " + new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2));
 		return new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2);
-	}
 
+	}
 }
