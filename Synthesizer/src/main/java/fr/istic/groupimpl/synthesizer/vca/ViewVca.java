@@ -7,7 +7,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -49,10 +48,6 @@ public class ViewVca extends ViewComponent implements Initializable {
 	/** The input. */
 	@FXML 
 	private ImageView input;
-
-	/** The db value. */
-	@FXML
-	private Label dbValue;
 
 	/** The vca control. */
 	private ControllerVca vcaControl;
@@ -102,10 +97,8 @@ public class ViewVca extends ViewComponent implements Initializable {
 		pf.setMinValue(-1);
 		pf.setMaxValue(1);
 
-		Potentiometre precisionKnob = pf.getPotentiometre();
-
 		// VcaController creation and listeners on knob values
-		vcaControl = new ControllerVca(dbValue);
+		vcaControl = new ControllerVca();
 
 		amplitudeKnod.valueProperty().addListener((p, oldVal, newVal) ->
 		vcaControl.handleViewVoltChange((double) newVal));		
@@ -117,10 +110,8 @@ public class ViewVca extends ViewComponent implements Initializable {
 			parent.getChildren().remove(paneVca);
 		});
 		
-		// Creation du controller
-		ControllerOut controller = new ControllerOut();
 		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			controller.handleViewInputClick("vca_input", inputX, inputY);
+			vcaControl.handleViewInputClick("vca_input", inputX, inputY);
 		});
 
 		addPort(input, inputX, inputY);

@@ -66,10 +66,10 @@ public class VCAJSyn extends UnitGenerator {
 	 * Constructor
 	 */
     public VCAJSyn() {
-    	addPort(input = new UnitInputPort("Input"));
-        addPort(inputam = new UnitInputPort("Inputam"));
-        addPort(inputa0 = new UnitInputPort("Inputa0"));
-        addPort(output = new UnitOutputPort("Output"));
+    	addPort(input = new UnitInputPort("vca_input"));
+        addPort(inputam = new UnitInputPort("vca_inputam"));
+        addPort(inputa0 = new UnitInputPort("vca_inputa0"));
+        addPort(output = new UnitOutputPort("vca_output"));
     }
 
     @Override
@@ -80,9 +80,18 @@ public class VCAJSyn extends UnitGenerator {
         double[] outputs = output.getValues();
 
         for (int i = start; i < limit; i++) {
-        	double decibel = (SignalUtil.verifyAmplitude(inputams[i]) * 5 * 12 ) + SignalUtil.verifyAmplitude(inputa0s[i]);
-        	outputs[i]=converter(decibel, inputs[i]); 
-        	Log.getInstance().info(inputs[i]+" --> "+inputams[i]+" -->  "+outputs[i]);
+        	double am = SignalUtil.verifyAmplitude(inputams[i]);
+        	if (am >0)
+        	{
+        	double decibel = ((am+SignalUtil.verifyAmplitude(inputa0s[i])-5) * 12 );
+//        	outputs[i]= inputs[i];
+        	outputs[i]=converter(decibel, inputs[i]);
+        	}
+        	else
+        	{
+        		outputs[i] = 0;
+        	}
+        	Log.getInstance().info(inputs[i]+" --> "+inputams[i]+ " -->  "+ inputa0s[i] +" -->  "+outputs[i]);
         }
     }
      
