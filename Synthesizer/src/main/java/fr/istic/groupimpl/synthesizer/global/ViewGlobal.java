@@ -2,7 +2,6 @@ package fr.istic.groupimpl.synthesizer.global;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.DoubleProperty;
@@ -13,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.ClipboardContent;
@@ -27,7 +25,6 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
-import fr.istic.groupimpl.synthesizer.out.ViewOut;
 import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 
 /**
@@ -137,7 +134,7 @@ private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();				
 				Dragboard db = e.getDragboard();
-				boolean success = false;
+//				boolean success = false;
 				if (db.hasString()) {
 					Log.getInstance().debug("DROP DONE");
 					String []pos=db.getString().split(";");
@@ -307,18 +304,18 @@ private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 		});
 	}
 
-	/**
-	 * Sets the all modules transparent.
-	 *
-	 * @param t the new all modules transparent
-	 */
-	private void setAllModulesTransparent(boolean t) {
-		splitpane.getItems().forEach((b) -> {
-			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
-				m.setMouseTransparent(t);
-			});
-		});
-	}
+//	/**
+//	 * Sets the all modules transparent.
+//	 *
+//	 * @param t the new all modules transparent
+//	 */
+//	private void setAllModulesTransparent(boolean t) {
+//		splitpane.getItems().forEach((b) -> {
+//			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
+//				m.setMouseTransparent(t);
+//			});
+//		});
+//	}
 
 	/**
 	 * Handle add vco. Plus click. This method adds a new VCO component VCO
@@ -350,6 +347,14 @@ private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 	@FXML
 	public void handleAddScope(){
 		createModule("fxml/oscillo.fxml");		
+	}
+	
+	/**
+	 * Handle add eg.
+	 */
+	@FXML
+	public void handleAddEg(){
+		createModule("fxml/eg.fxml");		
 	}
 
 	/**

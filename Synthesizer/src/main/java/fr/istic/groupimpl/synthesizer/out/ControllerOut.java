@@ -4,7 +4,7 @@ import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
-public class ControllerOut implements IControllerComponent{
+public class ControllerOut implements IControllerComponent {
 
 	private ModelOut model = new ModelOut();
 	
