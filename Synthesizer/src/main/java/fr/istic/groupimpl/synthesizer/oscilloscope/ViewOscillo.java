@@ -28,16 +28,17 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 	private DoubleProperty inY = new SimpleDoubleProperty(0);
 	private DoubleProperty outX = new SimpleDoubleProperty(0);
 	private DoubleProperty outY = new SimpleDoubleProperty(0);
+	
+	private ControllerOscillo controller;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 
-		// Creation du controller
-		ControllerOscillo controller = new ControllerOscillo();
 		
 		OscilloscopeFactory scopeFact = OscilloscopeFactory.getFactoryInstance();
-		scopeFact.setWidth(400);
-		scopeFact.setHeight(200);
+		scopeFact.setWidth(screenScopePane.getPrefWidth());
+		scopeFact.setHeight(screenScopePane.getPrefHeight());
 		scopeFact.setRefreshPeriod(1000);
 		scopeFact.setCmdGetBuffer(()->{return controller.getbufferData();});
 		
@@ -45,6 +46,8 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 		Oscilloscope scope = scopeFact.getOscilloscope();
 		screenScopePane.getChildren().add(scope);
 		
+		// Creation du controller
+		controller = new ControllerOscillo(scope);
 
 		// Listener in
 		in.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
