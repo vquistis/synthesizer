@@ -82,6 +82,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
              </Button>
+            <Button onAction="#handleAddRep" text="REP">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+             </Button>
             <Button onAction="#handleAddVco" text="VCO">
                <font>
                   <Font name="System Bold" size="12.0" />

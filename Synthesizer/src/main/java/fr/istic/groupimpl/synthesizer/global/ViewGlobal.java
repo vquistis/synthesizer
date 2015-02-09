@@ -315,6 +315,14 @@ private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 			});
 		});
 	}
+	
+	/**
+	 * Handle add replicator. Plus click. This method adds a new Rep component Replicator
+	 */
+	@FXML
+	public void handleAddRep(){
+		createModule("fxml/rep.fxml");		
+	}
 
 	/**
 	 * Handle add vco. Plus click. This method adds a new VCO component VCO
