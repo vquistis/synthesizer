@@ -77,7 +77,7 @@
       </GridPane>
    </bottom>
    <center>
-      <VBox alignment="TOP_CENTER">
+      <VBox alignment="TOP_CENTER" styleClass="contentPane">
          <children>
             <GridPane prefHeight="197.0" prefWidth="465.0" BorderPane.alignment="CENTER">
               <columnConstraints>

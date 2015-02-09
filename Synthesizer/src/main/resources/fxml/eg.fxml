@@ -22,6 +22,9 @@
                <image>
                   <Image url="@../img/close.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <Label text="EG">
                <GridPane.margin>

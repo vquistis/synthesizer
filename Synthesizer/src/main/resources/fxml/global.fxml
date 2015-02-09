@@ -63,7 +63,8 @@
 		<VBox alignment="TOP_CENTER" spacing="10.0"
 			style="-fx-background-color: #383838;" BorderPane.alignment="CENTER">
 			<children>
-				<Button onAction="#handleAddOut" text="OUT">
+				<Button onAction="#handleAddOut" styleClass="moduleButton"
+					text="OUT">
 					<font>
 						<Font name="System Bold" size="12.0" />
 					</font>
@@ -71,7 +72,8 @@
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</Button>
-				<Button onAction="#handleAddRep" text="REP">
+				<Button onAction="#handleAddRep" styleClass="moduleButton"
+					text="REP">
 					<font>
 						<Font name="System Bold" size="12.0" />
 					</font>
@@ -79,7 +81,8 @@
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</Button>
-				<Button onAction="#handleAddVco" text="VCO">
+				<Button onAction="#handleAddVco" styleClass="moduleButton"
+					text="VCO">
 					<font>
 						<Font name="System Bold" size="12.0" />
 					</font>
@@ -87,7 +90,8 @@
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</Button>
-				<Button onAction="#handleAddVca" text="VCA">
+				<Button onAction="#handleAddVca" styleClass="moduleButton"
+					text="VCA">
 					<font>
 						<Font name="System Bold" size="12.0" />
 					</font>
@@ -95,7 +99,8 @@
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</Button>
-				<Button onAction="#handleAddScope" text="Scope">
+				<Button onAction="#handleAddScope" styleClass="moduleButton"
+					text="Scope">
 					<font>
 						<Font name="System Bold" size="12.0" />
 					</font>
@@ -104,7 +109,7 @@
 					</cursor>
 				</Button>
 				<Button layoutX="20.0" layoutY="119.0" onAction="#handleAddEg"
-					text="Eg">
+					styleClass="moduleButton" text="Eg">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>

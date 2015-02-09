@@ -49,8 +49,8 @@ public class ModelEg extends ModelComponent {
 		adsr.decay.set(decay);
 	}
 	
-	public void setSustain(double sustain) {
-		adsr.sustain.set(sustain);
+	public void setSustain(double sustainDb) {
+		adsr.sustain.set(Math.pow(2, sustainDb/6));
 	}
 	
 	public void setRelease(double release) {

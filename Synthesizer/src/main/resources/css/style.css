@@ -2,7 +2,7 @@
 
 /* ===== CSS Dark theme ===== */
 .workspace, .split-pane {
-	-fx-background-color:  #4a4c4e;
+	-fx-background-color:  transparent, #4a4c4e;
 }
 
 .split-pane:vertical .split-pane-divider {
@@ -14,13 +14,15 @@
 .scroll-pane {
 	-fx-padding: 0px;
 }
+.scroll-pane > * {
+	-fx-background-color: transparent, derive(#1d1d1d, 20%);
+	-fx-padding: 0px;
+}
 .scroll-pane .scroll-bar .track {
 	-fx-background-color: transparent, derive(#1d1d1d, 20%);
 }
 .scroll-pane .scroll-bar .thumb {
     -fx-background-color: transparent, derive(#1d1d1d, 80%);
-/*     -fx-background-insets: 2, 0, 0; */
-/*     -fx-background-radius: 2em; */
 }
 .scroll-pane .scroll-bar .increment-button ,
 .scroll-pane .scroll-bar .decrement-button {
@@ -64,6 +66,25 @@
 	-fx-effect: dropshadow(gaussian, #00ae00, 4, 0, 0, 0);
 }
 /* ---------------------- */
+
+.moduleButton {
+    -fx-background-color: 
+        #090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+        linear-gradient(#20262b, #191d22),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 5 10;
+}
+.moduleButton Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}
 /* ========================== */
 
 
