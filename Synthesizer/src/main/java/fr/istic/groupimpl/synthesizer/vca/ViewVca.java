@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.out.ControllerOut;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
@@ -41,6 +42,9 @@ public class ViewVca extends ViewComponent implements Initializable {
 	private Label dbValue;
 
 	private ControllerVca vcaControl;
+	
+	private DoubleProperty inputX = new SimpleDoubleProperty(0);
+	private DoubleProperty inputY = new SimpleDoubleProperty(0);
 
 	private DoubleProperty fmX = new SimpleDoubleProperty(0);
 	private DoubleProperty fmY = new SimpleDoubleProperty(0);
@@ -86,11 +90,18 @@ public class ViewVca extends ViewComponent implements Initializable {
 			cleanupPorts();
 			vcaControl.handleViewClose();
 			Pane parent = (Pane) paneVca.getParent();
-//			parent.getChildren().remove(paneVca);
+			parent.getChildren().remove(paneVca);
+		});
+		
+		// Creation du controller
+		ControllerOut controller = new ControllerOut();
+		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+			controller.handleViewInputClick("vca_input", inputX, inputY);
 		});
 
 		addPort(am, fmX, fmY);
 		addPort(out, outX, outY);
+		addPort(input, inputX, inputY);
 	}
 
 	/**
