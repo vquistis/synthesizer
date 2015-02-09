@@ -33,7 +33,7 @@ public class ControllerEg implements IControllerComponent {
 	 * @param newVal - new value of sustain in volt
 	 */
 	public void handleViewSustainChange(Number newVal) {
-		model.setSustain((double) newVal/5.0);
+		model.setSustain((double) newVal);
 	}
 	
 	/**

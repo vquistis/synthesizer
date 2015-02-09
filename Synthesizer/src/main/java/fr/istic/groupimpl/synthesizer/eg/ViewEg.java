@@ -58,7 +58,8 @@ public class ViewEg extends ViewComponent implements Initializable {
 		knobDecayPane.getChildren().add(1,knobDecay);
 		Potentiometre knobRelease = knobFact.getPotentiometre();
 		knobReleasePane.getChildren().add(1,knobRelease);
-		knobFact.setMaxValue(5); // 5 volts
+		knobFact.setMinValue(-60);
+		knobFact.setMaxValue(0);
 		Potentiometre knobSustain = knobFact.getPotentiometre();
 		knobSustainPane.getChildren().add(1,knobSustain);
 		
