@@ -19,7 +19,11 @@ public class Oscilloscope extends Region {
 	private boolean isRunning = false;
 
 	private final GetBuffer cmdGetBuffer;
-	private final long refreshPeriod;
+	private long refreshPeriod;
+	
+	public static final long MAX_REFRESH_PERIOD=2000;
+	public static final long MIN_REFRESH_PERIOD=100;
+	
 	private Rectangle rectangle;
 
 	private Thread refreshThread;
@@ -55,6 +59,17 @@ public class Oscilloscope extends Region {
 				Platform.runLater(() -> affBuf());
 			}
 		});
+	}
+	
+	
+	public void setRefreshPeriod(double v)
+	{
+		refreshPeriod = (long)(v*1000);
+		
+		if ( refreshPeriod < MIN_REFRESH_PERIOD )
+			refreshPeriod = MIN_REFRESH_PERIOD;
+		if ( refreshPeriod > MAX_REFRESH_PERIOD )
+			refreshPeriod = MAX_REFRESH_PERIOD;	
 	}
 
 	public void start() {

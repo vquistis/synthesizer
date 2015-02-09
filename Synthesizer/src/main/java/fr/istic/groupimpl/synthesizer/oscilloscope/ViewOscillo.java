@@ -7,6 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -22,6 +23,7 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 	@FXML private VBox screenScopePane;
 	@FXML private ImageView in;
 	@FXML private ImageView out;
+	@FXML private Slider refreshPeriodSlider;
 	
 
 	private DoubleProperty inX = new SimpleDoubleProperty(0);
@@ -48,6 +50,9 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 		
 		// Creation du controller
 		controller = new ControllerOscillo(scope);
+		
+		refreshPeriodSlider.valueProperty().addListener( (obsVal, oldVal, newVal) -> controller.handleRefreshPeriodViewChange(newVal));
+		// Listener mute);
 
 		// Listener in
 		in.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {

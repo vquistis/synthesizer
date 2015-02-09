@@ -45,4 +45,10 @@ public class ControllerOscillo  implements IControllerComponent
 		return model.getBuffer();
 	}
 
+
+
+	public void handleRefreshPeriodViewChange(Number newVal) {
+		scope.setRefreshPeriod((Double)newVal);
+	}
+
 }
