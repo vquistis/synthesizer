@@ -7,9 +7,11 @@ import java.util.List;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
@@ -42,27 +44,17 @@ public abstract class ViewComponent implements IViewComponent {
 	 */
 	final protected void addPort(Node node, DoubleProperty portX, DoubleProperty portY) {
 		
-		// Scene scene = source.getScene();
-		// Node nodeToFind = scene.lookup("#nodeToFindId");
-		
 		ChangeListener posChangeListener = ((a,b,c) -> {
 			Point2D point2D = computeNodeCenter(node);
 			portX.set(point2D.getX());
 			portY.set(point2D.getY());
-		});
-
-		// TODO a supprimer
-		ChangeListener posChangeListenerLog = ((a,b,c) -> {
-			Log.getInstance().debug("ViewComponent.addPort()->root.parentProperty().addListener : " + node.getId());
 		});
 		
 		portBindings.add(posChangeListener);
 		Node root = getComponentRoot();
 
 		root.parentProperty().addListener(posChangeListener);
-		// TODO a supprimer
-		root.parentProperty().addListener(posChangeListenerLog);
-		root.boundsInParentProperty().addListener(posChangeListener);
+		root.boundsInParentProperty().addListener(posChangeListener);		
 	}
 
 	final protected void cleanupPorts() {
@@ -79,7 +71,9 @@ public abstract class ViewComponent implements IViewComponent {
 		Log.getInstance().debug("   [node-getBoundsInParent] = " + node.getBoundsInParent());
 		Log.getInstance().debug("   [node-getBoundsInLocal]  = " + node.getBoundsInLocal());
 		Log.getInstance().debug("   [node-getLayoutBounds]   = " + node.getLayoutBounds());
-		
+		Log.getInstance().debug("   [node-localToScene]      = " + node.localToScene(node.getBoundsInParent()));
+		Log.getInstance().debug("   [node-getLayoutX_Y]      = " + node.getLayoutX() + " " + node.getLayoutY());
+
 		Bounds res = node.getBoundsInParent();
 
 		Node componentParent = getComponentRoot();

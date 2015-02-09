@@ -5,20 +5,18 @@ import java.util.Collection;
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
-import com.jsyn.unitgen.EnvelopeDAHDSR;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.eg.jsyn.JsynEnvelopeADSR;
 
 public class ModelEg extends ModelComponent {
 	
-	private EnvelopeDAHDSR adsr;
+	private JsynEnvelopeADSR adsr;
 	
 	public ModelEg() {
 		super();
-		adsr = new EnvelopeDAHDSR();
-		adsr.delay.set(0.0);
-		adsr.hold.set(0.0);
+		adsr = new JsynEnvelopeADSR();
 	}
 
 	@Override
