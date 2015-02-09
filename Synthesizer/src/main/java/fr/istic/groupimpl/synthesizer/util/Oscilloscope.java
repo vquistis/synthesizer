@@ -28,6 +28,9 @@ public class Oscilloscope extends Region {
 
 	private Thread refreshThread;
 
+	/**
+	 * interface of the getBuffuer command.
+	 */
 	public interface GetBuffer {
 		double[] getBuffer();
 	}
@@ -62,6 +65,11 @@ public class Oscilloscope extends Region {
 	}
 	
 	
+	/**
+	 * Set the refresh period
+	 * @param v
+	 * 	Value of the period in seconds
+	 */
 	public void setRefreshPeriod(double v)
 	{
 		refreshPeriod = (long)(v*1000);
@@ -72,12 +80,18 @@ public class Oscilloscope extends Region {
 			refreshPeriod = MAX_REFRESH_PERIOD;	
 	}
 
+	/**
+	 * To start the refresh thread
+	 */
 	public void start() {
 		Log.getInstance().trace("Oscilloscope : start");
 		isRunning = true;
 		refreshThread.start();
 	}
 
+	/**
+	 *  To stop the refresh thread
+	 */
 	public void stop() {
 		Log.getInstance().trace("Oscilloscope : stop");
 		if ( isRunning )
@@ -104,63 +118,6 @@ public class Oscilloscope extends Region {
 	private double baseY;
 	private double baseX;
 
-	class EltComp {
-		public EltComp(int indice, double val) {
-			this.indice = indice;
-			this.val = val;
-			this.x = ((double) indice) * coefX;
-			this.y = val * coefY;
-		}
-
-		final int indice;
-		final double val;
-		final double x;
-		final double y;
-
-	}
-
-	List<EltComp> compress(double[] buf) {
-		List<EltComp> result = new ArrayList<EltComp>();
-
-		EltComp elt = null;
-
-		result.add(elt = new EltComp(0, buf[0]));
-
-		boolean flagBruit = false;
-
-		double coef = Double.NaN;
-		for (int i = 1; i < buf.length; i++) {
-			double newCoef = (buf[i] - elt.val) / (i - elt.indice);
-
-			if (coef == Double.NaN) {
-				coef = newCoef;
-				continue;
-			}
-
-			if (Math.abs(newCoef - coef) < 0.01) {
-				coef = newCoef;
-			} else {
-				i--;
-				result.add(elt = new EltComp(i, buf[i]));
-				coef = Double.NaN;
-				if (i > 60 && result.size() > i / 4) {
-					flagBruit = true;
-					break;
-				}
-			}
-		}
-
-		if (flagBruit) {
-			result.clear();
-			int dec = buf.length / 40;
-			for (int i = 0; i < buf.length; i += dec) {
-				result.add(new EltComp(i, buf[i]));
-			}
-		}
-
-		return result;
-
-	}
 
 	private void affBuf() {
 
@@ -263,24 +220,5 @@ public class Oscilloscope extends Region {
 
 		}
 
-		//
-		// List<EltComp> res = compress(buf);
-		//
-		// Log.getInstance().trace("buf.length="+buf.length+" res.size()="+res.size());
-		//
-		// for (Line l : memLine) {
-		// l.setFill(Color.BLACK);
-		// getChildren().remove(l);
-		// }
-		// Line line = null;
-		// memLine.clear();
-		// EltComp eltPres = null;
-		// for (EltComp elt : res) {
-		// if (eltPres != null) {
-		// memLine.add(line = new Line(eltPres.x, eltPres.y, elt.x, elt.y));
-		// getChildren().add(line);
-		// }
-		// eltPres = elt;
-		// }
 	}
 }
