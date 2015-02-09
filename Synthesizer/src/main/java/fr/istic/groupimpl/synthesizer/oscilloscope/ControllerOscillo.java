@@ -4,13 +4,16 @@ import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 import fr.istic.groupimpl.synthesizer.out.ModelOut;
+import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
 
 public class ControllerOscillo  implements IControllerComponent
 {
 	
-	private ModelOscillo model = new ModelOscillo();
+	private ModelOscillo model = new ModelOscillo(Oscilloscope.SIZE_BUFFER_READ);
+	private Oscilloscope scope;
 	
-	public ControllerOscillo() {
+	public ControllerOscillo(Oscilloscope scope) {
+		this.scope = scope;
 		ControllerGlobal.getInstance().registerOutUnitGenerator(model.getUnitGenerator());
 	}
 	
@@ -32,6 +35,7 @@ public class ControllerOscillo  implements IControllerComponent
 
 	@Override
 	public void handleViewClose() {
+		scope.stop();
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());		
 	}
