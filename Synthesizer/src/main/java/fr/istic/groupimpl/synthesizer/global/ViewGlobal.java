@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.sun.glass.ui.Pixels;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
@@ -11,11 +13,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
@@ -25,7 +28,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
@@ -83,7 +85,7 @@ public class ViewGlobal implements Initializable {
 		contentpane.getChildren().add(contentpane.getChildren().size()-1, cable);
 		cable.setOnMouseClicked((event) -> {
 			if(event.getButton() == MouseButton.PRIMARY) {
-				ctl.handleRemoveCable(cable);
+				ctl.handleClickOnCable(cable);
 			}
 		});
 		cable.toFront();
@@ -96,7 +98,6 @@ public class ViewGlobal implements Initializable {
 	 */
 	public void removeCable(Cable cable) {
 		contentpane.getChildren().remove(cable);
-		cable.toFront();
 	}
 
 	/**
@@ -141,7 +142,6 @@ public class ViewGlobal implements Initializable {
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();				
 				Dragboard db = e.getDragboard();
-//				boolean success = false;
 				if (db.hasString()) {
 					Log.getInstance().debug("DROP DONE");
 					String []pos=db.getString().split(";");
@@ -227,7 +227,6 @@ public class ViewGlobal implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
 			Node root = loader.load();
 			ViewComponent view = loader.getController();
-			//			listAssoc.add(new Pair<Node, ViewComponent>(root, view));
 			HBox hb = (HBox) splitpane.getItems().get(0);
 			hb.getChildren().add(root);
 			enableDrag(root);
@@ -366,25 +365,53 @@ public class ViewGlobal implements Initializable {
 	 */
 	@FXML
 	public void handleDelete() {
-		contentpane.setCursor(Cursor.CROSSHAIR);
+		ctl.activateDeletionMode();
+	}
+	
+
+	@FXML
+	public void handlePaint() {
+		ctl.activatePaintingMode();
+	}
+	
+	public void enableCableDeletionMode(boolean enable) {
 		for(Node n : contentpane.getChildren()) {
 			if(n instanceof Cable) {
-				n.setMouseTransparent(false);
+				n.setMouseTransparent(!enable);
+			} else {
+				n.setMouseTransparent(enable);
 			}
+		}
+		if(enable) {
+			contentpane.setCursor(new ImageCursor(new Image("img/delete.png")));
+		}
+	}
+	
+	public void enableCableCreationMode(boolean enable) {
+		if(enable) {
+			contentpane.setCursor(Cursor.DISAPPEAR);
+		}
+	}
+	
+	public void enableDefaultMode(boolean enable) {
+		if(enable) {
+			contentpane.setCursor(Cursor.DEFAULT);
 		}
 	}
 
-	@FXML
-	public void handleChooseColor() {
-		final Stage dialog = new Stage();
-		dialog.initModality(Modality.APPLICATION_MODAL);
-		dialog.initOwner(primaryStage);
-		ColorPicker picker = new ColorPicker();
-		Scene dialogScene = new Scene(picker, 300, 200);
-		dialog.setScene(dialogScene);
-		dialog.show();
+	public void enableCablePaintingMode(boolean enable) {
+		for(Node n : contentpane.getChildren()) {
+			if(n instanceof Cable) {
+				n.setMouseTransparent(!enable);
+			} else {
+				n.setMouseTransparent(enable);
+			}
+		}
+		if(enable) {
+			contentpane.setCursor(Cursor.HAND);
+		}
 	}
-
+	
 	@FXML
 	public void handleMenuDevmodeNodeHierarchy_1() {
 		DebugJFXTools debugJFXTools = new DebugJFXTools();
@@ -395,4 +422,5 @@ public class ViewGlobal implements Initializable {
 		DebugJFXTools debugJFXTools = new DebugJFXTools();
 		debugJFXTools.GenerateNodeHierarchy(borderpane, "synthjfx_2.dmp");
 	}
+
 }

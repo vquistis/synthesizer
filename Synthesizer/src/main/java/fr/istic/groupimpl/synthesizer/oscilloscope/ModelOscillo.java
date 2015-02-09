@@ -20,6 +20,11 @@ public class ModelOscillo extends ModelComponent {
 		circuit = new JsynOscilloCircuit(3,sizeBuffer);
 	}
 
+	/**
+	 * Méthode pour transmettre les dernière données valides
+	 * @return 
+	 * 		buffer de données
+	 */
 	public double [] getBuffer()
 	{
 		return circuit.getBuffer();

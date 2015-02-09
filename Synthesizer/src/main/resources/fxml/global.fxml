@@ -15,6 +15,7 @@
 		<ToolBar fx:id="tools">
 			<items>
 				<ColorPicker fx:id="colorpicker" />
+				<Button text="Paint cable" onAction="#handlePaint" />
 				<Button text="Delete Mode" onAction="#handleDelete" />
 				<Button text="JavaFX Node Hierarchy dump 1" onAction="#handleMenuDevmodeNodeHierarchy_1" />
 				<Button text="JavaFX Node Hierarchy dump 2" onAction="#handleMenuDevmodeNodeHierarchy_2" />

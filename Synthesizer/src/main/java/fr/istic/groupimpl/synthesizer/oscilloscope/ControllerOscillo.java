@@ -35,18 +35,27 @@ public class ControllerOscillo  implements IControllerComponent
 
 	@Override
 	public void handleViewClose() {
-		scope.stop();
+		scope.stop(); // pour arreter le thread
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());		
 	}
 	
+	/**
+	 * méthode qui transmet les données venant du model
+	 * @return 
+	 * 	Le buffer de données
+	 */
 	public double [] getbufferData()
 	{
 		return model.getBuffer();
 	}
 
 
-
+	/**
+	 * Methode appellé sur un changement de valeur 
+	 * @param newVal
+	 * 		nouvelle valeur
+	 */
 	public void handleRefreshPeriodViewChange(Number newVal) {
 		scope.setRefreshPeriod((Double)newVal);
 	}
