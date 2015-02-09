@@ -25,6 +25,7 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
+import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 
 /**
  * The Class ViewGlobal.
@@ -133,7 +134,7 @@ private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();				
 				Dragboard db = e.getDragboard();
-				boolean success = false;
+//				boolean success = false;
 				if (db.hasString()) {
 					Log.getInstance().debug("DROP DONE");
 					String []pos=db.getString().split(";");
@@ -303,6 +304,7 @@ private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 		});
 	}
 
+
 	/**
 	 * Sets the all modules transparent.
 	 *
@@ -315,6 +317,15 @@ private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 			});
 		});
 	}
+	
+	/**
+	 * Handle add replicator. Plus click. This method adds a new Rep component Replicator
+	 */
+	@FXML
+	public void handleAddRep(){
+		createModule("fxml/rep.fxml");		
+	}
+
 
 	/**
 	 * Handle add vco. Plus click. This method adds a new VCO component VCO
@@ -347,6 +358,14 @@ private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 	public void handleAddScope(){
 		createModule("fxml/oscillo.fxml");		
 	}
+	
+	/**
+	 * Handle add eg.
+	 */
+	@FXML
+	public void handleAddEg(){
+		createModule("fxml/eg.fxml");		
+	}
 
 	/**
 	 * Mouse x property.
@@ -377,5 +396,16 @@ private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 				n.setMouseTransparent(false);
 			}
 		}
+	}
+
+	@FXML
+	public void handleMenuDevmodeNodeHierarchy_1() {
+		DebugJFXTools debugJFXTools = new DebugJFXTools();
+		debugJFXTools.GenerateNodeHierarchy(borderpane, "synthjfx_1.dmp");
+	}
+	@FXML
+	public void handleMenuDevmodeNodeHierarchy_2() {
+		DebugJFXTools debugJFXTools = new DebugJFXTools();
+		debugJFXTools.GenerateNodeHierarchy(borderpane, "synthjfx_2.dmp");
 	}
 }
