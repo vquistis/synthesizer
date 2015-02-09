@@ -12,7 +12,6 @@
 	minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="fr.istic.groupimpl.synthesizer.global.ViewGlobal">
 	<top>
-
 		<ToolBar fx:id="tools">
 			<items>
 				<ColorPicker fx:id="colorpicker" />
@@ -72,6 +71,14 @@
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</Button>
+				<Button onAction="#handleAddRep" text="REP">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</Button>
 				<Button onAction="#handleAddVco" text="VCO">
 					<font>
 						<Font name="System Bold" size="12.0" />
@@ -95,6 +102,15 @@
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
+				</Button>
+				<Button layoutX="20.0" layoutY="119.0" onAction="#handleAddEg"
+					text="Eg">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
 				</Button>
 			</children>
 			<padding>

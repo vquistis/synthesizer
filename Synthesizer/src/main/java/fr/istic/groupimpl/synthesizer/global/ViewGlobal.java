@@ -141,7 +141,7 @@ public class ViewGlobal implements Initializable {
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();				
 				Dragboard db = e.getDragboard();
-				boolean success = false;
+//				boolean success = false;
 				if (db.hasString()) {
 					Log.getInstance().debug("DROP DONE");
 					String []pos=db.getString().split(";");
@@ -293,6 +293,15 @@ public class ViewGlobal implements Initializable {
 			});
 		});
 	}
+	
+	/**
+	 * Handle add replicator. Plus click. This method adds a new Rep component Replicator
+	 */
+	@FXML
+	public void handleAddRep(){
+		createModule("fxml/rep.fxml");		
+	}
+
 
 	/**
 	 * Handle add vco. Plus click. This method adds a new VCO component VCO
@@ -324,6 +333,14 @@ public class ViewGlobal implements Initializable {
 	@FXML
 	public void handleAddScope(){
 		createModule("fxml/oscillo.fxml");		
+	}
+	
+	/**
+	 * Handle add eg.
+	 */
+	@FXML
+	public void handleAddEg(){
+		createModule("fxml/eg.fxml");		
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.out;
+package fr.istic.groupimpl.synthesizer.out.jsyn;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitPort;
