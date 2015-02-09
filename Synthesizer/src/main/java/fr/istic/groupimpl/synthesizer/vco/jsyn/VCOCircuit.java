@@ -158,7 +158,7 @@ public class VCOCircuit extends Circuit implements UnitSource
 		vcFreq.getOutput().connect(sawtoothOscillator.frequency);
 		vcFreq.getOutput().connect(squareOscillator.frequency);
 		 
-		passThroughAmplitude.getInput().set(UnitOscillator.DEFAULT_AMPLITUDE/5);
+		passThroughAmplitude.getInput().set(UnitOscillator.DEFAULT_AMPLITUDE);
 		passThroughAmplitude.output.connect(triangleOscillator.amplitude);
 		passThroughAmplitude.output.connect(sawtoothOscillator.amplitude);
 		passThroughAmplitude.output.connect(squareOscillator.amplitude);
