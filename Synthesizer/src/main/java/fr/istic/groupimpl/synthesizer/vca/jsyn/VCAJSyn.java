@@ -4,6 +4,7 @@ import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.UnitGenerator;
 
+import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
@@ -81,6 +82,7 @@ public class VCAJSyn extends UnitGenerator {
         for (int i = start; i < limit; i++) {
         	double decibel = (SignalUtil.verifyAmplitude(inputams[i]) * 5 * 12 ) + SignalUtil.verifyAmplitude(inputa0s[i]);
         	outputs[i]=converter(decibel, inputs[i]); 
+        	Log.getInstance().info(inputs[i]+" --> "+inputams[i]+" -->  "+outputs[i]);
         }
     }
      

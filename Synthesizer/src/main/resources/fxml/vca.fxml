@@ -63,7 +63,7 @@
                <font>
                   <Font size="12.0" />
                </font></Label>
-            <ImageView fx:id="am" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleFmClick" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView fx:id="am" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleamClick" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
                   <Image url="@../img/inoutBleu.png" />
                </image>
@@ -110,9 +110,9 @@
                 <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <VBox fx:id="decibelPane" alignment="CENTER">
+                  <VBox fx:id="voltPane" alignment="CENTER">
                      <children>
-                        <Label text="Décibels">
+                        <Label text="Volt">
                            <VBox.margin>
                               <Insets bottom="28.0" />
                            </VBox.margin>

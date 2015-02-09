@@ -121,13 +121,6 @@ public class ViewVco extends ViewComponent implements Initializable {
 		vcoControl.handleViewOutputClick("vco_output", outX, outY);
 	}
 
-	/**
-	 * Handles the click on the close button
-	 */
-	public void handleCloseClick() {
-		vcoControl.handleViewClose();
-	}
-
 	@Override
 	protected Pane getComponentRoot() {
 		return paneVco;
