@@ -90,6 +90,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
              </Button>
+             <Button onAction="#handleAddVca" text="VCA">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+             </Button>
             <Button onAction="#handleAddScope" text="Scope">
                <font>
                   <Font name="System Bold" size="12.0" />

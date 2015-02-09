@@ -34,20 +34,43 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
  */
 public class ViewGlobal implements Initializable {
 
+	/** The borderpane. */
 	@FXML private BorderPane borderpane; 
+	
+	/** The contentpane. */
 	@FXML private Pane contentpane;
+	
+	/** The scrollpane. */
 	@FXML private ScrollPane scrollpane;
+	
+	/** The splitpane. */
 	@FXML private SplitPane splitpane;
+	
+	/** The hb1. */
 	@FXML private HBox hb1;
+	
+	/** The hb2. */
 	@FXML private HBox hb2;
+	
+	/** The hb3. */
 	@FXML private HBox hb3;
 	
 //	private List<HBox> hboxes = new ArrayList<HBox>();
 //	private List<Pair<Node,ViewComponent>> listAssoc = new ArrayList<Pair<Node,ViewComponent>>();
-	private DoubleProperty mouseX = new SimpleDoubleProperty(0);
+	/** The mouse x. */
+private DoubleProperty mouseX = new SimpleDoubleProperty(0);
+	
+	/** The mouse y. */
 	private DoubleProperty mouseY = new SimpleDoubleProperty(0);
+	
+	/** The ctl. */
 	private ControllerGlobal ctl;
 
+	/**
+	 * Adds the cable.
+	 *
+	 * @param cable the cable
+	 */
 	public void addCable(Cable cable) {
 		contentpane.getChildren().add(contentpane.getChildren().size()-1, cable);
 		cable.setOnMouseClicked((event) -> {
@@ -58,6 +81,11 @@ public class ViewGlobal implements Initializable {
 		cable.toFront();
 	}
 
+	/**
+	 * Removes the cable.
+	 *
+	 * @param cable the cable
+	 */
 	public void removeCable(Cable cable) {
 		contentpane.getChildren().remove(cable);
 		cable.toFront();
@@ -275,6 +303,11 @@ public class ViewGlobal implements Initializable {
 		});
 	}
 
+	/**
+	 * Sets the all modules transparent.
+	 *
+	 * @param t the new all modules transparent
+	 */
 	private void setAllModulesTransparent(boolean t) {
 		splitpane.getItems().forEach((b) -> {
 			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
@@ -290,6 +323,14 @@ public class ViewGlobal implements Initializable {
 	public void handleAddVco(){
 		createModule("fxml/vco.fxml");		
 	}
+	
+	/**
+	 * Handle add vca.
+	 */
+	@FXML
+	public void handleAddVca(){
+		createModule("fxml/vca.fxml");	
+	}
 
 	/**
 	 * Handle add out. This method adds a new OUT components
@@ -298,19 +339,36 @@ public class ViewGlobal implements Initializable {
 	public void handleAddOut(){
 		createModule("fxml/out.fxml");		
 	}
+	
+	/**
+	 * Handle add scope.
+	 */
 	@FXML
 	public void handleAddScope(){
 		createModule("fxml/oscillo.fxml");		
 	}
 
+	/**
+	 * Mouse x property.
+	 *
+	 * @return the double property
+	 */
 	public DoubleProperty mouseXProperty() {
 		return mouseX;
 	}
 
+	/**
+	 * Mouse y property.
+	 *
+	 * @return the double property
+	 */
 	public DoubleProperty mouseYProperty() {
 		return mouseY;
 	}
 	
+	/**
+	 * Handle delete.
+	 */
 	@FXML
 	public void handleDelete() {
 		contentpane.setCursor(Cursor.CROSSHAIR);
