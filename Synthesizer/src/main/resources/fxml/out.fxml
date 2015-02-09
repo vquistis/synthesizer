@@ -36,7 +36,7 @@
       </GridPane>
    </top>
    <center>
-      <VBox alignment="TOP_CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" spacing="10.0" styleClass="contentPane" BorderPane.alignment="CENTER">
          <children>
             <VBox fx:id="knobVolumePane" alignment="CENTER" spacing="4.0">
                <children>

@@ -62,7 +62,7 @@ public class ViewVco extends ViewComponent implements Initializable {
 		PotentiometreFactory pf = PotentiometreFactory.getFactoryInstance();
 
 		// Octave knob
-		pf.setMinValue(0);
+		pf.setMinValue(-8);
 		pf.setMaxValue(8);
 		pf.setDiscret(true);
 		pf.setShowTickMarks(true);

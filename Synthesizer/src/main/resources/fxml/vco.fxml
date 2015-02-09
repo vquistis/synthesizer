@@ -119,7 +119,7 @@
       </GridPane>
    </bottom>
    <center>
-      <VBox alignment="TOP_CENTER">
+      <VBox alignment="TOP_CENTER" styleClass="contentPane">
          <children>
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>

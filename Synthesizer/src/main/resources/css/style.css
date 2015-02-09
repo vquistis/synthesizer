@@ -1,38 +1,45 @@
 @CHARSET "UTF-8";
 
-
-.background {
-   /* -fx-background-color: #1d1d1d;*/
+/* ===== CSS Dark theme ===== */
+.workspace, .split-pane {
+	-fx-background-color:  #4a4c4e;
 }
 
-
-.btnClass{
-	-fx-background-color: #9ACD32;
-/*	-fx-background-color: derive(-fx-focus-color,30%);
-	-fx-font-family: "Segoe UI Light";
-	-fx-text-fill: white;
-	-fx-opacity: 0.9;
-	-fx-background-color: #1d1d1d;
-	-fx-font-size: 14pt;
-	-fx-background-color: #000000;*/
+.split-pane:vertical .split-pane-divider {
+	-fx-padding: 3px;
+	-fx-background-color: transparent, derive(#1d1d1d, 20%);
 }
 
-.hboxStyle{
-	-fx-min-width: 100%;
-	-fx-min-height: 100%;
-	min-width: 100%
+/* ----- CSS Scroll bar ----- */
+.scroll-pane {
+	-fx-padding: 0px;
 }
-
-.btnClass:hover {
-    -fx-background-color: #9ACD32;
+.scroll-pane .scroll-bar .track {
+	-fx-background-color: transparent, derive(#1d1d1d, 20%);
 }
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: transparent, derive(#1d1d1d, 80%);
+/*     -fx-background-insets: 2, 0, 0; */
+/*     -fx-background-radius: 2em; */
+}
+.scroll-pane .scroll-bar .increment-button ,
+.scroll-pane .scroll-bar .decrement-button {
+	-fx-background-color: transparent;
+	-fx-padding: 0px;
+}
+.scroll-pane .scroll-bar .increment-arrow,
+.scroll-pane .scroll-bar .decrement-arrow {
+	-fx-shape: " ";
+	-fx-padding: 0px;
+}
+/* -------------------------- */
 
-
+/* ----- CSS Module ----- */
 .moduleBox {
-	-fx-border-color: #9a9a9a;
+	-fx-border-color: #1d1d1d;
 	-fx-border-width: 1;
 	-fx-border-style: solid;
-    -fx-border-radius: 5;
+/* 	-fx-border-radius: 15; */
 }
 
 .titlePane {
@@ -40,6 +47,10 @@
 	-fx-border-color: #bbb;
 	-fx-border-width: 0 0 1 0;
 	-fx-border-style: solid;
+}
+
+.contentPane {
+	-fx-background-color: #f4f4f4;
 }
 
 .portPane {
@@ -50,13 +61,17 @@
 }
 
 .inputPort:hover, .outputPort:hover {
-    -fx-effect: dropshadow(gaussian, #00ae00, 4,0,0,0);
+	-fx-effect: dropshadow(gaussian, #00ae00, 4, 0, 0, 0);
+}
+/* ---------------------- */
+/* ========================== */
+
+
+.knobButton {
+	-fx-background-color: transparent;
 }
 
-.button {
-    -fx-background-color: transparent;
-}
-.button .knob {
-    -fx-background-image: url("../img/knob.png");
-    -fx-background-size: stretch; 
+.knob {
+	-fx-background-image: url("../img/knob.png");
+	-fx-background-size: stretch;
 }
