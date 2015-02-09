@@ -35,6 +35,14 @@
             </items>
           </Menu>
   --> 
+          <Menu mnemonicParsing="false" text="devmode">
+            <items>
+              <MenuItem mnemonicParsing="false"  onAction="#handleMenuDevmodeNodeHierarchy_1"  text="JavaFX Node Hierarchy dump 1" />
+            </items>
+            <items>
+              <MenuItem mnemonicParsing="false"  onAction="#handleMenuDevmodeNodeHierarchy_2"  text="JavaFX Node Hierarchy dump 2" />
+            </items>
+          </Menu>
         </menus>
       </MenuBar>
    </top>

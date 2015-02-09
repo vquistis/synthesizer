@@ -2,6 +2,7 @@ package fr.istic.groupimpl.synthesizer.global;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.DoubleProperty;
@@ -12,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.ClipboardContent;
@@ -25,6 +27,8 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
+import fr.istic.groupimpl.synthesizer.out.ViewOut;
+import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 
 /**
  * The Class ViewGlobal.
@@ -377,5 +381,16 @@ private DoubleProperty mouseX = new SimpleDoubleProperty(0);
 				n.setMouseTransparent(false);
 			}
 		}
+	}
+
+	@FXML
+	public void handleMenuDevmodeNodeHierarchy_1() {
+		DebugJFXTools debugJFXTools = new DebugJFXTools();
+		debugJFXTools.GenerateNodeHierarchy(borderpane, "synthjfx_1.dmp");
+	}
+	@FXML
+	public void handleMenuDevmodeNodeHierarchy_2() {
+		DebugJFXTools debugJFXTools = new DebugJFXTools();
+		debugJFXTools.GenerateNodeHierarchy(borderpane, "synthjfx_2.dmp");
 	}
 }
