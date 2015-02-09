@@ -7,6 +7,8 @@ import org.junit.Test;
 import com.jsyn.engine.SynthesisEngine;
 import com.jsyn.unitgen.SineOscillator;
 
+import fr.istic.groupimpl.synthesizer.out.jsyn.JsynOutCircuit;
+
 public class JsynOutCircuitTest {
 	
     private SynthesisEngine synthesisEngine;
