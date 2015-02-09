@@ -106,11 +106,9 @@ public class ViewVca extends ViewComponent implements Initializable {
 
 		// VcaController creation and listeners on knob values
 		vcaControl = new ControllerVca(dbValue);
+
 		amplitudeKnod.valueProperty().addListener((p, oldVal, newVal) ->
-		vcaControl.handleViewAmplitudeChange((double) newVal, precisionKnob.getValue()));
-		precisionKnob.valueProperty().addListener((p, oldVal, newVal) ->
-		vcaControl.handleViewAmplitudeChange(amplitudeKnod.getValue(), (double) newVal));
-		
+		vcaControl.handleViewVoltChange((double) newVal));		
 		// Listener close VCA
 		closeVca.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();

@@ -58,10 +58,10 @@ public class ControllerVca implements IControllerComponent {
 	/**
 	 * Handle view octave change.
 	 *
-	 * @param octave the octave
+	 * @param volt the volt
 	 * @param precision the precision
 	 */
-	public void handleViewAmplitudeChange(double octave, double precision) {
-//		modelVca.setOctave(octave + precision);
+	public void handleViewVoltChange(double volt) {
+		modelVca.setVolt(volt);
 	}
 }

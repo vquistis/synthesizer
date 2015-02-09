@@ -65,5 +65,10 @@ public class ModelVca extends ModelComponent {
 	public Collection<UnitPort> getAllPorts() {
 		return this.vcajSyn.getPorts();
 	}
+	
+	protected void setVolt(double volt) {
+		vcajSyn.getInputa0().set(volt);
+//		computeFrequency(volt);
+	}
 
 }
