@@ -41,7 +41,7 @@ public class ViewOut extends ViewComponent implements Initializable {
 		knobFact.setNbSpins(3);
 		knobFact.setRayon(32);
 		Potentiometre knobVolume = knobFact.getPotentiometre();
-		knobVolumePane.getChildren().add(knobVolume);
+		knobVolumePane.getChildren().add(1,knobVolume);
 		
 		// Bind knob value and text field value
 		StringConverter<Number> converter = new DoubleStringConverter();
