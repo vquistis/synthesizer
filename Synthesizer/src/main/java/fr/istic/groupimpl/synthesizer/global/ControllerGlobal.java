@@ -4,7 +4,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableObjectValue;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
@@ -28,7 +32,7 @@ public class ControllerGlobal {
 	private ModelGlobal model;
 	private ViewGlobal view;
 
-	private CableMode cableMode = CableMode.NONE_CONNECTED;
+	private InteractionMode interactionMode = InteractionMode.CableCreation_none;
 	/*
 	 * By default, when the user clicks on a port, a new cable is created.
 	 * However, if the user clicks on an already connected port, the existing
@@ -93,65 +97,24 @@ public class ControllerGlobal {
 	 * @param port
 	 */
 	public void handleInputClicked(UnitInputPort port, DoubleProperty x, DoubleProperty y) {
-		switch(cableMode) {
-		case NONE_CONNECTED:
-			/*
-			 * No connection is currently in the process of creation.
-			 * If the input port that was clicked is already part of a connection,
-			 * we should enter in a "move" move:
-			 *   - set the "previousPort" field to remember which port was connected, 
-			 *   in order to restore the connection in case of cancellation,
-			 *   - set the "currentPort" field to the port currently connected to the
-			 *   parameter "port",
-			 *   - disconnect the currentPort and the previousPort in the model.
-			 *   - change mode to OUT_CONNECTED.
-			 * If not, we should enter in a "create" mode.
-			 */
-			if(model.isPortConnected(port)) {
-				cableMode = CableMode.OUT_CONNECTED;
-				currentPort = model.getConnectedPort(port);
-				model.disconnectInputPort(port);
-				previousPort = port;
-				previousX = x;
-				previousY = y;
-
-				//----------------------
-				Cable cable = cables.get(port);
-				cables.remove(port);
-				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());
-				Log.getInstance().debug("INPUT PORT DISCONNECTED");
-				//----------------------
-
-			} else {
-				cableMode = CableMode.IN_CONNECTED;
-				currentPort = port;
-
-				//----------------------
-				Cable cable = new Cable(view.getCableColor());
-				cables.put(port, cable);
-				cable.bindInput(x, y);
-				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
-				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
-				view.addCable(cable);
-				Log.getInstance().debug("CREATING CABLE FROM INPUT PORT");
-				//----------------------
-
-			}
+		switch(interactionMode) {
+		case CableDeletion:
+			view.enableCableDeletionMode(false);
+			view.enableCableCreationMode(true);
+			doStuff(port, x, y);
 			break;
-		case IN_CONNECTED:
-			/*
-			 * An input port is connected to the cable. Clicking on another (or the same) input port
-			 * should not have any effect.
-			 */
+		case CableCreation_none:
+			doStuff(port, x, y);
 			break;
-		case OUT_CONNECTED:
+		case CableCreation_out:
 			/*
 			 * An output port is connected to the cable. By clicking on an input port,
 			 * we should ask the model whether this input port is already part of a connection
 			 * or not. If it is, do nothing. If it isn't, create a new connection.
 			 */
 			if(!model.isPortConnected(port)) {
-				cableMode = CableMode.NONE_CONNECTED;
+				interactionMode = InteractionMode.CableCreation_none;
+				view.enableDefaultMode(true);
 				this.model.connectPorts(currentPort, port);
 
 				//----------------------
@@ -169,6 +132,7 @@ public class ControllerGlobal {
 			}
 			break;
 		default:
+			break;
 		}
 	}
 
@@ -177,42 +141,19 @@ public class ControllerGlobal {
 	 * @param port
 	 */
 	public void handleOutputClicked(UnitOutputPort port, DoubleProperty x, DoubleProperty y) {
-		switch(cableMode) {
-		case NONE_CONNECTED:
-			if(model.isPortConnected(port)) {
-				cableMode = CableMode.IN_CONNECTED;
-				currentPort = model.getConnectedPort(port);
-				model.disconnectOutputPort(port);
-				previousPort = port;
-				previousX = x;
-				previousY = y;
-
-				//----------------------
-				Cable cable = cables.get(port);
-				cables.remove(port);
-				Log.getInstance().debug("OUTPUT PORT DISCONNECTED");
-				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
-				//----------------------
-
-			} else {
-				cableMode = CableMode.OUT_CONNECTED;
-				currentPort = port;
-
-				//----------------------				
-				Cable cable = new Cable(view.getCableColor());
-				cables.put(port, cable);
-				cable.bindOutput(x, y);
-				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
-				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());
-				view.addCable(cable);
-				Log.getInstance().debug("CREATING CABLE FROM OUTPUT PORT");
-				//----------------------
-
-			}
+		switch(interactionMode) {
+		case CableDeletion:
+			view.enableCableDeletionMode(false);
+			view.enableCableCreationMode(true);
+			doStuff(port, x, y);
 			break;
-		case IN_CONNECTED:
+		case CableCreation_none:
+			doStuff(port, x, y);
+			break;
+		case CableCreation_in:
 			if(!model.isPortConnected(port)) {
-				cableMode = CableMode.NONE_CONNECTED;
+				interactionMode = InteractionMode.CableCreation_none;
+				view.enableDefaultMode(true);
 				this.model.connectPorts(port, currentPort);
 
 				//----------------------
@@ -228,9 +169,70 @@ public class ControllerGlobal {
 				previousY = null;
 			}
 			break;
-		case OUT_CONNECTED:
-			break;
 		default:
+			break;
+		}
+	}
+	
+	/*
+	 * No connection is currently in the process of creation.
+	 * If the put port that was clicked is already part of a connection,
+	 * we should enter in a "move" move:
+	 *   - set the "previousPort" field to remember which port was connected, 
+	 *   in order to restore the connection in case of cancellation,
+	 *   - set the "currentPort" field to the port currently connected to the
+	 *   parameter "port",
+	 *   - disconnect the currentPort and the previousPort in the model.
+	 *   - change mode accordingly.
+	 * If not, we should enter in a "create" mode.
+	 */
+	private void doStuff(UnitPort port, DoubleProperty x, DoubleProperty y) {
+		boolean isInput = port instanceof UnitInputPort;
+		view.enableCableCreationMode(true);
+		if(model.isPortConnected(port)) {
+			interactionMode = isInput ? InteractionMode.CableCreation_out : InteractionMode.CableCreation_in;
+			currentPort = model.getConnectedPort(port);
+			if(isInput) {
+				model.disconnectInputPort((UnitInputPort) port);
+			} else {
+				model.disconnectOutputPort((UnitOutputPort) port);
+			}
+			previousPort = port;
+			previousX = x;
+			previousY = y;
+
+			//----------------------
+			Cable cable = cables.get(port);
+			cables.remove(port);
+			if(isInput) {
+				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());
+				Log.getInstance().debug("INPUT PORT DISCONNECTED");
+			} else {
+				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
+				Log.getInstance().debug("OUTPUT PORT DISCONNECTED");
+			}
+			//----------------------
+
+		} else {
+			interactionMode = isInput ? InteractionMode.CableCreation_in : InteractionMode.CableCreation_out;
+			currentPort = port;
+
+			//----------------------
+			Cable cable = new Cable(view.getCableColor());
+			cables.put(port, cable);
+			if(isInput) {
+				cable.bindInput(x, y);
+				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
+				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());
+				Log.getInstance().debug("CREATING CABLE FROM INPUT PORT");
+			} else {
+				cable.bindOutput(x, y);
+				Log.getInstance().debug("output X = " + x.get() + " ; " + "output Y = " + y.get());
+				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());
+				Log.getInstance().debug("CREATING CABLE FROM OUTPUT PORT");
+			}
+			view.addCable(cable);
+			//----------------------
 		}
 	}
 
@@ -238,7 +240,25 @@ public class ControllerGlobal {
 	 * Aborts the connection creation process.
 	 */
 	public void handleRightButtonClicked() {
-		cableMode = CableMode.NONE_CONNECTED;
+		switch(interactionMode) {
+		case CableCreation_in:
+		case CableCreation_out:
+			cancelCableCreation();
+			break;
+		case CableDeletion:
+			view.enableCableDeletionMode(false);
+			break;
+		case CablePainting:
+			view.enableCablePaintingMode(false);
+			break;
+		default:
+			break;
+		}
+		view.enableDefaultMode(true);
+		interactionMode = InteractionMode.CableCreation_none;
+	}
+
+	private void cancelCableCreation() {
 		Cable cable = cables.get(currentPort);
 		if(cable != null) {
 			if(previousPort != null) {
@@ -255,33 +275,84 @@ public class ControllerGlobal {
 				view.removeCable(cable);
 			}
 		}
-		
 		currentPort = null;
 		previousPort = null;
 		previousX = null;
 		previousY = null;
 	}
-	
-	public void handleRemoveCable(Cable cable) {
-		view.removeCable(cable);
-		cables.forEach((k,v) -> {
-			if(v == cable) {
-				if(k instanceof UnitInputPort) {
-					model.disconnectInputPort((UnitInputPort) k);
-				} else if(k instanceof UnitOutputPort) {
-					model.disconnectOutputPort((UnitOutputPort) k);
+
+	public void handleClickOnCable(Cable cable) {
+		switch(interactionMode) {
+		case CableDeletion:
+			view.removeCable(cable);
+			cables.forEach((k,v) -> {
+				if(v == cable) {
+					if(k instanceof UnitInputPort) {
+						model.disconnectInputPort((UnitInputPort) k);
+					} else if(k instanceof UnitOutputPort) {
+						model.disconnectOutputPort((UnitOutputPort) k);
+					}
 				}
-			}
-		});
-		
+			});
+			break;
+		case CablePainting:
+			cable.setStroke(view.getCableColor());
+			break;
+		default:
+			break;
+		}
+			
 	}
 
 	public void setView(ViewGlobal view) {
 		this.view = view;
 	}
 
-	private enum CableMode {
-		NONE_CONNECTED,IN_CONNECTED,OUT_CONNECTED
+	public void activateDeletionMode() {
+		switch(interactionMode) {
+		case CableCreation_none:
+			view.enableCableDeletionMode(true);
+			break;
+		case CableCreation_in:
+			cancelCableCreation();
+			view.enableCableDeletionMode(true);
+			break;
+		case CableCreation_out:
+			cancelCableCreation();
+			view.enableCableDeletionMode(true);
+			break;
+		case CablePainting:
+			view.enableCableDeletionMode(true);
+			break;
+		default:
+			break;
+		}
+		interactionMode = InteractionMode.CableDeletion;
 	}
 
+	public void activatePaintingMode() {
+		switch(interactionMode) {
+		case CableCreation_none:
+			view.enableCablePaintingMode(true);
+			break;
+		case CableCreation_in:
+			cancelCableCreation();
+			view.enableCablePaintingMode(true);
+			break;
+		case CableCreation_out:
+			cancelCableCreation();
+			view.enableCablePaintingMode(true);
+			break;
+		case CablePainting:
+			view.enableCablePaintingMode(true);
+			break;
+		default:
+			break;
+		}
+		interactionMode = InteractionMode.CablePainting;
+	}
+	
+	private enum InteractionMode {
+		CableCreation_none,CableCreation_in,CableCreation_out,CableDeletion,CablePainting
+	}
 }
