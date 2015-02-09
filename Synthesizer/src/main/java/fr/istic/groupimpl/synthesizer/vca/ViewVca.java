@@ -19,38 +19,65 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
+ * The Class ViewVca.
+ *
  * @authors GroupImpl
  * VCA module - JavaFX Controller
  */
 public class ViewVca extends ViewComponent implements Initializable {
 
+	/** The pane vca. */
 	@FXML
 	private BorderPane paneVca;
+	
+	/** The close vca. */
 	@FXML
 	private ImageView closeVca;
+	
+	/** The decibel pane. */
 	@FXML
 	private VBox decibelPane;
 
+	/** The am. */
 	@FXML
 	private ImageView am;
+	
+	/** The out. */
 	@FXML
 	private ImageView out;
+	
+	/** The input. */
 	@FXML 
 	private ImageView input;
 
+	/** The db value. */
 	@FXML
 	private Label dbValue;
 
+	/** The vca control. */
 	private ControllerVca vcaControl;
 	
+	/** The input x. */
 	private DoubleProperty inputX = new SimpleDoubleProperty(0);
+	
+	/** The input y. */
 	private DoubleProperty inputY = new SimpleDoubleProperty(0);
 
+	/** The fm x. */
 	private DoubleProperty fmX = new SimpleDoubleProperty(0);
+	
+	/** The fm y. */
 	private DoubleProperty fmY = new SimpleDoubleProperty(0);
+	
+	/** The out x. */
 	private DoubleProperty outX = new SimpleDoubleProperty(0);
+	
+	/** The out y. */
 	private DoubleProperty outY = new SimpleDoubleProperty(0);
 
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -105,26 +132,29 @@ public class ViewVca extends ViewComponent implements Initializable {
 	}
 
 	/**
-	 * Handles the click on the FM input port
+	 * Handles the click on the FM input port.
 	 */
 	public void handleFmClick() {
 		vcaControl.handleViewInputClick("vca_inputFm", fmX, fmY);
 	}
 
 	/**
-	 * Handles the click on the output port
+	 * Handles the click on the output port.
 	 */
 	public void handleOutputClick() {
 		vcaControl.handleViewOutputClick("vca_output", outX, outY);
 	}
 
 	/**
-	 * Handles the click on the close button
+	 * Handles the click on the close button.
 	 */
 	public void handleCloseClick() {
 		vcaControl.handleViewClose();
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return paneVca;
