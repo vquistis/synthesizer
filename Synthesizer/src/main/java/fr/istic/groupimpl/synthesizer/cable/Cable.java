@@ -22,9 +22,9 @@ public class Cable extends CubicCurve {
 	/**
 	 * Constructeur
 	 */
-	public Cable() {
+	public Cable(Color color) {
 		setMouseTransparent(true);
-		setStroke(Color.FORESTGREEN);
+		setStroke(color);
 		setStrokeWidth(10);
 		setStrokeLineCap(StrokeLineCap.ROUND);
 		setFill(Color.TRANSPARENT);

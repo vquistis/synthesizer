@@ -127,7 +127,7 @@ public class ControllerGlobal {
 				currentPort = port;
 
 				//----------------------
-				Cable cable = new Cable();
+				Cable cable = new Cable(view.getCableColor());
 				cables.put(port, cable);
 				cable.bindInput(x, y);
 				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
@@ -199,7 +199,7 @@ public class ControllerGlobal {
 				currentPort = port;
 
 				//----------------------				
-				Cable cable = new Cable();
+				Cable cable = new Cable(view.getCableColor());
 				cables.put(port, cable);
 				cable.bindOutput(x, y);
 				Log.getInstance().debug("input X = " + x.get() + " ; " + "input Y = " + y.get());
