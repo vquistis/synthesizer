@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import fr.istic.groupimpl.synthesizer.global.ViewGlobal;
 
 /**
  * Hello world!
@@ -26,8 +27,12 @@ public class App extends Application
 		Scene scene = new Scene(root,1100,700);
 		scene.getStylesheets().add(cssURL.toExternalForm());
 		primaryStage.setScene(scene);
+		
+		ViewGlobal view = loader.getController();
+		view.init();
+		
 		primaryStage.show();
-
+		
         primaryStage.setOnCloseRequest((event) -> System.exit(0));
 	}
 }
