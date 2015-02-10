@@ -8,45 +8,46 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.vcf.jsyn.FilterFourPoles;
+import fr.istic.groupimpl.synthesizer.vcf.jsyn.JsynVcfCircuit;
 
 public class ModelVcf extends ModelComponent {
 	
-	private FilterFourPoles filter;
+	private JsynVcfCircuit circuit;
 	
 	public ModelVcf() {
 		super();
-		filter = new FilterFourPoles();
-		filter.input.setName("vcf_input");
-		filter.fm.setName("vcf_fm");
+		circuit = new JsynVcfCircuit();
 	}
 
+	public void setCutFrequency(double freq) {
+		circuit.setCutFrequency(freq);
+	}
+	
+	public void setResonance(double res) {
+		circuit.setResonance(res);
+	}
+	
 	@Override
 	public UnitGenerator getUnitGenerator() {
-		return filter;
+		return circuit;
 	}
 
 	@Override
 	public UnitInputPort getInputPort(String portName) {
-		return (UnitInputPort) filter.getPortByName(portName);
+		return circuit.getInput();
+	}
+	
+	public UnitInputPort getFmPort() {
+		return circuit.getFm();
 	}
 
 	@Override
 	public UnitOutputPort getOutputPort(String portName) {
-		return filter.getOutput();
+		return circuit.getOutput();
 	}
 
 	@Override
 	public Collection<UnitPort> getAllPorts() {
-		return filter.getPorts();
+		return circuit.getPorts();
 	}
-	
-	public void setCutFrequency(double freq) {
-		filter.frequency.set(freq);
-	}
-	
-	public void setResonance(double res) {
-		filter.Q.set(res);
-	}
-
 }

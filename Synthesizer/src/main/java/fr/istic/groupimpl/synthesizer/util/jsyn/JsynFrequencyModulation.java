@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.vco.jsyn;
+package fr.istic.groupimpl.synthesizer.util.jsyn;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
@@ -24,7 +24,7 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  * 
  * @author Team GroupImpl
  */
-public class VCFrequency extends UnitGenerator {
+public class JsynFrequencyModulation extends UnitGenerator {
 	
 	private UnitInputPort inputfm; 		//Volt
 	private UnitInputPort inputf0; 		//HZ
@@ -67,7 +67,7 @@ public class VCFrequency extends UnitGenerator {
 	/**
 	 * Constructor
 	 */
-    public VCFrequency() {
+    public JsynFrequencyModulation() {
         addPort(inputfm = new UnitInputPort("Inputfm"));
         addPort(inputf0 = new UnitInputPort("Inputf0"));
         addPort(inputOctave = new UnitInputPort("InputOctave"));

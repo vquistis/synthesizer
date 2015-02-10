@@ -343,6 +343,14 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
+	 * Handle add vcf lp.
+	 */
+	@FXML
+	public void handleAddVcfLp(){
+		createModule("fxml/vcf-lp.fxml");		
+	}
+
+	/**
 	 * Mouse x property.
 	 *
 	 * @return the double property
