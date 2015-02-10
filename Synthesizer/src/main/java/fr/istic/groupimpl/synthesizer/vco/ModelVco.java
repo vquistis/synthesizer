@@ -82,10 +82,5 @@ public class ModelVco extends ModelComponent {
 		DoubleStringConverter dsc = new DoubleStringConverter();
 		this.setValProperty("freq", dsc.toString(frequency));
 	}
-
-	@Override
-	public Module getModule() {
-		return null;
-	}
-		
+	
 }

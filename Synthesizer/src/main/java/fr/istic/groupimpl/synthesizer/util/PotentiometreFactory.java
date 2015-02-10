@@ -38,6 +38,20 @@ public class PotentiometreFactory {
 	private boolean showTickMarks = false;
 	private boolean showTickLabels = false;
 	private double majorTickUnit = 5.;
+	private double minorTickUnit = 5.;
+	private boolean minorTickUnitInit = false;
+
+	public double getMinorTickUnit() {
+		if( minorTickUnitInit )
+			return minorTickUnit;
+		else
+			return majorTickUnit;
+	}
+
+	public void setMinorTickUnit(double minorTickUnit) {
+		this.minorTickUnit = minorTickUnit;
+		minorTickUnitInit = true;
+	}
 
 	/**
 	 * get the minimum value

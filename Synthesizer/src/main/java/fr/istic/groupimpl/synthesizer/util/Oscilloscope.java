@@ -123,7 +123,7 @@ public class Oscilloscope extends Region {
 		}
 
 	}
-
+	private double lastHValue=1.;
 	private void affBuf() {
 
 		double[] buf = cmdGetBuffer.getBuffer();
@@ -202,7 +202,9 @@ public class Oscilloscope extends Region {
 		}
 
 		if (hValue == 0.)
-			hValue = 1.;
+		{
+			hValue = lastHValue;
+		}
 		coefY = -(getHeight() * 0.45) / hValue;
 		baseY = getHeight() / 2.;
 
@@ -239,6 +241,8 @@ public class Oscilloscope extends Region {
 			line.setEndY(baseY + coefY * buf[ind + 1]);
 
 		}
+		
+		lastHValue = hValue;
 
 	}
 }

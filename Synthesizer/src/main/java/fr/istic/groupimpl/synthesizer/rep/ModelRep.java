@@ -54,9 +54,4 @@ public class ModelRep extends ModelComponent{
 		return rep.getPorts();
 	}
 
-	@Override
-	public Module getModule() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

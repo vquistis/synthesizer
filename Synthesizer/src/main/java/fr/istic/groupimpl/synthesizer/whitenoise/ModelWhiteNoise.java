@@ -47,9 +47,4 @@ public class ModelWhiteNoise extends ModelComponent {
 		return whiteNoise.getPorts();
 	}
 
-	@Override
-	public Module getModule() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
