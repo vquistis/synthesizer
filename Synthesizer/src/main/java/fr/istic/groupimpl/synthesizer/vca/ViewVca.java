@@ -84,7 +84,6 @@ public class ViewVca extends ViewComponent implements Initializable {
 		// knob
 		pf.setMinValue(-5);
 		pf.setMaxValue(+5);
-		pf.setDiscret(true);
 		pf.setShowTickMarks(true);
 		pf.setShowTickLabels(true);
 		pf.setMajorTickUnit(1);
