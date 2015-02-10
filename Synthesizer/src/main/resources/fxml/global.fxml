@@ -12,13 +12,18 @@
 	minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="fr.istic.groupimpl.synthesizer.global.ViewGlobal">
 	<top>
-		<ToolBar fx:id="tools">
+		<ToolBar>
 			<items>
 				<ColorPicker fx:id="colorpicker" />
-				<Button text="Paint cable" onAction="#handlePaint" />
-				<Button text="Delete Mode" onAction="#handleDelete" />
-				<Button text="JavaFX Node Hierarchy dump 1" onAction="#handleMenuDevmodeNodeHierarchy_1" />
-				<Button text="JavaFX Node Hierarchy dump 2" onAction="#handleMenuDevmodeNodeHierarchy_2" />
+				<Button onAction="#handlePaint" text="Paint cable" />
+				<Button onAction="#handleDelete" text="Delete Mode" />
+
+				<Button onAction="#handleSaveConfiguration" text="Sauvegarder la configuraion" />
+				<Button onAction="#handleLoadConfiguration" text="Charger la configuration" />
+
+				<!-- GENERATE GRAPH SCENE DEBUG ONLY <Button onAction="#handleMenuDevmodeNodeHierarchy_1" 
+					text="JavaFX Node Hierarchy dump 1" /> <Button onAction="#handleMenuDevmodeNodeHierarchy_2" 
+					text="JavaFX Node Hierarchy dump 2" /> -->
 			</items>
 		</ToolBar>
 	</top>
@@ -73,6 +78,15 @@
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</Button>
+				<Button onAction="#handleAddMixer" styleClass="moduleButton"
+					text="MIXER">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</Button>
 				<Button onAction="#handleAddRep" styleClass="moduleButton"
 					text="REP">
 					<font>
@@ -111,6 +125,24 @@
 				</Button>
 				<Button layoutX="20.0" layoutY="119.0" onAction="#handleAddEg"
 					styleClass="moduleButton" text="Eg">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Button>
+				<Button layoutX="32.0" layoutY="185.0" onAction="#handleAddVcfLp"
+					styleClass="moduleButton" text="VCF - LP">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Button>
+				<Button layoutX="44.0" layoutY="185.0" onAction="#handleAddWhiteNoise"
+					styleClass="moduleButton" text="WHITE NOISE">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>

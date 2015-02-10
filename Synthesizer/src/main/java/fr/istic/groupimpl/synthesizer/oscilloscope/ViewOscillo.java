@@ -39,8 +39,8 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 
 		
 		OscilloscopeFactory scopeFact = OscilloscopeFactory.getFactoryInstance();
-		scopeFact.setWidth(screenScopePane.getPrefWidth());
-		scopeFact.setHeight(screenScopePane.getPrefHeight());
+		scopeFact.setWidth(screenScopePane.getPrefWidth()-20);
+		scopeFact.setHeight(screenScopePane.getPrefHeight()-20);
 		scopeFact.setRefreshPeriod(1000);
 		scopeFact.setCmdGetBuffer(()->{return controller.getbufferData();});
 		
@@ -54,15 +54,9 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 		refreshPeriodSlider.valueProperty().addListener( (obsVal, oldVal, newVal) -> controller.handleRefreshPeriodViewChange(newVal));
 		// Listener mute);
 
-		// Listener in
-		in.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			controller.handleViewInputClick("oscillo_in", inX, inY);
-		});
-		
-		// Listener out
-		out.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			controller.handleViewOutputClick("oscillo_out", outX, outY);
-		});
+		// Listener in & out
+		in.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(inX, inY));
+		out.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outX, outY));
 		
 		// Listener close module
 		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {

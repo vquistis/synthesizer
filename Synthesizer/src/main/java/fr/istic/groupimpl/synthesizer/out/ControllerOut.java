@@ -32,14 +32,13 @@ public class ControllerOut implements IControllerComponent {
 		}
 	}
 
-	@Override
-	public void handleViewInputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
-		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(portName), xCoord, yCoord);
-	}
-
-	@Override
-	public void handleViewOutputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
-		//This module doesn't have output port
+	/**
+	 * Click listener for input port
+	 * @param xCoord Coordinate of the clicked input port (x axis)
+	 * @param yCoord Coordinate of the clicked input port (y axis)
+	 */
+	public void handleViewInputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
+		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(), xCoord, yCoord);
 	}
 
 	@Override

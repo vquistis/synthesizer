@@ -13,7 +13,7 @@ public class JsynAttenuationFilter extends UnitFilter {
 	// Coef diviseur car le voltage en entrée est entre -5V et +5V
 	// et on veut pouvoir augmenté le son de 12 DB et le resultat
 	// doit être inférieur à 1 ( pour ne pas saturer ).
-	private final double COEF_DIV=4.*5.;
+//	private final double COEF_DIV=4.*5.;
 	 	
  	
  	

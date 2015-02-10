@@ -8,6 +8,7 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
 
 public class ModelOscillo extends ModelComponent {
@@ -34,20 +35,31 @@ public class ModelOscillo extends ModelComponent {
 	public UnitGenerator getUnitGenerator() {
 		return circuit;
 	}
-	
-	@Override
-	public UnitInputPort getInputPort(String portName) {
+
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
 		return circuit.getInput();
 	}
 
-	@Override
-	public UnitOutputPort getOutputPort(String portName) {
-		//This module doesn't have output port
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
 		return circuit.getOutput();
 	}
 
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return circuit.getPorts();
+	}
+
+	@Override
+	public Module getModule() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

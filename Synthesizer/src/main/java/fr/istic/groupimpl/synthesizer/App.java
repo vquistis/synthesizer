@@ -24,13 +24,15 @@ public class App extends Application
 		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/global.fxml"));
 		Parent root = loader.load();
 		URL cssURL = getClass().getClassLoader().getResource("css/style.css");
-		ViewGlobal view = loader.getController();
 		Scene scene = new Scene(root,1100,700);
 		scene.getStylesheets().add(cssURL.toExternalForm());
 		primaryStage.setScene(scene);
+		
+		ViewGlobal view = loader.getController();
 		view.init();
+		
 		primaryStage.show();
-
+		
         primaryStage.setOnCloseRequest((event) -> System.exit(0));
 	}
 }

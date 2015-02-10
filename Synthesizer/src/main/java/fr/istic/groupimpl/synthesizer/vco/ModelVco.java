@@ -8,6 +8,7 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.vco.jsyn.VCOCircuit;
 
@@ -55,20 +56,20 @@ public class ModelVco extends ModelComponent {
 		}
 	}
 
-	@Override
-	public UnitInputPort getInputPort(String portName) {
-		if (portName.equals("vco_inputFm")) {
-			return vcoCirc.getInputFM();
-		}
-		return null;
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
+		return vcoCirc.getInputFM();
 	}
 
-	@Override
-	public UnitOutputPort getOutputPort(String portName) {
-		if (portName.equals("vco_output")) {
-			return vcoCirc.getOutput();
-		}
-		return null;
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
+		return vcoCirc.getOutput();
 	}
 
 	@Override
@@ -80,6 +81,11 @@ public class ModelVco extends ModelComponent {
 		double frequency = f0 * Math.pow(2, octave);
 		DoubleStringConverter dsc = new DoubleStringConverter();
 		this.setValProperty("freq", dsc.toString(frequency));
+	}
+
+	@Override
+	public Module getModule() {
+		return null;
 	}
 		
 }

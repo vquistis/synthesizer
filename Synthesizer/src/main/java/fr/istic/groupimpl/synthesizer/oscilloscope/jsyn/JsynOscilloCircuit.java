@@ -81,7 +81,7 @@ public class JsynOscilloCircuit extends UnitGenerator {
 		
 		blocBuf[ind].set(false);
 		
-		for ( int i = 0 ; i < buf.length ; i++ )
+		for ( int i = 0 ; i < ret.length ; i++ )
 		{
 			ret[i] *= SignalUtil.COEF_VOLT;
 		}

@@ -12,6 +12,7 @@ import com.jsyn.unitgen.UnitOscillator;
 import com.jsyn.unitgen.UnitSource;
 
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
+import fr.istic.groupimpl.synthesizer.util.jsyn.JsynFrequencyModulation;
 
 /**
  * VCO oscillator Circuit with a frequency modulation input.
@@ -33,7 +34,7 @@ public class VCOCircuit extends Circuit implements UnitSource
 	private TriangleOscillator triangleOscillator;
 	private SawtoothOscillator sawtoothOscillator;
 	private SquareOscillator squareOscillator;
-	private VCFrequency vcFreq;
+	private JsynFrequencyModulation vcFreq;
 	private SelectFrom3Input selectFrom3;
 	private PassThrough passThroughAmplitude;
 	
@@ -137,7 +138,7 @@ public class VCOCircuit extends Circuit implements UnitSource
 		add(sawtoothOscillator = new SawtoothOscillator());
 		add(squareOscillator = new SquareOscillator());
 
-		add(vcFreq = new VCFrequency());
+		add(vcFreq = new JsynFrequencyModulation());
 		add(selectFrom3 = new SelectFrom3Input());
 		add(passThroughAmplitude = new PassThrough());
 		

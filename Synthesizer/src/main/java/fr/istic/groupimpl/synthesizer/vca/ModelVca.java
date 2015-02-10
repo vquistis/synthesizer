@@ -8,6 +8,7 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.vca.jsyn.VCAJSyn;
 
@@ -52,7 +53,6 @@ public class ModelVca extends ModelComponent {
 	 * @param portName the port name
 	 * @return the input port
 	 */
-	@Override
 	public UnitInputPort getInputPort(String portName) {
 		switch (portName) {
 		case "vca_input":
@@ -69,17 +69,11 @@ public class ModelVca extends ModelComponent {
 	}
 
 	/**
-	 * get output port.
-	 *
-	 * @param portName the port name
-	 * @return the output port
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
 	 */
-	@Override
-	public UnitOutputPort getOutputPort(String portName) {
-		if (portName.equals("vca_output")) {
-			return vcajSyn.getOutput();
-		}
-		return null;
+	public UnitOutputPort getOutputPort() {
+		return vcajSyn.getOutput();
 	}
 
 	/**
@@ -97,6 +91,12 @@ public class ModelVca extends ModelComponent {
 	 */
 	protected void setVolt(double volt) {
 		vcajSyn.getInputa0().set(volt);
+	}
+
+	@Override
+	public Module getModule() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

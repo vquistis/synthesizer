@@ -8,45 +8,63 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.vcf.jsyn.FilterFourPoles;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
+import fr.istic.groupimpl.synthesizer.vcf.jsyn.JsynVcfCircuit;
 
 public class ModelVcf extends ModelComponent {
 	
-	private FilterFourPoles filter;
+	private JsynVcfCircuit circuit;
 	
 	public ModelVcf() {
 		super();
-		filter = new FilterFourPoles();
-		filter.input.setName("vcf_input");
-		filter.fm.setName("vcf_fm");
+		circuit = new JsynVcfCircuit();
 	}
 
+	public void setCutFrequency(double freq) {
+		circuit.setCutFrequency(freq);
+	}
+	
+	public void setResonance(double res) {
+		circuit.setResonance(res);
+	}
+	
 	@Override
 	public UnitGenerator getUnitGenerator() {
-		return filter;
+		return circuit;
 	}
 
-	@Override
-	public UnitInputPort getInputPort(String portName) {
-		return (UnitInputPort) filter.getPortByName(portName);
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
+		return circuit.getInput();
 	}
 
-	@Override
-	public UnitOutputPort getOutputPort(String portName) {
-		return filter.getOutput();
+	/**
+	 * Get the jsyn input fm port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getFmPort() {
+		return circuit.getFm();
+	}
+
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
+		return circuit.getOutput();
 	}
 
 	@Override
 	public Collection<UnitPort> getAllPorts() {
-		return filter.getPorts();
-	}
-	
-	public void setCutFrequency(double freq) {
-		filter.frequency.set(freq);
-	}
-	
-	public void setResonance(double res) {
-		filter.Q.set(res);
+		return circuit.getPorts();
 	}
 
+	@Override
+	public Module getModule() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

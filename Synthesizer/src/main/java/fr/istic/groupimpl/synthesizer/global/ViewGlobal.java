@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.sun.glass.ui.Pixels;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
@@ -28,7 +26,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
@@ -74,7 +71,7 @@ public class ViewGlobal implements Initializable {
 	/** The ctl. */
 	private ControllerGlobal ctl;
 
-	private Stage primaryStage;
+//	private Stage primaryStage;
 
 	/**
 	 * Adds the cable.
@@ -111,6 +108,17 @@ public class ViewGlobal implements Initializable {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 
 		ctl = ControllerGlobal.getInstance();
+		
+		splitpane.getDividers().forEach((div) -> {
+			div.positionProperty().addListener((a,b,c) -> {
+				
+				hb1.requestLayout();
+				hb2.requestLayout();
+				hb3.requestLayout();
+			});
+		});
+		
+		colorpicker.valueProperty().set(Color.BLUEVIOLET);
 
 		contentpane.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
 			if(event.getButton() == MouseButton.SECONDARY) {
@@ -207,13 +215,14 @@ public class ViewGlobal implements Initializable {
 		//
 		//		});
 
-		createModule("fxml/out.fxml");
+		
 
 		ctl.setView(this);
 	}
 
 	public void init() {
-		primaryStage = (Stage) borderpane.getScene().getWindow();
+		//primaryStage = (Stage) borderpane.getScene().getWindow();
+		createModule("fxml/out.fxml");
 
 	}
 
@@ -230,7 +239,14 @@ public class ViewGlobal implements Initializable {
 			HBox hb = (HBox) splitpane.getItems().get(0);
 			hb.getChildren().add(root);
 			enableDrag(root);
-			view.refreshComponent();
+			splitpane.getDividers().forEach((div) -> {
+				div.positionProperty().addListener((a,b,c) -> {
+					view.refreshComponent();
+				});
+			});
+			borderpane.getScene().widthProperty().addListener((a,b,c) -> {
+				view.refreshComponent();
+			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -280,21 +296,21 @@ public class ViewGlobal implements Initializable {
 		return colorpicker.getValue();
 	}
 	
-	/**
-	 * Sets the all modules transparent.
-	 *
-	 * @param t the new all modules transparent
-	 */
-	private void setAllModulesTransparent(boolean t) {
-		splitpane.getItems().forEach((b) -> {
-			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
-				m.setMouseTransparent(t);
-			});
-		});
-	}
+//	/**
+//	 * Sets the all modules transparent.
+//	 *
+//	 * @param t the new all modules transparent
+//	 */
+//	private void setAllModulesTransparent(boolean t) {
+//		splitpane.getItems().forEach((b) -> {
+//			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
+//				m.setMouseTransparent(t);
+//			});
+//		});
+//	}
 	
 	/**
-	 * Handle add replicator. Plus click. This method adds a new Rep component Replicator
+	 * Handle add replicator. This method adds a new Rep component 
 	 */
 	@FXML
 	public void handleAddRep(){
@@ -303,7 +319,7 @@ public class ViewGlobal implements Initializable {
 
 
 	/**
-	 * Handle add vco. Plus click. This method adds a new VCO component VCO
+	 * Handle add vco. This method adds a new VCO component
 	 */
 	@FXML
 	public void handleAddVco(){
@@ -311,7 +327,7 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-	 * Handle add vca.
+	 * Handle add vca. This method adds a new VCA component
 	 */
 	@FXML
 	public void handleAddVca(){
@@ -319,7 +335,7 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-	 * Handle add out. This method adds a new OUT components
+	 * Handle add out. This method adds a new OUT component
 	 */
 	@FXML
 	public void handleAddOut(){
@@ -327,7 +343,7 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-	 * Handle add scope.
+	 * Handle add scope. This method adds a new Scope component
 	 */
 	@FXML
 	public void handleAddScope(){
@@ -335,13 +351,38 @@ public class ViewGlobal implements Initializable {
 	}
 	
 	/**
-	 * Handle add eg.
+	 * Handle add eg. This method adds a new EG component
 	 */
 	@FXML
 	public void handleAddEg(){
 		createModule("fxml/eg.fxml");		
 	}
 
+	/**
+<<<<<<< Updated upstream
+	 * Handle add vcf lp. This method adds a new VCF lp component
+	 */
+	@FXML
+	public void handleAddVcfLp(){
+		createModule("fxml/vcf-lp.fxml");		
+	}
+
+	/**
+	 * Handle add mixer. This method adds a new Mixer component
+	 */
+	@FXML
+	public void handleAddMixer(){
+		createModule("fxml/mixer.fxml");		
+	}
+	
+	/**
+	 * Handle add whiteNoise. This method adds a new WhiteNoise component
+	 */
+	@FXML
+	public void handleAddWhiteNoise(){
+		createModule("fxml/whiteNoise.fxml");		
+	}
+	
 	/**
 	 * Mouse x property.
 	 *
@@ -421,6 +462,16 @@ public class ViewGlobal implements Initializable {
 	public void handleMenuDevmodeNodeHierarchy_2() {
 		DebugJFXTools debugJFXTools = new DebugJFXTools();
 		debugJFXTools.GenerateNodeHierarchy(borderpane, "synthjfx_2.dmp");
+	}
+	
+	@FXML
+	public void  handleSaveConfiguration(){
+			
+	}
+	
+	@FXML
+	public void handleLoadConfiguration(){
+		
 	}
 
 }

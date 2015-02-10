@@ -12,18 +12,18 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
 public class Oscilloscope extends Region {
-	
-	public static final int SIZE_BUFFER_READ=2048;
-	final int nbDataUsed=1024;
-	
+
+	public static final int SIZE_BUFFER_READ = 2048;
+	final int nbDataUsed = 1024;
+
 	private boolean isRunning = false;
 
 	private final GetBuffer cmdGetBuffer;
 	private long refreshPeriod;
-	
-	public static final long MAX_REFRESH_PERIOD=2000;
-	public static final long MIN_REFRESH_PERIOD=100;
-	
+
+	public static final long MAX_REFRESH_PERIOD = 2000;
+	public static final long MIN_REFRESH_PERIOD = 100;
+
 	private Rectangle rectangle;
 
 	private Thread refreshThread;
@@ -45,7 +45,7 @@ public class Oscilloscope extends Region {
 		rectangle.setFill(Color.BLACK);
 
 		getChildren().add(rectangle);
-		
+
 		rectangle.toFront();
 
 		refreshThread = new Thread(() -> {
@@ -63,21 +63,20 @@ public class Oscilloscope extends Region {
 			}
 		});
 	}
-	
-	
+
 	/**
 	 * Set the refresh period
+	 * 
 	 * @param v
-	 * 	Value of the period in seconds
+	 *            Value of the period in seconds
 	 */
-	public void setRefreshPeriod(double v)
-	{
-		refreshPeriod = (long)(v*1000);
-		
-		if ( refreshPeriod < MIN_REFRESH_PERIOD )
+	public void setRefreshPeriod(double v) {
+		refreshPeriod = (long) (v * 1000);
+
+		if (refreshPeriod < MIN_REFRESH_PERIOD)
 			refreshPeriod = MIN_REFRESH_PERIOD;
-		if ( refreshPeriod > MAX_REFRESH_PERIOD )
-			refreshPeriod = MAX_REFRESH_PERIOD;	
+		if (refreshPeriod > MAX_REFRESH_PERIOD)
+			refreshPeriod = MAX_REFRESH_PERIOD;
 	}
 
 	/**
@@ -90,12 +89,11 @@ public class Oscilloscope extends Region {
 	}
 
 	/**
-	 *  To stop the refresh thread
+	 * To stop the refresh thread
 	 */
 	public void stop() {
 		Log.getInstance().trace("Oscilloscope : stop");
-		if ( isRunning )
-		{
+		if (isRunning) {
 			isRunning = false;
 			refreshThread.interrupt();
 		}
@@ -104,11 +102,11 @@ public class Oscilloscope extends Region {
 	}
 
 	private List<Line> memLine = new ArrayList<>();
-	
+
 	private Line middleLine;
 	private Line hightLine;
 	private Line lowLine;
-	
+
 	private Text middleText;
 	private Text hightText;
 	private Text lowText;
@@ -116,8 +114,15 @@ public class Oscilloscope extends Region {
 	private double coefX;
 	private double coefY;
 	private double baseY;
-	private double baseX;
 
+	private String strVolt(double value) {
+		if (value == Math.floor(value)) {
+			return "" + ((int) value) + " V";
+		} else {
+			return "" + value + " V";
+		}
+
+	}
 
 	private void affBuf() {
 
@@ -145,78 +150,93 @@ public class Oscilloscope extends Region {
 				"moy=" + moy + " valMin=" + valMin + " valMax=" + valMax);
 
 		if (memLine.size() == 0) {
-			middleLine = new Line(0,0,0,0);
+			middleLine = new Line(0, 0, 0, 0);
 			middleLine.setStroke(Color.WHITE);
 			getChildren().add(middleLine);
-			lowLine = new Line(0,0,0,0);
+			lowLine = new Line(0, 0, 0, 0);
 			lowLine.setStroke(Color.ORANGE);
 			getChildren().add(lowLine);
-			hightLine = new Line(0,0,0,0);
+			hightLine = new Line(0, 0, 0, 0);
 			hightLine.setStroke(Color.ORANGE);
 			getChildren().add(hightLine);
-			int borne = nbDataUsed-1;
-			for (int i = 0; i < borne ; i++) {
+			int borne = nbDataUsed - 1;
+			for (int i = 0; i < borne; i++) {
 				Line line;
 				memLine.add(line = new Line(0, 0, 0, 0));
 				line.setStroke(Color.GREEN);
 				getChildren().add(line);
 			}
-			coefX = getWidth()/(nbDataUsed-1);
-			
+			coefX = getWidth() / (nbDataUsed - 1);
+
 			middleText = new Text("");
 			middleText.setFill(Color.WHITE);
 			getChildren().add(middleText);
-			
+
 			lowText = new Text("");
 			lowText.setFill(Color.ORANGE);
 			getChildren().add(lowText);
-			
+
 			hightText = new Text("");
 			hightText.setFill(Color.ORANGE);
 			getChildren().add(hightText);
-			
+
 		}
-		if ( nbPassage < 2 )
-			firstPassage = 0; 
-		
-		double hValue = Math.ceil(Math.max(Math.abs(valMax), Math.abs(valMin)));
-		if ( hValue == 0. )
+		if (nbPassage < 2)
+			firstPassage = 0;
+
+		double hVjuste = Math.max(Math.abs(valMax), Math.abs(valMin));
+		double hValue = Math.ceil(hVjuste);
+
+		if (hValue == 1.) {
+			double[] tabCoef = { 1., 2., 5., 10., 20., 50., 100. };
+			int i;
+			for (i = 1; i < tabCoef.length; i++) {
+				if (Math.ceil(hVjuste * tabCoef[i]) != 1.) {
+					hValue = 1. / tabCoef[i - 1];
+					break;
+				}
+			}
+			if (i == tabCoef.length) {
+				hValue = 1. / tabCoef[i - 1];
+			}
+		}
+
+		if (hValue == 0.)
 			hValue = 1.;
-		coefY = -(getHeight()*0.45)/hValue;
-		baseY = getHeight()/2.+10;
-		baseX = 30;
-		
+		coefY = -(getHeight() * 0.45) / hValue;
+		baseY = getHeight() / 2.;
+
 		middleText.setText("0 V");
 		middleText.setTranslateX(0);
-		middleText.setTranslateY(baseY);		
-		middleLine.setStartX(baseX);
+		middleText.setTranslateY(baseY+4);
+		middleLine.setStartX(middleText.getLayoutBounds().getMaxX());
 		middleLine.setStartY(baseY);
-		middleLine.setEndX(getWidth()+baseX);
+		middleLine.setEndX(getWidth());
 		middleLine.setEndY(baseY);
-		
+
 		hightText.setTranslateX(0);
-		hightText.setTranslateY(baseY+hValue*coefY);
-		hightText.setText(""+((int)hValue)+" V");
-		hightLine.setStartX(baseX);
-		hightLine.setStartY(baseY+hValue*coefY);
-		hightLine.setEndX(getWidth()+baseX);
-		hightLine.setEndY(baseY+hValue*coefY);
-		
+		hightText.setTranslateY(baseY + hValue * coefY+4);
+		hightText.setText(strVolt(hValue));
+		hightLine.setStartX(hightText.getLayoutBounds().getMaxX());
+		hightLine.setStartY(baseY + hValue * coefY);
+		hightLine.setEndX(getWidth());
+		hightLine.setEndY(baseY + hValue * coefY);
+
 		lowText.setTranslateX(0);
-		lowText.setTranslateY(baseY-hValue*coefY);
-		lowText.setText("-"+((int)hValue)+" V");
-		lowLine.setStartX(baseX);
-		lowLine.setStartY(baseY-hValue*coefY);
-		lowLine.setEndX(getWidth()+baseX);
-		lowLine.setEndY(baseY-hValue*coefY);
-			
-		int borne = nbDataUsed-1;
-		for (int ind = firstPassage, i = 0; i < borne ; ind++, i++) {
+		lowText.setTranslateY(baseY - hValue * coefY+4);
+		lowText.setText("-" + strVolt(hValue));
+		lowLine.setStartX(lowText.getLayoutBounds().getMaxX());
+		lowLine.setStartY(baseY - hValue * coefY);
+		lowLine.setEndX(getWidth());
+		lowLine.setEndY(baseY - hValue * coefY);
+
+		int borne = nbDataUsed - 1;
+		for (int ind = firstPassage, i = 0; i < borne; ind++, i++) {
 			Line line = memLine.get(i);
-			line.setStartX( coefX*i+baseX);
-			line.setStartY(baseY + coefY* buf[ind]);
-			line.setEndX(coefX* (i+1)+baseX);
-			line.setEndY(baseY + coefY* buf[ind+1]);
+			line.setStartX(coefX * i);
+			line.setStartY(baseY + coefY * buf[ind]);
+			line.setEndX(coefX * (i + 1));
+			line.setEndY(baseY + coefY * buf[ind + 1]);
 
 		}
 

@@ -28,7 +28,7 @@ public class ModelGlobalTest {
 				
 			}
 		};
-		model = new ModelGlobal(null);
+		model = new ModelGlobal();
 	}
 	
 	@Test

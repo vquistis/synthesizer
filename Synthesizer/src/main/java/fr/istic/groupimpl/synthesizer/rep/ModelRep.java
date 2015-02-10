@@ -8,6 +8,7 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.rep.jsyn.JsynRepCircuit;
 
 public class ModelRep extends ModelComponent{
@@ -24,15 +25,19 @@ public class ModelRep extends ModelComponent{
 		return rep;
 	}
 
-	@Override
-	public UnitInputPort getInputPort(String portName) {
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
 		return rep.getInput();
 	}
 
 	/**
+	 * Get the jsyn output port.
 	 * @param portName The name of one of three output
+	 * @return UnitOutputPort
 	 */
-	@Override
 	public UnitOutputPort getOutputPort(String portName) {
 		if (portName.equals("rep_out1"))
 			return rep.getOutput(1);
@@ -47,5 +52,11 @@ public class ModelRep extends ModelComponent{
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return rep.getPorts();
+	}
+
+	@Override
+	public Module getModule() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

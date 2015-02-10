@@ -9,6 +9,7 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.eg.jsyn.JsynEnvelopeADSR;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 public class ModelEg extends ModelComponent {
 	
@@ -24,13 +25,15 @@ public class ModelEg extends ModelComponent {
 		return adsr;
 	}
 
-	@Override
-	public UnitInputPort getInputPort(String portName) {
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
 		return adsr.input;
 	}
 
-	@Override
-	public UnitOutputPort getOutputPort(String portName) {
+	public UnitOutputPort getOutputPort() {
 		return adsr.output;
 	}
 
@@ -70,5 +73,13 @@ public class ModelEg extends ModelComponent {
 	public void setRelease(double release) {
 		adsr.release.set(release);
 	}
+
+	@Override
+	public Module getModule() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 }
