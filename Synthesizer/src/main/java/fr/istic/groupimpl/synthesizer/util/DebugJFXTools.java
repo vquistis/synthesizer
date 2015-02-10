@@ -12,7 +12,7 @@ public class DebugJFXTools {
 	public void GenerateNodeHierarchy(Node node, String fileName) {
 		FileWriter writer = null;
 		try{
-		     writer = new FileWriter(fileName, true);
+		     writer = new FileWriter(fileName, false);
 			 dump(node, 0, writer);
 		}catch(IOException ex){
 		    ex.printStackTrace();

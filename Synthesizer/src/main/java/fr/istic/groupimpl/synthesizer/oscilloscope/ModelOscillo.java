@@ -8,17 +8,23 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
 
 public class ModelOscillo extends ModelComponent {
 
 	private JsynOscilloCircuit circuit;
 	
-	public ModelOscillo() {
+	public ModelOscillo( int sizeBuffer ) {
 		super();
 
-		circuit = new JsynOscilloCircuit(3,1024);
+		circuit = new JsynOscilloCircuit(3,sizeBuffer);
 	}
 
+	/**
+	 * Méthode pour transmettre les dernière données valides
+	 * @return 
+	 * 		buffer de données
+	 */
 	public double [] getBuffer()
 	{
 		return circuit.getBuffer();

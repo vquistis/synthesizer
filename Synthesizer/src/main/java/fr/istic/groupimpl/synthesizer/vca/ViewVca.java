@@ -7,7 +7,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -36,7 +35,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 	
 	/** The decibel pane. */
 	@FXML
-	private VBox decibelPane;
+	private VBox voltPane;
 
 	/** The am. */
 	@FXML
@@ -50,10 +49,6 @@ public class ViewVca extends ViewComponent implements Initializable {
 	@FXML 
 	private ImageView input;
 
-	/** The db value. */
-	@FXML
-	private Label dbValue;
-
 	/** The vca control. */
 	private ControllerVca vcaControl;
 	
@@ -64,10 +59,10 @@ public class ViewVca extends ViewComponent implements Initializable {
 	private DoubleProperty inputY = new SimpleDoubleProperty(0);
 
 	/** The fm x. */
-	private DoubleProperty fmX = new SimpleDoubleProperty(0);
+	private DoubleProperty amX = new SimpleDoubleProperty(0);
 	
 	/** The fm y. */
-	private DoubleProperty fmY = new SimpleDoubleProperty(0);
+	private DoubleProperty amY = new SimpleDoubleProperty(0);
 	
 	/** The out x. */
 	private DoubleProperty outX = new SimpleDoubleProperty(0);
@@ -83,7 +78,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 
 		PotentiometreFactory pf = PotentiometreFactory.getFactoryInstance();
 
-		// Octave knob
+		// knob
 		pf.setMinValue(-5);
 		pf.setMaxValue(+5);
 		pf.setDiscret(true);
@@ -93,8 +88,8 @@ public class ViewVca extends ViewComponent implements Initializable {
 		pf.setNbSpins(0.88);
 		pf.setRayon(32);
 		pf.setValueDef(0);		
-		Potentiometre octaveKnob = pf.getPotentiometre();
-		decibelPane.getChildren().add(octaveKnob);
+		Potentiometre amplitudeKnod = pf.getPotentiometre();
+		voltPane.getChildren().add(amplitudeKnod);
 
 		// Precision knob
 		pf.setNbSpins(0.80);
@@ -102,16 +97,11 @@ public class ViewVca extends ViewComponent implements Initializable {
 		pf.setMinValue(-1);
 		pf.setMaxValue(1);
 
-		Potentiometre precisionKnob = pf.getPotentiometre();
-
 		// VcaController creation and listeners on knob values
-		vcaControl = new ControllerVca(dbValue);
-		octaveKnob.valueProperty().addListener((p, oldVal, newVal) ->
-		vcaControl.handleViewOctaveChange((double) newVal, precisionKnob.getValue()));
-		precisionKnob.valueProperty().addListener((p, oldVal, newVal) ->
-		vcaControl.handleViewOctaveChange(octaveKnob.getValue(), (double) newVal));
+		vcaControl = new ControllerVca();
 
-		
+		amplitudeKnod.valueProperty().addListener((p, oldVal, newVal) ->
+		vcaControl.handleViewVoltChange((double) newVal));		
 		// Listener close VCA
 		closeVca.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();
@@ -120,22 +110,21 @@ public class ViewVca extends ViewComponent implements Initializable {
 			parent.getChildren().remove(paneVca);
 		});
 		
-		// Creation du controller
-		ControllerOut controller = new ControllerOut();
 		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			controller.handleViewInputClick("vca_input", inputX, inputY);
+			vcaControl.handleViewInputClick("vca_input", inputX, inputY);
 		});
 
-		addPort(am, fmX, fmY);
-		addPort(out, outX, outY);
 		addPort(input, inputX, inputY);
+		addPort(am, amX, amY);
+		addPort(out, outX, outY);
+		
 	}
 
 	/**
 	 * Handles the click on the FM input port.
 	 */
-	public void handleFmClick() {
-		vcaControl.handleViewInputClick("vca_inputFm", fmX, fmY);
+	public void handleamClick() {
+		vcaControl.handleViewInputClick("vca_inputam", amX, amY);
 	}
 
 	/**
@@ -145,12 +134,6 @@ public class ViewVca extends ViewComponent implements Initializable {
 		vcaControl.handleViewOutputClick("vca_output", outX, outY);
 	}
 
-	/**
-	 * Handles the click on the close button.
-	 */
-	public void handleCloseClick() {
-		vcaControl.handleViewClose();
-	}
 
 	/* (non-Javadoc)
 	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()

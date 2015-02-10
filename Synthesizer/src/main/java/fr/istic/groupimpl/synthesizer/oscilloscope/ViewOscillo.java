@@ -7,6 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -22,22 +23,24 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 	@FXML private VBox screenScopePane;
 	@FXML private ImageView in;
 	@FXML private ImageView out;
+	@FXML private Slider refreshPeriodSlider;
 	
 
 	private DoubleProperty inX = new SimpleDoubleProperty(0);
 	private DoubleProperty inY = new SimpleDoubleProperty(0);
 	private DoubleProperty outX = new SimpleDoubleProperty(0);
 	private DoubleProperty outY = new SimpleDoubleProperty(0);
+	
+	private ControllerOscillo controller;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 
-		// Creation du controller
-		ControllerOscillo controller = new ControllerOscillo();
 		
 		OscilloscopeFactory scopeFact = OscilloscopeFactory.getFactoryInstance();
-		scopeFact.setWidth(400);
-		scopeFact.setHeight(200);
+		scopeFact.setWidth(screenScopePane.getPrefWidth());
+		scopeFact.setHeight(screenScopePane.getPrefHeight());
 		scopeFact.setRefreshPeriod(1000);
 		scopeFact.setCmdGetBuffer(()->{return controller.getbufferData();});
 		
@@ -45,6 +48,11 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 		Oscilloscope scope = scopeFact.getOscilloscope();
 		screenScopePane.getChildren().add(scope);
 		
+		// Creation du controller
+		controller = new ControllerOscillo(scope);
+		
+		refreshPeriodSlider.valueProperty().addListener( (obsVal, oldVal, newVal) -> controller.handleRefreshPeriodViewChange(newVal));
+		// Listener mute);
 
 		// Listener in
 		in.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {

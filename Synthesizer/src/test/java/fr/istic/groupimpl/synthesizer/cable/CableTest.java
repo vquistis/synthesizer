@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.paint.Color;
 
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public class CableTest {
 
     @Test
     public void bindInputTest() {
-    	Cable cable = new Cable();
+    	Cable cable = new Cable(Color.FORESTGREEN);
     	
     	// PropertyX de la fin du cable
     	DoubleProperty endX = cable.endXProperty();
@@ -46,7 +47,7 @@ public class CableTest {
     
     @Test
     public void bindOutputTest() {
-    	Cable cable = new Cable();
+    	Cable cable = new Cable(Color.FORESTGREEN);
     	
     	// PropertyX du début du cable
     	DoubleProperty startX = cable.startXProperty();

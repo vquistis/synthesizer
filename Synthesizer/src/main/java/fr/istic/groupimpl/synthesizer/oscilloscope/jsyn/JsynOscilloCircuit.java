@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.oscilloscope;
+package fr.istic.groupimpl.synthesizer.oscilloscope.jsyn;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -107,7 +107,7 @@ public class JsynOscilloCircuit extends UnitGenerator {
         double[] outputs = output.getValues();
 
         for (int i = start; i < limit; i++) {    	
-        	outputs[i] = inputs[i];
+        	outputs[i] = SignalUtil.verifyAmplitude(inputs[i]);
         	storeBuf(outputs[i]);
          }
     }

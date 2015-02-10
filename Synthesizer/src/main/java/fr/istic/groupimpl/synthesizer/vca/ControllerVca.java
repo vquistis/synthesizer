@@ -21,12 +21,8 @@ public class ControllerVca implements IControllerComponent {
 	 *
 	 * @param uiFreqLabel the ui freq label
 	 */
-	public ControllerVca(Label uiFreqLabel) {
+	public ControllerVca() {
 		modelVca = new ModelVca();
-		modelVca.setCommandProperty("freq", () ->
-			uiFreqLabel.setText(modelVca.getValProperty("freq") + " db")
-		);
-		modelVca.setOctave(0.0);
 		ctrlGlob = ControllerGlobal.getInstance();
 		ctrlGlob.registerUnitGenerator(modelVca.getUnitGenerator());
 	}
@@ -57,12 +53,12 @@ public class ControllerVca implements IControllerComponent {
 	}
 
 	/**
-	 * Handle view octave change.
+	 * Handle view volt amplitude change.
 	 *
-	 * @param octave the octave
+	 * @param volt the volt
 	 * @param precision the precision
 	 */
-	public void handleViewOctaveChange(double octave, double precision) {
-		modelVca.setOctave(octave + precision);
+	public void handleViewVoltChange(double volt) {
+		modelVca.setVolt(volt);
 	}
 }

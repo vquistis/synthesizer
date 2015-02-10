@@ -12,32 +12,6 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane fx:id="paneVca" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.vca.ViewVca">
-   <top>
-      <GridPane maxHeight="33.0" minHeight="33.0" prefHeight="33.0" styleClass="titlePane">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <Label alignment="CENTER" text="VCA">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </Label>
-            <ImageView fx:id="closeVca" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@../img/close.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-         </children>
-      </GridPane>
-   </top>
    <bottom>
       <GridPane styleClass="portPane">
          <columnConstraints>
@@ -63,7 +37,7 @@
                <font>
                   <Font size="12.0" />
                </font></Label>
-            <ImageView fx:id="am" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleFmClick" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView fx:id="am" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleamClick" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
                   <Image url="@../img/inoutBleu.png" />
                </image>
@@ -99,6 +73,32 @@
          </children>
       </GridPane>
    </bottom>
+   <top>
+      <GridPane maxHeight="33.0" minHeight="33.0" prefHeight="33.0" styleClass="titlePane">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label alignment="CENTER" text="VCA">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <ImageView fx:id="closeVca" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@../img/close.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </GridPane>
+   </top>
    <center>
       <VBox alignment="TOP_CENTER">
          <children>
@@ -110,9 +110,9 @@
                 <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <VBox fx:id="decibelPane" alignment="CENTER">
+                  <VBox fx:id="voltPane" alignment="CENTER">
                      <children>
-                        <Label text="Décibels">
+                        <Label text="Volt">
                            <VBox.margin>
                               <Insets bottom="28.0" />
                            </VBox.margin>
