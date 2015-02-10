@@ -1,12 +1,5 @@
 package fr.istic.groupimpl.synthesizer.util;
 
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import com.jsyn.engine.SynthesisEngine;
-
 import junit.framework.TestCase;
 
 public class TestOscilloscope extends TestCase {

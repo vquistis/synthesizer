@@ -1,10 +1,12 @@
-package fr.istic.groupimpl.synthesizer.vco.jsyn;
+package fr.istic.groupimpl.synthesizer.util.jsyn;
 
 import junit.framework.TestCase;
 
 import com.jsyn.engine.SynthesisEngine;
 
-public class VCFrequencyTest extends TestCase {
+import fr.istic.groupimpl.synthesizer.util.jsyn.JsynFrequencyModulation;
+
+public class JsynFrequencyModulationTest extends TestCase {
     SynthesisEngine synthesisEngine;
 
     @Override
@@ -25,11 +27,11 @@ public class VCFrequencyTest extends TestCase {
         double fmTested = 0.0;
         double OctaveTested = 0.0;
         
-        VCFrequency oVCFrequency = new VCFrequency();
+        JsynFrequencyModulation oVCFrequency = new JsynFrequencyModulation();
         synthesisEngine.add(oVCFrequency);
           	
         synthesisEngine.start();
-        double startTime = synthesisEngine.getCurrentTime();
+//        double startTime = synthesisEngine.getCurrentTime();
         // pull from final UnitGenerator
         oVCFrequency.start();
  
@@ -62,11 +64,11 @@ public class VCFrequencyTest extends TestCase {
         double fmTested = 0.0;
         double OctaveTested = 0.0;
         
-        VCFrequency oVCFrequency = new VCFrequency();
+        JsynFrequencyModulation oVCFrequency = new JsynFrequencyModulation();
         synthesisEngine.add(oVCFrequency);
           	
         synthesisEngine.start();
-        double startTime = synthesisEngine.getCurrentTime();
+//        double startTime = synthesisEngine.getCurrentTime();
         // pull from final UnitGenerator
         oVCFrequency.start();
         
@@ -127,11 +129,11 @@ public class VCFrequencyTest extends TestCase {
         double fmTested = 0.0;
         double OctaveTested = 0.0;
         
-        VCFrequency oVCFrequency = new VCFrequency();
+        JsynFrequencyModulation oVCFrequency = new JsynFrequencyModulation();
         synthesisEngine.add(oVCFrequency);
           	
         synthesisEngine.start();
-        double startTime = synthesisEngine.getCurrentTime();
+//        double startTime = synthesisEngine.getCurrentTime();
         // pull from final UnitGenerator
         oVCFrequency.start();
         

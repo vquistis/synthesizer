@@ -4,11 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableObjectValue;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
@@ -47,7 +43,7 @@ public class ControllerGlobal {
 	private Map<UnitPort,Cable> cables = new HashMap<UnitPort,Cable>();
 
 	private ControllerGlobal() {
-		model = new ModelGlobal(this);
+		model = new ModelGlobal();
 	}
 
 	/**

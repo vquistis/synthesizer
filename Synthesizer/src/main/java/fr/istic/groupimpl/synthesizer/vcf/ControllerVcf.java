@@ -1,47 +1,31 @@
-package fr.istic.groupimpl.synthesizer.eg;
+package fr.istic.groupimpl.synthesizer.vcf;
 
 import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
-public class ControllerEg implements IControllerComponent {
+public class ControllerVcf implements IControllerComponent {
 
-	private ModelEg model = new ModelEg();
+	private ModelVcf model = new ModelVcf();
 	
-	public ControllerEg() {
+	public ControllerVcf() {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
 	
 	/**
-	 * Change listener attack.
-	 * @param newVal - new value of attack in sec
+	 * Change listener frequency cutoff.
+	 * @param newVal - new frequency value
 	 */
-	public void handleViewAttackChange(Number newVal) {
-		model.setAttack((double) newVal);
+	public void handleViewCutoffChange(Number newVal) {
+		model.setCutFrequency((double) newVal);
 	}
 	
 	/**
-	 * Change listener decay.
-	 * @param newVal - new value of decay in sec
+	 * Change listener resonance.
+	 * @param newVal - new resonance value
 	 */
-	public void handleViewDecayChange(Number newVal) {
-		model.setDecay((double) newVal);
-	}
-	
-	/**
-	 * Change listener sustain.
-	 * @param newVal - new value of sustain in volt
-	 */
-	public void handleViewSustainChange(Number newVal) {
-		model.setSustain((double) newVal);
-	}
-	
-	/**
-	 * Change listener release.
-	 * @param newVal - new value of release in sec
-	 */
-	public void handleViewReleaseChange(Number newVal) {
-		model.setRelease((double) newVal);
+	public void handleViewResonanceChange(Number newVal) {
+		model.setResonance((double) newVal);
 	}
 
 	/**
@@ -51,6 +35,15 @@ public class ControllerEg implements IControllerComponent {
 	 */
 	public void handleViewInputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
 		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(), xCoord, yCoord);
+	}
+
+	/**
+	 * Click listener for input fm port
+	 * @param xCoord Coordinate of the clicked input port (x axis)
+	 * @param yCoord Coordinate of the clicked input port (y axis)
+	 */
+	public void handleViewFmClick(DoubleProperty xCoord, DoubleProperty yCoord) {
+		ControllerGlobal.getInstance().handleInputClicked(model.getFmPort(), xCoord, yCoord);
 	}
 
 	/**

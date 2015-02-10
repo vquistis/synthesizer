@@ -2,9 +2,7 @@ package fr.istic.groupimpl.synthesizer.rep.jsyn;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
-import com.jsyn.unitgen.Circuit;
 import com.jsyn.unitgen.UnitGenerator;
-import com.jsyn.unitgen.UnitOscillator;
 
 /**
  * Replicator UnitGenerator

@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.eg;
+package fr.istic.groupimpl.synthesizer.vcf;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,68 +19,62 @@ import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
-public class ViewEg extends ViewComponent implements Initializable {
+public class ViewVcf extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;
 	@FXML private ImageView closeModuleFx;
-	@FXML private VBox knobAttackPane;
-	@FXML private VBox knobDecayPane;
-	@FXML private VBox knobSustainPane;
-	@FXML private VBox knobReleasePane;
-	@FXML private TextField valueAttackFx;
-	@FXML private TextField valueDecayFx;
-	@FXML private TextField valueSustainFx;
-	@FXML private TextField valueReleaseFx;
+	@FXML private VBox knobCutoffPane;
+	@FXML private VBox knobResonancePane;
+	@FXML private TextField valueCutoffFx;
+	@FXML private TextField valueResonanceFx;
 	@FXML private ImageView input;
+	@FXML private ImageView fm;
 	@FXML private ImageView output;
 
 	private DoubleProperty inputX = new SimpleDoubleProperty(0);
 	private DoubleProperty inputY = new SimpleDoubleProperty(0);
+	private DoubleProperty fmX = new SimpleDoubleProperty(0);
+	private DoubleProperty fmY = new SimpleDoubleProperty(0);
 	private DoubleProperty outputX = new SimpleDoubleProperty(0);
 	private DoubleProperty outputY = new SimpleDoubleProperty(0);
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		addPort(input, inputX, inputY);
+		addPort(fm, fmX, fmY);
 		addPort(output, outputX, outputY);
 		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
-		knobFact.setMinValue(0);
-		knobFact.setMaxValue(1);
-		knobFact.setValueDef(0);
 		knobFact.setNbSpins(1);
 		knobFact.setRayon(32);
 		
-		// Add knob to view
-		Potentiometre knobAttack = knobFact.getPotentiometre();
-		knobAttackPane.getChildren().add(1,knobAttack);
-		Potentiometre knobDecay = knobFact.getPotentiometre();
-		knobDecayPane.getChildren().add(1,knobDecay);
-		Potentiometre knobRelease = knobFact.getPotentiometre();
-		knobReleasePane.getChildren().add(1,knobRelease);
-		knobFact.setMinValue(-60);
-		knobFact.setMaxValue(0);
-		Potentiometre knobSustain = knobFact.getPotentiometre();
-		knobSustainPane.getChildren().add(1,knobSustain);
+		knobFact.setMinValue(10);
+		knobFact.setMaxValue(16384);
+		knobFact.setValueDef(1024);
+		Potentiometre knobCutoff = knobFact.getPotentiometre();
+		knobCutoffPane.getChildren().add(1,knobCutoff);
+		
+		knobFact.setMinValue(0);
+		knobFact.setMaxValue(4);
+		knobFact.setValueDef(1);
+		Potentiometre knobResonance = knobFact.getPotentiometre();
+		knobResonancePane.getChildren().add(1,knobResonance);
 		
 		// Bind knob value and text field value
 		StringConverter<Number> converter = new DoubleStringConverter();
-		Bindings.bindBidirectional(valueAttackFx.textProperty(), knobAttack.valueProperty(), converter);
-		Bindings.bindBidirectional(valueDecayFx.textProperty(), knobDecay.valueProperty(), converter);
-		Bindings.bindBidirectional(valueSustainFx.textProperty(), knobSustain.valueProperty(), converter);
-		Bindings.bindBidirectional(valueReleaseFx.textProperty(), knobRelease.valueProperty(), converter);
+		Bindings.bindBidirectional(valueCutoffFx.textProperty(), knobCutoff.valueProperty(), converter);
+		Bindings.bindBidirectional(valueResonanceFx.textProperty(), knobResonance.valueProperty(), converter);
 
 		// Creation du controller
-		ControllerEg controller = new ControllerEg();
+		ControllerVcf controller = new ControllerVcf();
 
 		// Listener parameters
-		knobAttack.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewAttackChange(newVal));
-		knobDecay.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewDecayChange(newVal));
-		knobSustain.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewSustainChange(newVal));
-		knobRelease.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewReleaseChange(newVal));
+		knobCutoff.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewCutoffChange(newVal));
+		knobResonance.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewResonanceChange(newVal));
 		
 		// Listener input & output
 		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(inputX, inputY));
+		fm.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewFmClick(fmX, fmY));
 		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));
 
 		// Listener close module

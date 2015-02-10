@@ -22,9 +22,9 @@ public class VCOCircuitTest extends TestCase {
 
     public void testVCOCircuit() throws InterruptedException {
     	LineOut lineOut = null;
-        double tolerance = 0.002;
+//        double tolerance = 0.002;
         boolean activelineOut = true;
-    	double time;
+//    	double time;
     	
         VCOCircuit oVCOCircuit = new VCOCircuit();
         synthesisEngine.add(oVCOCircuit);

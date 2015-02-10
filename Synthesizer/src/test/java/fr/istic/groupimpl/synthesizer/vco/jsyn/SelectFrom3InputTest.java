@@ -29,7 +29,7 @@ public class SelectFrom3InputTest extends TestCase {
         select.getInput3().set(3.0);
        
         synthesisEngine.start();
-        double startTime = synthesisEngine.getCurrentTime();
+//        double startTime = synthesisEngine.getCurrentTime();
         // pull from final UnitGenerator
         select.start();
         

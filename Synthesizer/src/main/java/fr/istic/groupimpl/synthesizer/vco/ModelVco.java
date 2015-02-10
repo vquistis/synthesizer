@@ -55,20 +55,20 @@ public class ModelVco extends ModelComponent {
 		}
 	}
 
-	@Override
-	public UnitInputPort getInputPort(String portName) {
-		if (portName.equals("vco_inputFm")) {
-			return vcoCirc.getInputFM();
-		}
-		return null;
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
+		return vcoCirc.getInputFM();
 	}
 
-	@Override
-	public UnitOutputPort getOutputPort(String portName) {
-		if (portName.equals("vco_output")) {
-			return vcoCirc.getOutput();
-		}
-		return null;
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
+		return vcoCirc.getOutput();
 	}
 
 	@Override
