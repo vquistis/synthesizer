@@ -50,13 +50,13 @@ public class ViewVcf extends ViewComponent implements Initializable {
 		knobFact.setRayon(32);
 		
 		knobFact.setMinValue(10);
-		knobFact.setMaxValue(16384);
-		knobFact.setValueDef(1024);
+		knobFact.setMaxValue(22000);
+		knobFact.setValueDef(10);
 		Potentiometre knobCutoff = knobFact.getPotentiometre();
 		knobCutoffPane.getChildren().add(1,knobCutoff);
 		
-		knobFact.setMinValue(0);
-		knobFact.setMaxValue(4);
+		knobFact.setMinValue(0.2);
+		knobFact.setMaxValue(10);
 		knobFact.setValueDef(1);
 		Potentiometre knobResonance = knobFact.getPotentiometre();
 		knobResonancePane.getChildren().add(1,knobResonance);

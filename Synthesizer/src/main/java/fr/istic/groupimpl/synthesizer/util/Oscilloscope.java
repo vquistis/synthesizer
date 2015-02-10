@@ -114,7 +114,6 @@ public class Oscilloscope extends Region {
 	private double coefX;
 	private double coefY;
 	private double baseY;
-	private double baseX;
 
 	private String strVolt(double value) {
 		if (value == Math.floor(value)) {
@@ -205,39 +204,38 @@ public class Oscilloscope extends Region {
 		if (hValue == 0.)
 			hValue = 1.;
 		coefY = -(getHeight() * 0.45) / hValue;
-		baseY = getHeight() / 2. + 10;
-		baseX = 30;
+		baseY = getHeight() / 2.;
 
 		middleText.setText("0 V");
 		middleText.setTranslateX(0);
-		middleText.setTranslateY(baseY);
-		middleLine.setStartX(baseX);
+		middleText.setTranslateY(baseY+4);
+		middleLine.setStartX(middleText.getLayoutBounds().getMaxX());
 		middleLine.setStartY(baseY);
-		middleLine.setEndX(getWidth() + baseX);
+		middleLine.setEndX(getWidth());
 		middleLine.setEndY(baseY);
 
 		hightText.setTranslateX(0);
-		hightText.setTranslateY(baseY + hValue * coefY);
+		hightText.setTranslateY(baseY + hValue * coefY+4);
 		hightText.setText(strVolt(hValue));
-		hightLine.setStartX(baseX);
+		hightLine.setStartX(hightText.getLayoutBounds().getMaxX());
 		hightLine.setStartY(baseY + hValue * coefY);
-		hightLine.setEndX(getWidth() + baseX);
+		hightLine.setEndX(getWidth());
 		hightLine.setEndY(baseY + hValue * coefY);
 
 		lowText.setTranslateX(0);
-		lowText.setTranslateY(baseY - hValue * coefY);
+		lowText.setTranslateY(baseY - hValue * coefY+4);
 		lowText.setText("-" + strVolt(hValue));
-		lowLine.setStartX(baseX);
+		lowLine.setStartX(lowText.getLayoutBounds().getMaxX());
 		lowLine.setStartY(baseY - hValue * coefY);
-		lowLine.setEndX(getWidth() + baseX);
+		lowLine.setEndX(getWidth());
 		lowLine.setEndY(baseY - hValue * coefY);
 
 		int borne = nbDataUsed - 1;
 		for (int ind = firstPassage, i = 0; i < borne; ind++, i++) {
 			Line line = memLine.get(i);
-			line.setStartX(coefX * i + baseX);
+			line.setStartX(coefX * i);
 			line.setStartY(baseY + coefY * buf[ind]);
-			line.setEndX(coefX * (i + 1) + baseX);
+			line.setEndX(coefX * (i + 1));
 			line.setEndY(baseY + coefY * buf[ind + 1]);
 
 		}
