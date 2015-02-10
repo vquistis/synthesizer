@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.sun.glass.ui.Pixels;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
@@ -111,6 +109,8 @@ public class ViewGlobal implements Initializable {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 
 		ctl = ControllerGlobal.getInstance();
+		
+		colorpicker.valueProperty().set(Color.BLUEVIOLET);
 
 		contentpane.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
 			if(event.getButton() == MouseButton.SECONDARY) {
