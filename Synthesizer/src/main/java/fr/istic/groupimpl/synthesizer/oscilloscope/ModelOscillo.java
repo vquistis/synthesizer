@@ -8,6 +8,7 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
 
 public class ModelOscillo extends ModelComponent {
@@ -57,7 +58,7 @@ public class ModelOscillo extends ModelComponent {
 	}
 
 	@Override
-	public String saveModule() {
+	public Module getModule() {
 		// TODO Auto-generated method stub
 		return null;
 	}

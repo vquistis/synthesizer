@@ -8,6 +8,7 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.vco.jsyn.VCOCircuit;
 
@@ -83,8 +84,7 @@ public class ModelVco extends ModelComponent {
 	}
 
 	@Override
-	public String saveModule() {
-		// TODO Auto-generated method stub
+	public Module getModule() {
 		return null;
 	}
 		

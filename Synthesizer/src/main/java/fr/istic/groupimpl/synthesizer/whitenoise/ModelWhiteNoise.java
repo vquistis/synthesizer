@@ -8,6 +8,7 @@ import com.jsyn.unitgen.UnitGenerator;
 import com.jsyn.unitgen.WhiteNoise;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 /**
  * 
@@ -47,7 +48,7 @@ public class ModelWhiteNoise extends ModelComponent {
 	}
 
 	@Override
-	public String saveModule() {
+	public Module getModule() {
 		// TODO Auto-generated method stub
 		return null;
 	}
