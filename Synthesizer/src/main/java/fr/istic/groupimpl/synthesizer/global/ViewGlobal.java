@@ -310,7 +310,7 @@ public class ViewGlobal implements Initializable {
 //	}
 	
 	/**
-	 * Handle add replicator. Plus click. This method adds a new Rep component Replicator
+	 * Handle add replicator. This method adds a new Rep component 
 	 */
 	@FXML
 	public void handleAddRep(){
@@ -319,7 +319,7 @@ public class ViewGlobal implements Initializable {
 
 
 	/**
-	 * Handle add vco. Plus click. This method adds a new VCO component VCO
+	 * Handle add vco. This method adds a new VCO component
 	 */
 	@FXML
 	public void handleAddVco(){
@@ -327,7 +327,7 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-	 * Handle add vca.
+	 * Handle add vca. This method adds a new VCA component
 	 */
 	@FXML
 	public void handleAddVca(){
@@ -335,7 +335,7 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-	 * Handle add out. This method adds a new OUT components
+	 * Handle add out. This method adds a new OUT component
 	 */
 	@FXML
 	public void handleAddOut(){
@@ -343,7 +343,7 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-	 * Handle add scope.
+	 * Handle add scope. This method adds a new Scope component
 	 */
 	@FXML
 	public void handleAddScope(){
@@ -351,7 +351,7 @@ public class ViewGlobal implements Initializable {
 	}
 	
 	/**
-	 * Handle add eg.
+	 * Handle add eg. This method adds a new EG component
 	 */
 	@FXML
 	public void handleAddEg(){
@@ -360,7 +360,7 @@ public class ViewGlobal implements Initializable {
 
 	/**
 <<<<<<< Updated upstream
-	 * Handle add vcf lp.
+	 * Handle add vcf lp. This method adds a new VCF lp component
 	 */
 	@FXML
 	public void handleAddVcfLp(){
@@ -368,11 +368,19 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-	 * Handle add out. This method adds a new Mixer components
+	 * Handle add mixer. This method adds a new Mixer component
 	 */
 	@FXML
 	public void handleAddMixer(){
 		createModule("fxml/mixer.fxml");		
+	}
+	
+	/**
+	 * Handle add whiteNoise. This method adds a new WhiteNoise component
+	 */
+	@FXML
+	public void handleAddWhiteNoise(){
+		createModule("fxml/whiteNoise.fxml");		
 	}
 	
 	/**

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.whitenoise.ViewWhiteNoise">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="62.0" prefWidth="151.0" styleClass="portPane">
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
+         <children>
+            <VBox alignment="CENTER">
+               <children>
+                  <ImageView fx:id="output" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
+                     <image>
+                        <Image url="@../img/inoutRouge.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <GridPane alignment="CENTER" styleClass="titlePane">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label fx:id="titleModuleFx" text="BRUIT BLANC">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <ImageView fx:id="closeModuleFx" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@../img/close.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </GridPane>
+   </top>
+</BorderPane>
