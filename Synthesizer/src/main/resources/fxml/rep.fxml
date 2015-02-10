@@ -52,7 +52,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="out2" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="3">
+            <ImageView fx:id="out1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleOutputClick1" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="3">
                <image>
                   <Image url="@../img/inoutVert.png" />
                </image>
@@ -60,7 +60,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="out3" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <ImageView fx:id="out2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleOutputClick2" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <image>
                   <Image url="@../img/inoutBleu.png" />
                </image>
@@ -68,7 +68,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="out1" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <ImageView fx:id="out3" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleOutputClick3" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <image>
                   <Image url="@../img/inoutRouge.png" />
                </image>
