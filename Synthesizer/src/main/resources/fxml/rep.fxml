@@ -28,7 +28,7 @@
          <children>
             <ImageView fx:id="out1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleOutputClick1" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="3">
                <image>
-                  <Image url="@../img/inoutVert.png" />
+                  <Image url="@../img/inoutRouge.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -36,7 +36,7 @@
             </ImageView>
             <ImageView fx:id="out2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleOutputClick2" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../img/inoutBleu.png" />
+                  <Image url="@../img/inoutRouge.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
