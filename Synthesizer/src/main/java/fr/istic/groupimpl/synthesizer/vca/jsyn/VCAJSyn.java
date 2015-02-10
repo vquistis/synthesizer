@@ -74,7 +74,7 @@ public class VCAJSyn extends UnitGenerator {
 	}
 
 	/**
-	 * Constructor.
+	 * create a new vca jsyn.
 	 */
     public VCAJSyn() {
     	addPort(input = new UnitInputPort("vca_input"));
@@ -83,7 +83,8 @@ public class VCAJSyn extends UnitGenerator {
         addPort(output = new UnitOutputPort("vca_output"));
     }
 
-    /* (non-Javadoc)
+    /** 
+     * generate signal
      * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
      */
     @Override
@@ -110,11 +111,11 @@ public class VCAJSyn extends UnitGenerator {
     }
      
     /**
-     * Converter.
+     * Converter decibel to volt.
      *
      * @param decibel the decibel
      * @param in the in
-     * @return   Frequency
+     * @return   Frequency to volt
      */
     public double converter(double decibel, double in) {
     	return in*Math.pow(10, decibel/20);
