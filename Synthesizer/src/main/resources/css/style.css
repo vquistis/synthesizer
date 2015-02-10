@@ -51,6 +51,10 @@
 	-fx-border-style: solid;
 }
 
+.choiceBaseFreq {
+    -fx-font-size : 11px;
+}
+
 .contentPane {
 	-fx-background-color: #f4f4f4;
 }

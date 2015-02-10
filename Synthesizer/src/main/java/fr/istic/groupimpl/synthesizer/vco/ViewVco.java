@@ -7,6 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -30,6 +31,8 @@ public class ViewVco extends ViewComponent implements Initializable {
 
 	@FXML
 	private BorderPane paneVco;
+	@FXML
+	private ChoiceBox<String> choiceBaseFreq;
 	@FXML
 	private ImageView closeVco;
 	@FXML
@@ -63,8 +66,8 @@ public class ViewVco extends ViewComponent implements Initializable {
 		PotentiometreFactory pf = PotentiometreFactory.getFactoryInstance();
 
 		// Octave knob
-		pf.setMinValue(-8);
-		pf.setMaxValue(8);
+		pf.setMinValue(0);
+		pf.setMaxValue(9);
 		pf.setDiscret(true);
 		pf.setShowTickMarks(true);
 		pf.setShowTickLabels(true);
@@ -101,6 +104,23 @@ public class ViewVco extends ViewComponent implements Initializable {
 			vcoControl.handleViewClose();
 			Pane parent = (Pane) paneVco.getParent();
 			parent.getChildren().remove(paneVco);
+		});
+		
+		// Choice base freq config + listener
+		choiceBaseFreq.getItems().addAll("1 Hz", "32 Hz", "1 KHz");
+		choiceBaseFreq.getSelectionModel().selectFirst();
+		choiceBaseFreq.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+				switch(newVal) {
+					case "1 Hz":
+						vcoControl.handleViewBaseFreqChange(1.0);
+						break;
+					case "32 Hz":
+						vcoControl.handleViewBaseFreqChange(32.0);
+						break;
+					case "1 KHz":
+						vcoControl.handleViewBaseFreqChange(1000.0);
+						break;
+				}
 		});
 
 		addPort(fm, fmX, fmY);

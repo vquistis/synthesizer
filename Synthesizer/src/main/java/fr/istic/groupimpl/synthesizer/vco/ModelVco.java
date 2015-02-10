@@ -15,7 +15,7 @@ import fr.istic.groupimpl.synthesizer.vco.jsyn.VCOCircuit;
 public class ModelVco extends ModelComponent {
 	
 	private VCOCircuit vcoCirc;
-	private int f0 = 32;
+	private double f0 = 1.0;
 		
 	public ModelVco() {
 		super();		
@@ -83,4 +83,14 @@ public class ModelVco extends ModelComponent {
 		this.setValProperty("freq", dsc.toString(frequency));
 	}
 	
+	/**
+	 * @param value The frequency to set (in Hz)
+	 * Sets the base frequency of the VCO
+	 */
+	public void setBaseFreq(double value) {
+		f0 = value;
+		vcoCirc.getInputF0().set(value);
+		computeFrequency(vcoCirc.getInputOctave().get());
+	}
+		
 }
