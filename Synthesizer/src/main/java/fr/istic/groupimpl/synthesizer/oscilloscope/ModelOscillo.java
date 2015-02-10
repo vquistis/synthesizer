@@ -56,9 +56,4 @@ public class ModelOscillo extends ModelComponent {
 		return circuit.getPorts();
 	}
 
-	@Override
-	public String saveModule() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

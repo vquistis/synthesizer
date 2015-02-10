@@ -72,11 +72,4 @@ public class ModelEg extends ModelComponent {
 	public void setRelease(double release) {
 		adsr.release.set(release);
 	}
-
-	@Override
-	public String saveModule() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

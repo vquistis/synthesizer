@@ -32,20 +32,15 @@
       </HBox>
    </bottom>
    <top>
-      <GridPane alignment="CENTER" styleClass="titlePane">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <GridPane alignment="CENTER" styleClass="titlePane" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Label fx:id="titleModuleFx" text="OUT">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </Label>
             <ImageView fx:id="closeModuleFx" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
                   <Image url="@../img/close.png" />
@@ -54,6 +49,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <Label text="OUT">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
    </top>

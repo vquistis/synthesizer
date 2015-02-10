@@ -1,12 +1,14 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import java.util.Collection;
+import java.util.Map;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.out.jsyn.JsynOutCircuit;
 
 public class ModelOut extends ModelComponent {
@@ -46,9 +48,4 @@ public class ModelOut extends ModelComponent {
 		return out.getPorts();
 	}
 
-	@Override
-	public String saveModule() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

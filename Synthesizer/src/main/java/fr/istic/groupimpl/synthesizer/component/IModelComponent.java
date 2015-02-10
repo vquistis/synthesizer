@@ -6,6 +6,7 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.command.ICommand;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 public interface IModelComponent {
 	/**
@@ -42,6 +43,4 @@ public interface IModelComponent {
 	 * @return Collection of port
 	 */
 	public Collection<UnitPort> getAllPorts();
-	
-	public String saveModule();
 }
