@@ -4,7 +4,6 @@ import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.UnitGenerator;
 
-import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
@@ -18,36 +17,47 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  * -1 Volt = -12 dB
  *    
  * <pre>
- * output = input*Math.pow(4, am-5 + a0);
+ * decibel = (inputam + inputa0-5) * SignalUtil.COEF_VOLT * 12 );
+ * output = input*Math.pow(10, decibel/20);
  * <pre>
  * 
  * @author Team GroupImpl
  */
 public class VCAJSyn extends UnitGenerator {
-	
+
+	/** The input. */
 	private UnitInputPort input;	 	//Volt
+
+	/** The inputam. */
 	private UnitInputPort inputam; 		//Volt
+
+	/** The inputa0. */
 	private UnitInputPort inputa0; 		//Volt
+
+	/** The output. */
 	private UnitOutputPort output; 		//Volt
-	
+
 	/**
-     * Signal input
-     * @return input
-     */
-    public UnitInputPort getInput() {
+	 * Signal input.
+	 *
+	 * @return input
+	 */
+	public UnitInputPort getInput() {
 		return input;
 	}
-    
-    /**
-     * Modulation amplitude input
-     * @return inputam
-     */
-    public UnitInputPort getInputam() {
+
+	/**
+	 * Modulation amplitude input.
+	 *
+	 * @return inputam
+	 */
+	public UnitInputPort getInputam() {
 		return inputam;
 	}
 
 	/**
-	 * Modulation amplitude with potentiometer
+	 * Modulation amplitude with potentiometer.
+	 *
 	 * @return inputa0
 	 */
 	public UnitInputPort getInputa0() {
@@ -55,7 +65,8 @@ public class VCAJSyn extends UnitGenerator {
 	}
 
 	/**
-	 * Signal Output
+	 * Signal Output.
+	 *
 	 * @return output
 	 */
 	public UnitOutputPort getOutput() {
@@ -63,40 +74,48 @@ public class VCAJSyn extends UnitGenerator {
 	}
 
 	/**
-	 * Constructor
+	 * create a new vca jsyn.
 	 */
-    public VCAJSyn() {
-    	addPort(input = new UnitInputPort("Input"));
-        addPort(inputam = new UnitInputPort("Inputam"));
-        addPort(inputa0 = new UnitInputPort("Inputa0"));
-        addPort(output = new UnitOutputPort("Output"));
-    }
+	public VCAJSyn() {
+		addPort(input = new UnitInputPort("vca_input"));
+		addPort(inputam = new UnitInputPort("vca_inputam"));
+		addPort(inputa0 = new UnitInputPort("vca_inputa0"));
+		addPort(output = new UnitOutputPort("vca_output"));
+	}
 
-    @Override
-    public void generate(int start, int limit) {
-    	double[] inputs = input.getValues();
-        double[] inputams = inputam.getValues();
-        double[] inputa0s = inputa0.getValues();
-        double[] outputs = output.getValues();
+	/** 
+	 * generate signal
+	 * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+	 */
+	@Override
+	public void generate(int start, int limit) {
+		double[] inputs = input.getValues();
+		double[] inputams = inputam.getValues();
+		double[] inputa0s = inputa0.getValues();
+		double[] outputs = output.getValues();
 
-        for (int i = start; i < limit; i++) {
-        	double decibel = (SignalUtil.verifyAmplitude(inputams[i]) * 5 * 12 ) + SignalUtil.verifyAmplitude(inputa0s[i]);
-        	outputs[i]=converter(decibel, inputs[i]); 
-        	Log.getInstance().info(inputs[i]+" --> "+inputams[i]+" -->  "+outputs[i]);
-        }
-    }
-     
-    /**
-     * @param fm
-     *   Modulation Frequency 
-     * @param f0
-     *   Default frequency
-     * @param octave
-     *   octave value
-     * @return
-     *   Frequency
-     */
-    public double converter(double decibel, double in) {
-    	return in*Math.pow(10, decibel/20);
-    }
+		for (int i = start; i < limit; i++) {
+			double am = SignalUtil.verifyAmplitude(inputams[i])*SignalUtil.COEF_VOLT;
+			if (am >0)
+			{
+				double decibel = ((am+SignalUtil.verifyAmplitude(inputa0s[i])-SignalUtil.COEF_VOLT) * 12 );
+				outputs[i]=converter(decibel, inputs[i]);
+			}
+			else
+			{
+				outputs[i] = 0;
+			}
+		}
+	}
+
+	/**
+	 * Converter decibel to volt.
+	 *
+	 * @param decibel the decibel
+	 * @param in the in
+	 * @return   Frequency to volt
+	 */
+	public double converter(double decibel, double in) {
+		return in*Math.pow(10, decibel/20);
+	}
 }

@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.vca;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.scene.control.Label;
 import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
@@ -21,11 +20,8 @@ public class ControllerVca implements IControllerComponent {
 	 *
 	 * @param uiFreqLabel the ui freq label
 	 */
-	public ControllerVca(Label uiFreqLabel) {
+	public ControllerVca() {
 		modelVca = new ModelVca();
-		modelVca.setCommandProperty("freq", () ->
-			uiFreqLabel.setText(modelVca.getValProperty("freq") + " db")
-		);
 		ctrlGlob = ControllerGlobal.getInstance();
 		ctrlGlob.registerUnitGenerator(modelVca.getUnitGenerator());
 	}
@@ -56,7 +52,7 @@ public class ControllerVca implements IControllerComponent {
 	}
 
 	/**
-	 * Handle view octave change.
+	 * Handle view volt amplitude change.
 	 *
 	 * @param volt the volt
 	 * @param precision the precision

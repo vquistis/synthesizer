@@ -3,8 +3,16 @@ package fr.istic.groupimpl.synthesizer.rep.jsyn;
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.Circuit;
+import com.jsyn.unitgen.UnitGenerator;
+import com.jsyn.unitgen.UnitOscillator;
 
-public class JsynRepCircuit extends Circuit {
+/**
+ * Replicator UnitGenerator
+ * 
+ * @author Team GroupImpl
+ *
+ */
+public class JsynRepCircuit extends UnitGenerator {
 	
 	private UnitInputPort input; 	
 	private UnitOutputPort output1, output2, output3; 
@@ -42,5 +50,21 @@ public class JsynRepCircuit extends Circuit {
         addPort(output1 = new UnitOutputPort("rep_out1"));
         addPort(output2 = new UnitOutputPort("rep_out2"));
         addPort(output3 = new UnitOutputPort("rep_out3"));
+        
 	}
+	
+	@Override
+    public void generate(int start, int limit) {
+        double[] in = input.getValues();
+        double[] out1 = output1.getValues();
+        double[] out2 = output2.getValues();
+        double[] out3 = output3.getValues();
+
+        
+        for (int i = start; i < limit; i++) {
+        	out1[i] = in[i];
+        	out2[i] = in[i];
+        	out3[i] = in[i];
+        }
+    }
 }
