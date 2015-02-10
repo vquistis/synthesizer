@@ -455,5 +455,15 @@ public class ViewGlobal implements Initializable {
 		DebugJFXTools debugJFXTools = new DebugJFXTools();
 		debugJFXTools.GenerateNodeHierarchy(borderpane, "synthjfx_2.dmp");
 	}
+	
+	@FXML
+	public void  handleSaveConfiguration(){
+			
+	}
+	
+	@FXML
+	public void handleLoadConfiguration(){
+		
+	}
 
 }

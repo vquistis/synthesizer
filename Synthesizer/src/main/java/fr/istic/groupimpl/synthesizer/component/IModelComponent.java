@@ -42,4 +42,6 @@ public interface IModelComponent {
 	 * @return Collection of port
 	 */
 	public Collection<UnitPort> getAllPorts();
+	
+	public String saveModule();
 }

@@ -92,4 +92,10 @@ public class ModelVca extends ModelComponent {
 		vcajSyn.getInputa0().set(volt);
 	}
 
+	@Override
+	public String saveModule() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

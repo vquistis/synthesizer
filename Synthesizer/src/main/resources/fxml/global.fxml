@@ -15,6 +15,10 @@
 				<ColorPicker fx:id="colorpicker" />
 				<Button onAction="#handlePaint" text="Paint cable" />
 				<Button onAction="#handleDelete" text="Delete Mode" />
+				
+				<Button onAction="#handleSaveConfiguration" text="Sauvegarder la configuraion" />
+				<Button onAction="#handleLoadConfiguration" text="Charger la configuration" /> 
+				
 				<!-- GENERATE GRAPH SCENE DEBUG ONLY
  				<Button onAction="#handleMenuDevmodeNodeHierarchy_1" text="JavaFX Node Hierarchy dump 1" />
 				<Button onAction="#handleMenuDevmodeNodeHierarchy_2" text="JavaFX Node Hierarchy dump 2" /> 

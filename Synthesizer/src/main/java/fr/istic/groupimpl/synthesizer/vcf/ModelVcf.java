@@ -60,4 +60,10 @@ public class ModelVcf extends ModelComponent {
 	public Collection<UnitPort> getAllPorts() {
 		return circuit.getPorts();
 	}
+
+	@Override
+	public String saveModule() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

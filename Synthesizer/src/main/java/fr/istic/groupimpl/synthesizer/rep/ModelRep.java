@@ -52,4 +52,10 @@ public class ModelRep extends ModelComponent{
 	public Collection<UnitPort> getAllPorts() {
 		return rep.getPorts();
 	}
+
+	@Override
+	public String saveModule() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

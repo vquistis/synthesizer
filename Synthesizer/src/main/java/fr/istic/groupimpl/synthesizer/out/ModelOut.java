@@ -45,4 +45,10 @@ public class ModelOut extends ModelComponent {
 	public Collection<UnitPort> getAllPorts() {
 		return out.getPorts();
 	}
+
+	@Override
+	public String saveModule() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
