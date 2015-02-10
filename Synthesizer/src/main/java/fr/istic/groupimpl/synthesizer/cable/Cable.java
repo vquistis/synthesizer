@@ -1,10 +1,16 @@
 package fr.istic.groupimpl.synthesizer.cable;
 
+import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
-import javafx.scene.input.MouseButton;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.CubicCurve;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.QuadCurveTo;
 import javafx.scene.shape.StrokeLineCap;
 
 /**
@@ -14,10 +20,13 @@ import javafx.scene.shape.StrokeLineCap;
  * @author Team groupImpl
  *
  */
-public class Cable extends CubicCurve {
+public class Cable extends Path {
 
-	DoubleProperty distance;
 	ComputeDistance binding;
+	InnerShadow innerShadow;
+	DropShadow dropShadow;
+	CubicCurveTo curve;
+	MoveTo move;
 
 	/**
 	 * Constructeur
@@ -27,8 +36,26 @@ public class Cable extends CubicCurve {
 		setStroke(color);
 		setStrokeWidth(10);
 		setStrokeLineCap(StrokeLineCap.ROUND);
-		setFill(Color.TRANSPARENT);
+		curve = new CubicCurveTo();
+		move = new MoveTo();
 		binding = new ComputeDistance();
+		getElements().addAll(move, curve);
+		
+		innerShadow = new InnerShadow(BlurType.GAUSSIAN,
+				Color.BLACK, 10, 0.25, 0, 0);
+		dropShadow = new DropShadow(BlurType.GAUSSIAN,
+				Color.ANTIQUEWHITE, 5, 0.5, 0, 0);
+		dropShadow.setInput(innerShadow);
+		setEffect(innerShadow);
+		
+		hoverProperty().addListener((obs,oldVal,newVal) -> {
+			Log.getInstance().debug("CABLE HOVERED");
+			if(newVal) {
+				setEffect(dropShadow);
+			} else {
+				setEffect(innerShadow);
+			}
+		});
 	}
 
 	/**
@@ -37,10 +64,10 @@ public class Cable extends CubicCurve {
 	 * @param endY
 	 */
 	public void bindInput(DoubleProperty endX, DoubleProperty endY) {
-		endXProperty().bind(endX);
-		endYProperty().bind(endY);
-		controlX2Property().bind(endX);
-		controlY2Property().bind(endY.add(binding.get()));
+		curve.xProperty().bind(endX);
+		curve.yProperty().bind(endY);
+		curve.controlX2Property().bind(endX);
+		curve.controlY2Property().bind(endY.add(binding));
 	}
 
 	/**
@@ -49,10 +76,10 @@ public class Cable extends CubicCurve {
 	 * @param startY
 	 */
 	public void bindOutput(DoubleProperty startX, DoubleProperty startY) {
-		startXProperty().bind(startX);
-		startYProperty().bind(startY);
-		controlX1Property().bind(startX);
-		controlY1Property().bind(startY.add(binding.get()));
+		move.xProperty().bind(startX);
+		move.yProperty().bind(startY);
+		curve.controlX1Property().bind(startX);
+		curve.controlY1Property().bind(startY.add(binding));
 	}
 
 	/**
@@ -65,13 +92,13 @@ public class Cable extends CubicCurve {
 		 * Constructeur
 		 */
 		public ComputeDistance() {
-			super.bind(startXProperty(),startYProperty(),endXProperty(),endYProperty());
+			super.bind(move.xProperty(),move.yProperty(),curve.xProperty(),curve.yProperty());
 		}
 
 		@Override
 		protected double computeValue() {
-			double xCarre = Math.pow(startXProperty().get()-endXProperty().get(), 2) ;
-			double yCarre = Math.pow(startYProperty().get()-endYProperty().get(), 2) ;
+			double xCarre = Math.pow(move.xProperty().get()-curve.xProperty().get(), 2) ;
+			double yCarre = Math.pow(move.yProperty().get()-curve.yProperty().get(), 2) ;
 			return Math.sqrt(xCarre + yCarre)*0.50;
 		}
 	};
