@@ -51,6 +51,7 @@ public class Potentiometre extends Region {
 	private final boolean showTickMarks;
 	private final boolean showTickLabels;
 	private final double majorTickUnit;
+	private final double minorTickUnit;
 
 	// angle en Radian
 	private final double minAngle;
@@ -122,6 +123,7 @@ public class Potentiometre extends Region {
 		showTickMarks = initPot.isShowTickMarks();
 		showTickLabels = initPot.isShowTickLabels();
 		majorTickUnit = initPot.getMajorTickUnit();
+		minorTickUnit = initPot.getMinorTickUnit();
 
 		this.setPrefSize(2. * rayon, 2. * rayon);
 		this.setShape(new Circle(2. * rayon));
@@ -205,12 +207,10 @@ public class Potentiometre extends Region {
 
 		});
 		setOnScroll((event) -> {
-			double v = ((double) event.getDeltaY()) / 100.;
+			double v = ((double) event.getDeltaY()) / 750.;
 			Log.getInstance().debug(
 					"event OnScroll deltaY=" + event.getDeltaY() + " v=" + v);
-			if (dragValid) {
-				addValue(v);
-			}
+			addValue(v);
 			event.consume();
 		});
 
@@ -331,14 +331,23 @@ public class Potentiometre extends Region {
 		if (isShowTickMarks()) {
 
 			double rayonExt = rayon + rayon / 8.;
-
-			for (double v = minValue; v <= maxValue; v += majorTickUnit) {
+			double rayonExt2 = rayon + rayon / 12.;
+			int nbmtu = 1;
+			if (majorTickUnit != minorTickUnit) {
+				nbmtu = (int) ((majorTickUnit + minorTickUnit / 2.) / minorTickUnit);
+			}
+			int nb = 0;
+			for (double v = minValue; v <= (maxValue + minorTickUnit / 2.); v += minorTickUnit, nb++) {
 
 				double ang = valueToAngle(v) - Math.PI / 2.;
 				double debX = Math.cos(ang) * rayon + centerX;
-				double endX = Math.cos(ang) * rayonExt + centerX;
 				double debY = Math.sin(ang) * rayon + centerY;
+				double endX = Math.cos(ang) * rayonExt + centerX;
 				double endY = Math.sin(ang) * rayonExt + centerY;
+				if (nb % nbmtu != 0) {
+					endX = Math.cos(ang) * rayonExt2 + centerX;
+					endY = Math.sin(ang) * rayonExt2 + centerY;
+				}
 				Line line = new Line();
 				getChildren().add(line);
 				line.setStartX(debX);
@@ -346,7 +355,7 @@ public class Potentiometre extends Region {
 				line.setStartY(debY);
 				line.setEndY(endY);
 				Log.getInstance().trace("TRACE1");
-				if (isShowTickLabels()) {
+				if (isShowTickLabels() && nb % nbmtu == 0) {
 					Log.getInstance().trace("TRACE2");
 					Text label = null;
 					if (Math.floor(majorTickUnit) == majorTickUnit)

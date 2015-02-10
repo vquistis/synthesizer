@@ -79,6 +79,7 @@ public class ViewVco extends ViewComponent implements Initializable {
 		pf.setDiscret(false);
 		pf.setMinValue(-1);
 		pf.setMaxValue(1);
+		pf.setMinorTickUnit(1./12.);
 
 		Potentiometre precisionKnob = pf.getPotentiometre();
 		knobFreqPane.getChildren().add(precisionKnob);
