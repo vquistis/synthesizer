@@ -25,21 +25,30 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  */
 public class VCAJSyn extends UnitGenerator {
 	
+	/** The input. */
 	private UnitInputPort input;	 	//Volt
+	
+	/** The inputam. */
 	private UnitInputPort inputam; 		//Volt
+	
+	/** The inputa0. */
 	private UnitInputPort inputa0; 		//Volt
+	
+	/** The output. */
 	private UnitOutputPort output; 		//Volt
 	
 	/**
-     * Signal input
-     * @return input
-     */
+	 * Signal input.
+	 *
+	 * @return input
+	 */
     public UnitInputPort getInput() {
 		return input;
 	}
     
     /**
-     * Modulation amplitude input
+     * Modulation amplitude input.
+     *
      * @return inputam
      */
     public UnitInputPort getInputam() {
@@ -47,7 +56,8 @@ public class VCAJSyn extends UnitGenerator {
 	}
 
 	/**
-	 * Modulation amplitude with potentiometer
+	 * Modulation amplitude with potentiometer.
+	 *
 	 * @return inputa0
 	 */
 	public UnitInputPort getInputa0() {
@@ -55,7 +65,8 @@ public class VCAJSyn extends UnitGenerator {
 	}
 
 	/**
-	 * Signal Output
+	 * Signal Output.
+	 *
 	 * @return output
 	 */
 	public UnitOutputPort getOutput() {
@@ -63,7 +74,7 @@ public class VCAJSyn extends UnitGenerator {
 	}
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
     public VCAJSyn() {
     	addPort(input = new UnitInputPort("vca_input"));
@@ -72,6 +83,9 @@ public class VCAJSyn extends UnitGenerator {
         addPort(output = new UnitOutputPort("vca_output"));
     }
 
+    /* (non-Javadoc)
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
     @Override
     public void generate(int start, int limit) {
     	double[] inputs = input.getValues();
@@ -96,14 +110,11 @@ public class VCAJSyn extends UnitGenerator {
     }
      
     /**
-     * @param fm
-     *   Modulation Frequency 
-     * @param f0
-     *   Default frequency
-     * @param octave
-     *   octave value
-     * @return
-     *   Frequency
+     * Converter.
+     *
+     * @param decibel the decibel
+     * @param in the in
+     * @return   Frequency
      */
     public double converter(double decibel, double in) {
     	return in*Math.pow(10, decibel/20);

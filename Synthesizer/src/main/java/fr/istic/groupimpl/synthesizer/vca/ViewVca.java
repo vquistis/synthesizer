@@ -33,7 +33,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 	@FXML
 	private ImageView closeVca;
 	
-	/** The decibel pane. */
+	/** The volt pane. */
 	@FXML
 	private VBox voltPane;
 
@@ -70,8 +70,12 @@ public class ViewVca extends ViewComponent implements Initializable {
 	/** The out y. */
 	private DoubleProperty outY = new SimpleDoubleProperty(0);
 
-	/* (non-Javadoc)
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	/**
+	 * Initializes the controller class.
+	 * This method is automatically called after the FXML file has been loaded. It creates a new view and set all the button with new created buttons.
+	 *
+	 * @param url the url
+	 * @param resourceBundle the resourceBundle
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -121,7 +125,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 	}
 
 	/**
-	 * Handles the click on the FM input port.
+	 * Handles the click on the FM input am port.
 	 */
 	public void handleamClick() {
 		vcaControl.handleViewInputClick("vca_inputam", amX, amY);
@@ -135,8 +139,8 @@ public class ViewVca extends ViewComponent implements Initializable {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	/** (non-Javadoc)
+	 * get vca pane
 	 */
 	@Override
 	protected Pane getComponentRoot() {
