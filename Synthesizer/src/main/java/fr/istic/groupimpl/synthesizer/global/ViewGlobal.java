@@ -110,6 +110,15 @@ public class ViewGlobal implements Initializable {
 
 		ctl = ControllerGlobal.getInstance();
 		
+		splitpane.getDividers().forEach((div) -> {
+			div.positionProperty().addListener((a,b,c) -> {
+				
+				hb1.requestLayout();
+				hb2.requestLayout();
+				hb3.requestLayout();
+			});
+		});
+		
 		colorpicker.valueProperty().set(Color.BLUEVIOLET);
 
 		contentpane.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
@@ -207,13 +216,14 @@ public class ViewGlobal implements Initializable {
 		//
 		//		});
 
-		createModule("fxml/out.fxml");
+		
 
 		ctl.setView(this);
 	}
 
 	public void init() {
 		primaryStage = (Stage) borderpane.getScene().getWindow();
+		createModule("fxml/out.fxml");
 
 	}
 
@@ -230,7 +240,14 @@ public class ViewGlobal implements Initializable {
 			HBox hb = (HBox) splitpane.getItems().get(0);
 			hb.getChildren().add(root);
 			enableDrag(root);
-			view.refreshComponent();
+			splitpane.getDividers().forEach((div) -> {
+				div.positionProperty().addListener((a,b,c) -> {
+					view.refreshComponent();
+				});
+			});
+			borderpane.getScene().widthProperty().addListener((a,b,c) -> {
+				view.refreshComponent();
+			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

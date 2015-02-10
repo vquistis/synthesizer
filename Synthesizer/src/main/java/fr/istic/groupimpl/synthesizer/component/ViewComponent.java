@@ -1,17 +1,13 @@
 package fr.istic.groupimpl.synthesizer.component;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
@@ -54,7 +50,8 @@ public abstract class ViewComponent implements IViewComponent {
 		Node root = getComponentRoot();
 
 		root.parentProperty().addListener(posChangeListener);
-		root.boundsInParentProperty().addListener(posChangeListener);		
+		root.boundsInParentProperty().addListener(posChangeListener);
+		
 	}
 
 	final protected void cleanupPorts() {
