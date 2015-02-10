@@ -39,8 +39,8 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 
 		
 		OscilloscopeFactory scopeFact = OscilloscopeFactory.getFactoryInstance();
-		scopeFact.setWidth(screenScopePane.getPrefWidth());
-		scopeFact.setHeight(screenScopePane.getPrefHeight());
+		scopeFact.setWidth(screenScopePane.getPrefWidth()-20);
+		scopeFact.setHeight(screenScopePane.getPrefHeight()-20);
 		scopeFact.setRefreshPeriod(1000);
 		scopeFact.setCmdGetBuffer(()->{return controller.getbufferData();});
 		

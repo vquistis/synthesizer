@@ -205,29 +205,29 @@ public class Oscilloscope extends Region {
 		if (hValue == 0.)
 			hValue = 1.;
 		coefY = -(getHeight() * 0.45) / hValue;
-		baseY = getHeight() / 2. + 10;
-		baseX = 30;
+		baseY = getHeight() / 2.;
+		baseX = 0;
 
 		middleText.setText("0 V");
 		middleText.setTranslateX(0);
-		middleText.setTranslateY(baseY);
-		middleLine.setStartX(baseX);
+		middleText.setTranslateY(baseY+4);
+		middleLine.setStartX(baseX+25);
 		middleLine.setStartY(baseY);
 		middleLine.setEndX(getWidth() + baseX);
 		middleLine.setEndY(baseY);
 
 		hightText.setTranslateX(0);
-		hightText.setTranslateY(baseY + hValue * coefY);
+		hightText.setTranslateY(baseY + hValue * coefY+4);
 		hightText.setText(strVolt(hValue));
-		hightLine.setStartX(baseX);
+		hightLine.setStartX(baseX+25);
 		hightLine.setStartY(baseY + hValue * coefY);
 		hightLine.setEndX(getWidth() + baseX);
 		hightLine.setEndY(baseY + hValue * coefY);
 
 		lowText.setTranslateX(0);
-		lowText.setTranslateY(baseY - hValue * coefY);
+		lowText.setTranslateY(baseY - hValue * coefY+4);
 		lowText.setText("-" + strVolt(hValue));
-		lowLine.setStartX(baseX);
+		lowLine.setStartX(baseX+25);
 		lowLine.setStartY(baseY - hValue * coefY);
 		lowLine.setEndX(getWidth() + baseX);
 		lowLine.setEndY(baseY - hValue * coefY);
