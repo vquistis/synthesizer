@@ -24,13 +24,15 @@ public class ModelEg extends ModelComponent {
 		return adsr;
 	}
 
-	@Override
-	public UnitInputPort getInputPort(String portName) {
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
 		return adsr.input;
 	}
 
-	@Override
-	public UnitOutputPort getOutputPort(String portName) {
+	public UnitOutputPort getOutputPort() {
 		return adsr.output;
 	}
 

@@ -3,7 +3,6 @@ package fr.istic.groupimpl.synthesizer.out;
 import java.util.Collection;
 
 import com.jsyn.ports.UnitInputPort;
-import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
@@ -26,9 +25,6 @@ public class ModelOut extends ModelComponent {
 	 * @param value - attenuation in db
 	 */
 	public void setAttenuation(double dbValue) {
-		if (dbValue > 12) {
-			dbValue = 12;
-		}
 		out.setAttenuation(dbValue);
 	}
 
@@ -36,16 +32,13 @@ public class ModelOut extends ModelComponent {
 	public UnitGenerator getUnitGenerator() {
 		return out;
 	}
-	
-	@Override
-	public UnitInputPort getInputPort(String portName) {
-		return out.getInput();
-	}
 
-	@Override
-	public UnitOutputPort getOutputPort(String portName) {
-		//This module doesn't have output port
-		return null;
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
+		return out.getInput();
 	}
 
 	@Override

@@ -2,8 +2,6 @@ package fr.istic.groupimpl.synthesizer.component;
 
 import java.util.Collection;
 
-import com.jsyn.ports.UnitInputPort;
-import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
@@ -38,20 +36,6 @@ public interface IModelComponent {
 	 * @return UnitGenerator
 	 */
 	public UnitGenerator getUnitGenerator();
-	
-	/**
-	 * Get the jsyn input port.
-	 * @param portName - the name associated to the port
-	 * @return UnitInputPort
-	 */
-	public UnitInputPort getInputPort(String portName);
-	
-	/**
-	 * Get the jsyn output port.
-	 * @param portName - the name associated to the port
-	 * @return UnitOutputPort
-	 */
-	public UnitOutputPort getOutputPort(String portName);
 	
 	/**
 	 * Get all port of the component.

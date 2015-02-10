@@ -24,15 +24,19 @@ public class ModelRep extends ModelComponent{
 		return rep;
 	}
 
-	@Override
-	public UnitInputPort getInputPort(String portName) {
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
 		return rep.getInput();
 	}
 
 	/**
+	 * Get the jsyn output port.
 	 * @param portName The name of one of three output
+	 * @return UnitOutputPort
 	 */
-	@Override
 	public UnitOutputPort getOutputPort(String portName) {
 		if (portName.equals("rep_out1"))
 			return rep.getOutput(1);

@@ -32,17 +32,27 @@ public class ModelVcf extends ModelComponent {
 		return circuit;
 	}
 
-	@Override
-	public UnitInputPort getInputPort(String portName) {
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
 		return circuit.getInput();
 	}
-	
+
+	/**
+	 * Get the jsyn input fm port.
+	 * @return UnitInputPort
+	 */
 	public UnitInputPort getFmPort() {
 		return circuit.getFm();
 	}
 
-	@Override
-	public UnitOutputPort getOutputPort(String portName) {
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
 		return circuit.getOutput();
 	}
 

@@ -34,15 +34,20 @@ public class ModelOscillo extends ModelComponent {
 	public UnitGenerator getUnitGenerator() {
 		return circuit;
 	}
-	
-	@Override
-	public UnitInputPort getInputPort(String portName) {
+
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
 		return circuit.getInput();
 	}
 
-	@Override
-	public UnitOutputPort getOutputPort(String portName) {
-		//This module doesn't have output port
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
 		return circuit.getOutput();
 	}
 
