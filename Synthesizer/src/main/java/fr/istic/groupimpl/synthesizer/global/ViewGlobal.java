@@ -359,6 +359,7 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
+<<<<<<< Updated upstream
 	 * Handle add vcf lp.
 	 */
 	@FXML
@@ -366,6 +367,14 @@ public class ViewGlobal implements Initializable {
 		createModule("fxml/vcf-lp.fxml");		
 	}
 
+	/**
+	 * Handle add out. This method adds a new Mixer components
+	 */
+	@FXML
+	public void handleAddMixer(){
+		createModule("fxml/mixer.fxml");		
+	}
+	
 	/**
 	 * Mouse x property.
 	 *
