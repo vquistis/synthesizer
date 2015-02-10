@@ -31,7 +31,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 	
 	/** The close vca. */
 	@FXML
-	private ImageView closeVca;
+	private ImageView closeModuleFx;
 	
 	/** The volt pane. */
 	@FXML
@@ -106,7 +106,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 		amplitudeKnod.valueProperty().addListener((p, oldVal, newVal) ->
 		vcaControl.handleViewVoltChange((double) newVal));		
 		// Listener close VCA
-		closeVca.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();
 			vcaControl.handleViewClose();
 			Pane parent = (Pane) paneVca.getParent();

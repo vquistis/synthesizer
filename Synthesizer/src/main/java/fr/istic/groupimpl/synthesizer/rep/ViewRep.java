@@ -22,7 +22,7 @@ public class ViewRep extends ViewComponent implements Initializable{
 	@FXML private Pane rootModulePane;
 	@FXML private ImageView in;
 	@FXML private ImageView out1, out2, out3;
-	@FXML private ImageView close;
+	@FXML private ImageView closeModuleFx;
 	
 	private ControllerRep controller;
 	
@@ -40,7 +40,7 @@ public class ViewRep extends ViewComponent implements Initializable{
 		controller = new ControllerRep();
 		
 		// Listener close module
-		close.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
