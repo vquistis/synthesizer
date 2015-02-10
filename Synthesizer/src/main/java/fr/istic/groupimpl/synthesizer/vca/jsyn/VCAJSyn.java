@@ -97,7 +97,7 @@ public class VCAJSyn extends UnitGenerator {
         	double am = SignalUtil.verifyAmplitude(inputams[i]);
         	if (am >0)
         	{
-        	double decibel = ((am+SignalUtil.verifyAmplitude(inputa0s[i])-5) * 12 );
+        	double decibel = ((am+SignalUtil.verifyAmplitude(inputa0s[i])-5) * SignalUtil.COEF_VOLT * 12 );
 //        	outputs[i]= inputs[i];
         	outputs[i]=converter(decibel, inputs[i]);
         	}
