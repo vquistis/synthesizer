@@ -11,6 +11,8 @@ import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 import com.jsyn.unitgen.UnitSource;
 
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
+
 /**
  * VCO oscillator Circuit with a frequency modulation input.
  * 
@@ -158,7 +160,7 @@ public class VCOCircuit extends Circuit implements UnitSource
 		vcFreq.getOutput().connect(sawtoothOscillator.frequency);
 		vcFreq.getOutput().connect(squareOscillator.frequency);
 		 
-		passThroughAmplitude.getInput().set(UnitOscillator.DEFAULT_AMPLITUDE);
+		passThroughAmplitude.getInput().set(UnitOscillator.DEFAULT_AMPLITUDE/SignalUtil.COEF_VOLT);
 		passThroughAmplitude.output.connect(triangleOscillator.amplitude);
 		passThroughAmplitude.output.connect(sawtoothOscillator.amplitude);
 		passThroughAmplitude.output.connect(squareOscillator.amplitude);

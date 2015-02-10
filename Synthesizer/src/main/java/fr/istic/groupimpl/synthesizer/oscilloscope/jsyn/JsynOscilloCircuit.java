@@ -76,9 +76,16 @@ public class JsynOscilloCircuit extends UnitGenerator {
 	{
 		int ind = newIndBuf();
 		
+		
 		double [] ret = Arrays.copyOf(buf[ind], buf[ind].length);
 		
 		blocBuf[ind].set(false);
+		
+		for ( int i = 0 ; i < buf.length ; i++ )
+		{
+			ret[i] *= SignalUtil.COEF_VOLT;
+		}
+		
 		
 		return ret;
 	}	
