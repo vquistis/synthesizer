@@ -5,6 +5,8 @@ package fr.istic.groupimpl.synthesizer.util;
  */
 public class SignalUtil {
 	
+	public static double COEF_VOLT=5.;
+	
 	/** The Constant AMPLITUDE_MAX. */
 	private static final int FREQUENCE_MAX = 22100;
 

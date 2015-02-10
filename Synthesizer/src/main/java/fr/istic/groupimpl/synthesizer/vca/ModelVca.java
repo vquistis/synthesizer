@@ -12,10 +12,11 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.vca.jsyn.VCAJSyn;
 
 /**
- * The Class ModelVca.
+ * The Class Model Vca.
  */
 public class ModelVca extends ModelComponent {
 
+	/** The vcaj syn. */
 	private VCAJSyn vcajSyn;
 
 	/**
@@ -26,6 +27,11 @@ public class ModelVca extends ModelComponent {
 		vcajSyn = new VCAJSyn();
 	}
 
+	/**
+	 * get VCA jsyn.
+	 *
+	 * @return the unit generator
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return this.vcajSyn;
@@ -34,12 +40,18 @@ public class ModelVca extends ModelComponent {
 	/**
 	 * Sets the a0.
 	 *
-	 * @param a0
+	 * @param a0 the new a0
 	 */
 	protected void seta0(double a0) {
 		vcajSyn.getInputa0().set(a0);
 	}
 
+	/**
+	 * get input port.
+	 *
+	 * @param portName the port name
+	 * @return the input port
+	 */
 	@Override
 	public UnitInputPort getInputPort(String portName) {
 		switch (portName) {
@@ -56,6 +68,12 @@ public class ModelVca extends ModelComponent {
 		}
 	}
 
+	/**
+	 * get output port.
+	 *
+	 * @param portName the port name
+	 * @return the output port
+	 */
 	@Override
 	public UnitOutputPort getOutputPort(String portName) {
 		if (portName.equals("vca_output")) {
@@ -64,14 +82,21 @@ public class ModelVca extends ModelComponent {
 		return null;
 	}
 
+	/**
+	 * get all port
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return this.vcajSyn.getPorts();
 	}
 	
+	/**
+	 * Sets the volt.
+	 *
+	 * @param volt the new volt
+	 */
 	protected void setVolt(double volt) {
 		vcajSyn.getInputa0().set(volt);
-//		computeFrequency(volt);
 	}
 
 }
