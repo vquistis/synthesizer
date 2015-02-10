@@ -26,20 +26,25 @@ public class ControllerVca implements IControllerComponent {
 		ctrlGlob.registerUnitGenerator(modelVca.getUnitGenerator());
 	}
 		
-	/* (non-Javadoc)
-	 * @see fr.istic.groupimpl.synthesizer.component.IControllerComponent#handleViewInputClick(java.lang.String, javafx.beans.property.DoubleProperty, javafx.beans.property.DoubleProperty)
+
+	/**
+	 * Click listener for input ports
+	 * @param portName Name of the clicked input port
+	 * @param xCoord Coordinate of the clicked input port (x axis)
+	 * @param yCoord Coordinate of the clicked input port (y axis)
 	 */
-	@Override
 	public void handleViewInputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
 		ctrlGlob.handleInputClicked(modelVca.getInputPort(portName), xCoord, yCoord);
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.istic.groupimpl.synthesizer.component.IControllerComponent#handleViewOutputClick(java.lang.String, javafx.beans.property.DoubleProperty, javafx.beans.property.DoubleProperty)
+	/**
+	 * Click listener for output ports
+	 * @param portName Name of the clicked output port
+	 * @param xCoord Coordinate of the clicked output port (x axis)
+	 * @param yCoord Coordinate of the clicked output port (y axis)
 	 */
-	@Override
-	public void handleViewOutputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
-		ctrlGlob.handleOutputClicked(modelVca.getOutputPort(portName), xCoord, yCoord);
+	public void handleViewOutputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
+		ctrlGlob.handleOutputClicked(modelVca.getOutputPort(), xCoord, yCoord);
 	}
 
 	/* (non-Javadoc)

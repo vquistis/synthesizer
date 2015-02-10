@@ -19,15 +19,23 @@ public class ControllerVco implements IControllerComponent {
 		ctrlGlob = ControllerGlobal.getInstance();
 		ctrlGlob.registerUnitGenerator(modelVco.getUnitGenerator());
 	}
-		
-	@Override
-	public void handleViewInputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
-		ctrlGlob.handleInputClicked(modelVco.getInputPort(portName), xCoord, yCoord);
+
+	/**
+	 * Click listener for input port
+	 * @param xCoord Coordinate of the clicked input port (x axis)
+	 * @param yCoord Coordinate of the clicked input port (y axis)
+	 */
+	public void handleViewInputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
+		ctrlGlob.handleInputClicked(modelVco.getInputPort(), xCoord, yCoord);
 	}
 
-	@Override
-	public void handleViewOutputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
-		ctrlGlob.handleOutputClicked(modelVco.getOutputPort(portName), xCoord, yCoord);
+	/**
+	 * Click listener for output ports
+	 * @param xCoord Coordinate of the clicked output port (x axis)
+	 * @param yCoord Coordinate of the clicked output port (y axis)
+	 */
+	public void handleViewOutputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
+		ctrlGlob.handleOutputClicked(modelVco.getOutputPort(), xCoord, yCoord);
 	}
 
 	@Override

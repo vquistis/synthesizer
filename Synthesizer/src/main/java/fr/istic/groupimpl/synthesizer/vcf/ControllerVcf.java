@@ -27,19 +27,32 @@ public class ControllerVcf implements IControllerComponent {
 	public void handleViewResonanceChange(Number newVal) {
 		model.setResonance((double) newVal);
 	}
-	
-	@Override
-	public void handleViewInputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
-		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(portName), xCoord, yCoord);
+
+	/**
+	 * Click listener for input port
+	 * @param xCoord Coordinate of the clicked input port (x axis)
+	 * @param yCoord Coordinate of the clicked input port (y axis)
+	 */
+	public void handleViewInputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
+		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(), xCoord, yCoord);
 	}
-	
+
+	/**
+	 * Click listener for input fm port
+	 * @param xCoord Coordinate of the clicked input port (x axis)
+	 * @param yCoord Coordinate of the clicked input port (y axis)
+	 */
 	public void handleViewFmClick(DoubleProperty xCoord, DoubleProperty yCoord) {
 		ControllerGlobal.getInstance().handleInputClicked(model.getFmPort(), xCoord, yCoord);
 	}
-	
-	@Override
-	public void handleViewOutputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
-		ControllerGlobal.getInstance().handleOutputClicked(model.getOutputPort(portName), xCoord, yCoord);
+
+	/**
+	 * Click listener for output port
+	 * @param xCoord Coordinate of the clicked output port (x axis)
+	 * @param yCoord Coordinate of the clicked output port (y axis)
+	 */
+	public void handleViewOutputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
+		ControllerGlobal.getInstance().handleOutputClicked(model.getOutputPort(), xCoord, yCoord);
 	}
 
 	@Override
