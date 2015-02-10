@@ -1,6 +1,7 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import java.util.Collection;
+import java.util.Map;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitPort;
@@ -49,7 +50,10 @@ public class ModelOut extends ModelComponent {
 
 	@Override
 	public Module getModule() {
-		return null;
+		Module module= new Module();
+		Map<String, String>parameters = module.getParameters();
+		parameters.put("attenuation", String.valueOf(out.getFrameRate()));		
+		return module;
 	}
 
 }

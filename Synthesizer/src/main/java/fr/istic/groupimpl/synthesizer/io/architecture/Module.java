@@ -1,5 +1,7 @@
 package fr.istic.groupimpl.synthesizer.io.architecture;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +17,18 @@ public class Module {
 	private String id;
 	
 	/** The map. */
-	private Map<String, String> map;
+	private Map<String, String> parameters;
 	
 	/** The ports. */
 	private List<Port> ports;
+	
+	/**
+	 * Create a new module.
+	 */
+	public Module() {
+		parameters = new HashMap<>();
+		ports = new ArrayList<>();
+	}
 	
 	/**
 	 * Gets the id.
@@ -39,23 +49,23 @@ public class Module {
 	}
 	
 	/**
-	 * Gets the map.
+	 * Gets the parameters.
 	 *
-	 * @return the map
+	 * @return the parameters
 	 */
-	public Map<String, String> getMap() {
-		return map;
+	public Map<String, String> getParameters() {
+		return parameters;
 	}
-	
+
 	/**
-	 * Sets the map.
+	 * Sets the parameters.
 	 *
-	 * @param map the map
+	 * @param parameters the parameters
 	 */
-	public void setMap(Map<String, String> map) {
-		this.map = map;
+	public void setParameters(Map<String, String> parameters) {
+		this.parameters = parameters;
 	}
-	
+
 	/**
 	 * Gets the ports.
 	 *
