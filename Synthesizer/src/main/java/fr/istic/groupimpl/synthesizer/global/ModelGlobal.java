@@ -15,8 +15,6 @@ import com.jsyn.unitgen.UnitGenerator;
 
 public class ModelGlobal {
 
-	private ControllerGlobal controller;
-
 	private List<UnitGenerator> unitGenerators = new ArrayList<UnitGenerator>();
 
 	private Synthesizer synth;
@@ -27,12 +25,10 @@ public class ModelGlobal {
 
 	/**
 	 * Instantiates the underlying JSyn synthesizer and starts it.
-	 * @param controller
 	 */
-	public ModelGlobal(ControllerGlobal controller) {
+	public ModelGlobal() {
 		this.outputConnections = new HashMap<UnitOutputPort, UnitInputPort>();
 		this.inputConnections = new HashMap<UnitInputPort, UnitOutputPort>();
-		this.controller = controller;
 		this.synth = JSyn.createSynthesizer();
 		this.synth.start();
 	}

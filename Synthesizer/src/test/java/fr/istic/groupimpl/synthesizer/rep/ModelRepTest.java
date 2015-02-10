@@ -7,8 +7,6 @@ import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.LineOut;
 
-import fr.istic.groupimpl.synthesizer.vco.ModelVco;
-
 public class ModelRepTest {
 	private ModelRep model;
 	private Synthesizer synth;

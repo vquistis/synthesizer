@@ -1,6 +1,5 @@
 package fr.istic.groupimpl.synthesizer.cable;
 
-import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.effect.BlurType;
@@ -10,8 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javafx.scene.shape.QuadCurveTo;
 import javafx.scene.shape.StrokeLineCap;
+import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * 

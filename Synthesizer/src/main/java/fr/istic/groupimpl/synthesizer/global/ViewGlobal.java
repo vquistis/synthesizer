@@ -26,7 +26,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
@@ -72,7 +71,7 @@ public class ViewGlobal implements Initializable {
 	/** The ctl. */
 	private ControllerGlobal ctl;
 
-	private Stage primaryStage;
+//	private Stage primaryStage;
 
 	/**
 	 * Adds the cable.
@@ -212,10 +211,10 @@ public class ViewGlobal implements Initializable {
 		ctl.setView(this);
 	}
 
-	public void init() {
-		primaryStage = (Stage) borderpane.getScene().getWindow();
-
-	}
+//	public void init() {
+//		primaryStage = (Stage) borderpane.getScene().getWindow();
+//
+//	}
 
 	/**
 	 * Creates a new module.
@@ -280,18 +279,18 @@ public class ViewGlobal implements Initializable {
 		return colorpicker.getValue();
 	}
 	
-	/**
-	 * Sets the all modules transparent.
-	 *
-	 * @param t the new all modules transparent
-	 */
-	private void setAllModulesTransparent(boolean t) {
-		splitpane.getItems().forEach((b) -> {
-			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
-				m.setMouseTransparent(t);
-			});
-		});
-	}
+//	/**
+//	 * Sets the all modules transparent.
+//	 *
+//	 * @param t the new all modules transparent
+//	 */
+//	private void setAllModulesTransparent(boolean t) {
+//		splitpane.getItems().forEach((b) -> {
+//			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
+//				m.setMouseTransparent(t);
+//			});
+//		});
+//	}
 	
 	/**
 	 * Handle add replicator. Plus click. This method adds a new Rep component Replicator

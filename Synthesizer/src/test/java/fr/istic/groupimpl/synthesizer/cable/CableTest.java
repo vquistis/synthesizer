@@ -1,12 +1,5 @@
 package fr.istic.groupimpl.synthesizer.cable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.paint.Color;
-
-import org.junit.Test;
 
 public class CableTest {
     
