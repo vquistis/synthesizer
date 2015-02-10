@@ -29,6 +29,9 @@ public class ModelRep extends ModelComponent{
 		return rep.getInput();
 	}
 
+	/**
+	 * @param portName The name of one of three output
+	 */
 	@Override
 	public UnitOutputPort getOutputPort(String portName) {
 		if (portName.equals("rep_out1"))

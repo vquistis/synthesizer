@@ -39,22 +39,6 @@ public class ViewRep extends ViewComponent implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		controller = new ControllerRep();
 		
-		// Listener in
-		in.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			controller.handleViewInputClick("rep_in", inX, inY);
-		});
-				
-		// Listener out
-		out1.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			controller.handleViewOutputClick("rep_out1", outX1, outY1);
-		});
-		out2.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			controller.handleViewOutputClick("rep_out2", outX2, outY2);
-		});
-		out3.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			controller.handleViewOutputClick("rep_out3", outX3, outY3);
-		});
-		
 		// Listener close module
 		close.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			
@@ -70,7 +54,7 @@ public class ViewRep extends ViewComponent implements Initializable{
 	}
 	
 	/**
-	 * Handles the click on the FM input port
+	 * Handles the click on the input port
 	 */
 	@FXML
 	public void handleInputClick() {
@@ -78,18 +62,24 @@ public class ViewRep extends ViewComponent implements Initializable{
 	}
 
 	/**
-	 * Handles the click on the output port
+	 * Handles the click on the first output port
 	 */
 	@FXML
 	public void handleOutputClick1() {
 		controller.handleViewOutputClick("rep_out1", outX1, outY1);
 	}
 	
+	/**
+	 * Handles the click on the second output port
+	 */
 	@FXML
 	public void handleOutputClick2() {
 		controller.handleViewOutputClick("rep_out2", outX2, outY2);
 	}
 	
+	/**
+	 * Handles the click on the third output port
+	 */
 	@FXML
 	public void handleOutputClick3() {
 		controller.handleViewOutputClick("rep_out3", outX3, outY3);

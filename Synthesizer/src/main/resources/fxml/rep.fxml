@@ -53,7 +53,7 @@
             <Label text="out1" GridPane.columnIndex="2" />
             <Label text="out2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label text="out3" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <ImageView fx:id="in" fitHeight="40.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView fx:id="in" fitHeight="40.0" fitWidth="37.0" onMouseClicked="#handleInputClick" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
                   <Image url="@../img/inoutBlanc.png" />
                </image>
