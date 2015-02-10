@@ -22,7 +22,7 @@ public class VCOCircuitModelTest {
 		LineOut lineout = new LineOut();
 		synth.add(lineout);
 		
-		lineout.getInput().connect(model.getOutputPort("vco_output"));
+		lineout.getInput().connect(model.getOutputPort());
 		
 		synth.start();
 		lineout.start();

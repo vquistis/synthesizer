@@ -26,7 +26,7 @@ public class ModelEgTest {
 		synth.add(sineOsc);
 		synth.add(lineout);
 
-		sineOsc.amplitude.connect(model.getOutputPort("eg_output"));
+		sineOsc.amplitude.connect(model.getOutputPort());
 		lineout.getInput().connect(sineOsc.output);
 
 		synth.start();
@@ -42,13 +42,13 @@ public class ModelEgTest {
 
 	@Test
 	public void testModel() throws InterruptedException {
-		model.getInputPort("eg_gate").set(1);
+		model.getInputPort().set(1);
 		Thread.sleep(3000);
-		model.getInputPort("eg_gate").set(0);
+		model.getInputPort().set(0);
 		Thread.sleep(1000);
-		model.getInputPort("eg_gate").set(1);
+		model.getInputPort().set(1);
 		Thread.sleep(3000);
-		model.getInputPort("eg_gate").set(0);
+		model.getInputPort().set(0);
 		Thread.sleep(5000);
 		synth.stop();
 	}
