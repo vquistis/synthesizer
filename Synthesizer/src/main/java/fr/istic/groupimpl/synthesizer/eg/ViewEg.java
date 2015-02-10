@@ -80,8 +80,8 @@ public class ViewEg extends ViewComponent implements Initializable {
 		knobRelease.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewReleaseChange(newVal));
 		
 		// Listener input & output
-		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick("eg_gate", inputX, inputY));
-		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick("eg_output", outputX, outputY));
+		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(inputX, inputY));
+		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));
 
 		// Listener close module
 		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {

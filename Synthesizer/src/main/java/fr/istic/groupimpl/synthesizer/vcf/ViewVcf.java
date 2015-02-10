@@ -73,9 +73,9 @@ public class ViewVcf extends ViewComponent implements Initializable {
 		knobResonance.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewResonanceChange(newVal));
 		
 		// Listener input & output
-		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick("vcf_input", inputX, inputY));
+		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(inputX, inputY));
 		fm.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewFmClick(fmX, fmY));
-		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick("vcf_output", outputX, outputY));
+		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));
 
 		// Listener close module
 		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {

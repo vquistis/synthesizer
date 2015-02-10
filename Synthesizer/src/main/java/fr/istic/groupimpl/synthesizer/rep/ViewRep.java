@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 
 /**
@@ -58,7 +57,7 @@ public class ViewRep extends ViewComponent implements Initializable{
 	 */
 	@FXML
 	public void handleInputClick() {
-		controller.handleViewInputClick("rep_in", inX, inY);
+		controller.handleViewInputClick(inX, inY);
 	}
 
 	/**

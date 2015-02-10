@@ -133,7 +133,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 	 * Handles the click on the output port.
 	 */
 	public void handleOutputClick() {
-		vcaControl.handleViewOutputClick("vca_output", outX, outY);
+		vcaControl.handleViewOutputClick(outX, outY);
 	}
 
 
