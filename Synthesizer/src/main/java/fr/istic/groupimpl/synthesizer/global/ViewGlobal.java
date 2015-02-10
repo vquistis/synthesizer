@@ -2,7 +2,10 @@ package fr.istic.groupimpl.synthesizer.global;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -28,6 +31,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 
@@ -70,8 +74,10 @@ public class ViewGlobal implements Initializable {
 
 	/** The ctl. */
 	private ControllerGlobal ctl;
-
-//	private Stage primaryStage;
+	
+	private List<Supplier<Configuration>> suppliers=new ArrayList<Supplier<Configuration>>();
+	
+	
 
 	/**
 	 * Adds the cable.

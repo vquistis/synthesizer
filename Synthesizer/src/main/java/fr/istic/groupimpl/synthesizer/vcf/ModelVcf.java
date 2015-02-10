@@ -62,9 +62,4 @@ public class ModelVcf extends ModelComponent {
 		return circuit.getPorts();
 	}
 
-	@Override
-	public Module getModule() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -9,7 +9,6 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.eg.jsyn.JsynEnvelopeADSR;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 public class ModelEg extends ModelComponent {
 	
@@ -73,13 +72,4 @@ public class ModelEg extends ModelComponent {
 	public void setRelease(double release) {
 		adsr.release.set(release);
 	}
-
-	@Override
-	public Module getModule() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-
 }

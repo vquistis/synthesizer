@@ -22,6 +22,13 @@ public class Module {
 	/** The ports. */
 	private List<Port> ports;
 	
+	
+	/** The pos x. */
+	private int posX;
+	
+	/** The pos y. */
+	private int posY;
+	
 	/**
 	 * Create a new module.
 	 */
@@ -82,5 +89,41 @@ public class Module {
 	 */
 	public void setPorts(List<Port> ports) {
 		this.ports = ports;
+	}
+
+	/**
+	 * Gets the pos x.
+	 *
+	 * @return the pos x
+	 */
+	public int getPosX() {
+		return posX;
+	}
+
+	/**
+	 * Sets the pos x.
+	 *
+	 * @param posX the new pos x
+	 */
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	/**
+	 * Gets the pos y.
+	 *
+	 * @return the pos y
+	 */
+	public int getPosY() {
+		return posY;
+	}
+
+	/**
+	 * Sets the pos y.
+	 *
+	 * @param posY the new pos y
+	 */
+	public void setPosY(int posY) {
+		this.posY = posY;
 	}
 }

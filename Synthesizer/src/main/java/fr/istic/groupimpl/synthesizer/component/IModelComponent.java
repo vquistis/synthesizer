@@ -43,10 +43,4 @@ public interface IModelComponent {
 	 * @return Collection of port
 	 */
 	public Collection<UnitPort> getAllPorts();
-	
-	/**
-	 * get module
-	 * @return module component
-	 */
-	public Module getModule();
 }

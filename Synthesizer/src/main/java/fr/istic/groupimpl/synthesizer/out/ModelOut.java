@@ -48,12 +48,4 @@ public class ModelOut extends ModelComponent {
 		return out.getPorts();
 	}
 
-	@Override
-	public Module getModule() {
-		Module module= new Module();
-		Map<String, String>parameters = module.getParameters();
-		parameters.put("attenuation", String.valueOf(out.getFrameRate()));		
-		return module;
-	}
-
 }

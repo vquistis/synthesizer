@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
 
 /**
  * @authors GroupImpl
@@ -94,6 +95,12 @@ public class ViewRep extends ViewComponent implements Initializable{
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
+	}
+
+	@Override
+	protected Configuration getConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

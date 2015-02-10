@@ -2,6 +2,7 @@ package fr.istic.groupimpl.synthesizer.component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -9,6 +10,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 public abstract class ViewComponent implements IViewComponent {
@@ -151,4 +153,11 @@ public abstract class ViewComponent implements IViewComponent {
 		return new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2);
 
 	}
+	
+	public Supplier<Configuration> getSaveSupplier() {
+		Supplier<Configuration> sup = (() -> getConfiguration());
+		return sup;
+	}
+	
+	protected abstract Configuration getConfiguration();
 }
