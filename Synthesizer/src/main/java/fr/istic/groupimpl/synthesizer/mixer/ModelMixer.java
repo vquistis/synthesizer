@@ -79,10 +79,4 @@ public class ModelMixer extends ModelComponent {
 	public UnitInputPort getInputPort(Integer index) {
 		return mixer.getInput(index);
 	}
-
-	@Override
-	public Module getModule() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

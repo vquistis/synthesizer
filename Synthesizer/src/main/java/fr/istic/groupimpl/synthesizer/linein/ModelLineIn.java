@@ -46,10 +46,4 @@ public class ModelLineIn extends ModelComponent {
 	public Collection<UnitPort> getAllPorts() {
 		return lineIn.getPorts();
 	}
-
-	@Override
-	public Module getModule() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
