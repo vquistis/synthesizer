@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
 import fr.istic.groupimpl.synthesizer.util.OscilloscopeFactory;
 
@@ -39,8 +40,8 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 
 		
 		OscilloscopeFactory scopeFact = OscilloscopeFactory.getFactoryInstance();
-		scopeFact.setWidth(screenScopePane.getPrefWidth());
-		scopeFact.setHeight(screenScopePane.getPrefHeight());
+		scopeFact.setWidth(screenScopePane.getPrefWidth()-20);
+		scopeFact.setHeight(screenScopePane.getPrefHeight()-20);
 		scopeFact.setRefreshPeriod(1000);
 		scopeFact.setCmdGetBuffer(()->{return controller.getbufferData();});
 		
@@ -75,5 +76,11 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
+	}
+
+	@Override
+	protected Module getConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

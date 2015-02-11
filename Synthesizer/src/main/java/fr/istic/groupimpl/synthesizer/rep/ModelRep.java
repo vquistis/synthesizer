@@ -8,7 +8,6 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.rep.jsyn.JsynRepCircuit;
 
 public class ModelRep extends ModelComponent{
@@ -54,9 +53,4 @@ public class ModelRep extends ModelComponent{
 		return rep.getPorts();
 	}
 
-	@Override
-	public Module getModule() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

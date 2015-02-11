@@ -8,14 +8,13 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.vco.jsyn.VCOCircuit;
 
 public class ModelVco extends ModelComponent {
 	
 	private VCOCircuit vcoCirc;
-	private int f0 = 32;
+	private double f0 = 1.0;
 		
 	public ModelVco() {
 		super();		
@@ -82,10 +81,15 @@ public class ModelVco extends ModelComponent {
 		DoubleStringConverter dsc = new DoubleStringConverter();
 		this.setValProperty("freq", dsc.toString(frequency));
 	}
-
-	@Override
-	public Module getModule() {
-		return null;
+	
+	/**
+	 * @param value The frequency to set (in Hz)
+	 * Sets the base frequency of the VCO
+	 */
+	public void setBaseFreq(double value) {
+		f0 = value;
+		vcoCirc.getInputF0().set(value);
+		computeFrequency(vcoCirc.getInputOctave().get());
 	}
 		
 }

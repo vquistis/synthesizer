@@ -2,14 +2,19 @@ package fr.istic.groupimpl.synthesizer.global;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
@@ -18,6 +23,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +34,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.io.FileUtil;
+import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 
@@ -70,8 +79,8 @@ public class ViewGlobal implements Initializable {
 
 	/** The ctl. */
 	private ControllerGlobal ctl;
-
-//	private Stage primaryStage;
+	
+	private List<Supplier<Module>> suppliers=new ArrayList<Supplier<Module>>();	
 
 	/**
 	 * Adds the cable.
@@ -173,47 +182,37 @@ public class ViewGlobal implements Initializable {
 			mouseY.set(e.getY());
 		});
 
-		//		splitpane.setOnDragOver((e) -> {
-		//			Event.fireEvent(scrollpane, e);
-		//			double spXMin = scrollpane.getViewportBounds().getMinX();
-		//			double spYMin = scrollpane.getViewportBounds().getMinY();
-		//			double spXMax = scrollpane.getViewportBounds().getMaxX();
-		//			double spYMax = scrollpane.getViewportBounds().getMaxY();
-		//			double x = e.getX();
-		//			double y = e.getY();
-		//			Point2D point = splitpane.localToParent(e.getX(), e.getY());
-		//
-		//			double pX = point.getX();
-		//			double pY = point.getY();
-		//			Log.getInstance().debug("!! Scroll : " + x  + " " + y);
-		//			Log.getInstance().debug("!! Scroll : " + pX  + " " + pY);
-		//
-		//			if ((pX >= spXMin  && pX <= spXMin+50) &&
-		//					(pY >= spYMin  && pY <= spYMax))  
-		//			{
-		//				scrollpane.setHvalue(scrollpane.getHvalue() - 0.05);
-		//				Log.getInstance().debug("!!! Scroll Column left " + scrollpane.getHvalue() );
-		//
-		//			} else if ((pX >= spXMax-50  && pX <= spXMax) &&
-		//					(pY >= spYMin  && pY <= spYMax))  
-		//			{
-		//				scrollpane.setHvalue(scrollpane.getHvalue() + 0.05);
-		//				Log.getInstance().debug("!!! Scroll Column right " + scrollpane.getHvalue() );
-		//
-		//			}
-		//
-		//			if ((pX >= spXMin  && pX <= spXMax) &&
-		//					(pY >= spYMin  && pY <= spYMin+50))  
-		//			{
-		//				scrollpane.setVvalue(scrollpane.getVvalue() - 0.05);
-		//
-		//			} else if ((pX >= spXMin  && pX <= spXMax) &&
-		//					(pY >= spYMax-50  && pY <= spYMax))  
-		//			{
-		//				scrollpane.setVvalue(scrollpane.getVvalue() + 0.05);
-		//			}
-		//
-		//		});
+				scrollpane.addEventFilter(DragEvent.ANY, (e) -> {
+					double spXMin = scrollpane.getViewportBounds().getMinX();
+					double spYMin = scrollpane.getViewportBounds().getMinY();
+					double spXMax = scrollpane.getViewportBounds().getMaxX();
+					double spYMax = scrollpane.getViewportBounds().getMaxY();
+					double x = e.getX();
+					double y = e.getY();
+		
+					Log.getInstance().debug("!! Scroll : " + x  + " " + y);
+		
+					if (y >= spYMin  && y <= (spYMin + 100)) {
+						scrollpane.setVvalue(scrollpane.getVvalue() - 0.05);
+						Log.getInstance().debug("!!! Scroll botom " + scrollpane.getVvalue() );
+					}
+					
+					if (y <= spYMax  && y >= (spYMax - 100)) {
+						scrollpane.setVvalue(scrollpane.getVvalue() + 0.05);
+						Log.getInstance().debug("!!! Scroll top " + scrollpane.getHvalue() );
+					}
+		
+					if (x >= spXMin  && x <= (spXMin + 100)) {
+						scrollpane.setHvalue(scrollpane.getHvalue() - 0.05);
+						Log.getInstance().debug("!!! Scroll left " + scrollpane.getHvalue() );						
+					}
+					
+					if (x <= spXMax  && x >= (spXMax - 100)) {
+						scrollpane.setHvalue(scrollpane.getHvalue() + 0.05);
+						Log.getInstance().debug("!!! Scroll right " + scrollpane.getHvalue() );						
+					}
+		
+				});
 
 		
 
@@ -244,6 +243,8 @@ public class ViewGlobal implements Initializable {
 					view.refreshComponent();
 				});
 			});
+				
+			suppliers.add(view.getSaveSupplier());
 			borderpane.getScene().widthProperty().addListener((a,b,c) -> {
 				view.refreshComponent();
 			});
@@ -392,6 +393,14 @@ public class ViewGlobal implements Initializable {
 	}
 	
 	/**
+	 * Handle add sequencer. This method adds a new Sequencer component
+	 */
+	@FXML
+	public void handleAddSeq(){
+		createModule("fxml/seq.fxml");		
+	}
+	
+	/**
 	 * Mouse x property.
 	 *
 	 * @return the double property
@@ -474,7 +483,12 @@ public class ViewGlobal implements Initializable {
 	
 	@FXML
 	public void  handleSaveConfiguration(){
-			
+		Configuration configuration =new Configuration();
+		for (Supplier<Module> supplier : suppliers) {
+			configuration.addModule(supplier.get());
+		}
+		
+		FileUtil.saveFile(configuration, "file.synthlab");
 	}
 	
 	@FXML

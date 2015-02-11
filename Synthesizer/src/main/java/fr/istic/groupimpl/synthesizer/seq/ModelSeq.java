@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.oscilloscope;
+package fr.istic.groupimpl.synthesizer.seq;
 
 import java.util.Collection;
 
@@ -9,25 +9,16 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
+import fr.istic.groupimpl.synthesizer.seq.jsyn.JsynSequencerCircuit;
 
-public class ModelOscillo extends ModelComponent {
+public class ModelSeq extends ModelComponent {
 
-	private JsynOscilloCircuit circuit;
+	private JsynSequencerCircuit circuit;
 	
-	public ModelOscillo( int sizeBuffer ) {
+	public ModelSeq( int nbPas ) {
 		super();
 
-		circuit = new JsynOscilloCircuit(3,sizeBuffer);
-	}
-
-	/**
-	 * Méthode pour transmettre les dernière données valides
-	 * @return 
-	 * 		buffer de données
-	 */
-	public double [] getBuffer()
-	{
-		return circuit.getBuffer();
+		circuit = new JsynSequencerCircuit( nbPas);
 	}
 
 	@Override
@@ -39,8 +30,8 @@ public class ModelOscillo extends ModelComponent {
 	 * Get the jsyn input port.
 	 * @return UnitInputPort
 	 */
-	public UnitInputPort getInputPort() {
-		return circuit.getInput();
+	public UnitInputPort getGatePort() {
+		return circuit.getGate();
 	}
 
 	/**

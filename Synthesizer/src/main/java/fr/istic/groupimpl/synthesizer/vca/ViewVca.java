@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
@@ -30,7 +31,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 	
 	/** The close vca. */
 	@FXML
-	private ImageView closeVca;
+	private ImageView closeModuleFx;
 	
 	/** The volt pane. */
 	@FXML
@@ -105,7 +106,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 		amplitudeKnod.valueProperty().addListener((p, oldVal, newVal) ->
 		vcaControl.handleViewVoltChange((double) newVal));		
 		// Listener close VCA
-		closeVca.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();
 			vcaControl.handleViewClose();
 			Pane parent = (Pane) paneVca.getParent();
@@ -143,6 +144,12 @@ public class ViewVca extends ViewComponent implements Initializable {
 	@Override
 	protected Pane getComponentRoot() {
 		return paneVca;
+	}
+
+	@Override
+	protected Module getConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

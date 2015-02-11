@@ -7,6 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -18,6 +19,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
@@ -29,6 +31,8 @@ public class ViewVco extends ViewComponent implements Initializable {
 
 	@FXML
 	private BorderPane paneVco;
+	@FXML
+	private ChoiceBox<String> choiceBaseFreq;
 	@FXML
 	private ImageView closeVco;
 	@FXML
@@ -62,8 +66,8 @@ public class ViewVco extends ViewComponent implements Initializable {
 		PotentiometreFactory pf = PotentiometreFactory.getFactoryInstance();
 
 		// Octave knob
-		pf.setMinValue(-8);
-		pf.setMaxValue(8);
+		pf.setMinValue(0);
+		pf.setMaxValue(9);
 		pf.setDiscret(true);
 		pf.setShowTickMarks(true);
 		pf.setShowTickLabels(true);
@@ -79,6 +83,7 @@ public class ViewVco extends ViewComponent implements Initializable {
 		pf.setDiscret(false);
 		pf.setMinValue(-1);
 		pf.setMaxValue(1);
+		pf.setMinorTickUnit(1./12.);
 
 		Potentiometre precisionKnob = pf.getPotentiometre();
 		knobFreqPane.getChildren().add(precisionKnob);
@@ -99,6 +104,26 @@ public class ViewVco extends ViewComponent implements Initializable {
 			vcoControl.handleViewClose();
 			Pane parent = (Pane) paneVco.getParent();
 			parent.getChildren().remove(paneVco);
+		});
+		
+		// Choice base freq config + listener
+		choiceBaseFreq.getItems().addAll("0.1 Hz", "1 Hz", "32 Hz", "1 kHz");
+		choiceBaseFreq.getSelectionModel().select(1);
+		choiceBaseFreq.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+				switch(newVal) {
+					case "0.1 Hz":
+						vcoControl.handleViewBaseFreqChange(0.1);
+						break;
+					case "1 Hz":
+						vcoControl.handleViewBaseFreqChange(1.0);
+						break;
+					case "32 Hz":
+						vcoControl.handleViewBaseFreqChange(32.0);
+						break;
+					case "1 kHz":
+						vcoControl.handleViewBaseFreqChange(1000.0);
+						break;
+				}
 		});
 
 		addPort(fm, fmX, fmY);
@@ -124,6 +149,12 @@ public class ViewVco extends ViewComponent implements Initializable {
 	@Override
 	protected Pane getComponentRoot() {
 		return paneVco;
+	}
+
+	@Override
+	protected Module getConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -13,6 +13,9 @@ public class Connection {
 	
 	/** The output port. */
 	private String outputPort;
+	
+	/** The color. */
+	private String color;
 
 	/**
 	 * Gets the input port.
@@ -49,5 +52,25 @@ public class Connection {
 	public void setOutputPort(String outputPort) {
 		this.outputPort = outputPort;
 	}
+
+	/**
+	 * Gets the color.
+	 *
+	 * @return the color
+	 */
+	public String getColor() {
+		return color;
+	}
+
+	/**
+	 * Sets the color.
+	 *
+	 * @param color the new color
+	 */
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	
 
 }

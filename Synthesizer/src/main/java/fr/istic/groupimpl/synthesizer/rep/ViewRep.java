@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 /**
  * @authors GroupImpl
@@ -21,7 +22,7 @@ public class ViewRep extends ViewComponent implements Initializable{
 	@FXML private Pane rootModulePane;
 	@FXML private ImageView in;
 	@FXML private ImageView out1, out2, out3;
-	@FXML private ImageView close;
+	@FXML private ImageView closeModuleFx;
 	
 	private ControllerRep controller;
 	
@@ -39,7 +40,7 @@ public class ViewRep extends ViewComponent implements Initializable{
 		controller = new ControllerRep();
 		
 		// Listener close module
-		close.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
@@ -94,6 +95,12 @@ public class ViewRep extends ViewComponent implements Initializable{
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
+	}
+
+	@Override
+	protected Module getConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

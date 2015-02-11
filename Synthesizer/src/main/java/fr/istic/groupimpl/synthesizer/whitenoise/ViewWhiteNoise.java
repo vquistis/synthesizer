@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 public class ViewWhiteNoise extends ViewComponent implements Initializable {
 
@@ -41,5 +42,11 @@ public class ViewWhiteNoise extends ViewComponent implements Initializable {
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
+	}
+
+	@Override
+	protected Module getConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

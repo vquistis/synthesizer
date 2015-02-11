@@ -1,5 +1,7 @@
 package fr.istic.groupimpl.synthesizer.io.architecture;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +17,25 @@ public class Module {
 	private String id;
 	
 	/** The map. */
-	private Map<String, String> map;
+	private Map<String, String> parameters;
 	
 	/** The ports. */
 	private List<Port> ports;
+	
+	
+	/** The pos x. */
+	private int posX;
+	
+	/** The pos y. */
+	private int posY;
+	
+	/**
+	 * Create a new module.
+	 */
+	public Module() {
+		parameters = new HashMap<>();
+		ports = new ArrayList<>();
+	}
 	
 	/**
 	 * Gets the id.
@@ -39,23 +56,23 @@ public class Module {
 	}
 	
 	/**
-	 * Gets the map.
+	 * Gets the parameters.
 	 *
-	 * @return the map
+	 * @return the parameters
 	 */
-	public Map<String, String> getMap() {
-		return map;
+	public Map<String, String> getParameters() {
+		return parameters;
 	}
-	
+
 	/**
-	 * Sets the map.
+	 * Sets the parameters.
 	 *
-	 * @param map the map
+	 * @param parameters the parameters
 	 */
-	public void setMap(Map<String, String> map) {
-		this.map = map;
+	public void setParameters(Map<String, String> parameters) {
+		this.parameters = parameters;
 	}
-	
+
 	/**
 	 * Gets the ports.
 	 *
@@ -72,5 +89,41 @@ public class Module {
 	 */
 	public void setPorts(List<Port> ports) {
 		this.ports = ports;
+	}
+
+	/**
+	 * Gets the pos x.
+	 *
+	 * @return the pos x
+	 */
+	public int getPosX() {
+		return posX;
+	}
+
+	/**
+	 * Sets the pos x.
+	 *
+	 * @param posX the new pos x
+	 */
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	/**
+	 * Gets the pos y.
+	 *
+	 * @return the pos y
+	 */
+	public int getPosY() {
+		return posY;
+	}
+
+	/**
+	 * Sets the pos y.
+	 *
+	 * @param posY the new pos y
+	 */
+	public void setPosY(int posY) {
+		this.posY = posY;
 	}
 }

@@ -60,5 +60,13 @@ public class ControllerVco implements IControllerComponent {
 	public void handleViewOutputTypeChange(String typeName) {
 		modelVco.setOutputType(typeName);
 	}
+	
+	/**
+	 * @param value The frequency to set (in Hz)
+	 * Sets in the model the base frequency
+	 */
+	public void handleViewBaseFreqChange(double value) {
+		modelVco.setBaseFreq(value);
+	}
 
 }

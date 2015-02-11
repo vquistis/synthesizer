@@ -1,7 +1,10 @@
 package fr.istic.groupimpl.synthesizer.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Deque;
+import java.util.LinkedList;
 
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.application.Platform;
@@ -13,6 +16,8 @@ import javafx.scene.text.Text;
 
 public class Oscilloscope extends Region {
 
+	private final long TIME_STABILITY=5000;
+	
 	public static final int SIZE_BUFFER_READ = 2048;
 	final int nbDataUsed = 1024;
 
@@ -64,6 +69,61 @@ public class Oscilloscope extends Region {
 		});
 	}
 
+	private class HistMax
+	{
+		
+		public HistMax(long t, double v) {
+			super();
+			this.t = t;
+			this.v = v;
+		}
+		long t;
+		double v;
+	}
+	
+	private Deque<HistMax> dequeStability=new LinkedList<>();
+	private void stabAdd(double v)
+	{
+		dequeStability.addLast(new HistMax((new Date()).getTime(), Math.abs(v)));
+	}
+	
+	private double stabGetMax()
+	{
+		double res=0.;
+		double memT=-1;
+		boolean flagErr=false;
+		for ( HistMax p:dequeStability)
+		{
+			res = Math.max(p.v,res);
+			if ( memT > p.t )
+			{
+				// anomalie du temps
+				flagErr=true;
+			}
+			memT = p.t;
+		}
+		if( flagErr )
+			dequeStability.clear();
+		return res;
+	}
+	private void stabPurge()
+	{
+		boolean flagCont=true;
+		long borneT=(new Date()).getTime()-TIME_STABILITY;
+		while( flagCont && !dequeStability.isEmpty() )
+		{
+			HistMax hm = dequeStability.getFirst();
+			if ( hm.t < borneT )
+			{
+				dequeStability.removeFirst();
+			}
+			else
+			{
+				flagCont = false;
+			}
+		}
+	}
+
 	/**
 	 * Set the refresh period
 	 * 
@@ -88,6 +148,8 @@ public class Oscilloscope extends Region {
 		refreshThread.start();
 	}
 
+	
+	
 	/**
 	 * To stop the refresh thread
 	 */
@@ -114,7 +176,6 @@ public class Oscilloscope extends Region {
 	private double coefX;
 	private double coefY;
 	private double baseY;
-	private double baseX;
 
 	private String strVolt(double value) {
 		if (value == Math.floor(value)) {
@@ -124,7 +185,7 @@ public class Oscilloscope extends Region {
 		}
 
 	}
-
+	private double lastHValue=1.;
 	private void affBuf() {
 
 		double[] buf = cmdGetBuffer.getBuffer();
@@ -203,44 +264,51 @@ public class Oscilloscope extends Region {
 		}
 
 		if (hValue == 0.)
-			hValue = 1.;
+		{
+			hValue = lastHValue;
+		}
+		stabAdd(hValue);
+		hValue = stabGetMax();
+		stabPurge();
+		
 		coefY = -(getHeight() * 0.45) / hValue;
-		baseY = getHeight() / 2. + 10;
-		baseX = 30;
+		baseY = getHeight() / 2.;
 
 		middleText.setText("0 V");
 		middleText.setTranslateX(0);
-		middleText.setTranslateY(baseY);
-		middleLine.setStartX(baseX);
+		middleText.setTranslateY(baseY+4);
+		middleLine.setStartX(middleText.getLayoutBounds().getMaxX());
 		middleLine.setStartY(baseY);
-		middleLine.setEndX(getWidth() + baseX);
+		middleLine.setEndX(getWidth());
 		middleLine.setEndY(baseY);
 
 		hightText.setTranslateX(0);
-		hightText.setTranslateY(baseY + hValue * coefY);
+		hightText.setTranslateY(baseY + hValue * coefY+4);
 		hightText.setText(strVolt(hValue));
-		hightLine.setStartX(baseX);
+		hightLine.setStartX(hightText.getLayoutBounds().getMaxX());
 		hightLine.setStartY(baseY + hValue * coefY);
-		hightLine.setEndX(getWidth() + baseX);
+		hightLine.setEndX(getWidth());
 		hightLine.setEndY(baseY + hValue * coefY);
 
 		lowText.setTranslateX(0);
-		lowText.setTranslateY(baseY - hValue * coefY);
+		lowText.setTranslateY(baseY - hValue * coefY+4);
 		lowText.setText("-" + strVolt(hValue));
-		lowLine.setStartX(baseX);
+		lowLine.setStartX(lowText.getLayoutBounds().getMaxX());
 		lowLine.setStartY(baseY - hValue * coefY);
-		lowLine.setEndX(getWidth() + baseX);
+		lowLine.setEndX(getWidth());
 		lowLine.setEndY(baseY - hValue * coefY);
 
 		int borne = nbDataUsed - 1;
 		for (int ind = firstPassage, i = 0; i < borne; ind++, i++) {
 			Line line = memLine.get(i);
-			line.setStartX(coefX * i + baseX);
+			line.setStartX(coefX * i);
 			line.setStartY(baseY + coefY * buf[ind]);
-			line.setEndX(coefX * (i + 1) + baseX);
+			line.setEndX(coefX * (i + 1));
 			line.setEndY(baseY + coefY * buf[ind + 1]);
 
 		}
+		
+		lastHValue = hValue;
 
 	}
 }
