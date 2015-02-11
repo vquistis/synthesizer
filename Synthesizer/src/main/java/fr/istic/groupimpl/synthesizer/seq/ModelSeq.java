@@ -8,19 +8,29 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
 import fr.istic.groupimpl.synthesizer.seq.jsyn.JsynSequencerCircuit;
 
 public class ModelSeq extends ModelComponent {
 
+	private final double sigMin = 0.00001;
+	private final double sigMax = 0.1;
+	
 	private JsynSequencerCircuit circuit;
 	
 	public ModelSeq( int nbPas ) {
 		super();
 
-		circuit = new JsynSequencerCircuit( nbPas);
+		circuit = new JsynSequencerCircuit( nbPas,sigMin,sigMax);
 	}
 
+	
+	
+	public void setValue(int indice, Double newVal)
+	{
+		circuit.setValue(indice,newVal);
+	}
+	
+	
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return circuit;
