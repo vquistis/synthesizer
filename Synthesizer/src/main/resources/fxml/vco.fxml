@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="paneVco" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.vco.ViewVco">
+   <bottom>
+      <GridPane styleClass="portPane">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="70.0" prefWidth="70.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="70.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="100.0" minHeight="20.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="70.0" minHeight="56.0" prefHeight="56.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label text="fm" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <Label text="out" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <Label text="type" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <ImageView fx:id="fm" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleFmClick" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../img/inoutBleu.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="out" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleOutputClick" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../img/inoutRouge.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <RadioButton mnemonicParsing="false" selected="true" text="square" textFill="#444444">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="3.0" />
+                     </VBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="typeOutput" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="triangle" textFill="#444444" toggleGroup="$typeOutput">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="2.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="sawtooth" textFill="#444444" toggleGroup="$typeOutput">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="2.0" />
+                     </VBox.margin>
+                  </RadioButton>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <padding>
+                  <Insets left="6.0" right="6.0" />
+               </padding>
+            </VBox>
+         </children>
+      </GridPane>
+   </bottom>
+   <top>
+      <GridPane maxHeight="33.0" minHeight="33.0" prefHeight="33.0" styleClass="titlePane">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="35.0" prefWidth="39.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="-Infinity" prefWidth="148.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label alignment="CENTER" text="VCO">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <ImageView fx:id="closeVco" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@../img/close.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ChoiceBox fx:id="choiceBaseFreq" minHeight="-Infinity" prefHeight="21.0" prefWidth="60.0" styleClass="choiceBaseFreq" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" styleClass="contentPane">
+         <children>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <VBox fx:id="knobOctavePane" alignment="CENTER">
+                     <children>
+                        <Label text="Octave">
+                           <VBox.margin>
+                              <Insets bottom="28.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="13.0" left="12.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets top="4.0" />
+                     </GridPane.margin>
+                  </VBox>
+                  <VBox fx:id="knobFreqPane" alignment="CENTER" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Précision">
+                           <VBox.margin>
+                              <Insets bottom="28.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="13.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets top="4.0" />
+                     </GridPane.margin>
+                  </VBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </BorderPane.margin>
+            </GridPane>
+            <Label fx:id="freqLabel">
+               <VBox.margin>
+                  <Insets bottom="7.0" top="9.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
