@@ -6,11 +6,21 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 public class ControllerMixer extends ControllerComponent {
-
-	private ModelMixer model = new ModelMixer();
+	final Integer NumberOfInputPort = 4;
+	
+	private ModelMixer model = new ModelMixer(NumberOfInputPort);
 	
 	public ControllerMixer() {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
+	}
+
+	/**
+	 * Get the number of input port
+	 * 
+	 * @return Integer
+	 */
+	public Integer getNumberOfInputPort() {
+		return NumberOfInputPort;
 	}
 	
 	/**

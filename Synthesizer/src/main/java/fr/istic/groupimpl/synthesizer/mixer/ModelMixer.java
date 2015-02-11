@@ -12,10 +12,9 @@ import fr.istic.groupimpl.synthesizer.mixer.jsyn.Mixer;
 
 public class ModelMixer extends ModelComponent {
 
-	final Integer NumberOfInputPort = 4;
 	private Mixer mixer;
 	
-	public ModelMixer() {
+	public ModelMixer(Integer NumberOfInputPort) {
 		super();
 		mixer = new Mixer(NumberOfInputPort);
 	}
@@ -26,7 +25,7 @@ public class ModelMixer extends ModelComponent {
 	 * @return Integer
 	 */
 	public Integer getNumberOfInputPort() {
-		return NumberOfInputPort;
+		return mixer.getNumberOfInputPort();
 	}
 
 	
