@@ -386,6 +386,14 @@ public class ViewGlobal implements Initializable {
 	public void handleAddWhiteNoise(){
 		createModule("fxml/whiteNoise.fxml");		
 	}
+
+	/**
+	 * Handle add Line In. This method adds a new Line In component
+	 */
+	@FXML
+	public void handleAddLineIn(){
+		createModule("fxml/LineIn.fxml");		
+	}
 	
 	/**
 	 * Handle add sequencer. This method adds a new Sequencer component

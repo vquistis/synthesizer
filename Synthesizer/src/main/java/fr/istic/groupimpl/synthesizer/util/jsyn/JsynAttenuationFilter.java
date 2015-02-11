@@ -9,6 +9,7 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  */
 public class JsynAttenuationFilter extends UnitFilter {
 	
+	public final static int DECIBEL_MINIMUM_VALUE = -60;
 	
 	// Coef diviseur car le voltage en entrée est entre -5V et +5V
 	// et on veut pouvoir augmenté le son de 12 DB et le resultat
@@ -39,5 +40,12 @@ public class JsynAttenuationFilter extends UnitFilter {
 	 */
 	public void set(double dbValue) {
 		coef = Math.pow(2, dbValue/6);
+	}
+	
+	/**
+	 * Get an attenuation decibel value
+	 */
+	public Double get() {
+		return (Math.log(coef)/Math.log(2))*6;
 	}
 }
