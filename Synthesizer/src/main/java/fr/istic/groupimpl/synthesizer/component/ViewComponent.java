@@ -10,7 +10,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 public abstract class ViewComponent implements IViewComponent {
@@ -154,10 +154,10 @@ public abstract class ViewComponent implements IViewComponent {
 
 	}
 	
-	public Supplier<Configuration> getSaveSupplier() {
-		Supplier<Configuration> sup = (() -> getConfiguration());
+	public Supplier<Module> getSaveSupplier() {
+		Supplier<Module> sup = (() -> getConfiguration());
 		return sup;
 	}
 	
-	protected abstract Configuration getConfiguration();
+	protected abstract Module getConfiguration();
 }

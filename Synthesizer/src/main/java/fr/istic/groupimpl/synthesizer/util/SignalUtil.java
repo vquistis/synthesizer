@@ -11,16 +11,16 @@ public class SignalUtil {
 	private static final int FREQUENCE_MAX = 22100;
 
 	/** The Constant AMPLITUDE_MAX. */
-	private static final double AMPLITUDE_MAX = 5;
+	private static final double AMPLITUDE_MAX = 5./COEF_VOLT;
 
 	/** The Constant AMPLITUDE_MIN. */
-	private static final double AMPLITUDE_MIN = -5;
+	private static final double AMPLITUDE_MIN = -5./COEF_VOLT;
 	
 	/** The freq max. */
-	private static int MODULATION_MAX= 10;
+	private static double MODULATION_MAX= 10./COEF_VOLT;
 	
 	/** The freq min. */
-	private static  int MODULATION_MIN = -10;
+	private static  double MODULATION_MIN = -10./COEF_VOLT;
 	
 	/** The valid. */
 	private static boolean valid = true;
