@@ -14,7 +14,7 @@ public class ControllerOscillo  extends ControllerComponent
 	
 	public ControllerOscillo(Oscilloscope scope) {
 		this.scope = scope;
-		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
+		ControllerGlobal.getInstance().registerOutUnitGenerator(model.getUnitGenerator());
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class ControllerOscillo  extends ControllerComponent
 	public void handleViewClose() {
 		scope.stop(); // pour arreter le thread
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
-		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());		
+		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());		
 	}
 	
 	/**
