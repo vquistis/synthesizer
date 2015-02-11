@@ -8,7 +8,6 @@ import com.jsyn.unitgen.UnitGenerator;
 import com.jsyn.unitgen.WhiteNoise;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 /**
  * 

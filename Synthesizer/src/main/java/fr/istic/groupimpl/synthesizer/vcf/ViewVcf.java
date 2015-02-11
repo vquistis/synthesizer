@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
@@ -48,14 +48,14 @@ public class ViewVcf extends ViewComponent implements Initializable {
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setNbSpins(1);
 		knobFact.setRayon(32);
-		
-		knobFact.setMinValue(10);
-		knobFact.setMaxValue(22000);
+
+		knobFact.setMinValue(1);
+		knobFact.setMaxValue(44000);
 		knobFact.setValueDef(10);
 		Potentiometre knobCutoff = knobFact.getPotentiometre();
 		knobCutoffPane.getChildren().add(1,knobCutoff);
 		
-		knobFact.setMinValue(0.2);
+		knobFact.setMinValue(0);
 		knobFact.setMaxValue(10);
 		knobFact.setValueDef(1);
 		Potentiometre knobResonance = knobFact.getPotentiometre();
@@ -93,7 +93,7 @@ public class ViewVcf extends ViewComponent implements Initializable {
 	}
 
 	@Override
-	protected Configuration getConfiguration() {
+	protected Module getConfiguration() {
 		// TODO Auto-generated method stub
 		return null;
 	}

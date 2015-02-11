@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.vcf;
+package fr.istic.groupimpl.synthesizer.seq;
 
 import java.util.Collection;
 
@@ -8,25 +8,19 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.vcf.jsyn.JsynVcfCircuit;
+import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
+import fr.istic.groupimpl.synthesizer.seq.jsyn.JsynSequencerCircuit;
 
-public class ModelVcf extends ModelComponent {
+public class ModelSeq extends ModelComponent {
+
+	private JsynSequencerCircuit circuit;
 	
-	private JsynVcfCircuit circuit;
-	
-	public ModelVcf() {
+	public ModelSeq( int nbPas ) {
 		super();
-		circuit = new JsynVcfCircuit();
+
+		circuit = new JsynSequencerCircuit( nbPas);
 	}
 
-	public void setCutFrequency(double freq) {
-		circuit.setCutFrequency(freq);
-	}
-	
-	public void setResonance(double res) {
-		circuit.setResonance(res);
-	}
-	
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return circuit;
@@ -36,16 +30,8 @@ public class ModelVcf extends ModelComponent {
 	 * Get the jsyn input port.
 	 * @return UnitInputPort
 	 */
-	public UnitInputPort getInputPort() {
-		return circuit.getInput();
-	}
-
-	/**
-	 * Get the jsyn input fm port.
-	 * @return UnitInputPort
-	 */
-	public UnitInputPort getFmPort() {
-		return circuit.getFm();
+	public UnitInputPort getGatePort() {
+		return circuit.getGate();
 	}
 
 	/**

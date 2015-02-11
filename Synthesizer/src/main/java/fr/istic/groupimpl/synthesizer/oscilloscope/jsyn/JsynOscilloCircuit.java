@@ -114,7 +114,9 @@ public class JsynOscilloCircuit extends UnitGenerator {
         double[] outputs = output.getValues();
 
         for (int i = start; i < limit; i++) {    	
-        	outputs[i] = SignalUtil.verifyAmplitude(inputs[i]);
+        	//       	outputs[i] = SignalUtil.verifyAmplitude(inputs[i]);
+        	// pas de verification de l'amplitude pour l'oscilloscope
+        	outputs[i] = inputs[i];
         	storeBuf(outputs[i]);
          }
     }
