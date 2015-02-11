@@ -241,16 +241,12 @@ public class ViewGlobal implements Initializable {
 			HBox hb = (HBox) splitpane.getItems().get(0);
 			hb.getChildren().add(root);
 			enableDrag(root);
-			splitpane.getDividers().forEach((div) -> {
-				div.positionProperty().addListener((a,b,c) -> {
+			splitpane.getItems().forEach((item) -> {
+				((HBox)item).heightProperty().addListener((a,b,c) -> {
 					view.refreshComponent();
 				});
 			});
-
 			suppliers.add(view.getSaveSupplier());
-			borderpane.getScene().widthProperty().addListener((a,b,c) -> {
-				view.refreshComponent();
-			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
