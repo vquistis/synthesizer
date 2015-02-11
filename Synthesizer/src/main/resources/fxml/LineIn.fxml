@@ -10,14 +10,15 @@
 
 <BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.linein.ViewLineIn">
    <bottom>
-      <HBox alignment="CENTER" prefHeight="226.0" prefWidth="50.0" styleClass="portPane">
+      <HBox alignment="CENTER" styleClass="portPane">
          <padding>
             <Insets bottom="5.0" top="5.0" />
          </padding>
          <children>
             <VBox alignment="CENTER">
                <children>
-                  <ImageView fx:id="output" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
+                  <Label text="out" />
+                  <ImageView fx:id="output" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
                      <image>
                         <Image url="@../img/inoutRouge.png" />
                      </image>
@@ -56,4 +57,15 @@
          </children>
       </GridPane>
    </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="159.0" styleClass="contentPane">
+         <children>
+            <ImageView fitHeight="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/mic.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+   </center>
 </BorderPane>

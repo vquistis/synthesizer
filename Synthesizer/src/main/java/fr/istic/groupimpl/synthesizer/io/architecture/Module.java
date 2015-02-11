@@ -17,17 +17,17 @@ public class Module {
 	private String id;
 	
 	/** The map. */
-	private Map<String, String> parameters;
+	private Map<String, Double> parameters;
 	
 	/** The ports. */
 	private List<Port> ports;
 	
 	
 	/** The pos x. */
-	private int posX;
+	private double posX;
 	
 	/** The pos y. */
-	private int posY;
+	private double posY;
 	
 	/**
 	 * Create a new module.
@@ -60,7 +60,7 @@ public class Module {
 	 *
 	 * @return the parameters
 	 */
-	public Map<String, String> getParameters() {
+	public Map<String, Double> getParameters() {
 		return parameters;
 	}
 
@@ -69,7 +69,7 @@ public class Module {
 	 *
 	 * @param parameters the parameters
 	 */
-	public void setParameters(Map<String, String> parameters) {
+	public void setParameters(Map<String, Double> parameters) {
 		this.parameters = parameters;
 	}
 
@@ -96,7 +96,7 @@ public class Module {
 	 *
 	 * @return the pos x
 	 */
-	public int getPosX() {
+	public double getPosX() {
 		return posX;
 	}
 
@@ -105,7 +105,7 @@ public class Module {
 	 *
 	 * @param posX the new pos x
 	 */
-	public void setPosX(int posX) {
+	public void setPosX(double posX) {
 		this.posX = posX;
 	}
 
@@ -114,7 +114,7 @@ public class Module {
 	 *
 	 * @return the pos y
 	 */
-	public int getPosY() {
+	public double getPosY() {
 		return posY;
 	}
 
@@ -123,7 +123,7 @@ public class Module {
 	 *
 	 * @param posY the new pos y
 	 */
-	public void setPosY(int posY) {
+	public void setPosY(double posY) {
 		this.posY = posY;
 	}
 }

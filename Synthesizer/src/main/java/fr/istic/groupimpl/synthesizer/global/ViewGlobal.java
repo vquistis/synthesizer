@@ -10,11 +10,9 @@ import java.util.function.Supplier;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
@@ -118,8 +116,6 @@ public class ViewGlobal implements Initializable {
 
 		ctl = ControllerGlobal.getInstance();
 		
-		splitpane.setMinHeight(100.0);
-		
 		splitpane.getDividers().forEach((div) -> {
 			div.positionProperty().addListener((a,b,c) -> {
 				
@@ -153,9 +149,6 @@ public class ViewGlobal implements Initializable {
 		});
 
 		for(Node n : splitpane.getItems()) {
-			n.setOnDragDetected((e) -> {
-				
-			});
 			n.setOnDragOver((e) -> {
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();
@@ -186,7 +179,7 @@ public class ViewGlobal implements Initializable {
 			mouseX.set(e.getX());
 			mouseY.set(e.getY());
 		});
-
+		
 		scrollpane.addEventFilter(DragEvent.ANY, (e) -> {
 			double spXMin = scrollpane.getViewportBounds().getMinX();
 			double spYMin = scrollpane.getViewportBounds().getMinY();
@@ -217,7 +210,7 @@ public class ViewGlobal implements Initializable {
 				Log.getInstance().debug("!!! Scroll right " + scrollpane.getHvalue() );						
 			}
 		
-		});		
+		});
 
 		ctl.setView(this);
 	}

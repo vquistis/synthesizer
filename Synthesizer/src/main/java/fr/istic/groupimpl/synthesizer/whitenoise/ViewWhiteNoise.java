@@ -10,8 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 public class ViewWhiteNoise extends ViewComponent implements Initializable {
 
@@ -21,13 +21,14 @@ public class ViewWhiteNoise extends ViewComponent implements Initializable {
 
 	private DoubleProperty outputX = new SimpleDoubleProperty(0);
 	private DoubleProperty outputY = new SimpleDoubleProperty(0);
+	private ControllerWhiteNoise controller;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		addPort(output, outputX, outputY);
 		
 		// implementation of controller
-		ControllerWhiteNoise controller = new ControllerWhiteNoise();
+		controller = new ControllerWhiteNoise();
 		// Listener output
 		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));
 		// Listener close module
@@ -45,8 +46,8 @@ public class ViewWhiteNoise extends ViewComponent implements Initializable {
 	}
 
 	@Override
-	protected Module getConfiguration() {
+	protected ControllerComponent getController() {
 		// TODO Auto-generated method stub
-		return null;
+		return controller;
 	}
 }

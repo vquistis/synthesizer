@@ -2,10 +2,11 @@ package fr.istic.groupimpl.synthesizer.vco;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.Label;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
-public class ControllerVco implements IControllerComponent {
+public class ControllerVco extends ControllerComponent {
 	
 	private ModelVco modelVco;
 	private ControllerGlobal ctrlGlob;
@@ -67,6 +68,12 @@ public class ControllerVco implements IControllerComponent {
 	 */
 	public void handleViewBaseFreqChange(double value) {
 		modelVco.setBaseFreq(value);
+	}
+
+	@Override
+	public ModelComponent getModel() {
+		// TODO Auto-generated method stub
+		return modelVco;
 	}
 
 }
