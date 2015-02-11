@@ -128,7 +128,8 @@ public class Potentiometre extends Region {
 		minorTickUnit = initPot.getMinorTickUnit();
 
 		this.setPrefSize(2. * rayon, 2. * rayon);
-		this.setShape(new Circle(2. * rayon));
+		
+		this.setShape(new Circle(rayon));
 
 		getStyleClass().add("knobButton"); // NOI18N.
 		rgKnob.setPrefSize(2. * RAYON_REF, 2. * RAYON_REF);
