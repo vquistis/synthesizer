@@ -1,11 +1,12 @@
 package fr.istic.groupimpl.synthesizer.seq;
 
 import javafx.beans.property.DoubleProperty;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
 
-public class ControllerSeq  implements IControllerComponent
+public class ControllerSeq  extends ControllerComponent
 {
 	static final int NB_BUTTONS = 8;
 	
@@ -52,6 +53,12 @@ public class ControllerSeq  implements IControllerComponent
 	 */
 	public void handleRefreshPeriodViewChange(Number newVal) {
 		scope.setRefreshPeriod((Double)newVal);
+	}
+
+	@Override
+	public ModelComponent getModel() {
+		// TODO Auto-generated method stub
+		return model;
 	}
 
 }

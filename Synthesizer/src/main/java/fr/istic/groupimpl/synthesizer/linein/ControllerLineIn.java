@@ -1,7 +1,8 @@
 package fr.istic.groupimpl.synthesizer.linein;
 
 import javafx.beans.property.DoubleProperty;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 /**
@@ -11,7 +12,7 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
  * @author Team GroupImpl
  *
  */
-public class ControllerLineIn implements IControllerComponent {
+public class ControllerLineIn extends ControllerComponent {
 
 	private ModelLineIn model = new ModelLineIn();
 	
@@ -35,5 +36,10 @@ public class ControllerLineIn implements IControllerComponent {
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());
+	}
+
+	@Override
+	public ModelComponent getModel() {
+		return model;
 	}
 }

@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
@@ -103,6 +104,12 @@ public class ViewSeq extends ViewComponent implements Initializable {
 	@FXML
 	public void handleOutputClick() {
 		controller.handleViewOutputClick(outX, outY);
+	}
+
+	@Override
+	protected ControllerComponent getController() {
+		// TODO Auto-generated method stub
+		return controller;
 	}
 
 

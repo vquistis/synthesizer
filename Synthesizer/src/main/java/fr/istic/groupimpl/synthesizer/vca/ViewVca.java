@@ -14,12 +14,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
-<<<<<<< HEAD
-=======
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
->>>>>>> branch 'master' of https://kheireddinebourahli@bitbucket.org/groupimpl/projectsynthesizer.git
-import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
+import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 
 /**
  * The Class ViewVca.

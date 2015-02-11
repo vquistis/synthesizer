@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
@@ -21,13 +22,14 @@ public class ViewLineIn extends ViewComponent implements Initializable {
 
 	private DoubleProperty outputX = new SimpleDoubleProperty(0);
 	private DoubleProperty outputY = new SimpleDoubleProperty(0);
+	private ControllerLineIn controller;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		addPort(output, outputX, outputY);
 		
 		// implementation of controller
-		ControllerLineIn controller = new ControllerLineIn();
+		controller = new ControllerLineIn();
 		// Listener output
 		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));
 		// Listener close module
@@ -48,5 +50,10 @@ public class ViewLineIn extends ViewComponent implements Initializable {
 	protected Module getConfiguration() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	protected ControllerComponent getController() {
+		return controller;
 	}
 }
