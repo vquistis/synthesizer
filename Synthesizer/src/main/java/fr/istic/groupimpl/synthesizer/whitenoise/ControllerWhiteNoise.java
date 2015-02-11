@@ -19,7 +19,7 @@ public class ControllerWhiteNoise implements IControllerComponent {
 	 * Constructor
 	 */
 	public ControllerWhiteNoise() {
-		ControllerGlobal.getInstance().registerOutUnitGenerator(model.getUnitGenerator());
+		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
 	
 	/**
@@ -34,6 +34,6 @@ public class ControllerWhiteNoise implements IControllerComponent {
 	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
-		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());
+		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 }
