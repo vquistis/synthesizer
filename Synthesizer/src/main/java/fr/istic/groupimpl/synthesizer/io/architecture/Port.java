@@ -1,6 +1,9 @@
 package fr.istic.groupimpl.synthesizer.io.architecture;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.jsyn.ports.UnitPort;
 
 /**
  * The Class Port.
@@ -16,6 +19,9 @@ public class Port {
 	
 	/** The connected. */
 	private boolean connected;
+	
+	@XmlTransient
+	private UnitPort unitPort;
 
 	/**
 	 * Gets the name.
@@ -70,4 +76,14 @@ public class Port {
 	public void setConnected(boolean connected) {
 		this.connected = connected;
 	}
+
+	public UnitPort getUnitPort() {
+		return unitPort;
+	}
+
+	public void setUnitPort(UnitPort unitPort) {
+		this.unitPort = unitPort;
+	}
+	
+	
 }

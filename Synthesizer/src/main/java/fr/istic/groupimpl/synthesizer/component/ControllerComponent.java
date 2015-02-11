@@ -12,15 +12,30 @@ import fr.istic.groupimpl.synthesizer.io.architecture.Port;
 import fr.istic.groupimpl.synthesizer.io.architecture.Type;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ControllerComponent.
+ */
 public abstract class ControllerComponent {	
+	
 	/**
-	 * Click listener for close the component
+	 * Click listener for close the component.
 	 */
 	public  abstract void handleViewClose();
 	
 
+	/**
+	 * Gets the model.
+	 *
+	 * @return the model
+	 */
 	public abstract ModelComponent getModel();
 	
+	/**
+	 * Gets the all port.
+	 *
+	 * @return the all port
+	 */
 	public final List<Port> getAllPort(){
 		List<Port> ports =new ArrayList<>();
 		
@@ -34,7 +49,8 @@ public abstract class ControllerComponent {
 			} else {
 				port.setType(Type.OUT);
 			}			
-			port.setConnected(ControllerGlobal.getInstance().isPortConnected(unitPort));			
+			port.setConnected(ControllerGlobal.getInstance().isPortConnected(unitPort));	
+			port.setUnitPort(unitPort);
 			ports.add(port);
 		}		
 		return ports;

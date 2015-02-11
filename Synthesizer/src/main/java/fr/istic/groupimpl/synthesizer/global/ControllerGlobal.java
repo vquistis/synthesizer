@@ -1,10 +1,14 @@
 package fr.istic.groupimpl.synthesizer.global;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.scene.shape.Shape;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
@@ -12,6 +16,9 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.cable.Cable;
+import fr.istic.groupimpl.synthesizer.io.architecture.Connection;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
+import fr.istic.groupimpl.synthesizer.io.architecture.Port;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 public class ControllerGlobal {
@@ -41,6 +48,7 @@ public class ControllerGlobal {
 	private UnitPort currentPort;
 
 	private Map<UnitPort,Cable> cables = new HashMap<UnitPort,Cable>();
+	private Shape v;
 
 	private ControllerGlobal() {
 		model = new ModelGlobal();
@@ -354,5 +362,46 @@ public class ControllerGlobal {
 	
 	private enum InteractionMode {
 		CableCreation_none,CableCreation_in,CableCreation_out,CableDeletion,CablePainting
+	}
+	
+	
+	public Port getPort(UnitPort unitPort){
+		List<Module> modules = view.getConfiguration().getModules();
+		for (Module module : modules) {
+			List<Port> ports = module.getPorts();
+			for (Port port : ports) {
+				if (port.getUnitPort().equals(unitPort)) {
+					return port;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Module getModule(UnitPort unitPort){
+		List<Module> modules = view.getConfiguration().getModules();
+		for (Module module : modules) {
+			List<Port> ports = module.getPorts();
+			for (Port port : ports) {
+				if (port.getUnitPort().equals(unitPort)) {
+					return module;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public List<Connection> getConnectionList(){
+//		List<Module> modules = view.getConfiguration().getModules();
+		List<Connection> connections =new ArrayList<Connection>();
+		
+		Set<UnitPort> unitPorts = cables.keySet();
+		for (UnitPort unitPort : unitPorts) {
+			Connection connection =new Connection();
+			connection.setInputPort(getPort(unitPort));
+			connection.setInputPort(getPort(model.getConnectedPort(unitPort)));
+			connection.setColor(cables.get(unitPort).getStroke().toString());
+		}
+		return connections;
 	}
 }

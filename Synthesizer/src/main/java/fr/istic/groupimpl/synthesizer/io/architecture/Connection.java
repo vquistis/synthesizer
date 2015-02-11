@@ -9,10 +9,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Connection {
 
 	/** The input port. */
-	private String inputPort;
+	private Port inputPort;
 	
 	/** The output port. */
-	private String outputPort;
+	private Port outputPort;
 	
 	/** The color. */
 	private String color;
@@ -22,7 +22,7 @@ public class Connection {
 	 *
 	 * @return the input port
 	 */
-	public String getInputPort() {
+	public Port getInputPort() {
 		return inputPort;
 	}
 
@@ -31,7 +31,7 @@ public class Connection {
 	 *
 	 * @param inputPort the new input port
 	 */
-	public void setInputPort(String inputPort) {
+	public void setInputPort(Port inputPort) {
 		this.inputPort = inputPort;
 	}
 
@@ -40,7 +40,7 @@ public class Connection {
 	 *
 	 * @return the output port
 	 */
-	public String getOutputPort() {
+	public Port getOutputPort() {
 		return outputPort;
 	}
 
@@ -49,7 +49,7 @@ public class Connection {
 	 *
 	 * @param outputPort the new output port
 	 */
-	public void setOutputPort(String outputPort) {
+	public void setOutputPort(Port outputPort) {
 		this.outputPort = outputPort;
 	}
 

@@ -12,14 +12,25 @@ import fr.istic.groupimpl.synthesizer.seq.jsyn.JsynSequencerCircuit;
 
 public class ModelSeq extends ModelComponent {
 
+	private final double sigMin = 0.00001;
+	private final double sigMax = 0.1;
+	
 	private JsynSequencerCircuit circuit;
 	
 	public ModelSeq( int nbPas ) {
 		super();
 
-		circuit = new JsynSequencerCircuit( nbPas);
+		circuit = new JsynSequencerCircuit( nbPas,sigMin,sigMax);
 	}
 
+	
+	
+	public void setValue(int indice, Double newVal)
+	{
+		circuit.setValue(indice,newVal);
+	}
+	
+	
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return circuit;

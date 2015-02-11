@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -77,7 +78,7 @@ public class ViewGlobal implements Initializable {
 
 	/** The ctl. */
 	private ControllerGlobal ctl;
-	
+
 	private List<Supplier<Module>> suppliers=new ArrayList<Supplier<Module>>();	
 
 	/**
@@ -115,16 +116,28 @@ public class ViewGlobal implements Initializable {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 
 		ctl = ControllerGlobal.getInstance();
-		
+		splitpane.setDividerPositions(0.33f, 0.66f);
 		splitpane.getDividers().forEach((div) -> {
 			div.positionProperty().addListener((a,b,c) -> {
-				
 				hb1.requestLayout();
 				hb2.requestLayout();
 				hb3.requestLayout();
 			});
 		});
-		
+
+		splitpane.getItems().forEach((hb) -> {
+			((HBox) hb).getChildren().addListener( new ListChangeListener<Node>() {
+				@Override
+				public void onChanged(javafx.collections.ListChangeListener.Change<? extends Node> c) {
+					c.next();
+					if (c.wasRemoved()) {
+						if (c.getList().size()== 0) {
+							splitpane.setDividerPositions(0.33f, 0.66f);
+						}
+					}
+				};
+			});
+		});
 		colorpicker.valueProperty().set(Color.BLUEVIOLET);
 
 		contentpane.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
@@ -179,7 +192,7 @@ public class ViewGlobal implements Initializable {
 			mouseX.set(e.getX());
 			mouseY.set(e.getY());
 		});
-		
+
 		scrollpane.addEventFilter(DragEvent.ANY, (e) -> {
 			double spXMin = scrollpane.getViewportBounds().getMinX();
 			double spYMin = scrollpane.getViewportBounds().getMinY();
@@ -187,29 +200,23 @@ public class ViewGlobal implements Initializable {
 			double spYMax = scrollpane.getViewportBounds().getMaxY();
 			double x = e.getX();
 			double y = e.getY();
-		
-			Log.getInstance().debug("!! Scroll : " + x  + " " + y);
-		
+
 			if (y >= spYMin  && y <= (spYMin + 100)) {
 				scrollpane.setVvalue(scrollpane.getVvalue() - 0.05);
-				Log.getInstance().debug("!!! Scroll botom " + scrollpane.getVvalue() );
 			}
-					
+
 			if (y <= spYMax  && y >= (spYMax - 100)) {
 				scrollpane.setVvalue(scrollpane.getVvalue() + 0.05);
-				Log.getInstance().debug("!!! Scroll top " + scrollpane.getHvalue() );
 			}
-		
+
 			if (x >= spXMin  && x <= (spXMin + 100)) {
 				scrollpane.setHvalue(scrollpane.getHvalue() - 0.05);
-				Log.getInstance().debug("!!! Scroll left " + scrollpane.getHvalue() );						
 			}
-					
+
 			if (x <= spXMax  && x >= (spXMax - 100)) {
 				scrollpane.setHvalue(scrollpane.getHvalue() + 0.05);
-				Log.getInstance().debug("!!! Scroll right " + scrollpane.getHvalue() );						
 			}
-		
+
 		});
 
 		ctl.setView(this);
@@ -234,16 +241,12 @@ public class ViewGlobal implements Initializable {
 			HBox hb = (HBox) splitpane.getItems().get(0);
 			hb.getChildren().add(root);
 			enableDrag(root);
-			splitpane.getDividers().forEach((div) -> {
-				div.positionProperty().addListener((a,b,c) -> {
+			splitpane.getItems().forEach((item) -> {
+				((HBox)item).heightProperty().addListener((a,b,c) -> {
 					view.refreshComponent();
 				});
 			});
-				
 			suppliers.add(view.getSaveSupplier());
-			borderpane.getScene().widthProperty().addListener((a,b,c) -> {
-				view.refreshComponent();
-			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -292,20 +295,20 @@ public class ViewGlobal implements Initializable {
 	public Color getCableColor() {
 		return colorpicker.getValue();
 	}
-	
-//	/**
-//	 * Sets the all modules transparent.
-//	 *
-//	 * @param t the new all modules transparent
-//	 */
-//	private void setAllModulesTransparent(boolean t) {
-//		splitpane.getItems().forEach((b) -> {
-//			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
-//				m.setMouseTransparent(t);
-//			});
-//		});
-//	}
-	
+
+	//	/**
+	//	 * Sets the all modules transparent.
+	//	 *
+	//	 * @param t the new all modules transparent
+	//	 */
+	//	private void setAllModulesTransparent(boolean t) {
+	//		splitpane.getItems().forEach((b) -> {
+	//			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
+	//				m.setMouseTransparent(t);
+	//			});
+	//		});
+	//	}
+
 	/**
 	 * Handle add replicator. This method adds a new Rep component 
 	 */
@@ -346,7 +349,7 @@ public class ViewGlobal implements Initializable {
 	public void handleAddScope(){
 		createModule("fxml/oscillo.fxml");		
 	}
-	
+
 	/**
 	 * Handle add eg. This method adds a new EG component
 	 */
@@ -356,7 +359,6 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
-<<<<<<< Updated upstream
 	 * Handle add vcf lp. This method adds a new VCF lp component
 	 */
 	@FXML
@@ -371,7 +373,7 @@ public class ViewGlobal implements Initializable {
 	public void handleAddMixer(){
 		createModule("fxml/mixer.fxml");		
 	}
-	
+
 	/**
 	 * Handle add whiteNoise. This method adds a new WhiteNoise component
 	 */
@@ -387,7 +389,7 @@ public class ViewGlobal implements Initializable {
 	public void handleAddLineIn(){
 		createModule("fxml/LineIn.fxml");		
 	}
-	
+
 	/**
 	 * Handle add sequencer. This method adds a new Sequencer component
 	 */
@@ -395,7 +397,7 @@ public class ViewGlobal implements Initializable {
 	public void handleAddSeq(){
 		createModule("fxml/seq.fxml");		
 	}
-	
+
 	/**
 	 * Mouse x property.
 	 *
@@ -421,13 +423,13 @@ public class ViewGlobal implements Initializable {
 	public void handleDelete() {
 		ctl.activateDeletionMode();
 	}
-	
+
 
 	@FXML
 	public void handlePaint() {
 		ctl.activatePaintingMode();
 	}
-	
+
 	public void enableCableDeletionMode(boolean enable) {
 		for(Node n : contentpane.getChildren()) {
 			if(n instanceof Cable) {
@@ -440,13 +442,13 @@ public class ViewGlobal implements Initializable {
 			contentpane.setCursor(new ImageCursor(new Image("img/delete.png")));
 		}
 	}
-	
+
 	public void enableCableCreationMode(boolean enable) {
 		if(enable) {
 			contentpane.setCursor(Cursor.DISAPPEAR);
 		}
 	}
-	
+
 	public void enableDefaultMode(boolean enable) {
 		if(enable) {
 			contentpane.setCursor(Cursor.DEFAULT);
@@ -465,7 +467,7 @@ public class ViewGlobal implements Initializable {
 			contentpane.setCursor(Cursor.HAND);
 		}
 	}
-	
+
 	@FXML
 	public void handleMenuDevmodeNodeHierarchy_1() {
 		DebugJFXTools debugJFXTools = new DebugJFXTools();
@@ -476,20 +478,29 @@ public class ViewGlobal implements Initializable {
 		DebugJFXTools debugJFXTools = new DebugJFXTools();
 		debugJFXTools.GenerateNodeHierarchy(borderpane, "synthjfx_2.dmp");
 	}
-	
+
 	@FXML
 	public void  handleSaveConfiguration(){
 		Configuration configuration =new Configuration();
 		for (Supplier<Module> supplier : suppliers) {
 			configuration.addModule(supplier.get());
 		}
-		
+
 		FileUtil.saveFile(configuration, "file.synthlab");
 	}
-	
+
+	public Configuration getConfiguration() {
+		Configuration configuration =new Configuration();
+		for (Supplier<Module> supplier : suppliers) {
+			configuration.addModule(supplier.get());
+		}
+		configuration.setConnections(ControllerGlobal.getInstance().getConnectionList());
+		return configuration;
+	}
+
 	@FXML
 	public void handleLoadConfiguration(){
-		
+
 	}
 
 }
