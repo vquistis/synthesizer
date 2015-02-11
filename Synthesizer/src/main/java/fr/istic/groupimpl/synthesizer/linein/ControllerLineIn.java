@@ -20,7 +20,7 @@ public class ControllerLineIn extends ControllerComponent {
 	 * Constructor
 	 */
 	public ControllerLineIn() {
-		ControllerGlobal.getInstance().registerOutUnitGenerator(model.getUnitGenerator());
+		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class ControllerLineIn extends ControllerComponent {
 	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
-		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());
+		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 
 	@Override
