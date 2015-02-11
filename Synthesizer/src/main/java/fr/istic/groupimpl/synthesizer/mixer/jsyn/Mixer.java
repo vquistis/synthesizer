@@ -22,7 +22,6 @@ import fr.istic.groupimpl.synthesizer.util.jsyn.JsynAttenuationFilter;
 public class Mixer extends Circuit implements UnitSource {	
 	/* Declare units that will be part of the circuit. */
 	private ArrayList<JsynAttenuationFilter> attenuators = new ArrayList<JsynAttenuationFilter>();
-	private ArrayList<Double> attenuatorValues = new ArrayList<Double>();
 	private MixerSum mixerSum;
 
 	/* Declare ports. */
@@ -68,7 +67,6 @@ public class Mixer extends Circuit implements UnitSource {
         {
         	index = i+1;
         	attenuators.add(new JsynAttenuationFilter());
-        	attenuatorValues.add(0.00);
         	
         	/* Add unit generators to circuit. */
         	add(attenuators.get(i));
@@ -116,13 +114,7 @@ public class Mixer extends Circuit implements UnitSource {
 	 *     true|false
 	 */
 	public void setMute(Integer index, boolean value) {
-		if (value) {
-			// on sauvegarde la valeur
-			attenuatorValues.set(index, attenuators.get(index).get());
-			attenuators.get(index).set(JsynAttenuationFilter.DECIBEL_MINIMUM_VALUE);
-		} else {
-			attenuators.get(index).set(attenuatorValues.get(index));
-		}
+		attenuators.get(index).setMute(value);
 	}
 	
 	/**
