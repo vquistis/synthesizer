@@ -45,7 +45,7 @@
                   <Label text="in" />
                   <ImageView fx:id="input" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
                      <image>
-                        <Image url="@../img/inoutVert.png" />
+                        <Image url="@../img/inoutBlanc.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
