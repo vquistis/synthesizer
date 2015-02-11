@@ -13,7 +13,7 @@
 
 <BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.oscilloscope.ViewOscillo">
    <bottom>
-      <GridPane alignment="CENTER" hgap="10.0" styleClass="portPane" vgap="10.0">
+      <GridPane alignment="CENTER" hgap="5.0" styleClass="portPane" vgap="5.0">
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />

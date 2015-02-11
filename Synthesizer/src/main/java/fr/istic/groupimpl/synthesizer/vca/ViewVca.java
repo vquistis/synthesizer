@@ -7,6 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -92,8 +93,8 @@ public class ViewVca extends ViewComponent implements Initializable {
 		pf.setRayon(32);
 		pf.setValueDef(0);		
 		Potentiometre amplitudeKnod = pf.getPotentiometre();
-		voltPane.getChildren().add(amplitudeKnod);
-
+		amplitudeKnod.setPadding(new Insets(50,0,50,0));
+		voltPane.getChildren().add(1,amplitudeKnod);
 		// Precision knob
 		pf.setNbSpins(0.80);
 		pf.setDiscret(false);
