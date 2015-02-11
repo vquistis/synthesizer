@@ -6,7 +6,6 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.command.ICommand;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 public interface IModelComponent {
 	/**
