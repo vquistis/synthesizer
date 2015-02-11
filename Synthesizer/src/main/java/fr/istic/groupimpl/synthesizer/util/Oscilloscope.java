@@ -1,7 +1,10 @@
 package fr.istic.groupimpl.synthesizer.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Deque;
+import java.util.LinkedList;
 
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.application.Platform;
@@ -13,6 +16,8 @@ import javafx.scene.text.Text;
 
 public class Oscilloscope extends Region {
 
+	private final long TIME_STABILITY=5000;
+	
 	public static final int SIZE_BUFFER_READ = 2048;
 	final int nbDataUsed = 1024;
 
@@ -64,6 +69,61 @@ public class Oscilloscope extends Region {
 		});
 	}
 
+	private class HistMax
+	{
+		
+		public HistMax(long t, double v) {
+			super();
+			this.t = t;
+			this.v = v;
+		}
+		long t;
+		double v;
+	}
+	
+	private Deque<HistMax> dequeStability=new LinkedList<>();
+	private void stabAdd(double v)
+	{
+		dequeStability.addLast(new HistMax((new Date()).getTime(), Math.abs(v)));
+	}
+	
+	private double stabGetMax()
+	{
+		double res=0.;
+		double memT=-1;
+		boolean flagErr=false;
+		for ( HistMax p:dequeStability)
+		{
+			res = Math.max(p.v,res);
+			if ( memT > p.t )
+			{
+				// anomalie du temps
+				flagErr=true;
+			}
+			memT = p.t;
+		}
+		if( flagErr )
+			dequeStability.clear();
+		return res;
+	}
+	private void stabPurge()
+	{
+		boolean flagCont=true;
+		long borneT=(new Date()).getTime()-TIME_STABILITY;
+		while( flagCont && !dequeStability.isEmpty() )
+		{
+			HistMax hm = dequeStability.getFirst();
+			if ( hm.t < borneT )
+			{
+				dequeStability.removeFirst();
+			}
+			else
+			{
+				flagCont = false;
+			}
+		}
+	}
+
 	/**
 	 * Set the refresh period
 	 * 
@@ -88,6 +148,8 @@ public class Oscilloscope extends Region {
 		refreshThread.start();
 	}
 
+	
+	
 	/**
 	 * To stop the refresh thread
 	 */
@@ -205,6 +267,10 @@ public class Oscilloscope extends Region {
 		{
 			hValue = lastHValue;
 		}
+		stabAdd(hValue);
+		hValue = stabGetMax();
+		stabPurge();
+		
 		coefY = -(getHeight() * 0.45) / hValue;
 		baseY = getHeight() / 2.;
 
