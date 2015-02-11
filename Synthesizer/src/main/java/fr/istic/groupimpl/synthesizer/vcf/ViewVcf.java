@@ -14,8 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
@@ -38,6 +38,7 @@ public class ViewVcf extends ViewComponent implements Initializable {
 	private DoubleProperty fmY = new SimpleDoubleProperty(0);
 	private DoubleProperty outputX = new SimpleDoubleProperty(0);
 	private DoubleProperty outputY = new SimpleDoubleProperty(0);
+	private ControllerVcf controller;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
@@ -67,7 +68,7 @@ public class ViewVcf extends ViewComponent implements Initializable {
 		Bindings.bindBidirectional(valueResonanceFx.textProperty(), knobResonance.valueProperty(), converter);
 
 		// Creation du controller
-		ControllerVcf controller = new ControllerVcf();
+		controller = new ControllerVcf();
 
 		// Listener parameters
 		knobCutoff.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewCutoffChange(newVal));
@@ -93,8 +94,8 @@ public class ViewVcf extends ViewComponent implements Initializable {
 	}
 
 	@Override
-	protected Module getConfiguration() {
+	protected ControllerComponent getController() {
 		// TODO Auto-generated method stub
-		return null;
+		return controller;
 	}
 }

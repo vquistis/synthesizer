@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
@@ -55,6 +56,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	private DoubleProperty inputY4 = new SimpleDoubleProperty(0);
 	private DoubleProperty outputX = new SimpleDoubleProperty(0);
 	private DoubleProperty outputY = new SimpleDoubleProperty(0);
+	private ControllerMixer controller;
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		addPort(input1, inputX1, inputY1);
@@ -91,7 +93,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		Bindings.bindBidirectional(valueVolumeFx4.textProperty(), knobVolume4.valueProperty(), converter4);
 		
 		// Creation du controller
-		ControllerMixer controller = new ControllerMixer();
+		controller = new ControllerMixer();
 		// Listener volume
 		knobVolume1.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewVolumeChange(0, newVal));
 		knobVolume2.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewVolumeChange(1, newVal));
@@ -127,5 +129,11 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	protected Module getConfiguration() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	protected ControllerComponent getController() {
+		// TODO Auto-generated method stub
+		return controller;
 	}
 }

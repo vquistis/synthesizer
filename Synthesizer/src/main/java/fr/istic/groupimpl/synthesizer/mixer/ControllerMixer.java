@@ -1,10 +1,11 @@
 package fr.istic.groupimpl.synthesizer.mixer;
 
 import javafx.beans.property.DoubleProperty;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
-public class ControllerMixer implements IControllerComponent {
+public class ControllerMixer extends ControllerComponent {
 
 	private ModelMixer model = new ModelMixer();
 	
@@ -55,5 +56,11 @@ public class ControllerMixer implements IControllerComponent {
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());
+	}
+
+	@Override
+	public ModelComponent getModel() {
+		// TODO Auto-generated method stub
+		return model;
 	}
 }

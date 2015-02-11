@@ -1,6 +1,7 @@
 package fr.istic.groupimpl.synthesizer.vco.jsyn;
 
 import junit.framework.TestCase;
+
 import com.jsyn.engine.SynthesisEngine;
 
 public class SelectFrom3InputTest extends TestCase {

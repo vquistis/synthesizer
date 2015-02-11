@@ -4,8 +4,6 @@ import junit.framework.TestCase;
 
 import com.jsyn.engine.SynthesisEngine;
 
-import fr.istic.groupimpl.synthesizer.util.jsyn.JsynFrequencyModulation;
-
 public class JsynFrequencyModulationTest extends TestCase {
     SynthesisEngine synthesisEngine;
 

@@ -1,10 +1,11 @@
 package fr.istic.groupimpl.synthesizer.rep;
 
 import javafx.beans.property.DoubleProperty;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
-public class ControllerRep implements IControllerComponent{
+public class ControllerRep extends ControllerComponent{
 	
 	private ModelRep modelRep;
 	private ControllerGlobal ctrlGlob;
@@ -12,7 +13,7 @@ public class ControllerRep implements IControllerComponent{
 	public ControllerRep(){
 		modelRep = new ModelRep();
 		ctrlGlob = ControllerGlobal.getInstance();
-		ctrlGlob.registerOutUnitGenerator(modelRep.getUnitGenerator());
+		ctrlGlob.registerUnitGenerator(modelRep.getUnitGenerator());
 	}
 
 	/**
@@ -38,6 +39,12 @@ public class ControllerRep implements IControllerComponent{
 	public void handleViewClose() {
 		ctrlGlob.removeAllConnections(modelRep.getAllPorts());
 		ctrlGlob.unregisterUnitGenerator(modelRep.getUnitGenerator());		
+	}
+
+	@Override
+	public ModelComponent getModel() {
+		// TODO Auto-generated method stub
+		return modelRep;
 	}
 
 }

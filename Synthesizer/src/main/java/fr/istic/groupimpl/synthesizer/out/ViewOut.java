@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
@@ -16,8 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
@@ -33,6 +32,7 @@ public class ViewOut extends ViewComponent implements Initializable {
 
 	private DoubleProperty inputX = new SimpleDoubleProperty(0);
 	private DoubleProperty inputY = new SimpleDoubleProperty(0);
+	private ControllerOut controller;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
@@ -52,7 +52,7 @@ public class ViewOut extends ViewComponent implements Initializable {
 		Bindings.bindBidirectional(valueVolumeFx.textProperty(), knobVolume.valueProperty(), converter);
 
 		// Creation du controller
-		ControllerOut controller = new ControllerOut();
+		controller = new ControllerOut();
 		// Listener volume
 		knobVolume.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewVolumeChange(newVal));
 		// Listener mute
@@ -66,6 +66,9 @@ public class ViewOut extends ViewComponent implements Initializable {
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
 		});
+		
+		addParameters("attenuation", ()-> {return  knobVolume.getValue();}, (text)-> valueVolumeFx.setText(String.valueOf(text)));
+		addParameters("muteVolumeFx", ()-> {return  knobVolume.getValue();}, (text)-> valueVolumeFx.setText(String.valueOf(text)));
 	}
 
 	@Override
@@ -74,10 +77,8 @@ public class ViewOut extends ViewComponent implements Initializable {
 	}
 
 	@Override
-	protected Module getConfiguration() {
-		Module module= new Module();
-		Map<String, String>parameters = module.getParameters();
-		parameters.put("attenuation", valueVolumeFx.getText());		
-		return module;
+	protected ControllerComponent getController() {
+		// TODO Auto-generated method stub
+		return controller;
 	}
 }

@@ -1,6 +1,6 @@
 package fr.istic.groupimpl.synthesizer.global;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;

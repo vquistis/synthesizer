@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
@@ -110,4 +111,9 @@ public class ViewSeq extends ViewComponent implements Initializable {
 		controller.handleViewOutputClick(outX, outY);
 	}
 
+	@Override
+	protected ControllerComponent getController() {
+		// TODO Auto-generated method stub
+		return controller;
+	}
 }

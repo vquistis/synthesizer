@@ -1,10 +1,11 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import javafx.beans.property.DoubleProperty;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
-public class ControllerOut implements IControllerComponent {
+public class ControllerOut extends ControllerComponent {
 
 	private ModelOut model = new ModelOut();
 	
@@ -41,9 +42,15 @@ public class ControllerOut implements IControllerComponent {
 		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(), xCoord, yCoord);
 	}
 
-	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());
 	}
+
+	@Override
+	public ModelComponent getModel() {
+		// TODO Auto-generated method stub
+		return model;
+	}
+	
 }

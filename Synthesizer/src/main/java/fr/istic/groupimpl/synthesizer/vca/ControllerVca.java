@@ -1,13 +1,14 @@
 package fr.istic.groupimpl.synthesizer.vca;
 
 import javafx.beans.property.DoubleProperty;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 /**
  * The Class ControllerVca.
  */
-public class ControllerVca implements IControllerComponent {
+public class ControllerVca extends ControllerComponent {
 	
 	/** The model vca. */
 	private ModelVca modelVca;
@@ -64,5 +65,12 @@ public class ControllerVca implements IControllerComponent {
 	 */
 	public void handleViewVoltChange(double volt) {
 		modelVca.setVolt(volt);
+	}
+
+
+	@Override
+	public ModelComponent getModel() {
+		// TODO Auto-generated method stub
+		return modelVca;
 	}
 }

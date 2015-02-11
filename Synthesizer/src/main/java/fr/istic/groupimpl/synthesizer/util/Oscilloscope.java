@@ -2,17 +2,17 @@ package fr.istic.groupimpl.synthesizer.util;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
-import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.application.Platform;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import fr.istic.groupimpl.synthesizer.logger.Log;
 
 public class Oscilloscope extends Region {
 
