@@ -107,17 +107,20 @@ public class ViewVco extends ViewComponent implements Initializable {
 		});
 		
 		// Choice base freq config + listener
-		choiceBaseFreq.getItems().addAll("1 Hz", "32 Hz", "1 KHz");
-		choiceBaseFreq.getSelectionModel().selectFirst();
+		choiceBaseFreq.getItems().addAll("0.1 Hz", "1 Hz", "32 Hz", "1 kHz");
+		choiceBaseFreq.getSelectionModel().select(1);
 		choiceBaseFreq.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
 				switch(newVal) {
+					case "0.1 Hz":
+						vcoControl.handleViewBaseFreqChange(0.1);
+						break;
 					case "1 Hz":
 						vcoControl.handleViewBaseFreqChange(1.0);
 						break;
 					case "32 Hz":
 						vcoControl.handleViewBaseFreqChange(32.0);
 						break;
-					case "1 KHz":
+					case "1 kHz":
 						vcoControl.handleViewBaseFreqChange(1000.0);
 						break;
 				}
