@@ -84,7 +84,8 @@
     -fx-font-family: "Arial";
     -fx-text-fill: linear-gradient(white, #d0d0d0);
     -fx-font-size: 12px;
-    -fx-padding: 5 10;
+    -fx-padding: 5;
+    -fx-pref-width: 100px;
 }
 .moduleButton:hover {
 	-fx-effect: dropshadow( three-pass-box , rgba(130,130,130,0.6) , 5, 0.0 , 0 , 1 );
