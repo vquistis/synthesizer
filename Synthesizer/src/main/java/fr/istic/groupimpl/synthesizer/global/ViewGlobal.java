@@ -118,6 +118,8 @@ public class ViewGlobal implements Initializable {
 
 		ctl = ControllerGlobal.getInstance();
 		
+		splitpane.setMinHeight(100.0);
+		
 		splitpane.getDividers().forEach((div) -> {
 			div.positionProperty().addListener((a,b,c) -> {
 				
@@ -151,6 +153,9 @@ public class ViewGlobal implements Initializable {
 		});
 
 		for(Node n : splitpane.getItems()) {
+			n.setOnDragDetected((e) -> {
+				
+			});
 			n.setOnDragOver((e) -> {
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();
@@ -182,39 +187,37 @@ public class ViewGlobal implements Initializable {
 			mouseY.set(e.getY());
 		});
 
-				scrollpane.addEventFilter(DragEvent.ANY, (e) -> {
-					double spXMin = scrollpane.getViewportBounds().getMinX();
-					double spYMin = scrollpane.getViewportBounds().getMinY();
-					double spXMax = scrollpane.getViewportBounds().getMaxX();
-					double spYMax = scrollpane.getViewportBounds().getMaxY();
-					double x = e.getX();
-					double y = e.getY();
+		scrollpane.addEventFilter(DragEvent.ANY, (e) -> {
+			double spXMin = scrollpane.getViewportBounds().getMinX();
+			double spYMin = scrollpane.getViewportBounds().getMinY();
+			double spXMax = scrollpane.getViewportBounds().getMaxX();
+			double spYMax = scrollpane.getViewportBounds().getMaxY();
+			double x = e.getX();
+			double y = e.getY();
 		
-					Log.getInstance().debug("!! Scroll : " + x  + " " + y);
+			Log.getInstance().debug("!! Scroll : " + x  + " " + y);
 		
-					if (y >= spYMin  && y <= (spYMin + 100)) {
-						scrollpane.setVvalue(scrollpane.getVvalue() - 0.05);
-						Log.getInstance().debug("!!! Scroll botom " + scrollpane.getVvalue() );
-					}
+			if (y >= spYMin  && y <= (spYMin + 100)) {
+				scrollpane.setVvalue(scrollpane.getVvalue() - 0.05);
+				Log.getInstance().debug("!!! Scroll botom " + scrollpane.getVvalue() );
+			}
 					
-					if (y <= spYMax  && y >= (spYMax - 100)) {
-						scrollpane.setVvalue(scrollpane.getVvalue() + 0.05);
-						Log.getInstance().debug("!!! Scroll top " + scrollpane.getHvalue() );
-					}
+			if (y <= spYMax  && y >= (spYMax - 100)) {
+				scrollpane.setVvalue(scrollpane.getVvalue() + 0.05);
+				Log.getInstance().debug("!!! Scroll top " + scrollpane.getHvalue() );
+			}
 		
-					if (x >= spXMin  && x <= (spXMin + 100)) {
-						scrollpane.setHvalue(scrollpane.getHvalue() - 0.05);
-						Log.getInstance().debug("!!! Scroll left " + scrollpane.getHvalue() );						
-					}
+			if (x >= spXMin  && x <= (spXMin + 100)) {
+				scrollpane.setHvalue(scrollpane.getHvalue() - 0.05);
+				Log.getInstance().debug("!!! Scroll left " + scrollpane.getHvalue() );						
+			}
 					
-					if (x <= spXMax  && x >= (spXMax - 100)) {
-						scrollpane.setHvalue(scrollpane.getHvalue() + 0.05);
-						Log.getInstance().debug("!!! Scroll right " + scrollpane.getHvalue() );						
-					}
+			if (x <= spXMax  && x >= (spXMax - 100)) {
+				scrollpane.setHvalue(scrollpane.getHvalue() + 0.05);
+				Log.getInstance().debug("!!! Scroll right " + scrollpane.getHvalue() );						
+			}
 		
-				});
-
-		
+		});		
 
 		ctl.setView(this);
 	}
