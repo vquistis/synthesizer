@@ -151,9 +151,6 @@ public class ViewGlobal implements Initializable {
 		});
 
 		for(Node n : splitpane.getItems()) {
-//			n.setOnDragDetected((e) -> {
-//				
-//			});
 			n.setOnDragOver((e) -> {
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();
@@ -184,7 +181,7 @@ public class ViewGlobal implements Initializable {
 			mouseX.set(e.getX());
 			mouseY.set(e.getY());
 		});
-
+		
 		scrollpane.addEventFilter(DragEvent.ANY, (e) -> {
 			double spXMin = scrollpane.getViewportBounds().getMinX();
 			double spYMin = scrollpane.getViewportBounds().getMinY();
@@ -215,7 +212,7 @@ public class ViewGlobal implements Initializable {
 				Log.getInstance().debug("!!! Scroll right " + scrollpane.getHvalue() );						
 			}
 		
-		});		
+		});
 
 		ctl.setView(this);
 	}
