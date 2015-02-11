@@ -18,8 +18,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+<<<<<<< HEAD
+=======
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
+>>>>>>> branch 'master' of https://kheireddinebourahli@bitbucket.org/groupimpl/projectsynthesizer.git
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
@@ -152,9 +156,9 @@ public class ViewVco extends ViewComponent implements Initializable {
 	}
 
 	@Override
-	protected Module getConfiguration() {
+	protected ControllerComponent getController() {
 		// TODO Auto-generated method stub
-		return null;
+		return vcoControl;
 	}
 
 }

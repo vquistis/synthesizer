@@ -10,8 +10,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+<<<<<<< HEAD
+=======
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
+>>>>>>> branch 'master' of https://kheireddinebourahli@bitbucket.org/groupimpl/projectsynthesizer.git
 
 /**
  * @authors GroupImpl
@@ -96,11 +100,10 @@ public class ViewRep extends ViewComponent implements Initializable{
 	protected Pane getComponentRoot() {
 		return rootModulePane;
 	}
-
 	@Override
-	protected Module getConfiguration() {
+	protected ControllerComponent getController() {
 		// TODO Auto-generated method stub
-		return null;
+		return controller;
 	}
 
 }

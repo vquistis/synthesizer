@@ -1,10 +1,11 @@
 package fr.istic.groupimpl.synthesizer.eg;
 
 import javafx.beans.property.DoubleProperty;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
-public class ControllerEg implements IControllerComponent {
+public class ControllerEg extends ControllerComponent {
 
 	private ModelEg model = new ModelEg();
 	
@@ -66,5 +67,11 @@ public class ControllerEg implements IControllerComponent {
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
+	}
+
+	@Override
+	public ModelComponent getModel() {
+		// TODO Auto-generated method stub
+		return model;
 	}
 }

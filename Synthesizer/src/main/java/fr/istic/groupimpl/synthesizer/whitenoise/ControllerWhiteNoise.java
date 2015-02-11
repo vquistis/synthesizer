@@ -1,7 +1,8 @@
 package fr.istic.groupimpl.synthesizer.whitenoise;
 
 import javafx.beans.property.DoubleProperty;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 /**
@@ -11,7 +12,7 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
  * @author Team GroupImpl
  *
  */
-public class ControllerWhiteNoise implements IControllerComponent {
+public class ControllerWhiteNoise extends ControllerComponent {
 
 	private ModelWhiteNoise model = new ModelWhiteNoise();
 	
@@ -35,5 +36,14 @@ public class ControllerWhiteNoise implements IControllerComponent {
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
+<<<<<<< HEAD
+	}
+
+	@Override
+	public ModelComponent getModel() {
+		// TODO Auto-generated method stub
+		return model;
+=======
+>>>>>>> branch 'master' of https://kheireddinebourahli@bitbucket.org/groupimpl/projectsynthesizer.git
 	}
 }

@@ -1,11 +1,12 @@
 package fr.istic.groupimpl.synthesizer.oscilloscope;
 
 import javafx.beans.property.DoubleProperty;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
 
-public class ControllerOscillo  implements IControllerComponent
+public class ControllerOscillo  extends ControllerComponent
 {
 	
 	private ModelOscillo model = new ModelOscillo(Oscilloscope.SIZE_BUFFER_READ);
@@ -61,6 +62,12 @@ public class ControllerOscillo  implements IControllerComponent
 	 */
 	public void handleRefreshPeriodViewChange(Number newVal) {
 		scope.setRefreshPeriod((Double)newVal);
+	}
+
+	@Override
+	public ModelComponent getModel() {
+		// TODO Auto-generated method stub
+		return model;
 	}
 
 }
