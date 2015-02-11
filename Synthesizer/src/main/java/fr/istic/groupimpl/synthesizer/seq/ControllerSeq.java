@@ -9,7 +9,7 @@ public class ControllerSeq  implements IControllerComponent
 {
 	static final int NB_BUTTONS = 8;
 	
-	private ModelSeq model = new ModelSeq(Oscilloscope.SIZE_BUFFER_READ);
+	private ModelSeq model = new ModelSeq(NB_BUTTONS);
 	private Oscilloscope scope;
 	
 	public ControllerSeq(Oscilloscope scope) {
@@ -44,16 +44,6 @@ public class ControllerSeq  implements IControllerComponent
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());		
 	}
 	
-	/**
-	 * méthode qui transmet les données venant du model
-	 * @return 
-	 * 	Le buffer de données
-	 */
-	public double [] getbufferData()
-	{
-		return model.getBuffer();
-	}
-
 
 	/**
 	 * Methode appellé sur un changement de valeur 

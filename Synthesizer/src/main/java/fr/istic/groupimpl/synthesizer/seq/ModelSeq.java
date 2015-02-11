@@ -9,25 +9,16 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
+import fr.istic.groupimpl.synthesizer.seq.jsyn.JsynSequencerCircuit;
 
 public class ModelSeq extends ModelComponent {
 
 	private JsynSequencerCircuit circuit;
 	
-	public ModelSeq( int sizeBuffer ) {
+	public ModelSeq( int nbPas ) {
 		super();
 
-		circuit = new JsynSequencerCircuit(3,sizeBuffer);
-	}
-
-	/**
-	 * Méthode pour transmettre les dernière données valides
-	 * @return 
-	 * 		buffer de données
-	 */
-	public double [] getBuffer()
-	{
-		return circuit.getBuffer();
+		circuit = new JsynSequencerCircuit( nbPas);
 	}
 
 	@Override

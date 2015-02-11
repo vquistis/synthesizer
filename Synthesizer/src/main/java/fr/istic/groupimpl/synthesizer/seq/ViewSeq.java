@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
 import fr.istic.groupimpl.synthesizer.util.OscilloscopeFactory;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
@@ -63,8 +64,8 @@ public class ViewSeq extends ViewComponent implements Initializable {
 		
 
 		// Listener in & out
-		gate.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(gateX, gateY));
-		out.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outX, outY));
+//		gate.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewGateClick(gateX, gateY));
+//		out.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outX, outY));
 		
 		// Listener close module
 		closeSeq.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
@@ -84,7 +85,7 @@ public class ViewSeq extends ViewComponent implements Initializable {
 	}
 
 	@Override
-	protected Configuration getConfiguration() {
+	protected Module getConfiguration() {
 		// TODO Auto-generated method stub
 		return null;
 	}
