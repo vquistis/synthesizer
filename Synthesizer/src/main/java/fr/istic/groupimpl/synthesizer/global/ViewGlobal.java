@@ -118,8 +118,6 @@ public class ViewGlobal implements Initializable {
 
 		ctl = ControllerGlobal.getInstance();
 		
-		splitpane.setMinHeight(100.0);
-		
 		splitpane.getDividers().forEach((div) -> {
 			div.positionProperty().addListener((a,b,c) -> {
 				
@@ -153,9 +151,9 @@ public class ViewGlobal implements Initializable {
 		});
 
 		for(Node n : splitpane.getItems()) {
-			n.setOnDragDetected((e) -> {
-				
-			});
+//			n.setOnDragDetected((e) -> {
+//				
+//			});
 			n.setOnDragOver((e) -> {
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();
