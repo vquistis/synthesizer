@@ -41,9 +41,9 @@ public class FileUtil {
 	 * Save file.
 	 *
 	 * @param obj the obj
-	 * @param file the file
+	 * @param filename the file
 	 */
-	public static void saveFile(Object obj,File file){
+	public static void saveFile(Object obj,String filename){
 		final Log log = Log.getInstance();
 		try{
 			JAXBContext context = JAXBContext.newInstance(obj.getClass());
@@ -51,10 +51,10 @@ public class FileUtil {
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 //			m.marshal(obj, System.out);
 			Writer w = null;
-			w = new FileWriter(file);
+			w = new FileWriter(new File(filename));
 			m.marshal(obj, w);
 			w.close();
-			log.info("le fichier "+file+" a été enregistré");
+			log.info("le fichier "+filename+" a été enregistré");
 			
 		}catch(Exception e){
 			log.info("Erreur d'enregistrement ");

@@ -1,6 +1,7 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
@@ -17,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
@@ -73,8 +75,10 @@ public class ViewOut extends ViewComponent implements Initializable {
 	}
 
 	@Override
-	protected Configuration getConfiguration() {
-		// TODO Auto-generated method stub
-		return null;
+	protected Module getConfiguration() {
+		Module module= new Module();
+		Map<String, String>parameters = module.getParameters();
+		parameters.put("attenuation", valueVolumeFx.getText());		
+		return module;
 	}
 }

@@ -1,5 +1,6 @@
 package fr.istic.groupimpl.synthesizer.io.architecture;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,6 +16,12 @@ public class Configuration {
 	
 	/** The connections. */
 	private List<Connection> connections;
+	
+	
+	public Configuration() {
+		modules = new ArrayList<Module>();
+		connections = new ArrayList<Connection>();
+	}
 
 	/**
 	 * Gets the modules.
@@ -50,5 +57,41 @@ public class Configuration {
 	 */
 	public void setConnections(List<Connection> connections) {
 		this.connections = connections;
+	}
+	
+	/**
+	 * Adds the module.
+	 *
+	 * @param module the module
+	 */
+	public void addModule(Module module){
+		modules.add(module);
+	}
+	
+	/**
+	 * Removes the module.
+	 *
+	 * @param module the module
+	 */
+	public void removeModule(Module module){
+		modules.remove(module);
+	}
+	
+	/**
+	 * Adds the connection.
+	 *
+	 * @param connection the connection
+	 */
+	public void addConnection(Connection connection){
+		connections.add(connection);
+	}
+	
+	/**
+	 * Removes the connection.
+	 *
+	 * @param connection the connection
+	 */
+	public void removeConnection(Connection connection){
+		connections.remove(connection);
 	}
 }

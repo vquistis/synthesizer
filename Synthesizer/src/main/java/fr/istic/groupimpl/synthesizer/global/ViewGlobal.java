@@ -31,7 +31,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.io.FileUtil;
 import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 
@@ -75,9 +77,7 @@ public class ViewGlobal implements Initializable {
 	/** The ctl. */
 	private ControllerGlobal ctl;
 	
-	private List<Supplier<Configuration>> suppliers=new ArrayList<Supplier<Configuration>>();
-	
-	
+	private List<Supplier<Module>> suppliers=new ArrayList<Supplier<Module>>();	
 
 	/**
 	 * Adds the cable.
@@ -250,6 +250,8 @@ public class ViewGlobal implements Initializable {
 					view.refreshComponent();
 				});
 			});
+				
+			suppliers.add(view.getSaveSupplier());
 			borderpane.getScene().widthProperty().addListener((a,b,c) -> {
 				view.refreshComponent();
 			});
@@ -472,7 +474,12 @@ public class ViewGlobal implements Initializable {
 	
 	@FXML
 	public void  handleSaveConfiguration(){
-			
+		Configuration configuration =new Configuration();
+		for (Supplier<Module> supplier : suppliers) {
+			configuration.addModule(supplier.get());
+		}
+		
+		FileUtil.saveFile(configuration, "file.synthlab");
 	}
 	
 	@FXML
