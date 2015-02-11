@@ -4,18 +4,16 @@ import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
-import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
 
 public class ControllerSeq  extends ControllerComponent
 {
-	static final int NB_BUTTONS = 8;
+	static final int NB_BUTTONS=8;
 	
-	private ModelSeq model = new ModelSeq(NB_BUTTONS);
-	private Oscilloscope scope;
+	private final ModelSeq model = new ModelSeq(NB_BUTTONS);
 	
-	public ControllerSeq(Oscilloscope scope) {
-		this.scope = scope;
-		ControllerGlobal.getInstance().registerOutUnitGenerator(model.getUnitGenerator());
+	public ControllerSeq() {	
+		
+		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
 	
 	/**
@@ -40,19 +38,18 @@ public class ControllerSeq  extends ControllerComponent
 
 	@Override
 	public void handleViewClose() {
-		scope.stop(); // pour arreter le thread
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
-		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());		
+		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());		
 	}
 	
 
 	/**
-	 * Methode appellé sur un changement de valeur 
+	 * Methode appellé sur un changement de valeur d'un potentiometre
 	 * @param newVal
 	 * 		nouvelle valeur
 	 */
-	public void handleRefreshPeriodViewChange(Number newVal) {
-		scope.setRefreshPeriod((Double)newVal);
+	public void handleValueViewChange(int indice, Number newVal) {
+		model.setValue(indice, (Double)newVal);
 	}
 
 	@Override
