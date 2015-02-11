@@ -12,7 +12,7 @@ public class ControllerRep implements IControllerComponent{
 	public ControllerRep(){
 		modelRep = new ModelRep();
 		ctrlGlob = ControllerGlobal.getInstance();
-		ctrlGlob.registerOutUnitGenerator(modelRep.getUnitGenerator());
+		ctrlGlob.registerUnitGenerator(modelRep.getUnitGenerator());
 	}
 
 	/**
