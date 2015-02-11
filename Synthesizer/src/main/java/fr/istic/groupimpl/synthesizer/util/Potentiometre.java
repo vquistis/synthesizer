@@ -7,6 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -88,6 +89,7 @@ public class Potentiometre extends Region {
 
 	private double debDragAngle;
 	boolean dragOK = false;
+	boolean rightButtonPressed=false;
 
 	private void traitePosAngle(double x, double y) {
 		double centerX = getWidth() / 2.0;
@@ -156,8 +158,18 @@ public class Potentiometre extends Region {
 			Log.getInstance().debug(
 					"event MousePressed x=" + event.getX() + " y="
 							+ event.getY());
+			if ( event.getButton() == MouseButton.SECONDARY )
+			{
+				rightButtonPressed = true;
+				event.consume();
+				return;
+			}
 			dragValid = true;
 			dragOK = false;
+			if ( event.getButton() == MouseButton.SECONDARY )
+			{
+				rightButtonPressed = true;
+			}
 			traitePosAngle(event.getX(), event.getY());
 			event.consume();
 
@@ -176,6 +188,12 @@ public class Potentiometre extends Region {
 			Log.getInstance().debug(
 					"event MouseReleased x=" + event.getX() + " y="
 							+ event.getY());
+			if ( event.getButton() == MouseButton.SECONDARY )
+			{
+				rightButtonPressed = false;
+				event.consume();
+				return;
+			}
 
 			long t = (new Date()).getTime();
 
@@ -207,9 +225,13 @@ public class Potentiometre extends Region {
 
 		});
 		setOnScroll((event) -> {
-			double v = ((double) event.getDeltaY()) / 750.;
+			double v = ((double) event.getDeltaY()) / 500.;
 			Log.getInstance().debug(
 					"event OnScroll deltaY=" + event.getDeltaY() + " v=" + v);
+			if ( rightButtonPressed )
+			{
+				v /= 10.;
+			}
 			addValue(v);
 			event.consume();
 		});

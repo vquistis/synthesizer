@@ -13,7 +13,7 @@ public class ControllerOscillo  implements IControllerComponent
 	
 	public ControllerOscillo(Oscilloscope scope) {
 		this.scope = scope;
-		ControllerGlobal.getInstance().registerOutUnitGenerator(model.getUnitGenerator());
+		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
 	
 	/**
@@ -40,7 +40,7 @@ public class ControllerOscillo  implements IControllerComponent
 	public void handleViewClose() {
 		scope.stop(); // pour arreter le thread
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
-		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());		
+		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());		
 	}
 	
 	/**
