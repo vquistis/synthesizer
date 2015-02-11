@@ -8,7 +8,6 @@ import com.jsyn.unitgen.LineIn;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 /**
  * 

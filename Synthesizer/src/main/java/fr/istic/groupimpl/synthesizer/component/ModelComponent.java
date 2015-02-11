@@ -3,7 +3,6 @@ package fr.istic.groupimpl.synthesizer.component;
 import java.util.Properties;
 
 import fr.istic.groupimpl.synthesizer.command.ICommand;
-import fr.istic.groupimpl.synthesizer.component.IModelComponent;
 
 public abstract class ModelComponent implements IModelComponent {
 	

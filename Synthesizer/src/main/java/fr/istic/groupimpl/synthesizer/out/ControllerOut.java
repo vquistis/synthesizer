@@ -1,18 +1,9 @@
 package fr.istic.groupimpl.synthesizer.out;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import com.jsyn.ports.UnitInputPort;
-import com.jsyn.ports.UnitPort;
-
 import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
-import fr.istic.groupimpl.synthesizer.io.architecture.Port;
-import fr.istic.groupimpl.synthesizer.io.architecture.Type;
 
 public class ControllerOut extends ControllerComponent {
 

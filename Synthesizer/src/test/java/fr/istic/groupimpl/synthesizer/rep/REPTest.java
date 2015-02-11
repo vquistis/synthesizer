@@ -1,10 +1,10 @@
 package fr.istic.groupimpl.synthesizer.rep;
 
+import junit.framework.TestCase;
+
 import com.jsyn.engine.SynthesisEngine;
 
 import fr.istic.groupimpl.synthesizer.rep.jsyn.JsynRepCircuit;
-import fr.istic.groupimpl.synthesizer.vca.jsyn.VCAJSyn;
-import junit.framework.TestCase;
 
 public class REPTest extends TestCase {
 	SynthesisEngine synthesisEngine;

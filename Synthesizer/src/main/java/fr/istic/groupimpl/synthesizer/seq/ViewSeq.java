@@ -7,7 +7,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -15,10 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
-import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
-import fr.istic.groupimpl.synthesizer.util.OscilloscopeFactory;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 public class ViewSeq extends ViewComponent implements Initializable {

@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 
 public class ViewWhiteNoise extends ViewComponent implements Initializable {
 

@@ -20,9 +20,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
-import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
-//kheireddinebourahli@bitbucket.org/groupimpl/projectsynthesizer.git
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
+import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
  * @authors GroupImpl

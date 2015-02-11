@@ -8,7 +8,6 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
 import fr.istic.groupimpl.synthesizer.seq.jsyn.JsynSequencerCircuit;
 
 public class ModelSeq extends ModelComponent {
