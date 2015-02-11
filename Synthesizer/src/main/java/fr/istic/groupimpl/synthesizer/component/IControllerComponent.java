@@ -1,9 +1,0 @@
-package fr.istic.groupimpl.synthesizer.component;
-
-
-public interface IControllerComponent {	
-	/**
-	 * Click listener for close the component
-	 */
-	public void handleViewClose();
-}

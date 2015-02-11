@@ -1,7 +1,10 @@
 package fr.istic.groupimpl.synthesizer.component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
@@ -9,6 +12,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.logger.Log;
@@ -18,6 +23,9 @@ public abstract class ViewComponent implements IViewComponent {
 	public static final double COMPONENT_HEIGHT = 300;
 
 	private List<ChangeListener> portBindings = new ArrayList<ChangeListener>();
+	
+	private Map<String, Supplier<Double>> saveActionMap =new HashMap<>();
+	private Map<String, Consumer<Double>> loadActionMap =new HashMap<>();
 
 	private static boolean debug = false;
 
@@ -154,10 +162,41 @@ public abstract class ViewComponent implements IViewComponent {
 
 	}
 	
-	public Supplier<Module> getSaveSupplier() {
+	public final Supplier<Module> getSaveSupplier() {
 		Supplier<Module> sup = (() -> getConfiguration());
 		return sup;
 	}
 	
-	protected abstract Module getConfiguration();
+	public final int getPositionX(){
+		Node node =  getComponentRoot();
+		return ((HBox)node.getParent()).getChildren().indexOf(node);
+	}
+	
+	public final int getPositionY(){
+		Node node =  getComponentRoot();
+		HBox hbox = ((HBox)node.getParent());		
+		SplitPane splitPane = ((SplitPane)hbox.getParent().getParent());		
+		return splitPane.getItems().indexOf(hbox);
+	}
+	
+	protected final void addParameters(String parameterName, Supplier<Double> saveAction, Consumer<Double> loadAction){
+		saveActionMap.put(parameterName, saveAction);
+		loadActionMap.put(parameterName, loadAction);		
+	}
+	
+	protected abstract ControllerComponent getController();
+	
+	protected Module getConfiguration() {
+		Module module= new Module();
+		Map<String, Double> parameters = module.getParameters();
+		saveActionMap.forEach((k,v) -> {
+			parameters.put(k, v.get());
+		});
+
+		module.setPorts(getController().getAllPort());;
+		module.setPosX(getPositionX());
+		module.setPosY(getPositionY());
+		return module;
+	}
+	
 }

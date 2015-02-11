@@ -14,8 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
@@ -39,6 +39,7 @@ public class ViewEg extends ViewComponent implements Initializable {
 	private DoubleProperty inputY = new SimpleDoubleProperty(0);
 	private DoubleProperty outputX = new SimpleDoubleProperty(0);
 	private DoubleProperty outputY = new SimpleDoubleProperty(0);
+	private ControllerEg controller;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
@@ -72,7 +73,7 @@ public class ViewEg extends ViewComponent implements Initializable {
 		Bindings.bindBidirectional(valueReleaseFx.textProperty(), knobRelease.valueProperty(), converter);
 
 		// Creation du controller
-		ControllerEg controller = new ControllerEg();
+		controller = new ControllerEg();
 
 		// Listener parameters
 		knobAttack.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewAttackChange(newVal));
@@ -99,8 +100,8 @@ public class ViewEg extends ViewComponent implements Initializable {
 	}
 
 	@Override
-	protected Module getConfiguration() {
+	protected ControllerComponent getController() {
 		// TODO Auto-generated method stub
-		return null;
+		return controller;
 	}
 }

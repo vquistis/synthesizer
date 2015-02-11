@@ -1,10 +1,20 @@
 package fr.istic.groupimpl.synthesizer.out;
 
-import javafx.beans.property.DoubleProperty;
-import fr.istic.groupimpl.synthesizer.component.IControllerComponent;
-import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-public class ControllerOut implements IControllerComponent {
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitPort;
+
+import javafx.beans.property.DoubleProperty;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+import fr.istic.groupimpl.synthesizer.io.architecture.Port;
+import fr.istic.groupimpl.synthesizer.io.architecture.Type;
+
+public class ControllerOut extends ControllerComponent {
 
 	private ModelOut model = new ModelOut();
 	
@@ -41,9 +51,15 @@ public class ControllerOut implements IControllerComponent {
 		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(), xCoord, yCoord);
 	}
 
-	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());
 	}
+
+	@Override
+	public ModelComponent getModel() {
+		// TODO Auto-generated method stub
+		return model;
+	}
+	
 }

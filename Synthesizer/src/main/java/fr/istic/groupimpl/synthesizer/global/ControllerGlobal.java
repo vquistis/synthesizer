@@ -348,6 +348,10 @@ public class ControllerGlobal {
 		interactionMode = InteractionMode.CablePainting;
 	}
 	
+	public boolean isPortConnected(UnitPort port){
+		return model.isPortConnected(port);
+	}
+	
 	private enum InteractionMode {
 		CableCreation_none,CableCreation_in,CableCreation_out,CableDeletion,CablePainting
 	}
