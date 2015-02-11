@@ -100,6 +100,6 @@ public class JsynFrequencyModulation extends UnitGenerator {
      *   Frequency
      */
     public double converter(double fm, double f0, double octave) {
-    	return f0*Math.pow(2, octave + fm);
+    	return f0*Math.pow(2, octave + fm*SignalUtil.COEF_VOLT);
     }
 }

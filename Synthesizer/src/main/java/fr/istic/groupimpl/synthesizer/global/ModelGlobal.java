@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
+import com.jsyn.devices.AudioDeviceManager;
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
@@ -30,7 +31,9 @@ public class ModelGlobal {
 		this.outputConnections = new HashMap<UnitOutputPort, UnitInputPort>();
 		this.inputConnections = new HashMap<UnitInputPort, UnitOutputPort>();
 		this.synth = JSyn.createSynthesizer();
-		this.synth.start();
+		//this.synth.start();
+		this.synth.start( 44100, AudioDeviceManager.USE_DEFAULT_DEVICE, 2, 
+							AudioDeviceManager.USE_DEFAULT_DEVICE,2);
 	}
 
 	/**

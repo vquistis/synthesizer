@@ -36,11 +36,14 @@ public class ControllerWhiteNoise extends ControllerComponent {
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
+<<<<<<< HEAD
 	}
 
 	@Override
 	public ModelComponent getModel() {
 		// TODO Auto-generated method stub
 		return model;
+=======
+>>>>>>> branch 'master' of https://kheireddinebourahli@bitbucket.org/groupimpl/projectsynthesizer.git
 	}
 }

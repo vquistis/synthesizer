@@ -8,9 +8,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.whitenoise.ViewWhiteNoise">
+<BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.linein.ViewLineIn">
    <bottom>
-      <HBox alignment="CENTER" prefHeight="62.0" prefWidth="151.0" styleClass="contentPane">
+      <HBox alignment="CENTER" prefHeight="226.0" prefWidth="50.0" styleClass="portPane">
          <padding>
             <Insets bottom="5.0" top="5.0" />
          </padding>
@@ -40,7 +40,7 @@
             <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label fx:id="titleModuleFx" text="BRUIT BLANC">
+            <Label fx:id="titleModuleFx" text="LINE IN">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
