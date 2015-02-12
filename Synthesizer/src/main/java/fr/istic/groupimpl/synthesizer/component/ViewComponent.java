@@ -14,6 +14,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
@@ -88,7 +89,7 @@ public abstract class ViewComponent implements IViewComponent {
 			ControllerComponent ctl = getController();
 			ctl.getAllPort().forEach((p) -> {
 				if(p.getName().equals(portName)) {
-					ctl.handlePortClicked(p.getUnitPort(), portX, portY);
+					portNode.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> ctl.handlePortClicked(p.getUnitPort(), portX, portY));
 				}
 			});
 		});
