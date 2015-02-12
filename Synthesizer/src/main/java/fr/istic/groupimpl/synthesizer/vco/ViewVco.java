@@ -153,8 +153,12 @@ public class ViewVco extends ViewComponent implements Initializable {
 
 	@Override
 	protected ControllerComponent getController() {
-		// TODO Auto-generated method stub
 		return vcoControl;
+	}
+
+	@Override
+	public String getFilename() {
+		return "fxml/vco.fxml";
 	}
 
 }

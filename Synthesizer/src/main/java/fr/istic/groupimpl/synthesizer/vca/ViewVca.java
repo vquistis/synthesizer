@@ -8,9 +8,11 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
@@ -26,49 +28,19 @@ import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
  */
 public class ViewVca extends ViewComponent implements Initializable {
 
-	/** The pane vca. */
-	@FXML
-	private BorderPane paneVca;
-	
-	/** The close vca. */
-	@FXML
-	private ImageView closeModuleFx;
-	
-	/** The volt pane. */
-	@FXML
-	private VBox voltPane;
+	@FXML private BorderPane paneVca;
+	@FXML private GridPane top;
+	@FXML private VBox voltPane;
+	@FXML private ImageView am;
+	@FXML private ImageView out;
+	@FXML private ImageView input;
 
-	/** The am. */
-	@FXML
-	private ImageView am;
-	
-	/** The out. */
-	@FXML
-	private ImageView out;
-	
-	/** The input. */
-	@FXML 
-	private ImageView input;
-
-	/** The vca control. */
 	private ControllerVca vcaControl;
-	
-	/** The input x. */
 	private DoubleProperty inputX = new SimpleDoubleProperty(0);
-	
-	/** The input y. */
 	private DoubleProperty inputY = new SimpleDoubleProperty(0);
-
-	/** The fm x. */
 	private DoubleProperty amX = new SimpleDoubleProperty(0);
-	
-	/** The fm y. */
 	private DoubleProperty amY = new SimpleDoubleProperty(0);
-	
-	/** The out x. */
 	private DoubleProperty outX = new SimpleDoubleProperty(0);
-	
-	/** The out y. */
 	private DoubleProperty outY = new SimpleDoubleProperty(0);
 
 	/**
@@ -80,6 +52,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		((Label) top.lookup("#titleModule")).setText("VCA");
 
 		PotentiometreFactory pf = PotentiometreFactory.getFactoryInstance();
 
@@ -95,11 +68,6 @@ public class ViewVca extends ViewComponent implements Initializable {
 		Potentiometre amplitudeKnod = pf.getPotentiometre();
 		amplitudeKnod.setPadding(new Insets(50,0,50,0));
 		voltPane.getChildren().add(1,amplitudeKnod);
-		// Precision knob
-		pf.setNbSpins(0.80);
-		pf.setDiscret(false);
-		pf.setMinValue(-1);
-		pf.setMaxValue(1);
 
 		// VcaController creation and listeners on knob values
 		vcaControl = new ControllerVca();
@@ -107,7 +75,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 		amplitudeKnod.valueProperty().addListener((p, oldVal, newVal) ->
 		vcaControl.handleViewVoltChange((double) newVal));		
 		// Listener close VCA
-		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();
 			vcaControl.handleViewClose();
 			Pane parent = (Pane) paneVca.getParent();
@@ -150,8 +118,12 @@ public class ViewVca extends ViewComponent implements Initializable {
 
 	@Override
 	protected ControllerComponent getController() {
-		// TODO Auto-generated method stub
 		return vcaControl;
+	}
+
+	@Override
+	public String getFilename() {
+		return "fxml/vca.fxml";
 	}
 
 }

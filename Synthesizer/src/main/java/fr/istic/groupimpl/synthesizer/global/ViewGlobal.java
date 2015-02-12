@@ -244,7 +244,13 @@ public class ViewGlobal implements Initializable {
 	 *
 	 * @param filename the filename component fxml
 	 */
-	public void createModule(String filename) {
+
+	/**
+	 * Creates a new module.
+	 *
+	 * @param filename the filename component fxml
+	 */
+	public void createModule(String filename, Module module) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
 			Node root = loader.load();
@@ -252,6 +258,10 @@ public class ViewGlobal implements Initializable {
 			HBox hb = (HBox) splitpane.getItems().get(0);
 			hb.getChildren().add(root);
 			enableDrag(root);
+			
+			if (module != null) {
+				view.initComponent(module);
+			}
 			splitpane.getItems().forEach((item) -> {
 				((HBox)item).heightProperty().addListener((a,b,c) -> {
 					view.refreshComponent();
@@ -262,6 +272,12 @@ public class ViewGlobal implements Initializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void createModule(String filename) {
+		createModule(filename, null);
+	}
+	
+	
 
 	/**
 	 * This method is used to return the position of a component in the container splitPane.
@@ -381,7 +397,15 @@ public class ViewGlobal implements Initializable {
 	public void handleAddVcfLp(){
 		createModule("fxml/vcf-lp.fxml");		
 	}
-
+	
+	/**
+	 * Handle add vcf hp. This method adds a new VCF hp component
+	 */
+	@FXML
+	public void handleAddVcfHp(){
+		createModule("fxml/vcf-hp.fxml");		
+	}
+	
 	/**
 	 * Handle add mixer. This method adds a new Mixer component
 	 */
@@ -578,7 +602,13 @@ public class ViewGlobal implements Initializable {
          if(file != null){
         	 	// traitement
         	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);
-        	 System.out.println(configuration);
+        	 
+        	 // configue component
+        	 configuration.getModules().forEach((module) ->{
+        		 createModule(module.getFilename(), module);
+        	 });
+        	 
+
          }
 
 	}

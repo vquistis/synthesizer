@@ -7,8 +7,10 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
@@ -21,9 +23,9 @@ import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 public class ViewRep extends ViewComponent implements Initializable{
 	
 	@FXML private Pane rootModulePane;
+	@FXML private GridPane top;
 	@FXML private ImageView in;
 	@FXML private ImageView out1, out2, out3;
-	@FXML private ImageView closeModuleFx;
 	
 	private ControllerRep controller;
 	
@@ -38,10 +40,12 @@ public class ViewRep extends ViewComponent implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		((Label) top.lookup("#titleModule")).setText("REP");
+		
 		controller = new ControllerRep();
 		
 		// Listener close module
-		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
@@ -99,8 +103,12 @@ public class ViewRep extends ViewComponent implements Initializable{
 	}
 	@Override
 	protected ControllerComponent getController() {
-		// TODO Auto-generated method stub
 		return controller;
+	}
+
+	@Override
+	public String getFilename() {
+		return "fxml/rep.fxml";
 	}
 
 }
