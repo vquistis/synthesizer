@@ -8,6 +8,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,18 +27,12 @@ import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 public class ViewSeq extends ViewComponent implements Initializable {
 
-	@FXML
-	private BorderPane paneSeq;
-	@FXML
-	private ImageView closeSeq;
-	@FXML
-	private VBox screenSeqPane;
-	@FXML
-	private ImageView gate;
-	@FXML
-	private ImageView out;
-	@FXML
-	private GridPane gridSeq;
+	@FXML private BorderPane paneSeq;
+	@FXML private GridPane top;
+	@FXML private VBox screenSeqPane;
+	@FXML private ImageView gate;
+	@FXML private ImageView out;
+	@FXML private GridPane gridSeq;
 
 	private DoubleProperty gateX = new SimpleDoubleProperty(0);
 	private DoubleProperty gateY = new SimpleDoubleProperty(0);
@@ -48,6 +43,7 @@ public class ViewSeq extends ViewComponent implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
+		((Label) top.lookup("#titleModule")).setText("SEQ");
 		
 		controller = new ControllerSeq();
 		
@@ -99,7 +95,7 @@ public class ViewSeq extends ViewComponent implements Initializable {
 		}
 
 		// Listener close module
-		closeSeq.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();
 			controller.handleViewClose();
 			Pane parent = (Pane) paneSeq.getParent();
