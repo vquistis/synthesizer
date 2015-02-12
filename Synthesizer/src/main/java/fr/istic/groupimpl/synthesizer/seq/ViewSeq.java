@@ -71,8 +71,10 @@ public class ViewSeq extends ViewComponent implements Initializable {
 			gridSeq.add(knob, i , 0);
 
 			knob.valueProperty().addListener(
-					(p, oldVal, newVal) -> controller.handleValueViewChange(
-							indice, (double) newVal));
+					(p, oldVal, newVal) ->{
+						double v=(double) newVal;
+						if ( v > 1. ||  v <-1.) v = 0;
+						controller.handleValueViewChange(indice, v);});
 			HBox rg1 = new HBox();
 			HBox rg2 = new HBox();
 			TextField tf1 = new TextField("0");
