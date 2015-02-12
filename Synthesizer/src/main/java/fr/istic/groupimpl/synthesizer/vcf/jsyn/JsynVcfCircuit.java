@@ -4,21 +4,25 @@ import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.Circuit;
+import com.jsyn.unitgen.FilterBiquadCommon;
+import com.jsyn.unitgen.FilterHighPass;
 import com.jsyn.unitgen.FilterLowPass;
 
 import fr.istic.groupimpl.synthesizer.util.jsyn.JsynFrequencyModulation;
+import fr.istic.groupimpl.synthesizer.vcf.ModelVcf;
 
 /**
  * VCF Circuit with filter low pass and fm input.
  * 
  * UnitGenerator included :
  * - JsynFrequencyModulation
- * - FilterLowPass
+ * - FilterBiquadCommon : FilterLowPass or FilterHighPass
  */
 public class JsynVcfCircuit extends Circuit {
 	/* Declare units that will be part of the circuit. */
 	private JsynFrequencyModulation computeFreq;
-	private FilterLowPass filter;
+	private FilterBiquadCommon filter1; // filter LP or HP : 12dB/octave
+	private FilterBiquadCommon filter2; // filter LP or HP : 12dB/octave
 
 	/* Declare ports. */
 	private UnitInputPort input;
@@ -35,34 +39,53 @@ public class JsynVcfCircuit extends Circuit {
 		return output;
 	}
 	
-	public JsynVcfCircuit() {
+	public JsynVcfCircuit(ModelVcf.Type t) {
 		/* Create various unit generators. */
 		computeFreq = new JsynFrequencyModulation();
-		filter = new FilterLowPass();
 		
 		/* Octave is not necessary, 0 is the neutral element */
 		computeFreq.getInputOctave().set(0);
 		
 		/* Add unit generators to circuit. */
 		add(computeFreq);
-		add(filter);
-
+		switch (t) {
+			case LP24:
+				filter1 = new FilterLowPass();
+				filter2 = new FilterLowPass();
+				
+				add(filter1);
+				add(filter2);
+	
+				/* Connect SynthUnits to make control signal path. */
+				computeFreq.getOutput().connect(filter1.input);
+				filter1.output.connect(filter2.input);
+				break;
+			case HP12:
+				filter1 = new FilterHighPass();
+				filter2 = new FilterHighPass();
+				
+				add(filter2);
+	
+				/* Connect SynthUnits to make control signal path. */
+				computeFreq.getOutput().connect(filter2.input);
+				break;
+		}
+		
 		/* Make ports on internal units appear as ports on circuit. */
 		/* Optionally give some circuit ports more meaningful names. */	
 		input = (UnitInputPort) addNamedPort(computeFreq.getInputf0(), "vcf_input");
 		fm = (UnitInputPort) addNamedPort(computeFreq.getInputfm(), "vcf_fm");
-		output = (UnitOutputPort) addNamedPort(filter.output, "vcf_output");
-		
-		/* Connect SynthUnits to make control signal path. */
-		computeFreq.getOutput().connect(filter.input);
+		output = (UnitOutputPort) addNamedPort(filter2.output, "vcf_output");
 	}
 	
 	public void setCutFrequency(double value) {
-		filter.frequency.set(value);
+		filter1.frequency.set(value);
+		filter2.frequency.set(value);
 	}
 	
 	public void setResonance(double value) {
-		filter.Q.set(value);
+		filter1.Q.set(value);
+		filter2.Q.set(value);
 	}
 	
 	/**

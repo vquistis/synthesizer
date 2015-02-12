@@ -7,9 +7,10 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 public class ControllerVcf extends ControllerComponent {
 
-	private ModelVcf model = new ModelVcf();
+	private ModelVcf model;
 	
-	public ControllerVcf() {
+	public ControllerVcf(ModelVcf.Type t) {
+		model = new ModelVcf(t);
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
 	

@@ -381,7 +381,15 @@ public class ViewGlobal implements Initializable {
 	public void handleAddVcfLp(){
 		createModule("fxml/vcf-lp.fxml");		
 	}
-
+	
+	/**
+	 * Handle add vcf hp. This method adds a new VCF hp component
+	 */
+	@FXML
+	public void handleAddVcfHp(){
+		createModule("fxml/vcf-hp.fxml");		
+	}
+	
 	/**
 	 * Handle add mixer. This method adds a new Mixer component
 	 */
