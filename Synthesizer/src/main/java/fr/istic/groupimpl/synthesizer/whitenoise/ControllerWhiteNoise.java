@@ -1,6 +1,5 @@
 package fr.istic.groupimpl.synthesizer.whitenoise;
 
-import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
@@ -31,7 +30,6 @@ public class ControllerWhiteNoise extends ControllerComponent {
 
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return model;
 	}
 }

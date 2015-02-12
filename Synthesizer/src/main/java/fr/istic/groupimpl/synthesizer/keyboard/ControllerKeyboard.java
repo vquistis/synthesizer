@@ -27,7 +27,51 @@ public class ControllerKeyboard extends ControllerComponent {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
-
+	public void handleViewkeyEvent(String key) {
+		System.out.println("key" + key);
+		switch (key) {
+		case "A":
+			model.setKey(1);
+			break;
+		case "Z":
+			model.setKey(2);
+			break;
+		case "E":
+			model.setKey(3);
+			break;
+		case "R":
+			model.setKey(4);
+			break;
+		case "T":
+			model.setKey(5);
+			break;
+		case "Y":
+			model.setKey(6);
+			break;
+		case "U":
+			model.setKey(7);
+			break;
+		case "I":
+			model.setKey(8);
+			break;
+		case "O":
+			model.setKey(9);
+			break;
+		case "P":
+			model.setKey(10);
+			break;
+		case "Q":
+			model.setKey(11);
+			break;
+		case "S":
+			model.setKey(12);
+			break;
+			
+		default:
+			break;
+		} 
+	}
+	
 	@Override
 	public ModelComponent getModel() {
 		return model;
