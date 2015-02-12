@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
@@ -26,6 +27,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	@FXML private HBox inputHBox;
 	@FXML private ImageView fxOutput;
 	@FXML private ImageView closeModuleFx;
+	@FXML private GridPane top;
 
 	private DoubleProperty outputX = new SimpleDoubleProperty(0);
 	private DoubleProperty outputY = new SimpleDoubleProperty(0);
@@ -66,7 +68,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
         addPort(fxOutput, outputX, outputY);
 		fxOutput.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));	
 		// Listener close module
-		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
