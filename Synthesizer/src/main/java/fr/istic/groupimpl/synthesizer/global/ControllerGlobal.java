@@ -130,6 +130,15 @@ public class ControllerGlobal {
 		}
 	}
 
+	public void handlePortClicked(UnitPort port, DoubleProperty x, DoubleProperty y) {
+		if(port instanceof UnitInputPort) {
+			handleInputClicked((UnitInputPort)port, x, y);
+		}
+		else if(port instanceof UnitOutputPort) {
+			handleOutputClicked((UnitOutputPort)port, x, y);
+		}
+	}
+	
 	/**
 	 * Handles the process of connection creation when an input port is clicked.
 	 *
@@ -137,7 +146,7 @@ public class ControllerGlobal {
 	 * @param x the x
 	 * @param y the y
 	 */
-	public void handleInputClicked(UnitInputPort port, DoubleProperty x, DoubleProperty y) {
+	private void handleInputClicked(UnitInputPort port, DoubleProperty x, DoubleProperty y) {
 		switch(interactionMode) {
 		case CableDeletion:
 			view.enableCableDeletionMode(false);
@@ -184,7 +193,7 @@ public class ControllerGlobal {
 	 * @param x the x
 	 * @param y the y
 	 */
-	public void handleOutputClicked(UnitOutputPort port, DoubleProperty x, DoubleProperty y) {
+	private void handleOutputClicked(UnitOutputPort port, DoubleProperty x, DoubleProperty y) {
 		switch(interactionMode) {
 		case CableDeletion:
 			view.enableCableDeletionMode(false);

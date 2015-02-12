@@ -85,6 +85,12 @@ public abstract class ViewComponent implements IViewComponent {
 			if(debug) {
 				Log.getInstance().debug("[Port Position Recomputed : X = " + point2D.getX() + " ; Y = " + point2D.getY() + "]");
 			}
+			ControllerComponent ctl = getController();
+			ctl.getAllPort().forEach((p) -> {
+				if(p.getName().equals(portName)) {
+					ctl.handlePortClicked(p.getUnitPort(), portX, portY);
+				}
+			});
 		});
 
 		portBindings.add(posChangeListener);
