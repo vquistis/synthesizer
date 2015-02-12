@@ -269,10 +269,14 @@ public class ViewGlobal implements Initializable {
 			
 			root.parentProperty().addListener((obs,oldVal,newVal) -> {
 				if(oldVal != null) {
-					((HBox) oldVal).heightProperty().removeListener(view.getListener());
+					hb1.heightProperty().removeListener(view.getListener());
+					hb2.heightProperty().removeListener(view.getListener());
+					hb3.heightProperty().removeListener(view.getListener());
 				}
 				if(newVal != null) {
-					((HBox) newVal).heightProperty().addListener(view.getListener());
+					hb1.heightProperty().addListener(view.getListener());
+					hb2.heightProperty().addListener(view.getListener());
+					hb3.heightProperty().addListener(view.getListener());
 				}
 			});
 			
