@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
@@ -34,6 +36,8 @@ public abstract class ViewComponent implements IViewComponent {
 	
 	/** The load action map. */
 	private Map<String, Consumer<Double>> loadActionMap =new HashMap<>();
+	
+	private Map<String, Pair<DoubleProperty, DoubleProperty>> cablesProperties= new HashMap<>();
 
 	/** The debug. */
 	private static boolean debug = false;
@@ -64,17 +68,27 @@ public abstract class ViewComponent implements IViewComponent {
 	 * the portX and portY properties to the position of the port in the parent
 	 * node of the component.
 	 * 
-	 * @param node The node to be added as a port.
+	 * @param portNode The node to be added as a port.
 	 * @param portX The property that will be bounds to the x coordinate of the node in the
 	 * coordinate space of the parent node. 
 	 * @param portY The property that will be bounds to the y coordinate of the node in the
 	 * coordinate space of the parent node.
 	 */
-	final protected void addPort(Node node, DoubleProperty portX, DoubleProperty portY) {
+	final protected void addPort(String portName, Node portNode) {
+		
+		DoubleProperty portX = new SimpleDoubleProperty(0);
+		DoubleProperty portY = new SimpleDoubleProperty(0);
+		Pair<DoubleProperty, DoubleProperty> prop = new Pair<>(portX, portY);
+		cablesProperties.put(portName, prop);
+
+		ControllerComponent ctl = getController();
+		ctl.setupPort(portName, portNode, portX, portY);
+				
 		ChangeListener posChangeListener = ((a,b,c) -> {
-			Point2D point2D = computeNodeCenter(node);
-			portX.set(point2D.getX());
-			portY.set(point2D.getY());
+			Point2D point2D = computeNodeCenter(portNode);
+
+			cablesProperties.get(portName).getKey().set(point2D.getX());
+			cablesProperties.get(portName).getValue().set(point2D.getY());
 			if(debug) {
 				Log.getInstance().debug("[Port Position Recomputed : X = " + point2D.getX() + " ; Y = " + point2D.getY() + "]");
 			}

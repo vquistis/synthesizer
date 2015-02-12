@@ -3,8 +3,6 @@ package fr.istic.groupimpl.synthesizer.vco;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -53,12 +51,6 @@ public class ViewVco extends ViewComponent implements Initializable {
 	private Label freqLabel;
 
 	private ControllerVco vcoControl;
-
-	private DoubleProperty fmX = new SimpleDoubleProperty(0);
-	private DoubleProperty fmY = new SimpleDoubleProperty(0);
-
-	private DoubleProperty outX = new SimpleDoubleProperty(0);
-	private DoubleProperty outY = new SimpleDoubleProperty(0);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -126,24 +118,8 @@ public class ViewVco extends ViewComponent implements Initializable {
 				}
 		});
 
-		addPort(fm, fmX, fmY);
-		addPort(out, outX, outY);
-	}
-
-	/**
-	 * Handles the click on the FM input port
-	 */
-	@FXML
-	public void handleFmClick() {
-		vcoControl.handleViewInputClick(fmX, fmY);
-	}
-
-	/**
-	 * Handles the click on the output port
-	 */
-	@FXML
-	public void handleOutputClick() {
-		vcoControl.handleViewOutputClick(outX, outY);
+		addPort("vco_inputFm",fm);
+		addPort("outputAmplitude",out);
 	}
 
 	@Override

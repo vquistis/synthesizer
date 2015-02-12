@@ -23,7 +23,7 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  * 
  * @author Team GroupImpl
  */
-public class VCAJSyn extends UnitGenerator {
+public class JSynVCA extends UnitGenerator {
 
 	/** The input. */
 	private UnitInputPort input;	 	//Volt
@@ -74,9 +74,9 @@ public class VCAJSyn extends UnitGenerator {
 	}
 
 	/**
-	 * create a new vca jsyn.
+	 * constructor
 	 */
-	public VCAJSyn() {
+	public JSynVCA() {
 		addPort(input = new UnitInputPort("vca_input"));
 		addPort(inputam = new UnitInputPort("vca_inputam"));
 		addPort(inputa0 = new UnitInputPort("vca_inputa0"));

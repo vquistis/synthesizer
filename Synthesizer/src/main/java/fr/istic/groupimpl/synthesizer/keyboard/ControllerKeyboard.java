@@ -1,25 +1,24 @@
-package fr.istic.groupimpl.synthesizer.whitenoise;
+package fr.istic.groupimpl.synthesizer.keyboard;
 
-import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 /**
  * 
- * Controller of White Noise module
+ * Controller of keyboard module
  *  
  * @author Team GroupImpl
  *
  */
-public class ControllerWhiteNoise extends ControllerComponent {
+public class ControllerKeyboard extends ControllerComponent {
 
-	private ModelWhiteNoise model = new ModelWhiteNoise();
+	private ModelKeyboard model = new ModelKeyboard();
 	
 	/**
 	 * Constructor
 	 */
-	public ControllerWhiteNoise() {
+	public ControllerKeyboard() {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
 
@@ -31,7 +30,6 @@ public class ControllerWhiteNoise extends ControllerComponent {
 
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return model;
 	}
 }

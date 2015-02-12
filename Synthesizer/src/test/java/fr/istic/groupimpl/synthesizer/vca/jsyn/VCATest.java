@@ -31,7 +31,7 @@ public class VCATest extends TestCase {
 	 */
 	public void testVCA_in() throws InterruptedException {
 
-		VCAJSyn vca = new VCAJSyn();
+		JSynVCA vca = new JSynVCA();
 		synthesisEngine.add(vca);
 
 		synthesisEngine.start();
@@ -63,7 +63,7 @@ public class VCATest extends TestCase {
 	 */
 	public void testVCA_a0() throws InterruptedException {
 
-		VCAJSyn vca = new VCAJSyn();
+		JSynVCA vca = new JSynVCA();
 		synthesisEngine.add(vca);
 
 		synthesisEngine.start();
@@ -136,7 +136,7 @@ public class VCATest extends TestCase {
 	 */
 	public void testVCA_out1() throws InterruptedException {
 
-		VCAJSyn vca = new VCAJSyn();
+		JSynVCA vca = new JSynVCA();
 		synthesisEngine.add(vca);
 
 		synthesisEngine.start();
@@ -157,7 +157,7 @@ public class VCATest extends TestCase {
 	 */
 	public void testVCA_out2() throws InterruptedException {
 
-		VCAJSyn vca = new VCAJSyn();
+		JSynVCA vca = new JSynVCA();
 		synthesisEngine.add(vca);
 
 		synthesisEngine.start();
@@ -212,7 +212,7 @@ public class VCATest extends TestCase {
 	 */
 	public void testVCA_out3() throws InterruptedException {
 
-		VCAJSyn vca = new VCAJSyn();
+		JSynVCA vca = new JSynVCA();
 		synthesisEngine.add(vca);
 
 		synthesisEngine.start();
@@ -251,7 +251,7 @@ public class VCATest extends TestCase {
 	 */
 	public void testVCA_out4() throws InterruptedException {
 
-		VCAJSyn vca = new VCAJSyn();
+		JSynVCA vca = new JSynVCA();
 		synthesisEngine.add(vca);
 
 		synthesisEngine.start();

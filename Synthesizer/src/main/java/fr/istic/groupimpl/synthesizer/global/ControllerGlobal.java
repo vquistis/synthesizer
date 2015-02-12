@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.stage.Stage;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
@@ -130,6 +131,15 @@ public class ControllerGlobal {
 		}
 	}
 
+	public void handlePortClicked(UnitPort port, DoubleProperty x, DoubleProperty y) {
+		if(port instanceof UnitInputPort) {
+			handleInputClicked((UnitInputPort)port, x, y);
+		}
+		else if(port instanceof UnitOutputPort) {
+			handleOutputClicked((UnitOutputPort)port, x, y);
+		}
+	}
+	
 	/**
 	 * Handles the process of connection creation when an input port is clicked.
 	 *
@@ -137,7 +147,7 @@ public class ControllerGlobal {
 	 * @param x the x
 	 * @param y the y
 	 */
-	public void handleInputClicked(UnitInputPort port, DoubleProperty x, DoubleProperty y) {
+	private void handleInputClicked(UnitInputPort port, DoubleProperty x, DoubleProperty y) {
 		switch(interactionMode) {
 		case CableDeletion:
 			view.enableCableDeletionMode(false);
@@ -184,7 +194,7 @@ public class ControllerGlobal {
 	 * @param x the x
 	 * @param y the y
 	 */
-	public void handleOutputClicked(UnitOutputPort port, DoubleProperty x, DoubleProperty y) {
+	private void handleOutputClicked(UnitOutputPort port, DoubleProperty x, DoubleProperty y) {
 		switch(interactionMode) {
 		case CableDeletion:
 			view.enableCableDeletionMode(false);
@@ -518,6 +528,7 @@ public class ControllerGlobal {
 	}
 	
 	public void clearAllComponent(){
+		model.stopSynth();
 		Set<UnitPort> set= cables.keySet();
 		for (UnitPort unitPort : set) {
 			Cable cable=cables.get(unitPort);
@@ -525,4 +536,10 @@ public class ControllerGlobal {
 		}
 		model = new ModelGlobal();
 	}
+	
+	
+	public Stage getStage(){
+		return view.getStage();
+	}
+	
 }

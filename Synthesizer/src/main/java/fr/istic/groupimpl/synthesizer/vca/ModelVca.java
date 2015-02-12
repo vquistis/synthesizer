@@ -9,7 +9,7 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.logger.Log;
-import fr.istic.groupimpl.synthesizer.vca.jsyn.VCAJSyn;
+import fr.istic.groupimpl.synthesizer.vca.jsyn.JSynVCA;
 
 /**
  * The Class Model Vca.
@@ -17,14 +17,14 @@ import fr.istic.groupimpl.synthesizer.vca.jsyn.VCAJSyn;
 public class ModelVca extends ModelComponent {
 
 	/** The vcaj syn. */
-	private VCAJSyn vcajSyn;
+	private JSynVCA vcajSyn;
 
 	/**
 	 * Instantiates a new model vca.
 	 */
 	public ModelVca() {
 		super();
-		vcajSyn = new VCAJSyn();
+		vcajSyn = new JSynVCA();
 	}
 
 	/**

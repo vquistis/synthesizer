@@ -32,15 +32,16 @@ public class ViewOut extends ViewComponent implements Initializable {
 	@FXML private CheckBox muteVolumeFx;
 	@FXML private ImageView input;
 
-	private DoubleProperty inputX = new SimpleDoubleProperty(0);
-	private DoubleProperty inputY = new SimpleDoubleProperty(0);
 	private ControllerOut controller;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("OUT");
 		
-		addPort(input, inputX, inputY);
+		// Creation du controller
+		controller = new ControllerOut();
+		
+		addPort("out_input", input);
 		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setMinValue(-60);
@@ -55,14 +56,11 @@ public class ViewOut extends ViewComponent implements Initializable {
 		StringConverter<Number> converter = new DoubleStringConverter();
 		Bindings.bindBidirectional(valueVolumeFx.textProperty(), knobVolume.valueProperty(), converter);
 
-		// Creation du controller
-		controller = new ControllerOut();
 		// Listener volume
 		knobVolume.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewVolumeChange(newVal));
 		// Listener mute
 		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewMuteChange(newVal));
-		// Listener input
-		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(inputX, inputY));
+
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			

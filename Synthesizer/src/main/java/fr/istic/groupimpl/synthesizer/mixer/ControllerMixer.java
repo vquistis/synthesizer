@@ -1,6 +1,5 @@
 package fr.istic.groupimpl.synthesizer.mixer;
 
-import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
@@ -40,25 +39,6 @@ public class ControllerMixer extends ControllerComponent {
 	 */
 	public void handleViewMuteChange(Integer index, Boolean newVal) {
 		model.setMute(index, newVal);
-	}
-	
-	/**
-	 * Click listener for input port index
-	 * @param index of the input port
-	 * @param xCoord Coordinate of the clicked input port (x axis)
-	 * @param yCoord Coordinate of the clicked input port (y axis)
-	 */
-	public void handleViewInputClick(Integer index, DoubleProperty xCoord, DoubleProperty yCoord) {
-		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(index), xCoord, yCoord);
-	}
-	
-	/**
-	 * Click listener for output ports
-	 * @param xCoord Coordinate of the clicked output port (x axis)
-	 * @param yCoord Coordinate of the clicked output port (y axis)
-	 */
-	public void handleViewOutputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
-		ControllerGlobal.getInstance().handleOutputClicked(model.getOutputPort(), xCoord, yCoord);
 	}
 	
 	@Override

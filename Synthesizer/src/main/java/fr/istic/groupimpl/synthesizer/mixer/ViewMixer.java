@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -30,8 +28,8 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	@FXML private GridPane top;
 	private ImageView fxOutput;
 	
-	private DoubleProperty outputX = new SimpleDoubleProperty(0);
-	private DoubleProperty outputY = new SimpleDoubleProperty(0);
+//	private DoubleProperty outputX = new SimpleDoubleProperty(0);
+//	private DoubleProperty outputY = new SimpleDoubleProperty(0);
 	private ControllerMixer controller;
 	
 	@Override
@@ -61,19 +59,17 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		knobFact.setRayon(32);
 		
 		// Generate input port
-        for(int i = 0; i <= controller.getNumberOfInputPort() - 1; i++)
+        for(int i = 0; i < controller.getNumberOfInputPort(); i++)
         {
     		// Add the input view to Mixer
     		inputHBox.getChildren().add((HBox) createViewMixerInput(i, controller, knobFact));
-        } 
+        }
         
 		// Listener output
         fxOutput = (ImageView) inputHBox.lookup("#fxOutput");
-        addPort(fxOutput, outputX, outputY);
-		fxOutput.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));	
-		// Listener close module
+        addPort("output",fxOutput);
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();			
+			cleanupPorts();
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
@@ -90,9 +86,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		inputView.getFxKnobVolumePane().getChildren().add(1,knobVolume);
 		
 		// Add port to the ViewComponent
-		DoubleProperty inputX = new SimpleDoubleProperty(0);
-		DoubleProperty inputY = new SimpleDoubleProperty(0);
-		addPort(inputView.getFxInput(), inputX, inputY);
+		addPort("mixer_input"+index,inputView.getFxInput());
 		// Bind knob value and text field value
 		StringConverter<Number> converter = new DoubleStringConverter();
 		Bindings.bindBidirectional(inputView.getFxValueVolume().textProperty(), knobVolume.valueProperty(), converter);
@@ -101,7 +95,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		// Listener mute
 		inputView.getFxMuteVolume().selectedProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewMuteChange(index, newVal));
 		// Listener input
-		inputView.getFxInput().addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(index, inputX, inputY));
+		//inputView.getFxInput().addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(index, inputX, inputY));
 		
 		return inputView;
 	}

@@ -21,7 +21,7 @@
 				<VBox alignment="CENTER">
 					<children>
 						<Label text="out-1" />
-						<ImageView fx:id="out1" onMouseClicked="#handleOutputClick1"
+						<ImageView fx:id="out1" 
 							fitHeight="40.0" fitWidth="40.0" pickOnBounds="true"
 							preserveRatio="true" styleClass="outputPort">
 							<image>
@@ -36,7 +36,7 @@
 				<VBox alignment="CENTER">
 					<children>
 						<Label text="out-2" />
-						<ImageView fx:id="out2" onMouseClicked="#handleOutputClick2"
+						<ImageView fx:id="out2" 
 							fitHeight="40.0" fitWidth="40.0" pickOnBounds="true"
 							preserveRatio="true" styleClass="outputPort">
 							<image>
@@ -51,7 +51,7 @@
 				<VBox alignment="CENTER">
 					<children>
 						<Label text="out-3" />
-						<ImageView fx:id="out3" onMouseClicked="#handleOutputClick3"
+						<ImageView fx:id="out3" 
 							fitHeight="40.0" fitWidth="40.0" pickOnBounds="true"
 							preserveRatio="true" styleClass="outputPort">
 							<image>
@@ -73,7 +73,7 @@
 			</padding>
 			<children>
 				<Label text="in" />
-				<ImageView fx:id="in" onMouseClicked="#handleInputClick" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
+				<ImageView fx:id="in" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
 					<image>
 						<Image url="@../img/inoutBlanc.png" />
 					</image>

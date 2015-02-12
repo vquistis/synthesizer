@@ -3,8 +3,6 @@ package fr.istic.groupimpl.synthesizer.whitenoise;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -21,20 +19,17 @@ public class ViewWhiteNoise extends ViewComponent implements Initializable {
 	@FXML private GridPane top;
 	@FXML private ImageView output;
 
-	private DoubleProperty outputX = new SimpleDoubleProperty(0);
-	private DoubleProperty outputY = new SimpleDoubleProperty(0);
 	private ControllerWhiteNoise controller;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
-		((Label) top.lookup("#titleModule")).setText("Briut blanc");
+		((Label) top.lookup("#titleModule")).setText("White noise");
 		
-		addPort(output, outputX, outputY);
+		addPort("output", output);
 		
 		// implementation of controller
 		controller = new ControllerWhiteNoise();
-		// Listener output
-		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));
+
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			

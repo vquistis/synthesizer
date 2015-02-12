@@ -87,11 +87,11 @@ public class Mixer extends Circuit implements UnitSource {
 		
 		/* Make ports on internal units appear as ports on circuit. */
 		/* Optionally give some circuit ports more meaningful names. */	
-    	Integer index;
+    	Integer index = 0;
         for(int i = 0; i < NumberOfInputPort; i++)
         {
-        	index = i + 1;
         	unitInputPorts.add((UnitInputPort) addNamedPort(attenuators.get(i).getInput(), "mixer_input" + index));
+        	index = i + 1;
         } 
 				
 		/* Connect SynthUnits to make control signal path. */

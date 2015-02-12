@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -37,18 +35,14 @@ public class ViewEg extends ViewComponent implements Initializable {
 	@FXML private ImageView input;
 	@FXML private ImageView output;
 
-	private DoubleProperty inputX = new SimpleDoubleProperty(0);
-	private DoubleProperty inputY = new SimpleDoubleProperty(0);
-	private DoubleProperty outputX = new SimpleDoubleProperty(0);
-	private DoubleProperty outputY = new SimpleDoubleProperty(0);
 	private ControllerEg controller;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("EG");
 		
-		addPort(input, inputX, inputY);
-		addPort(output, outputX, outputY);
+		addPort("input", input);
+		addPort("output", output);
 		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setMinValue(0);
@@ -85,10 +79,6 @@ public class ViewEg extends ViewComponent implements Initializable {
 		knobSustain.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewSustainChange(newVal));
 		knobRelease.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewReleaseChange(newVal));
 		
-		// Listener input & output
-		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(inputX, inputY));
-		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));
-
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			

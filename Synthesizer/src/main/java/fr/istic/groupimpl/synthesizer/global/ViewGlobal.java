@@ -269,10 +269,14 @@ public class ViewGlobal implements Initializable {
 			
 			root.parentProperty().addListener((obs,oldVal,newVal) -> {
 				if(oldVal != null) {
-					((HBox) oldVal).heightProperty().removeListener(view.getListener());
+					hb1.heightProperty().removeListener(view.getListener());
+					hb2.heightProperty().removeListener(view.getListener());
+					hb3.heightProperty().removeListener(view.getListener());
 				}
 				if(newVal != null) {
-					((HBox) newVal).heightProperty().addListener(view.getListener());
+					hb1.heightProperty().addListener(view.getListener());
+					hb2.heightProperty().addListener(view.getListener());
+					hb3.heightProperty().addListener(view.getListener());
 				}
 			});
 			
@@ -454,6 +458,14 @@ public class ViewGlobal implements Initializable {
 	public void handleAddSeq(){
 		createModule("fxml/seq.fxml");		
 	}
+	
+	/**
+	 * Handle add sequencer. This method adds a new Sequencer component
+	 */
+	@FXML
+	public void handleAddKeyboard(){
+		createModule("fxml/keyboard.fxml");		
+	}
 
 	/**
 	 * Mouse x property.
@@ -574,7 +586,7 @@ public class ViewGlobal implements Initializable {
 		 FileChooser fileChooser = new FileChooser();
 		  
          //Set extension filter
-         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.synthlab)", "*.synthlab");
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.sl)", "*.sl");
          fileChooser.getExtensionFilters().add(extFilter);
          
          //Show save file dialog
@@ -611,7 +623,7 @@ public class ViewGlobal implements Initializable {
 	public void handleLoadConfiguration(){
 		 FileChooser fileChooser = new FileChooser();         
          //Set extension filter
-         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.synthlab)", "*.synthlab");
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.sl)", "*.sl");
          fileChooser.getExtensionFilters().add(extFilter);
           
          //Show save file dialog
@@ -644,5 +656,11 @@ public class ViewGlobal implements Initializable {
 	public void setStage(Stage primaryStage) {
 		this.stage=primaryStage;
 	}
+
+	public Stage getStage() {
+		return stage;
+	}
+	
+	
 
 }

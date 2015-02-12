@@ -3,8 +3,6 @@ package fr.istic.groupimpl.synthesizer.vca;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -36,12 +34,6 @@ public class ViewVca extends ViewComponent implements Initializable {
 	@FXML private ImageView input;
 
 	private ControllerVca vcaControl;
-	private DoubleProperty inputX = new SimpleDoubleProperty(0);
-	private DoubleProperty inputY = new SimpleDoubleProperty(0);
-	private DoubleProperty amX = new SimpleDoubleProperty(0);
-	private DoubleProperty amY = new SimpleDoubleProperty(0);
-	private DoubleProperty outX = new SimpleDoubleProperty(0);
-	private DoubleProperty outY = new SimpleDoubleProperty(0);
 
 	/**
 	 * Initializes the controller class.
@@ -81,29 +73,11 @@ public class ViewVca extends ViewComponent implements Initializable {
 			Pane parent = (Pane) paneVca.getParent();
 			parent.getChildren().remove(paneVca);
 		});
+
+		addPort("vca_input",input);
+		addPort("vca_inputam",am);
+		addPort("vca_output",out);
 		
-		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			vcaControl.handleViewInputClick("vca_input", inputX, inputY);
-		});
-
-		addPort(input, inputX, inputY);
-		addPort(am, amX, amY);
-		addPort(out, outX, outY);
-		
-	}
-
-	/**
-	 * Handles the click on the FM input am port.
-	 */
-	public void handleamClick() {
-		vcaControl.handleViewInputClick("vca_inputam", amX, amY);
-	}
-
-	/**
-	 * Handles the click on the output port.
-	 */
-	public void handleOutputClick() {
-		vcaControl.handleViewOutputClick(outX, outY);
 	}
 
 

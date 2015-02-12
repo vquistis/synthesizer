@@ -28,15 +28,6 @@ public class ViewRep extends ViewComponent implements Initializable{
 	@FXML private ImageView out1, out2, out3;
 	
 	private ControllerRep controller;
-	
-	private DoubleProperty inX = new SimpleDoubleProperty(0);
-	private DoubleProperty inY = new SimpleDoubleProperty(0);
-	private DoubleProperty outX1 = new SimpleDoubleProperty(0);
-	private DoubleProperty outY1 = new SimpleDoubleProperty(0);
-	private DoubleProperty outX2 = new SimpleDoubleProperty(0);
-	private DoubleProperty outY2 = new SimpleDoubleProperty(0);
-	private DoubleProperty outX3 = new SimpleDoubleProperty(0);
-	private DoubleProperty outY3 = new SimpleDoubleProperty(0);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -52,42 +43,10 @@ public class ViewRep extends ViewComponent implements Initializable{
 			parent.getChildren().remove(rootModulePane);
 		});
 		
-		addPort(in, inX, inY);
-		addPort(out1, outX1, outY1);
-		addPort(out2, outX2, outY2);
-		addPort(out3, outX3, outY3);
-	}
-	
-	/**
-	 * Handles the click on the input port
-	 */
-	@FXML
-	public void handleInputClick() {
-		controller.handleViewInputClick(inX, inY);
-	}
-
-	/**
-	 * Handles the click on the first output port
-	 */
-	@FXML
-	public void handleOutputClick1() {
-		controller.handleViewOutputClick("rep_out1", outX1, outY1);
-	}
-	
-	/**
-	 * Handles the click on the second output port
-	 */
-	@FXML
-	public void handleOutputClick2() {
-		controller.handleViewOutputClick("rep_out2", outX2, outY2);
-	}
-	
-	/**
-	 * Handles the click on the third output port
-	 */
-	@FXML
-	public void handleOutputClick3() {
-		controller.handleViewOutputClick("rep_out3", outX3, outY3);
+		addPort("rep_in", in);
+		addPort("rep_out1", out1);
+		addPort("rep_out2",out2);
+		addPort("rep_out3", out3);
 	}
 	
 	/**
