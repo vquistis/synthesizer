@@ -44,6 +44,10 @@ public abstract class ViewVcf extends ViewComponent {
 			parent.getChildren().remove(rootModulePane);
 		});
 
+		// Initialisation du model
+		controller.handleViewCutoffChange(knobCutoff.getValue());
+		controller.handleViewResonanceChange(knobResonance.getValue());
+		
 		addPort("vcf_input",port.lookup("#input"));
 		addPort("vcf_fm",port.lookup("#fm"));
 		addPort("vcf_output",port.lookup("#output"));
