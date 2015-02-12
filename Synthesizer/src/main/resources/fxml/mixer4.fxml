@@ -60,29 +60,6 @@
 		</HBox>
 	</center>
     <top>
-      <GridPane alignment="CENTER" styleClass="titlePane">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <Label fx:id="titleModuleFx" text="MIXER">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </Label>
-            <ImageView fx:id="closeModuleFx" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@../img/close.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-         </children>
-      </GridPane>
+		<fx:include source="include/top.fxml" fx:id="top"/>
    </top>
 </BorderPane>
