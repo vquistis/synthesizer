@@ -11,8 +11,6 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 import fr.istic.groupimpl.synthesizer.io.architecture.Port;
 import fr.istic.groupimpl.synthesizer.io.architecture.Type;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class ControllerComponent.
  */
@@ -39,7 +37,8 @@ public abstract class ControllerComponent {
 	public final List<Port> getAllPort(){
 		List<Port> ports =new ArrayList<>();
 		
-		Collection<UnitPort>  list = getModel().getAllPorts();
+		Collection<UnitPort>  list = getModel().getAllPorts();				
+		
 		for (UnitPort unitPort : list) {
 			Port port = new Port();
 			port.setName(unitPort.getName());

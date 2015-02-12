@@ -8,19 +8,22 @@ import com.jsyn.ports.UnitPort;
 /**
  * The Class Port.
  */
-@XmlRootElement
+@XmlRootElement(name="port")
 public class Port {
 	
 	/** The name. */
 	private String name;
 	
+	/** The id module. */
+	private String idModule;
+
 	/** The type. */
 	private Type type;
 	
 	/** The connected. */
 	private boolean connected;
 	
-	@XmlTransient
+	/** The unit port. */
 	private UnitPort unitPort;
 
 	/**
@@ -77,12 +80,41 @@ public class Port {
 		this.connected = connected;
 	}
 
+	/**
+	 * Gets the unit port.
+	 *
+	 * @return the unit port
+	 */
+	@XmlTransient
 	public UnitPort getUnitPort() {
 		return unitPort;
 	}
 
+	/**
+	 * Sets the unit port.
+	 *
+	 * @param unitPort the new unit port
+	 */
 	public void setUnitPort(UnitPort unitPort) {
 		this.unitPort = unitPort;
+	}
+	
+	/**
+	 * Gets the id module.
+	 *
+	 * @return the id module
+	 */
+	public String getIdModule() {
+		return idModule;
+	}
+
+	/**
+	 * Sets the id module.
+	 *
+	 * @param idModule the new id module
+	 */
+	public void setIdModule(String idModule) {
+		this.idModule = idModule;
 	}
 	
 	
