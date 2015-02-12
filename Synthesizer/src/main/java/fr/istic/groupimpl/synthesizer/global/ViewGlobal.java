@@ -258,15 +258,20 @@ public class ViewGlobal implements Initializable {
 			HBox hb = (HBox) splitpane.getItems().get(0);
 			hb.getChildren().add(root);
 			enableDrag(root);
-			
+		
 			if (module != null) {
 				view.initComponent(module);
 			}
-			splitpane.getItems().forEach((item) -> {
-				((HBox)item).heightProperty().addListener((a,b,c) -> {
-					view.refreshComponent();
-				});
+			
+			root.parentProperty().addListener((obs,oldVal,newVal) -> {
+				if(oldVal != null) {
+					((HBox) oldVal).heightProperty().removeListener(view.getListener());
+				}
+				if(newVal != null) {
+					((HBox) newVal).heightProperty().addListener(view.getListener());
+				}
 			});
+			
 			suppliers.add(view.getSaveSupplier());
 		} catch (IOException e) {
 			e.printStackTrace();

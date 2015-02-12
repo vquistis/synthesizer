@@ -37,7 +37,13 @@ public abstract class ViewComponent implements IViewComponent {
 
 	/** The debug. */
 	private static boolean debug = false;
+	
+	private ChangeListener<? super Number> listener = (a,b,c) -> {refreshComponent();};
 
+	public ChangeListener<? super Number> getListener() {
+		return listener;
+	}
+	
 	/**
 	 * This method should return the root Pane of the component.
 	 * @return The root Pane of the component
@@ -186,7 +192,6 @@ public abstract class ViewComponent implements IViewComponent {
 			Log.getInstance().debug(" computeNodeCenter " + new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2));
 		}
 		return new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2);
-
 	}
 	
 	/**
