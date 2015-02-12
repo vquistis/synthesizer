@@ -41,9 +41,6 @@ public class ViewEg extends ViewComponent implements Initializable {
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("EG");
 		
-		addPort("input", input);
-		addPort("output", output);
-		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setMinValue(0);
 		knobFact.setMaxValue(1);
@@ -86,6 +83,9 @@ public class ViewEg extends ViewComponent implements Initializable {
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
 		});
+
+		addPort("eg_input", input);
+		addPort("eg_output", output);
 	}
 
 	@Override
