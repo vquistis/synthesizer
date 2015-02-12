@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
@@ -34,6 +36,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.io.FileUtil;
@@ -41,6 +44,7 @@ import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
+
 
 /**
  * The Class ViewGlobal.
@@ -250,12 +254,13 @@ public class ViewGlobal implements Initializable {
 	 *
 	 * @param filename the filename component fxml
 	 */
-	public void createModule(String filename, Module module) {
+	public ViewComponent createModule(String filename, Module module) {
+		ViewComponent res = null;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
 			Node root = loader.load();
 			ViewComponent view = loader.getController();			
-		
+			res = view;
 			if (module != null) {
 				HBox hb = (HBox) splitpane.getItems().get(module.getPosY());
 				hb.getChildren().add(root);
@@ -284,6 +289,8 @@ public class ViewGlobal implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return res;
 	}
 	
 	public void createModule(String filename) {
@@ -626,6 +633,8 @@ public class ViewGlobal implements Initializable {
          FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.sl)", "*.sl");
          fileChooser.getExtensionFilters().add(extFilter);
           
+         Map<String,ViewComponent> views = new HashMap<>();
+         
          //Show save file dialog
          File file = fileChooser.showOpenDialog(stage);
          if(file != null){
@@ -634,8 +643,17 @@ public class ViewGlobal implements Initializable {
         	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);        	 
         	 // configue component
         	 configuration.getModules().forEach((module) ->{
-        		 createModule(module.getFilename(), module);
-        	 });    	 
+        		 views.put(module.getId(),createModule(module.getFilename(), module));
+        	 });
+        	 
+        	 configuration.getConnections().forEach((connection) -> {
+        		 Cable cable = new Cable(Color.valueOf(connection.getColor()));
+        		 ViewComponent view = views.get(connection.getInputPort().getIdModule());
+        		 ControllerGlobal.getInstance().createConnection(cable, view.getStuff(connection.getInputPort().getName()),
+        				 view.getStuff(connection.getOutputPort().getName()), view.getPort(connection.getInputPort().getName()),
+        				 view.getPort(connection.getOutputPort().getName()));
+        	 });
+        	 
          }
 
 	}

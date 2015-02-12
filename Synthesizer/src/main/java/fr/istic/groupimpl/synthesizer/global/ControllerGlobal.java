@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
@@ -43,7 +44,7 @@ public class ControllerGlobal {
 
 	/** The model. */
 	private ModelGlobal model;
-	
+
 	/** The view. */
 	private ViewGlobal view;
 
@@ -56,10 +57,10 @@ public class ControllerGlobal {
 	 */
 	/** The previous port. */
 	private UnitPort previousPort;
-	
+
 	/** The previous x. */
 	private DoubleProperty previousX;
-	
+
 	/** The previous y. */
 	private DoubleProperty previousY;
 
@@ -139,7 +140,7 @@ public class ControllerGlobal {
 			handleOutputClicked((UnitOutputPort)port, x, y);
 		}
 	}
-	
+
 	/**
 	 * Handles the process of connection creation when an input port is clicked.
 	 *
@@ -227,7 +228,7 @@ public class ControllerGlobal {
 			break;
 		}
 	}
-	
+
 	/*
 	 * No connection is currently in the process of creation.
 	 * If the put port that was clicked is already part of a connection,
@@ -370,7 +371,17 @@ public class ControllerGlobal {
 		default:
 			break;
 		}
-			
+
+	}
+
+	public void createConnection(Cable cable, Pair<DoubleProperty,DoubleProperty> inputPos,
+			Pair<DoubleProperty,DoubleProperty> outputPos, UnitPort inputPort, UnitPort outputPort) {
+		cable.bindInput(inputPos.getKey(), inputPos.getValue());
+		cable.bindOutput(outputPos.getKey(), outputPos.getValue());
+		this.model.connectPorts(inputPort,outputPort);
+		cables.put(inputPort,cable);
+		cables.put(outputPort,cable);
+		view.addCable(cable);
 	}
 
 	/**
@@ -431,7 +442,7 @@ public class ControllerGlobal {
 		}
 		interactionMode = InteractionMode.CablePainting;
 	}
-	
+
 	/**
 	 * Checks if is port connected.
 	 *
@@ -441,12 +452,12 @@ public class ControllerGlobal {
 	public boolean isPortConnected(UnitPort port){
 		return model.isPortConnected(port);
 	}
-	
+
 	/**
 	 * The Enum InteractionMode.
 	 */
 	private enum InteractionMode {
-		
+
 		/** The Cable creation_none. */
 		CableCreation_none,
 		/** The Cable creation_in. */
@@ -458,8 +469,8 @@ public class ControllerGlobal {
 		/** The Cable painting. */
 		CablePainting
 	}
-	
-	
+
+
 	/**
 	 * Gets the port.
 	 *
@@ -479,7 +490,7 @@ public class ControllerGlobal {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets the module.
 	 *
@@ -498,7 +509,7 @@ public class ControllerGlobal {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets the connection list.
 	 *
@@ -506,7 +517,7 @@ public class ControllerGlobal {
 	 */
 	public List<Connection> getConnectionList(){
 		List<Connection> connections =new ArrayList<Connection>();
-		
+
 		Set<UnitPort> unitPorts = cables.keySet();
 		for (UnitPort unitPort : unitPorts) {
 			Connection connection =new Connection();
@@ -526,7 +537,7 @@ public class ControllerGlobal {
 		}
 		return connections;
 	}
-	
+
 	public void clearAllComponent(){
 		model.stopSynth();
 		Set<UnitPort> set= cables.keySet();
@@ -536,10 +547,10 @@ public class ControllerGlobal {
 		}
 		model = new ModelGlobal();
 	}
-	
-	
+
+
 	public Stage getStage(){
 		return view.getStage();
 	}
-	
+
 }
