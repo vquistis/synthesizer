@@ -133,6 +133,14 @@
 						<Font name="System Bold" size="12.0" />
 					</font>
 				</Button>
+				<Button onAction="#handleAddVcfHp" styleClass="moduleButton" text="VCF - HP">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Button>
 				<Button onAction="#handleAddWhiteNoise" styleClass="moduleButton" text="WHITE NOISE">
 					<cursor>
 						<Cursor fx:constant="HAND" />

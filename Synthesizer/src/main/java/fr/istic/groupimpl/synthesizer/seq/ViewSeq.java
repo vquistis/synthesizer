@@ -15,7 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
-import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
@@ -94,11 +93,6 @@ public class ViewSeq extends ViewComponent implements Initializable {
 		return paneSeq;
 	}
 
-	@Override
-	protected Module getConfiguration() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * Handles the click on the gate port
@@ -118,7 +112,11 @@ public class ViewSeq extends ViewComponent implements Initializable {
 
 	@Override
 	protected ControllerComponent getController() {
-		// TODO Auto-generated method stub
 		return controller;
+	}
+
+	@Override
+	public String getFilename() {
+		return "fxml/seq.fxml";
 	}
 }

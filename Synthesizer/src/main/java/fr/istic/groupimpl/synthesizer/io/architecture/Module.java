@@ -16,6 +16,8 @@ public class Module {
 	/** The id. */
 	private String id;
 	
+	private String filename;
+	
 	/** The map. */
 	private Map<String, Double> parameters;
 	
@@ -126,4 +128,14 @@ public class Module {
 	public void setPosY(double posY) {
 		this.posY = posY;
 	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	
+	
 }

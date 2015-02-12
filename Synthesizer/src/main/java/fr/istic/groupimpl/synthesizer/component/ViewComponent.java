@@ -37,7 +37,13 @@ public abstract class ViewComponent implements IViewComponent {
 
 	/** The debug. */
 	private static boolean debug = false;
+	
+	private ChangeListener<? super Number> listener = (a,b,c) -> {refreshComponent();};
 
+	public ChangeListener<? super Number> getListener() {
+		return listener;
+	}
+	
 	/**
 	 * This method should return the root Pane of the component.
 	 * @return The root Pane of the component
@@ -186,7 +192,6 @@ public abstract class ViewComponent implements IViewComponent {
 			Log.getInstance().debug(" computeNodeCenter " + new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2));
 		}
 		return new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2);
-
 	}
 	
 	/**
@@ -245,17 +250,33 @@ public abstract class ViewComponent implements IViewComponent {
 	 *
 	 * @return the configuration
 	 */
-	protected Module getConfiguration() {
+	protected final Module getConfiguration() {
 		Module module= new Module();
 		Map<String, Double> parameters = module.getParameters();
 		saveActionMap.forEach((k,v) -> {
 			parameters.put(k, v.get());
 		});
+		
+		module.setFilename(getFilename());
 
 		module.setPorts(getController().getAllPort());;
 		module.setPosX(getPositionX());
 		module.setPosY(getPositionY());
 		return module;
 	}
+
+	/**
+	 * Inits the component.
+	 *
+	 * @param module the module
+	 */
+	public void initComponent(Module module){
+		loadActionMap.forEach((k, v)->{
+			v.accept(module.getParameters().get(k));
+		});
+	}
+	
+	
+	public abstract String getFilename();
 	
 }
