@@ -25,10 +25,11 @@ public class ViewLineIn extends ViewComponent implements Initializable {
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("IN");
 		
-		addPort("output", output);
-		
 		// implementation of controller
 		controller = new ControllerLineIn();
+		
+		addPort("Output", output);
+		
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			
