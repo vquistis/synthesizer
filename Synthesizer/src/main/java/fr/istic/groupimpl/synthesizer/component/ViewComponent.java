@@ -17,7 +17,11 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
+
+import com.jsyn.ports.UnitPort;
+
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
+import fr.istic.groupimpl.synthesizer.io.architecture.Port;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
@@ -292,5 +296,19 @@ public abstract class ViewComponent implements IViewComponent {
 	
 	
 	public abstract String getFilename();
+	
+	public Pair<DoubleProperty, DoubleProperty> getStuff(String inputName) {
+		return cablesProperties.get(inputName);
+	}
+	
+	public UnitPort getPort(String name) {
+		UnitPort res = null;
+		for(Port p : getController().getAllPort()) {
+			if(p.getName().equals(name)) {
+				return p.getUnitPort();
+			}
+		}
+		return res;
+	}
 	
 }
