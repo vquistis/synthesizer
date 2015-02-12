@@ -26,10 +26,10 @@ public class Module {
 	
 	
 	/** The pos x. */
-	private double posX;
+	private int posX;
 	
 	/** The pos y. */
-	private double posY;
+	private int posY;
 	
 	/**
 	 * Create a new module.
@@ -98,7 +98,7 @@ public class Module {
 	 *
 	 * @return the pos x
 	 */
-	public double getPosX() {
+	public int getPosX() {
 		return posX;
 	}
 
@@ -107,7 +107,7 @@ public class Module {
 	 *
 	 * @param posX the new pos x
 	 */
-	public void setPosX(double posX) {
+	public void setPosX(int posX) {
 		this.posX = posX;
 	}
 
@@ -116,7 +116,7 @@ public class Module {
 	 *
 	 * @return the pos y
 	 */
-	public double getPosY() {
+	public int getPosY() {
 		return posY;
 	}
 
@@ -125,7 +125,7 @@ public class Module {
 	 *
 	 * @param posY the new pos y
 	 */
-	public void setPosY(double posY) {
+	public void setPosY(int posY) {
 		this.posY = posY;
 	}
 
