@@ -51,6 +51,11 @@ public class ControllerSeq  extends ControllerComponent
 	public void handleValueViewChange(int indice, Number newVal) {
 		model.setValue(indice, (Double)newVal);
 	}
+	
+	public void handleViewDebutClicked()
+	{
+		model.initDebut();
+	}
 
 	@Override
 	public ModelComponent getModel() {
