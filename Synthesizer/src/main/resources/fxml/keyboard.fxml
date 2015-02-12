@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="fr.istic.groupimpl.synthesizer.keyboard.ViewKeyboard">
+   <bottom>
+      <HBox alignment="CENTER" styleClass="portPane">
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
+         <children>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label text="out" />
+                  <ImageView fx:id="output" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
+                     <image>
+                        <Image url="@../img/inoutRouge.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </bottom>
+	<top>
+		<fx:include source="include/top.fxml" fx:id="top"/>
+	</top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="159.0" styleClass="contentPane">
+         <children>
+            <ImageView fitHeight="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/piano.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

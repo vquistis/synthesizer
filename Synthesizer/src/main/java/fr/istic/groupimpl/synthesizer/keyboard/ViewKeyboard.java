@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.whitenoise;
+package fr.istic.groupimpl.synthesizer.keyboard;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,24 +15,26 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 
-public class ViewWhiteNoise extends ViewComponent implements Initializable {
+public class ViewKeyboard extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;
+	@FXML private ImageView closeModuleFx;
 	@FXML private GridPane top;
 	@FXML private ImageView output;
+	@FXML private Label keyboard;
 
 	private DoubleProperty outputX = new SimpleDoubleProperty(0);
 	private DoubleProperty outputY = new SimpleDoubleProperty(0);
-	private ControllerWhiteNoise controller;
+	private ControllerKeyboard controller;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
-		((Label) top.lookup("#titleModule")).setText("White noise");
+		((Label) top.lookup("#titleModule")).setText("Keyboard");
 		
 		addPort(output, outputX, outputY);
 		
 		// implementation of controller
-		controller = new ControllerWhiteNoise();
+		controller = new ControllerKeyboard();
 		// Listener output
 		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));
 		// Listener close module
@@ -56,6 +58,6 @@ public class ViewWhiteNoise extends ViewComponent implements Initializable {
 
 	@Override
 	public String getFilename() {
-		return "fxml/whiteNoise.fxml";
+		return "fxml/keyboard.fxml";
 	}
 }

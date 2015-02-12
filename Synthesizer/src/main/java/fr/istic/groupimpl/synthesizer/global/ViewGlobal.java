@@ -454,6 +454,14 @@ public class ViewGlobal implements Initializable {
 	public void handleAddSeq(){
 		createModule("fxml/seq.fxml");		
 	}
+	
+	/**
+	 * Handle add sequencer. This method adds a new Sequencer component
+	 */
+	@FXML
+	public void handleAddKeyboard(){
+		createModule("fxml/keyboard.fxml");		
+	}
 
 	/**
 	 * Mouse x property.

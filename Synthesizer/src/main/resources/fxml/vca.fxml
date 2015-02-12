@@ -34,7 +34,7 @@
             <VBox alignment="CENTER" layoutX="290.0" layoutY="15.0">
                <children>
                   <Label text="am" />
-                  <ImageView fx:id="am" onMouseClicked="#handleamClick" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
+                  <ImageView fx:id="am" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
                      <image>
                         <Image url="@../img/inoutBleu.png" />
                      </image>
@@ -47,7 +47,7 @@
             <VBox alignment="CENTER" layoutX="10.0" layoutY="15.0">
                <children>
                   <Label text="out" />
-                  <ImageView fx:id="out" onMouseClicked="#handleOutputClick" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
+                  <ImageView fx:id="out" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
