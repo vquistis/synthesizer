@@ -159,4 +159,8 @@ public class ModelGlobal {
 			}
 		});
 	}
+	
+	public void stopSynth(){
+		synth.stop();
+	}
 }

@@ -518,6 +518,7 @@ public class ControllerGlobal {
 	}
 	
 	public void clearAllComponent(){
+		model.stopSynth();
 		Set<UnitPort> set= cables.keySet();
 		for (UnitPort unitPort : set) {
 			Cable cable=cables.get(unitPort);
