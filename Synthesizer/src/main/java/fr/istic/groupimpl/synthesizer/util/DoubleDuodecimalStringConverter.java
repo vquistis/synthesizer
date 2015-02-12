@@ -1,7 +1,7 @@
 package fr.istic.groupimpl.synthesizer.util;
 
-import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.util.StringConverter;
+import fr.istic.groupimpl.synthesizer.logger.Log;
 
 public class DoubleDuodecimalStringConverter extends StringConverter<Number> {
 	@Override
