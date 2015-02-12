@@ -33,6 +33,9 @@ public class ViewVcfHP extends ViewVcf implements Initializable {
 		knobFact.setNbSpins(1);
 		Potentiometre knobResonance = knobFact.getPotentiometre();
 		
+		addParameters("knobCutoff", ()-> {return  knobCutoff.getValue();}, (val)-> knobCutoff.setValue(val));
+		addParameters("knobResonance", ()-> {return  knobResonance.getValue();}, (val)-> knobResonance.setValue(val));
+		
 		super.configurate("VCF - HP12", controller, knobCutoff, knobResonance);
 	}
 

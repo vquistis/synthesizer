@@ -86,6 +86,11 @@ public class ViewEg extends ViewComponent implements Initializable {
 
 		addPort("eg_input", input);
 		addPort("eg_output", output);
+		
+		addParameters("knobAttack", ()-> {return  knobAttack.getValue();}, (val)-> knobAttack.setValue(val));
+		addParameters("knobDecay", ()-> {return  knobDecay.getValue();}, (val)-> knobDecay.setValue(val));
+		addParameters("knobSustain", ()-> {return  knobSustain.getValue();}, (val)-> knobSustain.setValue(val));
+		addParameters("knobRelease", ()-> {return  knobRelease.getValue();}, (val)-> knobRelease.setValue(val));
 	}
 
 	@Override
