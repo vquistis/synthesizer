@@ -28,12 +28,6 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 	@FXML private ImageView out;
 	@FXML private Slider refreshPeriodSlider;
 	
-
-	private DoubleProperty inX = new SimpleDoubleProperty(0);
-	private DoubleProperty inY = new SimpleDoubleProperty(0);
-	private DoubleProperty outX = new SimpleDoubleProperty(0);
-	private DoubleProperty outY = new SimpleDoubleProperty(0);
-	
 	private ControllerOscillo controller;
 
 
@@ -57,10 +51,6 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 		refreshPeriodSlider.valueProperty().addListener( (obsVal, oldVal, newVal) -> controller.handleRefreshPeriodViewChange(newVal));
 		// Listener mute);
 
-		// Listener in & out
-		in.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(inX, inY));
-		out.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outX, outY));
-		
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			

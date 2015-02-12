@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -34,12 +32,6 @@ public class ViewVcfHP extends ViewComponent implements Initializable {
 	@FXML private ImageView fm;
 	@FXML private ImageView output;
 
-	private DoubleProperty inputX = new SimpleDoubleProperty(0);
-	private DoubleProperty inputY = new SimpleDoubleProperty(0);
-	private DoubleProperty fmX = new SimpleDoubleProperty(0);
-	private DoubleProperty fmY = new SimpleDoubleProperty(0);
-	private DoubleProperty outputX = new SimpleDoubleProperty(0);
-	private DoubleProperty outputY = new SimpleDoubleProperty(0);
 	private ControllerVcf controller;
 	
 	@Override
@@ -78,11 +70,6 @@ public class ViewVcfHP extends ViewComponent implements Initializable {
 		// Listener parameters
 		knobCutoff.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewCutoffChange(newVal));
 		knobResonance.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewResonanceChange(newVal));
-		
-		// Listener input & output
-		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(inputX, inputY));
-		fm.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewFmClick(fmX, fmY));
-		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {

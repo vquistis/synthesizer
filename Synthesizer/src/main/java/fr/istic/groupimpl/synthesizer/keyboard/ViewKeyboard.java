@@ -23,8 +23,7 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 	@FXML private ImageView output;
 	@FXML private Label keyboard;
 
-	private DoubleProperty outputX = new SimpleDoubleProperty(0);
-	private DoubleProperty outputY = new SimpleDoubleProperty(0);
+
 	private ControllerKeyboard controller;
 
 	@Override
@@ -35,8 +34,7 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 		
 		// implementation of controller
 		controller = new ControllerKeyboard();
-		// Listener output
-		output.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));
+
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			
