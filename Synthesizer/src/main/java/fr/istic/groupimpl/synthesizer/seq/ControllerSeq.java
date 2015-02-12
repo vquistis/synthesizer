@@ -52,9 +52,12 @@ public class ControllerSeq  extends ControllerComponent
 		model.setValue(indice, (Double)newVal);
 	}
 	
-	public void handleViewDebutClicked()
+	/**
+	 * this method is called when a mouse is clicked on Begin button 
+	 */
+	public void handleViewBeginClicked()
 	{
-		model.initDebut();
+		model.initBegin();
 	}
 
 	@Override

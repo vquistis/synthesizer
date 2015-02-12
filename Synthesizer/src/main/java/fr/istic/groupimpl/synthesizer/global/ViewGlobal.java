@@ -254,13 +254,17 @@ public class ViewGlobal implements Initializable {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
 			Node root = loader.load();
-			ViewComponent view = loader.getController();
-			HBox hb = (HBox) splitpane.getItems().get(0);
-			hb.getChildren().add(root);
-			enableDrag(root);
+			ViewComponent view = loader.getController();			
 		
 			if (module != null) {
+				HBox hb = (HBox) splitpane.getItems().get(module.getPosY());
+				hb.getChildren().add(root);
+				enableDrag(root);
 				view.initComponent(module);
+			} else {
+				HBox hb = (HBox) splitpane.getItems().get(0);
+				hb.getChildren().add(root);
+				enableDrag(root);
 			}
 			
 			root.parentProperty().addListener((obs,oldVal,newVal) -> {
@@ -613,17 +617,23 @@ public class ViewGlobal implements Initializable {
          //Show save file dialog
          File file = fileChooser.showOpenDialog(stage);
          if(file != null){
-        	 	// traitement
-        	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);
-        	 
+        	 	// traitement        	 
+        	 clearAllComponent();        	 
+        	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);        	 
         	 // configue component
         	 configuration.getModules().forEach((module) ->{
         		 createModule(module.getFilename(), module);
-        	 });
-        	 
-
+        	 });    	 
          }
 
+	}
+
+	private void clearAllComponent() {
+		for (Node node : splitpane.getItems()) {
+			((HBox) node).getChildren().clear();
+		}
+		 
+		 ControllerGlobal.getInstance().clearAllComponent();
 	}
 
 	/**

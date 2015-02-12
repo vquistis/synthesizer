@@ -8,6 +8,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,18 +27,12 @@ import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 public class ViewSeq extends ViewComponent implements Initializable {
 
-	@FXML
-	private BorderPane paneSeq;
-	@FXML
-	private ImageView closeSeq;
-	@FXML
-	private VBox screenSeqPane;
-	@FXML
-	private ImageView gate;
-	@FXML
-	private ImageView out;
-	@FXML
-	private GridPane gridSeq;
+	@FXML private BorderPane paneSeq;
+	@FXML private GridPane top;
+	@FXML private VBox screenSeqPane;
+	@FXML private ImageView gate;
+	@FXML private ImageView out;
+	@FXML private GridPane gridSeq;
 
 	private DoubleProperty gateX = new SimpleDoubleProperty(0);
 	private DoubleProperty gateY = new SimpleDoubleProperty(0);
@@ -48,6 +43,7 @@ public class ViewSeq extends ViewComponent implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
+		((Label) top.lookup("#titleModule")).setText("SEQ");
 		
 		controller = new ControllerSeq();
 		
@@ -63,20 +59,18 @@ public class ViewSeq extends ViewComponent implements Initializable {
 		potFact.setShowTickLabels(true);
 		potFact.setShowTickMarks(true);
 		
-		// Bind knob value and text field value
+		// to Bind knob value and text field values
 		StringConverter<Number> converter = new DoubleStringConverter();
 		StringConverter<Number> converter12 = new DoubleDuodecimalStringConverter();
-	
-
 
 		for (int i = 0; i < ControllerSeq.NB_BUTTONS; i++) {
 			final int indice = i;
-		//	potFact.setTitle("" + (i + 1));
-			Potentiometre potentiometre = potFact.getPotentiometre();
 
-			gridSeq.add(potentiometre, i , 0);
+			Potentiometre knob = potFact.getPotentiometre();
 
-			potentiometre.valueProperty().addListener(
+			gridSeq.add(knob, i , 0);
+
+			knob.valueProperty().addListener(
 					(p, oldVal, newVal) -> controller.handleValueViewChange(
 							indice, (double) newVal));
 			HBox rg1 = new HBox();
@@ -95,19 +89,13 @@ public class ViewSeq extends ViewComponent implements Initializable {
 			gridSeq.add(rg1,i,1);
 			gridSeq.add(rg2,i,2);
 						
-			Bindings.bindBidirectional(tf1.textProperty(), potentiometre.valueProperty(), converter);
-			Bindings.bindBidirectional(tf2.textProperty(), potentiometre.valueProperty(), converter12);
+			Bindings.bindBidirectional(tf1.textProperty(), knob.valueProperty(), converter);
+			Bindings.bindBidirectional(tf2.textProperty(), knob.valueProperty(), converter12);
 
 		}
 
-		// Listener in & out
-		// gate.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
-		// controller.handleViewGateClick(gateX, gateY));
-		// out.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
-		// controller.handleViewOutputClick(outX, outY));
-
 		// Listener close module
-		closeSeq.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();
 			controller.handleViewClose();
 			Pane parent = (Pane) paneSeq.getParent();
@@ -144,7 +132,7 @@ public class ViewSeq extends ViewComponent implements Initializable {
 	 */
 	@FXML
 	public void handleDebutClicked() {
-		controller.handleViewDebutClicked();
+		controller.handleViewBeginClicked();
 	}
 
 	@Override

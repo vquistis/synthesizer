@@ -8,7 +8,7 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 public class JsynSequencerCircuit extends UnitGenerator {
 
-	enum State 
+	private enum State 
 	{
 		ATTENTE_MIN,
 		ATTENTE_MAX
@@ -26,7 +26,7 @@ public class JsynSequencerCircuit extends UnitGenerator {
 	private final int nbPas;
 	
 	
-	State etat=State.ATTENTE_MIN;
+	private State etat=State.ATTENTE_MIN;
 	
 	
 	
@@ -46,25 +46,52 @@ public class JsynSequencerCircuit extends UnitGenerator {
      }
     
     
+    /**
+     * set the value of a step
+     * @param indice
+     * 	indice of the step from 0 to 7
+     * @param volt
+     *  value of the step from -1 to 1
+     */
     public void setValue( int indice, double volt )
     {
     	value[indice] = volt/SignalUtil.COEF_VOLT;
     }
     
+    /**
+     * get the value of a step
+     * @param indice
+     * 	indice of the step from 0 to 7
+     * @return
+     *  the value of the step
+     */
     public double getValue( int indice )
     {
     	return value[indice]*SignalUtil.COEF_VOLT;
     }
    
+    /**
+     * initalyse the step to 0
+     */
     public void resetPas()
     {
     	pasCourant = 0;
     }
     
+	/**
+	 * get the gate port
+	 * @return
+	 *  the gate port
+	 */
 	public UnitInputPort getGate() {
 		return gate;
 	}
 
+	/**
+	 * get the output port
+	 * @return
+	 * the output port
+	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}

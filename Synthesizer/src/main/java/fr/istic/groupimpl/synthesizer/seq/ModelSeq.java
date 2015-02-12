@@ -25,12 +25,22 @@ public class ModelSeq extends ModelComponent {
 
 	
 	
+	/**
+	 * Initialize a value for a step
+	 * @param indice
+	 * 	from 0 to 7 ( inclusive )
+	 * @param newVal
+	 *  new Value for -1. to 1. 
+	 */
 	public void setValue(int indice, Double newVal)
 	{
 		circuit.setValue(indice,newVal);
 	}
 	
-	public void initDebut()
+	/**
+	 * Initialize the step to 0 
+	 */
+	public void initBegin()
 	{
 		circuit.resetPas();
 	}

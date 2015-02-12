@@ -516,4 +516,13 @@ public class ControllerGlobal {
 		}
 		return connections;
 	}
+	
+	public void clearAllComponent(){
+		Set<UnitPort> set= cables.keySet();
+		for (UnitPort unitPort : set) {
+			Cable cable=cables.get(unitPort);
+			view.removeCable(cable);
+		}
+		model = new ModelGlobal();
+	}
 }
