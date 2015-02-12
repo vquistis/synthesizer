@@ -20,7 +20,7 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 public class ViewMixer extends ViewComponent implements Initializable {
-	final Integer NumberOfInputPort = 4;
+	private Integer NumberOfInputPort = 4;
 	
 	@FXML private Pane rootModulePane;
 	@FXML private HBox inputHBox;
@@ -33,10 +33,18 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {	
-		ConfigurateMixer(NumberOfInputPort);
+		configurate();
 	}
 
-	public void ConfigurateMixer(Integer NumberOfInputPort) {
+	public Integer getNumberOfInputPort() {
+		return NumberOfInputPort;
+	}
+
+	public void setNumberOfInputPort(Integer numberOfInputPort) {
+		NumberOfInputPort = numberOfInputPort;
+	}
+	
+	public void configurate() {
 		// Creation du controller
 		controller = new ControllerMixer(NumberOfInputPort);
 		

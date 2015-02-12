@@ -100,13 +100,11 @@ public class ViewVcfHP extends ViewComponent implements Initializable {
 
 	@Override
 	protected ControllerComponent getController() {
-		// TODO Auto-generated method stub
 		return controller;
 	}
 
 	@Override
 	public String getFilename() {
-		// TODO Auto-generated method stub
-		return null;
+		return "fxml/vcf-hp.fxml";
 	}
 }
