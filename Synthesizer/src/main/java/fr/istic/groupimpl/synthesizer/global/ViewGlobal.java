@@ -432,14 +432,6 @@ public class ViewGlobal implements Initializable {
 	}
 	
 	/**
-	 * Handle add mixer. This method adds a new Mixer component
-	 */
-	@FXML
-	public void handleAddMixer2(){
-		createModule("fxml/mixer2.fxml");		
-	}
-	
-	/**
 	 * Handle add whiteNoise. This method adds a new WhiteNoise component
 	 */
 	@FXML
