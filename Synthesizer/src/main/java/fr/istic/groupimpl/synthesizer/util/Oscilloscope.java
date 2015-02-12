@@ -243,7 +243,7 @@ public class Oscilloscope extends Region {
 			getChildren().add(hightText);
 
 		}
-		if (nbPassage < 2)
+		if (nbPassage < 2 || firstPassage >= 1024 )
 			firstPassage = 0;
 
 		double hVjuste = Math.max(Math.abs(valMax), Math.abs(valMin));
