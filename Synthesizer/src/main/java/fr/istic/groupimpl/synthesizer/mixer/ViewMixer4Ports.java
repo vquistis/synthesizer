@@ -17,4 +17,9 @@ public class ViewMixer4Ports extends ViewMixer {
 		setNumberOfInputPort(4);
 		configurate();
 	}
+	
+	@Override
+	public String getFilename() {
+		return "fxml/mixer4.fxml";
+	}
 }
