@@ -586,7 +586,7 @@ public class ViewGlobal implements Initializable {
 		 FileChooser fileChooser = new FileChooser();
 		  
          //Set extension filter
-         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.synthlab)", "*.synthlab");
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.sl)", "*.sl");
          fileChooser.getExtensionFilters().add(extFilter);
          
          //Show save file dialog
@@ -623,7 +623,7 @@ public class ViewGlobal implements Initializable {
 	public void handleLoadConfiguration(){
 		 FileChooser fileChooser = new FileChooser();         
          //Set extension filter
-         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.synthlab)", "*.synthlab");
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.sl)", "*.sl");
          fileChooser.getExtensionFilters().add(extFilter);
           
          //Show save file dialog
