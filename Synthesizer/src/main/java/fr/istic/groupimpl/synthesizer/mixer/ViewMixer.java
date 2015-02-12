@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
@@ -20,12 +21,13 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 public class ViewMixer extends ViewComponent implements Initializable {
-	final Integer NumberOfInputPort = 4;
+	private Integer NumberOfInputPort = 4;
 	
 	@FXML private Pane rootModulePane;
 	@FXML private HBox inputHBox;
 	@FXML private ImageView fxOutput;
 	@FXML private ImageView closeModuleFx;
+	@FXML private GridPane top;
 
 	private DoubleProperty outputX = new SimpleDoubleProperty(0);
 	private DoubleProperty outputY = new SimpleDoubleProperty(0);
@@ -33,10 +35,18 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {	
-		ConfigurateMixer(NumberOfInputPort);
+		configurate();
 	}
 
-	public void ConfigurateMixer(Integer NumberOfInputPort) {
+	public Integer getNumberOfInputPort() {
+		return NumberOfInputPort;
+	}
+
+	public void setNumberOfInputPort(Integer numberOfInputPort) {
+		NumberOfInputPort = numberOfInputPort;
+	}
+	
+	public void configurate() {
 		// Creation du controller
 		controller = new ControllerMixer(NumberOfInputPort);
 		
@@ -58,7 +68,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
         addPort(fxOutput, outputX, outputY);
 		fxOutput.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));	
 		// Listener close module
-		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();

@@ -56,7 +56,6 @@ public class MixerSum extends UnitGenerator {
         {
         	index = i + 1;
         	unitInputPorts.add(new UnitInputPort("Input" + index));
-        	System.out.println("unitInputPorts.add " + i);
         	addPort(unitInputPorts.get(i));
         } 
         addPort(output = new UnitOutputPort("Output"));

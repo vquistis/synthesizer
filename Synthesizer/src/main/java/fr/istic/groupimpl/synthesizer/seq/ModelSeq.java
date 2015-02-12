@@ -30,6 +30,10 @@ public class ModelSeq extends ModelComponent {
 		circuit.setValue(indice,newVal);
 	}
 	
+	public void initDebut()
+	{
+		circuit.resetPas();
+	}
 	
 	@Override
 	public UnitGenerator getUnitGenerator() {

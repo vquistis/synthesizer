@@ -11,8 +11,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-mixer2.fxml
-<BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.mixer.ViewMixer">
+<BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.mixer.ViewMixer4Ports">
 	<center>
 		<HBox fx:id="inputHBox" alignment="TOP_CENTER" spacing="0.0" styleClass="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">	        
 			<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
