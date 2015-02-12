@@ -8,14 +8,18 @@ import com.jsyn.unitgen.UnitSource;
 
 public class JSynKeyboard extends UnitGenerator implements UnitSource {
 
+	/* Declare ports */
 	public UnitInputPort key;
 	public UnitOutputPort output;
 	
+	/**
+	 * constructor
+	 */
 	public JSynKeyboard() {
 		addPort(key = new UnitInputPort("key"));
-		addPort(output = new UnitOutputPort("Output"));
+		addPort(output = new UnitOutputPort("output"));
 	}
-
+	
 	@Override
 	public void generate(int start, int limit) {
 		double[] keys = key.getValues();
@@ -26,17 +30,23 @@ public class JSynKeyboard extends UnitGenerator implements UnitSource {
 		}
 	}
 
+	/**
+	 * Signal output
+	 *
+	 * @return output
+	 */
 	@Override
 	public UnitOutputPort getOutput() {
 		return output;
 	}
 
+	/**
+	 * Signal input
+	 *
+	 * @return input
+	 */
 	public UnitInputPort getKey() {
 		return key;
 	}
 
-	public void setKey(UnitInputPort key) {
-		this.key = key;
-	}
-	
 }

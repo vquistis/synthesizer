@@ -657,4 +657,10 @@ public class ViewGlobal implements Initializable {
 		this.stage=primaryStage;
 	}
 
+	public Stage getStage() {
+		return stage;
+	}
+	
+	
+
 }

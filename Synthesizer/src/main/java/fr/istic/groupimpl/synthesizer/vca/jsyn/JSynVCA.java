@@ -74,7 +74,7 @@ public class JSynVCA extends UnitGenerator {
 	}
 
 	/**
-	 * create a new vca jsyn.
+	 * constructor
 	 */
 	public JSynVCA() {
 		addPort(input = new UnitInputPort("vca_input"));

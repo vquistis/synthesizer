@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.stage.Stage;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
@@ -526,4 +527,10 @@ public class ControllerGlobal {
 		}
 		model = new ModelGlobal();
 	}
+	
+	
+	public Stage getStage(){
+		return view.getStage();
+	}
+	
 }

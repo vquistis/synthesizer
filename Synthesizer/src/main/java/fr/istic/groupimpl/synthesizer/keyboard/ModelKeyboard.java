@@ -34,15 +34,22 @@ public class ModelKeyboard extends ModelComponent {
 
 	/**
 	 * Get the jsyn output port.
-	 * @return UnitInputPort
+	 * @return UnitOutputPort
 	 */
 	public UnitOutputPort getOutputPort() {
 		return keyboard.getOutput();
 	}
-
+	
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return keyboard.getPorts();
 	}
 
+	/**
+	 * sets the key of the keyboard
+	 * @param key, Time stamp
+	 */
+	public void setKey(int key) {
+		keyboard.getKey().set(key, 1);
+	}
 }
