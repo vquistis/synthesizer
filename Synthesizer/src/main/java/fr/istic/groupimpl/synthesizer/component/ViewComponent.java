@@ -257,5 +257,16 @@ public abstract class ViewComponent implements IViewComponent {
 		module.setPosY(getPositionY());
 		return module;
 	}
+
+	/**
+	 * Inits the component.
+	 *
+	 * @param module the module
+	 */
+	public void initComponent(Module module){
+		loadActionMap.forEach((k, v)->{
+			v.accept(module.getParameters().get(k));
+		});
+	}
 	
 }
