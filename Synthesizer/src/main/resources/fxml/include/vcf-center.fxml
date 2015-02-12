@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="TOP_CENTER" spacing="10.0" styleClass="contentPane" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<VBox fx:id="knobCutoffPane" alignment="CENTER" spacing="5.0">
+			<children>
+				<Label text="Cutoff" />
+				<TextField fx:id="valueCutoffFx" prefWidth="60.0">
+					<HBox.margin>
+						<Insets />
+					</HBox.margin>
+				</TextField>
+			</children>
+		</VBox>
+		<VBox fx:id="knobResonancePane" alignment="CENTER" spacing="5.0">
+			<children>
+				<Label text="Resonance" />
+				<TextField fx:id="valueResonanceFx" prefWidth="60.0">
+					<HBox.margin>
+						<Insets />
+					</HBox.margin>
+				</TextField>
+			</children>
+		</VBox>
+	</children>
+	<padding>
+		<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+	</padding>
+</HBox>

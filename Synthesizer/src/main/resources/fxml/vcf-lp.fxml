@@ -8,84 +8,13 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.vcf.ViewVcfLP">
+	<bottom>
+		<fx:include source="include/vcf-bottom.fxml" fx:id="port"/>
+	</bottom>
 	<top>
 		<fx:include source="include/top.fxml" fx:id="top"/>
 	</top>
-   <bottom>
-      <HBox alignment="CENTER" spacing="10.0" styleClass="portPane" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets bottom="5.0" top="5.0" />
-         </padding>
-         <children>
-            <VBox alignment="CENTER">
-               <children>
-                  <Label text="in" />
-                  <ImageView fx:id="input" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
-                     <image>
-                        <Image url="@../img/inoutBlanc.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER">
-               <children>
-                  <Label text="fm" />
-                  <ImageView fx:id="fm" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
-                     <image>
-                        <Image url="@../img/inoutBleu.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER">
-               <children>
-                  <Label text="out" />
-                  <ImageView fx:id="output" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <image>
-                        <Image url="@../img/inoutRouge.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </bottom>
-   <center>
-      <HBox alignment="TOP_CENTER" spacing="10.0" styleClass="contentPane" BorderPane.alignment="CENTER">
-         <children>
-            <VBox fx:id="knobCutoffPane" alignment="CENTER" spacing="5.0">
-               <children>
-                  <Label text="Cutoff" />
-                  <TextField fx:id="valueCutoffFx" prefWidth="60.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </VBox>
-            <VBox fx:id="knobResonancePane" alignment="CENTER" layoutX="289.0" layoutY="20.0" spacing="5.0">
-               <children>
-                  <Label text="Resonance" />
-                  <TextField fx:id="valueResonanceFx" prefWidth="60.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </VBox>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </HBox>
-   </center>
+	<center>
+		<fx:include source="include/vcf-center.fxml" fx:id="content"/>
+	</center>
 </BorderPane>

@@ -76,9 +76,9 @@ public class ViewVca extends ViewComponent implements Initializable {
 			parent.getChildren().remove(paneVca);
 		});
 
-		addPort("input",input);
-		addPort("am",am);
-		addPort("out",out);
+		addPort("vca_input",input);
+		addPort("vca_am",am);
+		addPort("vca_out",out);
 		
 	}
 
