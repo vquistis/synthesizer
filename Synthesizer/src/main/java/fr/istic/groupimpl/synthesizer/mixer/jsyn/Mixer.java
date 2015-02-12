@@ -59,14 +59,21 @@ public class Mixer extends Circuit implements UnitSource {
      * 
      * @param NumberOfInputPort
      *   number of input port to instantiate
+     *   minimum 2 -> maximum 10
      */
 	public Mixer(Integer NumberOfInputPort) {	
+		
+		// parameter's bounds
+		if (NumberOfInputPort>10) {
+			NumberOfInputPort=10;
+		} else if (NumberOfInputPort<2) {
+			NumberOfInputPort = 2;
+		}
+		
 		/* Create various unit generators. */
-    	Integer index;
-        for(int i = 0; i <= NumberOfInputPort - 1; i++)
+        for(int i = 0; i < NumberOfInputPort; i++)
         {
-        	index = i+1;
-        	attenuators.add(new JsynAttenuationFilter());
+         	attenuators.add(new JsynAttenuationFilter());
         	
         	/* Add unit generators to circuit. */
         	add(attenuators.get(i));
@@ -74,20 +81,21 @@ public class Mixer extends Circuit implements UnitSource {
         	// default value of the attenuator
         	attenuators.get(i).set(0);
         } 
-		mixerSum = new MixerSum(4);
+		mixerSum = new MixerSum(NumberOfInputPort);
 		/* Add mixerSum unit to circuit. */
 		add(mixerSum);
 		
 		/* Make ports on internal units appear as ports on circuit. */
 		/* Optionally give some circuit ports more meaningful names. */	
-        for(int i = 0; i <= NumberOfInputPort - 1; i++)
+    	Integer index;
+        for(int i = 0; i < NumberOfInputPort; i++)
         {
-        	index = i+1;
+        	index = i + 1;
         	unitInputPorts.add((UnitInputPort) addNamedPort(attenuators.get(i).getInput(), "mixer_input" + index));
         } 
 				
 		/* Connect SynthUnits to make control signal path. */
-        for(int i = 0; i <= NumberOfInputPort - 1; i++)
+        for(int i = 0; i < NumberOfInputPort; i++)
         {
     		mixerSum.getInput(i).connect(attenuators.get(i).output);
         }

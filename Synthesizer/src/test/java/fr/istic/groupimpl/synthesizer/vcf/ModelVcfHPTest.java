@@ -11,7 +11,7 @@ import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 
-public class ModelVcfTest {
+public class ModelVcfHPTest {
 
 	private Synthesizer synth;
 	private UnitOscillator sineOsc;
@@ -22,7 +22,7 @@ public class ModelVcfTest {
 		synth = JSyn.createSynthesizer();
 
 		sineOsc = new SineOscillator();
-		model = new ModelVcf();
+		model = new ModelVcf(ModelVcf.Type.HP12);
 		
 		synth.add(sineOsc);
 		synth.add(model.getUnitGenerator());
@@ -35,9 +35,9 @@ public class ModelVcfTest {
 	}
 	
 	@Test
-	public void testOpenFreqMax() throws InterruptedException {
+	public void testCloseFreqMax() throws InterruptedException {
 		// Configuration
-		model.setCutFrequency(44000);
+		model.setCutFrequency(Double.MAX_VALUE);
 		model.setResonance(1);	
 		
 		// Consomation de valeur
@@ -47,7 +47,24 @@ public class ModelVcfTest {
 		
 		// Test des valeurs de sortie
 		for (int i = 0; i < 8; i++) {
-			assertEquals(model.getOutputPort().getValues()[i], sineOsc.output.getValues()[i], 0.001);
+			assertEquals(model.getOutputPort().getValues()[i], 0, 0.001);
+		}
+	}
+	
+	@Test
+	public void testOpenFreqMin() throws InterruptedException {
+		// Configuration
+		model.setCutFrequency(0);
+		model.setResonance(1);	
+		
+		// Consomation de valeur
+		model.getUnitGenerator().start();
+		Thread.sleep(100);
+		model.getUnitGenerator().stop();
+		
+		// Test des valeurs de sortie
+		for (int i = 0; i < 8; i++) {
+			assertEquals(model.getOutputPort().getValues()[i], sineOsc.output.getValues()[i], 0.01);
 		}
 	}
 
@@ -64,7 +81,7 @@ public class ModelVcfTest {
 		
 		// Test des valeurs de sortie
 		for (int i = 0; i < 8; i++) {
-			assertNotEquals(model.getOutputPort().getValues()[i], sineOsc.output.getValues()[i], 0.001);
+			assertNotEquals(model.getOutputPort().getValues()[i], sineOsc.output.getValues()[i], 0.0001);
 		}
 	}
 
@@ -81,7 +98,7 @@ public class ModelVcfTest {
 		
 		// Test des valeurs de sortie
 		for (int i = 0; i < 8; i++) {
-			assertEquals(model.getOutputPort().getValues()[i], 0.0, 0.001);
+			assertEquals(model.getOutputPort().getValues()[i], 0.0, 0.01);
 		}
 	}
 
@@ -98,7 +115,7 @@ public class ModelVcfTest {
 		
 		// Test des valeurs de sortie
 		for (int i = 0; i < 8; i++) {
-			assertNotEquals(model.getOutputPort().getValues()[i], 0.0, 0.001);
+			assertNotEquals(model.getOutputPort().getValues()[i], 0.0, 0.0001);
 		}
 	}
 

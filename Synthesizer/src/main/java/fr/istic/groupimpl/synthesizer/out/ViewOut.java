@@ -9,9 +9,11 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
@@ -24,7 +26,7 @@ import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 public class ViewOut extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;
-	@FXML private ImageView closeModuleFx;
+	@FXML private GridPane top;
 	@FXML private VBox knobVolumePane;
 	@FXML private TextField valueVolumeFx;
 	@FXML private CheckBox muteVolumeFx;
@@ -36,6 +38,8 @@ public class ViewOut extends ViewComponent implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
+		((Label) top.lookup("#titleModule")).setText("OUT");
+		
 		addPort(input, inputX, inputY);
 		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
@@ -60,7 +64,7 @@ public class ViewOut extends ViewComponent implements Initializable {
 		// Listener input
 		input.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(inputX, inputY));
 		// Listener close module
-		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
@@ -79,5 +83,10 @@ public class ViewOut extends ViewComponent implements Initializable {
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
+	}
+
+	@Override
+	public String getFilename() {
+		return "fxml/out.fxml";
 	}
 }

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.scene.shape.Shape;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
@@ -21,10 +20,19 @@ import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.io.architecture.Port;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
+/**
+ * The Class ControllerGlobal.
+ */
 public class ControllerGlobal {
 
+	/** The instance. */
 	private static ControllerGlobal instance;
 
+	/**
+	 * Gets the single instance of ControllerGlobal.
+	 *
+	 * @return single instance of ControllerGlobal
+	 */
 	public static ControllerGlobal getInstance() {
 		if(instance == null) {
 			instance = new ControllerGlobal();
@@ -32,24 +40,37 @@ public class ControllerGlobal {
 		return instance;
 	}
 
+	/** The model. */
 	private ModelGlobal model;
+	
+	/** The view. */
 	private ViewGlobal view;
 
+	/** The interaction mode. */
 	private InteractionMode interactionMode = InteractionMode.CableCreation_none;
 	/*
 	 * By default, when the user clicks on a port, a new cable is created.
 	 * However, if the user clicks on an already connected port, the existing
 	 * cable should be in a "move" state.
 	 */
+	/** The previous port. */
 	private UnitPort previousPort;
+	
+	/** The previous x. */
 	private DoubleProperty previousX;
+	
+	/** The previous y. */
 	private DoubleProperty previousY;
 
+	/** The current port. */
 	private UnitPort currentPort;
 
+	/** The cables. */
 	private Map<UnitPort,Cable> cables = new HashMap<UnitPort,Cable>();
-	private Shape v;
 
+	/**
+	 * Instantiates a new controller global.
+	 */
 	private ControllerGlobal() {
 		model = new ModelGlobal();
 	}
@@ -57,12 +78,18 @@ public class ControllerGlobal {
 	/**
 	 * Signals the model that the given UnitGenerator must be added
 	 * to the synthesizer.
-	 * @param unitGen
+	 *
+	 * @param unitGen the unit gen
 	 */
 	public void registerUnitGenerator(UnitGenerator unitGen) {
 		model.addUnitGenerator(unitGen);
 	}
 
+	/**
+	 * Register out unit generator.
+	 *
+	 * @param unitGen the unit gen
+	 */
 	public void registerOutUnitGenerator(UnitGenerator unitGen) {
 		model.addOutUnit(unitGen);
 	}
@@ -70,13 +97,19 @@ public class ControllerGlobal {
 	/**
 	 * Signals the model that the given UnitGenerator must be removed
 	 * from the synthesizer.
-	 * @param unitGen
+	 *
+	 * @param unitGen the unit gen
 	 */
 	public void unregisterUnitGenerator(UnitGenerator unitGen) {
 
 		model.removeUnitGenerator(unitGen);
 	}
 
+	/**
+	 * Unregister out unit generator.
+	 *
+	 * @param unitGen the unit gen
+	 */
 	public void unregisterOutUnitGenerator(UnitGenerator unitGen) {
 		model.removeOutUnitGenerator(unitGen);
 	}
@@ -84,7 +117,8 @@ public class ControllerGlobal {
 	/**
 	 * Signals the model that any connection originating from each port in
 	 * the given collection must be removed.
-	 * @param unitports
+	 *
+	 * @param unitports the unitports
 	 */
 	public void removeAllConnections(Collection<UnitPort> unitports) {
 		model.removeAllConnections(unitports);
@@ -98,7 +132,10 @@ public class ControllerGlobal {
 
 	/**
 	 * Handles the process of connection creation when an input port is clicked.
-	 * @param port
+	 *
+	 * @param port the port
+	 * @param x the x
+	 * @param y the y
 	 */
 	public void handleInputClicked(UnitInputPort port, DoubleProperty x, DoubleProperty y) {
 		switch(interactionMode) {
@@ -142,7 +179,10 @@ public class ControllerGlobal {
 
 	/**
 	 * Handles the process of connection creation when an output port is clicked.
-	 * @param port
+	 *
+	 * @param port the port
+	 * @param x the x
+	 * @param y the y
 	 */
 	public void handleOutputClicked(UnitOutputPort port, DoubleProperty x, DoubleProperty y) {
 		switch(interactionMode) {
@@ -189,6 +229,13 @@ public class ControllerGlobal {
 	 *   - disconnect the currentPort and the previousPort in the model.
 	 *   - change mode accordingly.
 	 * If not, we should enter in a "create" mode.
+	 */
+	/**
+	 * Do stuff.
+	 *
+	 * @param port the port
+	 * @param x the x
+	 * @param y the y
 	 */
 	private void doStuff(UnitPort port, DoubleProperty x, DoubleProperty y) {
 		boolean isInput = port instanceof UnitInputPort;
@@ -262,6 +309,9 @@ public class ControllerGlobal {
 		interactionMode = InteractionMode.CableCreation_none;
 	}
 
+	/**
+	 * Cancel cable creation.
+	 */
 	private void cancelCableCreation() {
 		Cable cable = cables.get(currentPort);
 		if(cable != null) {
@@ -285,6 +335,11 @@ public class ControllerGlobal {
 		previousY = null;
 	}
 
+	/**
+	 * Handle click on cable.
+	 *
+	 * @param cable the cable
+	 */
 	public void handleClickOnCable(Cable cable) {
 		switch(interactionMode) {
 		case CableDeletion:
@@ -308,10 +363,18 @@ public class ControllerGlobal {
 			
 	}
 
+	/**
+	 * Sets the view.
+	 *
+	 * @param view the new view
+	 */
 	public void setView(ViewGlobal view) {
 		this.view = view;
 	}
 
+	/**
+	 * Activate deletion mode.
+	 */
 	public void activateDeletionMode() {
 		switch(interactionMode) {
 		case CableCreation_none:
@@ -334,6 +397,9 @@ public class ControllerGlobal {
 		interactionMode = InteractionMode.CableDeletion;
 	}
 
+	/**
+	 * Activate painting mode.
+	 */
 	public void activatePaintingMode() {
 		switch(interactionMode) {
 		case CableCreation_none:
@@ -356,17 +422,43 @@ public class ControllerGlobal {
 		interactionMode = InteractionMode.CablePainting;
 	}
 	
+	/**
+	 * Checks if is port connected.
+	 *
+	 * @param port the port
+	 * @return true, if is port connected
+	 */
 	public boolean isPortConnected(UnitPort port){
 		return model.isPortConnected(port);
 	}
 	
+	/**
+	 * The Enum InteractionMode.
+	 */
 	private enum InteractionMode {
-		CableCreation_none,CableCreation_in,CableCreation_out,CableDeletion,CablePainting
+		
+		/** The Cable creation_none. */
+		CableCreation_none,
+		/** The Cable creation_in. */
+		CableCreation_in,
+		/** The Cable creation_out. */
+		CableCreation_out,
+		/** The Cable deletion. */
+		CableDeletion,
+		/** The Cable painting. */
+		CablePainting
 	}
 	
 	
+	/**
+	 * Gets the port.
+	 *
+	 * @param unitPort the unit port
+	 * @return the port
+	 */
 	public Port getPort(UnitPort unitPort){
-		List<Module> modules = view.getConfiguration().getModules();
+		view.getModules();
+		List<Module> modules = view.getModules();
 		for (Module module : modules) {
 			List<Port> ports = module.getPorts();
 			for (Port port : ports) {
@@ -378,8 +470,14 @@ public class ControllerGlobal {
 		return null;
 	}
 	
+	/**
+	 * Gets the module.
+	 *
+	 * @param unitPort the unit port
+	 * @return the module
+	 */
 	public Module getModule(UnitPort unitPort){
-		List<Module> modules = view.getConfiguration().getModules();
+		List<Module> modules = view.getModules();
 		for (Module module : modules) {
 			List<Port> ports = module.getPorts();
 			for (Port port : ports) {
@@ -391,16 +489,30 @@ public class ControllerGlobal {
 		return null;
 	}
 	
+	/**
+	 * Gets the connection list.
+	 *
+	 * @return the connection list
+	 */
 	public List<Connection> getConnectionList(){
-//		List<Module> modules = view.getConfiguration().getModules();
 		List<Connection> connections =new ArrayList<Connection>();
 		
 		Set<UnitPort> unitPorts = cables.keySet();
 		for (UnitPort unitPort : unitPorts) {
 			Connection connection =new Connection();
-			connection.setInputPort(getPort(unitPort));
-			connection.setInputPort(getPort(model.getConnectedPort(unitPort)));
-			connection.setColor(cables.get(unitPort).getStroke().toString());
+			if (unitPort instanceof UnitInputPort) {
+				UnitPort portConnected = model.getConnectedPort(unitPort);
+				if (portConnected != null) {
+					Port portInput = getPort(unitPort);
+					Port portOutput = getPort(portConnected);					
+					connection.setInputPort(portInput);					
+					connection.setOutputPort(portOutput);
+					connection.getInputPort().setIdModule(getModule(unitPort).getId());
+					connection.getOutputPort().setIdModule(getModule(portConnected).getId());
+					connection.setColor(cables.get(unitPort).getStroke().toString());
+					connections.add(connection);
+				}				
+			}			
 		}
 		return connections;
 	}

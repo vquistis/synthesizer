@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * The Class Connection.
  */
-@XmlRootElement
+@XmlRootElement(name="connection")
 public class Connection {
 
 	/** The input port. */
@@ -70,7 +70,4 @@ public class Connection {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
-	
-
 }
