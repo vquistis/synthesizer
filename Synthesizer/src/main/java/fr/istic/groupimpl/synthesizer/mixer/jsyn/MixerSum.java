@@ -75,7 +75,7 @@ public class MixerSum extends UnitGenerator {
         for (int i = start; i < limit; i++) {
         	inputSum=0;
         	for (int inputIndex = 0; inputIndex < unitInputPorts.size(); inputIndex++) {
-        		inputSum = inputSum + ArrayInputs.get(inputIndex)[i]/unitInputPorts.size();
+        		inputSum = inputSum + ArrayInputs.get(inputIndex)[i];
         	}
         	outputs[i] = inputSum;
         }

@@ -50,6 +50,6 @@ public class ModelKeyboard extends ModelComponent {
 	 * @param key, Time stamp
 	 */
 	public void setKey(int key) {
-		keyboard.getKey().set(key, 1);
+		keyboard.getKey().set(key);
 	}
 }

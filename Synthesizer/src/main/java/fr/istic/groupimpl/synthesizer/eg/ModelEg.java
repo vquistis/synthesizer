@@ -17,6 +17,8 @@ public class ModelEg extends ModelComponent {
 	public ModelEg() {
 		super();
 		adsr = new JsynEnvelopeADSR();
+		adsr.input.setName("eg_input");
+		adsr.output.setName("eg_output");
 	}
 
 	@Override
