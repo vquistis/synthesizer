@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * The Class Module.
  */
-@XmlRootElement
+@XmlRootElement(name="module")
 public class Module {
 	
 	/** The id. */

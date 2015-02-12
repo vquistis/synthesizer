@@ -10,15 +10,25 @@ import javafx.stage.Stage;
 import fr.istic.groupimpl.synthesizer.global.ViewGlobal;
 
 /**
- * Hello world!
- *
+ * The Class App.
  */
 public class App extends Application
 {
+    
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main( String[] args ){
         launch(args);
     }
 
+	/**
+	 * start method javafx
+	 * @param primaryStage
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/global.fxml"));
@@ -26,13 +36,11 @@ public class App extends Application
 		URL cssURL = getClass().getClassLoader().getResource("css/style.css");
 		Scene scene = new Scene(root,1100,700);
 		scene.getStylesheets().add(cssURL.toExternalForm());
-		primaryStage.setScene(scene);
-		
+		primaryStage.setScene(scene);		
 		ViewGlobal view = loader.getController();
-		view.init();
-		
-		primaryStage.show();
-		
+		view.setStage(primaryStage);
+		view.init();		
+		primaryStage.show();		
         primaryStage.setOnCloseRequest((event) -> System.exit(0));
 	}
 }

@@ -18,15 +18,24 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
+/**
+ * The Class ViewComponent.
+ */
 public abstract class ViewComponent implements IViewComponent {
 
+	/** The Constant COMPONENT_HEIGHT. */
 	public static final double COMPONENT_HEIGHT = 300;
 
+	/** The port bindings. */
 	private List<ChangeListener> portBindings = new ArrayList<ChangeListener>();
 	
+	/** The save action map. */
 	private Map<String, Supplier<Double>> saveActionMap =new HashMap<>();
+	
+	/** The load action map. */
 	private Map<String, Consumer<Double>> loadActionMap =new HashMap<>();
 
+	/** The debug. */
 	private static boolean debug = false;
 
 	/**
@@ -35,6 +44,9 @@ public abstract class ViewComponent implements IViewComponent {
 	 */
 	protected abstract Pane getComponentRoot();
 
+	/**
+	 * Refresh component.
+	 */
 	public void refreshComponent() {
 		portBindings.forEach((c) -> {
 			c.changed(null, null, null);
@@ -69,6 +81,9 @@ public abstract class ViewComponent implements IViewComponent {
 		root.boundsInParentProperty().addListener(posChangeListener);
 	}
 
+	/**
+	 * Cleanup ports.
+	 */
 	final protected void cleanupPorts() {
 		Node root = getComponentRoot();
 		for(ChangeListener c : portBindings) {
@@ -77,6 +92,12 @@ public abstract class ViewComponent implements IViewComponent {
 		}
 	}
 
+	/**
+	 * Gets the node bounds in component.
+	 *
+	 * @param node the node
+	 * @return the node bounds in component
+	 */
 	private Bounds getNodeBoundsInComponent(Node node) {
 		if(debug) {
 			Log.getInstance().debug("getNodeBoundsInComponent : " + node.getId());
@@ -151,6 +172,12 @@ public abstract class ViewComponent implements IViewComponent {
 		return res;
 	}
 
+	/**
+	 * Compute node center.
+	 *
+	 * @param node the node
+	 * @return the point2 d
+	 */
 	private Point2D computeNodeCenter(Node node) {
 		Bounds bounds = getNodeBoundsInComponent(node);
 		if(debug) {
@@ -162,16 +189,31 @@ public abstract class ViewComponent implements IViewComponent {
 
 	}
 	
+	/**
+	 * Gets the save supplier.
+	 *
+	 * @return the save supplier
+	 */
 	public final Supplier<Module> getSaveSupplier() {
 		Supplier<Module> sup = (() -> getConfiguration());
 		return sup;
 	}
 	
+	/**
+	 * Gets the position x.
+	 *
+	 * @return the position x
+	 */
 	public final int getPositionX(){
 		Node node =  getComponentRoot();
 		return ((HBox)node.getParent()).getChildren().indexOf(node);
 	}
 	
+	/**
+	 * Gets the position y.
+	 *
+	 * @return the position y
+	 */
 	public final int getPositionY(){
 		Node node =  getComponentRoot();
 		HBox hbox = ((HBox)node.getParent());		
@@ -179,13 +221,30 @@ public abstract class ViewComponent implements IViewComponent {
 		return splitPane.getItems().indexOf(hbox);
 	}
 	
+	/**
+	 * Adds the parameters.
+	 *
+	 * @param parameterName the parameter name
+	 * @param saveAction the save action
+	 * @param loadAction the load action
+	 */
 	protected final void addParameters(String parameterName, Supplier<Double> saveAction, Consumer<Double> loadAction){
 		saveActionMap.put(parameterName, saveAction);
 		loadActionMap.put(parameterName, loadAction);		
 	}
 	
+	/**
+	 * Gets the controller.
+	 *
+	 * @return the controller
+	 */
 	protected abstract ControllerComponent getController();
 	
+	/**
+	 * Gets the configuration.
+	 *
+	 * @return the configuration
+	 */
 	protected Module getConfiguration() {
 		Module module= new Module();
 		Map<String, Double> parameters = module.getParameters();

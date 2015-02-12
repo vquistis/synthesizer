@@ -1,8 +1,9 @@
 package fr.istic.groupimpl.synthesizer.io.architecture;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -12,10 +13,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Configuration {
 	
 	/** The modules. */
-	private List<Module> modules;
+	private Collection<Module> modules;
 	
 	/** The connections. */
-	private List<Connection> connections;
+	private Collection<Connection> connections;
 	
 	
 	public Configuration() {
@@ -28,7 +29,8 @@ public class Configuration {
 	 *
 	 * @return the modules
 	 */
-	public List<Module> getModules() {
+	@XmlElement(name="modules")
+	public Collection<Module> getModules() {
 		return modules;
 	}
 
@@ -37,7 +39,7 @@ public class Configuration {
 	 *
 	 * @param modules the new modules
 	 */
-	public void setModules(List<Module> modules) {
+	public void setModules(Collection<Module> modules) {
 		this.modules = modules;
 	}
 
@@ -46,7 +48,8 @@ public class Configuration {
 	 *
 	 * @return the connections
 	 */
-	public List<Connection> getConnections() {
+	 @XmlElement(name="connections")
+	public Collection<Connection> getConnections() {
 		return connections;
 	}
 
@@ -55,7 +58,7 @@ public class Configuration {
 	 *
 	 * @param connections the new connections
 	 */
-	public void setConnections(List<Connection> connections) {
+	public void setConnections(Collection<Connection> connections) {
 		this.connections = connections;
 	}
 	

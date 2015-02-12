@@ -1,5 +1,6 @@
 package fr.istic.groupimpl.synthesizer.global;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.io.FileUtil;
@@ -68,6 +71,7 @@ public class ViewGlobal implements Initializable {
 	/** The hb3. */
 	@FXML private HBox hb3;
 
+	/** The colorpicker. */
 	@FXML private ColorPicker colorpicker; 
 
 	/** The mouse x. */
@@ -79,7 +83,11 @@ public class ViewGlobal implements Initializable {
 	/** The ctl. */
 	private ControllerGlobal ctl;
 
-	private List<Supplier<Module>> suppliers=new ArrayList<Supplier<Module>>();	
+	/** The suppliers. */
+	private List<Supplier<Module>> suppliers=new ArrayList<Supplier<Module>>();
+
+	/** The stage. */
+	private Stage stage;	
 
 	/**
 	 * Adds the cable.
@@ -222,6 +230,9 @@ public class ViewGlobal implements Initializable {
 		ctl.setView(this);
 	}
 
+	/**
+	 * Inits the.
+	 */
 	public void init() {
 		//primaryStage = (Stage) borderpane.getScene().getWindow();
 		createModule("fxml/out.fxml");
@@ -292,6 +303,11 @@ public class ViewGlobal implements Initializable {
 		});
 	}
 
+	/**
+	 * Gets the cable color.
+	 *
+	 * @return the cable color
+	 */
 	public Color getCableColor() {
 		return colorpicker.getValue();
 	}
@@ -425,11 +441,19 @@ public class ViewGlobal implements Initializable {
 	}
 
 
+	/**
+	 * Handle paint.
+	 */
 	@FXML
 	public void handlePaint() {
 		ctl.activatePaintingMode();
 	}
 
+	/**
+	 * Enable cable deletion mode.
+	 *
+	 * @param enable the enable
+	 */
 	public void enableCableDeletionMode(boolean enable) {
 		for(Node n : contentpane.getChildren()) {
 			if(n instanceof Cable) {
@@ -443,18 +467,33 @@ public class ViewGlobal implements Initializable {
 		}
 	}
 
+	/**
+	 * Enable cable creation mode.
+	 *
+	 * @param enable the enable
+	 */
 	public void enableCableCreationMode(boolean enable) {
 		if(enable) {
 			contentpane.setCursor(Cursor.DISAPPEAR);
 		}
 	}
 
+	/**
+	 * Enable default mode.
+	 *
+	 * @param enable the enable
+	 */
 	public void enableDefaultMode(boolean enable) {
 		if(enable) {
 			contentpane.setCursor(Cursor.DEFAULT);
 		}
 	}
 
+	/**
+	 * Enable cable painting mode.
+	 *
+	 * @param enable the enable
+	 */
 	public void enableCablePaintingMode(boolean enable) {
 		for(Node n : contentpane.getChildren()) {
 			if(n instanceof Cable) {
@@ -468,39 +507,89 @@ public class ViewGlobal implements Initializable {
 		}
 	}
 
+	/**
+	 * Handle menu devmode node hierarchy_1.
+	 */
 	@FXML
 	public void handleMenuDevmodeNodeHierarchy_1() {
 		DebugJFXTools debugJFXTools = new DebugJFXTools();
 		debugJFXTools.GenerateNodeHierarchy(borderpane, "synthjfx_1.dmp");
 	}
+	
+	/**
+	 * Handle menu devmode node hierarchy_2.
+	 */
 	@FXML
 	public void handleMenuDevmodeNodeHierarchy_2() {
 		DebugJFXTools debugJFXTools = new DebugJFXTools();
 		debugJFXTools.GenerateNodeHierarchy(borderpane, "synthjfx_2.dmp");
 	}
 
+	/**
+	 * Handle save configuration.
+	 */
 	@FXML
 	public void  handleSaveConfiguration(){
-		Configuration configuration =new Configuration();
-		for (Supplier<Module> supplier : suppliers) {
-			configuration.addModule(supplier.get());
-		}
-
-		FileUtil.saveFile(configuration, "file.synthlab");
+		 FileChooser fileChooser = new FileChooser();
+		  
+         //Set extension filter
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.synthlab)", "*.synthlab");
+         fileChooser.getExtensionFilters().add(extFilter);
+         
+         //Show save file dialog
+         File file = fileChooser.showSaveDialog(stage);
+         
+         if(file != null){
+        	Configuration configuration = new Configuration();     		
+     		configuration.setModules(getModules());
+     		configuration.setConnections(ControllerGlobal.getInstance().getConnectionList());
+     		FileUtil.saveFile(configuration, file);
+         }	
 	}
 
-	public Configuration getConfiguration() {
-		Configuration configuration =new Configuration();
+	/**
+	 * Gets the modules.
+	 *
+	 * @return the modules
+	 */
+	public List<Module> getModules() {
+		List<Module> list = new ArrayList<>();
+		int index=0;
 		for (Supplier<Module> supplier : suppliers) {
-			configuration.addModule(supplier.get());
+			Module module = supplier.get();
+			module.setId("Module"+index);
+			list.add(module);
+			index++;
 		}
-		configuration.setConnections(ControllerGlobal.getInstance().getConnectionList());
-		return configuration;
+		return list;
 	}
-
+	/**
+	 * Handle load configuration.
+	 */
 	@FXML
 	public void handleLoadConfiguration(){
+		 FileChooser fileChooser = new FileChooser();         
+         //Set extension filter
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.synthlab)", "*.synthlab");
+         fileChooser.getExtensionFilters().add(extFilter);
+          
+         //Show save file dialog
+         File file = fileChooser.showOpenDialog(stage);
+         if(file != null){
+        	 	// traitement
+        	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);
+        	 System.out.println(configuration);
+         }
 
+	}
+
+	/**
+	 * Sets the stage.
+	 *
+	 * @param primaryStage the new stage
+	 */
+	public void setStage(Stage primaryStage) {
+		this.stage=primaryStage;
 	}
 
 }

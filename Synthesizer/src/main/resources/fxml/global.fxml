@@ -16,7 +16,7 @@
 				<Button onAction="#handlePaint" text="Paint cable" />
 				<Button onAction="#handleDelete" text="Delete Mode" />
 
-				<Button onAction="#handleSaveConfiguration" text="Sauvegarder la configuraion" />
+				<Button onAction="#handleSaveConfiguration" text="Sauvegarder la configuration" />
 				<Button onAction="#handleLoadConfiguration" text="Charger la configuration" />
 
 				<!-- GENERATE GRAPH SCENE DEBUG ONLY <Button onAction="#handleMenuDevmodeNodeHierarchy_1" 
@@ -133,8 +133,7 @@
 						<Font name="System Bold" size="12.0" />
 					</font>
 				</Button>
-				<Button onAction="#handleAddLineIn"
-					styleClass="moduleButton" text="LINE IN">
+				<Button onAction="#handleAddLineIn" styleClass="moduleButton" text="LINE IN">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
@@ -142,8 +141,7 @@
 						<Font name="System Bold" size="12.0" />
 					</font>
 				</Button>
-				<Button onAction="#handleAddSeq"
-					styleClass="moduleButton" text="Sequencer">
+				<Button onAction="#handleAddSeq" styleClass="moduleButton" text="Sequencer">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
