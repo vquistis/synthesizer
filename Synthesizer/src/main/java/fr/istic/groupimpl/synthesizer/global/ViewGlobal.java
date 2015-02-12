@@ -36,7 +36,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.io.FileUtil;
@@ -659,11 +658,10 @@ public class ViewGlobal implements Initializable {
 	}
 
 	private void clearAllComponent() {
+		ControllerGlobal.getInstance().clearAllComponent();
 		for (Node node : splitpane.getItems()) {
 			((HBox) node).getChildren().clear();
-		}
-		 
-		 ControllerGlobal.getInstance().clearAllComponent();
+		}	 
 	}
 
 	/**

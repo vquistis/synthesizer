@@ -119,7 +119,10 @@ public class ViewVco extends ViewComponent implements Initializable {
 		});
 
 		addPort("vco_inputFm",fm);
-		addPort("outputAmplitude",out);
+		addPort("outputAmplitude",out);		
+		
+		addParameters("octave", ()-> {return  octaveKnob.getValue();}, (val)-> octaveKnob.setValue(val));
+		addParameters("precision", ()-> {return  precisionKnob.getValue();}, (val)-> precisionKnob.setValue(val));
 	}
 
 	@Override

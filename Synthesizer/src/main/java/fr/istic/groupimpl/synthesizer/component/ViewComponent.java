@@ -229,7 +229,12 @@ public abstract class ViewComponent implements IViewComponent {
 	 */
 	public final int getPositionX(){
 		Node node =  getComponentRoot();
-		return ((HBox)node.getParent()).getChildren().indexOf(node);
+		if (node.getParent() !=null) {
+			return ((HBox)node.getParent()).getChildren().indexOf(node);
+		} else {
+			return 0;
+		}
+		
 	}
 	
 	/**
@@ -239,9 +244,14 @@ public abstract class ViewComponent implements IViewComponent {
 	 */
 	public final int getPositionY(){
 		Node node =  getComponentRoot();
-		HBox hbox = ((HBox)node.getParent());		
-		SplitPane splitPane = ((SplitPane)hbox.getParent().getParent());		
-		return splitPane.getItems().indexOf(hbox);
+		if (node.getParent() != null) {
+			HBox hbox = ((HBox)node.getParent());		
+			SplitPane splitPane = ((SplitPane)hbox.getParent().getParent());		
+			return splitPane.getItems().indexOf(hbox);
+		} else {
+			return 0;
+		}
+		
 	}
 	
 	/**
