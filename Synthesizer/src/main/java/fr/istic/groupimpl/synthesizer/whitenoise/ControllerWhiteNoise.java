@@ -22,15 +22,6 @@ public class ControllerWhiteNoise extends ControllerComponent {
 	public ControllerWhiteNoise() {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
-	
-	/**
-	 * Click listener for output port
-	 * @param xCoord Coordinate of the clicked output port (x axis)
-	 * @param yCoord Coordinate of the clicked output port (y axis)
-	 */
-	public void handleViewOutputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
-		ControllerGlobal.getInstance().handleOutputClicked(model.getOutputPort(), xCoord, yCoord);
-	}
 
 	@Override
 	public void handleViewClose() {

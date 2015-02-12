@@ -33,15 +33,6 @@ public class ControllerOut extends ControllerComponent {
 		}
 	}
 
-	/**
-	 * Click listener for input port
-	 * @param xCoord Coordinate of the clicked input port (x axis)
-	 * @param yCoord Coordinate of the clicked input port (y axis)
-	 */
-	public void handleViewInputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
-		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(), xCoord, yCoord);
-	}
-
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());

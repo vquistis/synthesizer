@@ -36,7 +36,7 @@
                <font>
                   <Font size="12.0" />
                </font></Label>
-            <ImageView fx:id="fm" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleFmClick" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.rowIndex="1">
+            <ImageView fx:id="fm" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.rowIndex="1">
                <image>
                   <Image url="@../img/inoutBleu.png" />
                </image>
@@ -44,7 +44,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="out" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleOutputClick" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <ImageView fx:id="out" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../img/inoutRouge.png" />
                </image>

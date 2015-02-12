@@ -14,6 +14,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
@@ -75,13 +76,20 @@ public abstract class ViewComponent implements IViewComponent {
 	 * coordinate space of the parent node.
 	 */
 	final protected void addPort(String portName, Node portNode) {
+		
+		DoubleProperty portX = new SimpleDoubleProperty(0);
+		DoubleProperty portY = new SimpleDoubleProperty(0);
+		Pair<DoubleProperty, DoubleProperty> prop = new Pair<>(portX, portY);
+		cablesProperties.put(portName, prop);
+
+		ControllerComponent ctl = getController();
+		ctl.setupPort(portName, portNode, portX, portY);
+				
 		ChangeListener posChangeListener = ((a,b,c) -> {
 			Point2D point2D = computeNodeCenter(portNode);
-			
-			DoubleProperty portX = new SimpleDoubleProperty(point2D.getX());
-			DoubleProperty portY = new SimpleDoubleProperty(point2D.getY());
-			Pair<DoubleProperty, DoubleProperty> prop = new Pair<>(portX, portY);
-			cablesProperties.put(portName, prop);
+
+			cablesProperties.get(portName).getKey().set(point2D.getX());
+			cablesProperties.get(portName).getValue().set(point2D.getY());
 			if(debug) {
 				Log.getInstance().debug("[Port Position Recomputed : X = " + point2D.getX() + " ; Y = " + point2D.getY() + "]");
 			}

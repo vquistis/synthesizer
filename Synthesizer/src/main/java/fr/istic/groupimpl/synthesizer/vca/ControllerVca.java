@@ -1,6 +1,5 @@
 package fr.istic.groupimpl.synthesizer.vca;
 
-import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
@@ -25,27 +24,6 @@ public class ControllerVca extends ControllerComponent {
 		modelVca = new ModelVca();
 		ctrlGlob = ControllerGlobal.getInstance();
 		ctrlGlob.registerUnitGenerator(modelVca.getUnitGenerator());
-	}
-		
-
-	/**
-	 * Click listener for input ports
-	 * @param portName Name of the clicked input port
-	 * @param xCoord Coordinate of the clicked input port (x axis)
-	 * @param yCoord Coordinate of the clicked input port (y axis)
-	 */
-	public void handleViewInputClick(String portName, DoubleProperty xCoord, DoubleProperty yCoord) {
-		ctrlGlob.handleInputClicked(modelVca.getInputPort(portName), xCoord, yCoord);
-	}
-
-	/**
-	 * Click listener for output ports
-	 * @param portName Name of the clicked output port
-	 * @param xCoord Coordinate of the clicked output port (x axis)
-	 * @param yCoord Coordinate of the clicked output port (y axis)
-	 */
-	public void handleViewOutputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
-		ctrlGlob.handleOutputClicked(modelVca.getOutputPort(), xCoord, yCoord);
 	}
 
 	/* (non-Javadoc)

@@ -34,11 +34,6 @@ public class ViewSeq extends ViewComponent implements Initializable {
 	@FXML private ImageView out;
 	@FXML private GridPane gridSeq;
 
-	private DoubleProperty gateX = new SimpleDoubleProperty(0);
-	private DoubleProperty gateY = new SimpleDoubleProperty(0);
-	private DoubleProperty outX = new SimpleDoubleProperty(0);
-	private DoubleProperty outY = new SimpleDoubleProperty(0);
-
 	private ControllerSeq controller;
 
 	@Override
@@ -104,31 +99,15 @@ public class ViewSeq extends ViewComponent implements Initializable {
 			parent.getChildren().remove(paneSeq);
 		});
 
-		addPort("gate",gate);
-		addPort("out",out);
+		addPort("sequencer_gate",gate);
+		addPort("sequencer_out",out);
 	}
 
 	@Override
 	protected Pane getComponentRoot() {
 		return paneSeq;
 	}
-
-
-	/**
-	 * Handles the click on the gate port
-	 */
-	@FXML
-	public void handleGateClick() {
-		controller.handleViewGateClick(gateX, gateY);
-	}
-
-	/**
-	 * Handles the click on the output port
-	 */
-	@FXML
-	public void handleOutputClick() {
-		controller.handleViewOutputClick(outX, outY);
-	}
+	
 	/**
 	 * Handles the click on the reset button
 	 */

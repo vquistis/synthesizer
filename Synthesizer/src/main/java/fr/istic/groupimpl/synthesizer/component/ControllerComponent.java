@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
+
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitPort;
 
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 import fr.istic.groupimpl.synthesizer.io.architecture.Port;
 import fr.istic.groupimpl.synthesizer.io.architecture.Type;
+import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * The Class ControllerComponent.
@@ -47,11 +52,25 @@ public abstract class ControllerComponent {
 				port.setType(Type.IN);
 			} else {
 				port.setType(Type.OUT);
-			}			
+			}
 			port.setConnected(ControllerGlobal.getInstance().isPortConnected(unitPort));	
 			port.setUnitPort(unitPort);
 			ports.add(port);
 		}		
 		return ports;
+	}
+	
+	public void handlePortClicked(UnitPort port, DoubleProperty x, DoubleProperty y) {
+		ControllerGlobal.getInstance().handlePortClicked(port, x, y);
+	}
+
+	public void setupPort(String portName, Node portNode, DoubleProperty portX,	DoubleProperty portY) {
+		getModel().getAllPorts().forEach((p) -> {				
+			if(p.getName().equals(portName)) {
+				portNode.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+					handlePortClicked(p, portX, portY);
+				});
+			}
+		});
 	}
 }

@@ -1,6 +1,5 @@
 package fr.istic.groupimpl.synthesizer.vcf;
 
-import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
@@ -28,33 +27,6 @@ public class ControllerVcf extends ControllerComponent {
 	 */
 	public void handleViewResonanceChange(Number newVal) {
 		model.setResonance((double) newVal);
-	}
-
-	/**
-	 * Click listener for input port
-	 * @param xCoord Coordinate of the clicked input port (x axis)
-	 * @param yCoord Coordinate of the clicked input port (y axis)
-	 */
-	public void handleViewInputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
-		ControllerGlobal.getInstance().handleInputClicked(model.getInputPort(), xCoord, yCoord);
-	}
-
-	/**
-	 * Click listener for input fm port
-	 * @param xCoord Coordinate of the clicked input port (x axis)
-	 * @param yCoord Coordinate of the clicked input port (y axis)
-	 */
-	public void handleViewFmClick(DoubleProperty xCoord, DoubleProperty yCoord) {
-		ControllerGlobal.getInstance().handleInputClicked(model.getFmPort(), xCoord, yCoord);
-	}
-
-	/**
-	 * Click listener for output port
-	 * @param xCoord Coordinate of the clicked output port (x axis)
-	 * @param yCoord Coordinate of the clicked output port (y axis)
-	 */
-	public void handleViewOutputClick(DoubleProperty xCoord, DoubleProperty yCoord) {
-		ControllerGlobal.getInstance().handleOutputClicked(model.getOutputPort(), xCoord, yCoord);
 	}
 
 	@Override
