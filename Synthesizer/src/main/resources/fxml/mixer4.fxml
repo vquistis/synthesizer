@@ -12,52 +12,8 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.istic.groupimpl.synthesizer.mixer.ViewMixer4Ports">
-	<center>
-		<HBox fx:id="inputHBox" alignment="TOP_CENTER" spacing="0.0" styleClass="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">	        
-			<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-				<bottom>
-				   <GridPane styleClass="portPane">
-				      <columnConstraints>
-				         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" prefWidth="90.00" />
-				      </columnConstraints>
-				      <rowConstraints>
-				         <RowConstraints prefHeight="15.0" valignment="CENTER" />
-				         <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
-				      </rowConstraints>
-				      <children>
-				         <Label fx:id="fxLabelOutput" text="out" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM">
-				            <font>
-				               <Font size="12.0" />
-				            </font></Label>
-				         <ImageView fx:id="fxOutput" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="inputPort" GridPane.columnIndex="0" GridPane.rowIndex="1">
-				            <cursor>
-				               <Cursor fx:constant="HAND" />
-				            </cursor>
-				            <image>
-				               <Image url="@../img/inoutRouge.png" />
-				            </image>
-				            <GridPane.margin>
-				               <Insets />
-				            </GridPane.margin>
-				         </ImageView>
-				      </children>
-				   </GridPane>
-				</bottom>
-			   <center>
-			   	   <GridPane styleClass="contentPane">
-				      <columnConstraints>
-				         <ColumnConstraints halignment="CENTER" prefWidth="90.00" />
-				      </columnConstraints>
-				      <rowConstraints>
-				         <RowConstraints prefHeight="160.00" valignment="CENTER" vgrow="SOMETIMES" />
-				      </rowConstraints>
-				      <children>
-
-				      </children>
-				   </GridPane>
-			   </center>
-			</BorderPane>
-		</HBox>
+	<center>	        
+		<fx:include source="include/mixer.fxml" fx:id="inputHBox"/>
 	</center>
     <top>
 		<fx:include source="include/top.fxml" fx:id="top"/>
