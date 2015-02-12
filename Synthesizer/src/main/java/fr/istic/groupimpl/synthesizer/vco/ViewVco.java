@@ -123,6 +123,13 @@ public class ViewVco extends ViewComponent implements Initializable {
 		
 		addParameters("octave", ()-> {return  octaveKnob.getValue();}, (val)-> octaveKnob.setValue(val));
 		addParameters("precision", ()-> {return  precisionKnob.getValue();}, (val)-> precisionKnob.setValue(val));
+		
+		addParameters("choiceBaseFreq", ()-> {return  (double) choiceBaseFreq.getSelectionModel().getSelectedIndex();}, 
+				(val)-> choiceBaseFreq.getSelectionModel().select(val.intValue()));
+		addParameters("typeOutput", ()-> {return  (double) typeOutput.getToggles().indexOf(typeOutput.getSelectedToggle());},
+				(val)-> typeOutput.selectToggle(typeOutput.getToggles().get(val.intValue())));
+
+
 	}
 
 	@Override
