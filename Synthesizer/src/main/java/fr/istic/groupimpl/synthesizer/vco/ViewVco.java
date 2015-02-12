@@ -118,8 +118,8 @@ public class ViewVco extends ViewComponent implements Initializable {
 				}
 		});
 
-		addPort("fm",fm);
-		addPort("out",out);
+		addPort("vco_inputFm",fm);
+		addPort("outputAmplitude",out);
 	}
 
 	@Override

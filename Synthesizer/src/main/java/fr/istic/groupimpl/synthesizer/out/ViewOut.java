@@ -38,7 +38,10 @@ public class ViewOut extends ViewComponent implements Initializable {
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("OUT");
 		
-		addPort("input", input);
+		// Creation du controller
+		controller = new ControllerOut();
+		
+		addPort("out_input", input);
 		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setMinValue(-60);
@@ -53,8 +56,6 @@ public class ViewOut extends ViewComponent implements Initializable {
 		StringConverter<Number> converter = new DoubleStringConverter();
 		Bindings.bindBidirectional(valueVolumeFx.textProperty(), knobVolume.valueProperty(), converter);
 
-		// Creation du controller
-		controller = new ControllerOut();
 		// Listener volume
 		knobVolume.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewVolumeChange(newVal));
 		// Listener mute
