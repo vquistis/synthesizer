@@ -14,7 +14,6 @@ import com.jsyn.ports.UnitPort;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 import fr.istic.groupimpl.synthesizer.io.architecture.Port;
 import fr.istic.groupimpl.synthesizer.io.architecture.Type;
-import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * The Class ControllerComponent.
