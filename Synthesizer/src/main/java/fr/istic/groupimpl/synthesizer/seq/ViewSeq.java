@@ -63,20 +63,18 @@ public class ViewSeq extends ViewComponent implements Initializable {
 		potFact.setShowTickLabels(true);
 		potFact.setShowTickMarks(true);
 		
-		// Bind knob value and text field value
+		// to Bind knob value and text field values
 		StringConverter<Number> converter = new DoubleStringConverter();
 		StringConverter<Number> converter12 = new DoubleDuodecimalStringConverter();
-	
-
 
 		for (int i = 0; i < ControllerSeq.NB_BUTTONS; i++) {
 			final int indice = i;
-		//	potFact.setTitle("" + (i + 1));
-			Potentiometre potentiometre = potFact.getPotentiometre();
 
-			gridSeq.add(potentiometre, i , 0);
+			Potentiometre knob = potFact.getPotentiometre();
 
-			potentiometre.valueProperty().addListener(
+			gridSeq.add(knob, i , 0);
+
+			knob.valueProperty().addListener(
 					(p, oldVal, newVal) -> controller.handleValueViewChange(
 							indice, (double) newVal));
 			HBox rg1 = new HBox();
@@ -95,16 +93,10 @@ public class ViewSeq extends ViewComponent implements Initializable {
 			gridSeq.add(rg1,i,1);
 			gridSeq.add(rg2,i,2);
 						
-			Bindings.bindBidirectional(tf1.textProperty(), potentiometre.valueProperty(), converter);
-			Bindings.bindBidirectional(tf2.textProperty(), potentiometre.valueProperty(), converter12);
+			Bindings.bindBidirectional(tf1.textProperty(), knob.valueProperty(), converter);
+			Bindings.bindBidirectional(tf2.textProperty(), knob.valueProperty(), converter12);
 
 		}
-
-		// Listener in & out
-		// gate.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
-		// controller.handleViewGateClick(gateX, gateY));
-		// out.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
-		// controller.handleViewOutputClick(outX, outY));
 
 		// Listener close module
 		closeSeq.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
@@ -144,7 +136,7 @@ public class ViewSeq extends ViewComponent implements Initializable {
 	 */
 	@FXML
 	public void handleDebutClicked() {
-		controller.handleViewDebutClicked();
+		controller.handleViewBeginClicked();
 	}
 
 	@Override
