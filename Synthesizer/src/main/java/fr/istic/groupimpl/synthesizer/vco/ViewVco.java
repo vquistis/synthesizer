@@ -126,8 +126,8 @@ public class ViewVco extends ViewComponent implements Initializable {
 				}
 		});
 
-		addPort(fm, fmX, fmY);
-		addPort(out, outX, outY);
+		addPort("fm",fm);
+		addPort("out",out);
 	}
 
 	/**

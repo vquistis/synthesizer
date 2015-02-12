@@ -40,7 +40,7 @@ public class ViewOut extends ViewComponent implements Initializable {
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("OUT");
 		
-		addPort(input, inputX, inputY);
+		addPort("input", input);
 		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setMinValue(-60);

@@ -31,7 +31,7 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("Keyboard");
 		
-		addPort(output, outputX, outputY);
+		addPort("output", output);
 		
 		// implementation of controller
 		controller = new ControllerKeyboard();

@@ -86,9 +86,9 @@ public class ViewVca extends ViewComponent implements Initializable {
 			vcaControl.handleViewInputClick("vca_input", inputX, inputY);
 		});
 
-		addPort(input, inputX, inputY);
-		addPort(am, amX, amY);
-		addPort(out, outX, outY);
+		addPort("input",input);
+		addPort("am",am);
+		addPort("out",out);
 		
 	}
 

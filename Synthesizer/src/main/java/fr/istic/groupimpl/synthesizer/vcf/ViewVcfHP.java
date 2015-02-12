@@ -46,9 +46,9 @@ public class ViewVcfHP extends ViewComponent implements Initializable {
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("VCF - HP12");
 		
-		addPort(input, inputX, inputY);
-		addPort(fm, fmX, fmY);
-		addPort(output, outputX, outputY);
+		addPort("input",input);
+		addPort("fm",fm);
+		addPort("output",output);
 		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setRayon(32);

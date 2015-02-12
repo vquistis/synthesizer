@@ -47,8 +47,8 @@ public class ViewEg extends ViewComponent implements Initializable {
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("EG");
 		
-		addPort(input, inputX, inputY);
-		addPort(output, outputX, outputY);
+		addPort("input", input);
+		addPort("output", output);
 		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setMinValue(0);

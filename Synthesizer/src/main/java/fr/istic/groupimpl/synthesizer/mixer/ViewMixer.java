@@ -69,7 +69,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
         
 		// Listener output
         fxOutput = (ImageView) inputHBox.lookup("#fxOutput");
-        addPort(fxOutput, outputX, outputY);
+        addPort("fxOutput",fxOutput);
 		fxOutput.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outputX, outputY));	
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
@@ -92,7 +92,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		// Add port to the ViewComponent
 		DoubleProperty inputX = new SimpleDoubleProperty(0);
 		DoubleProperty inputY = new SimpleDoubleProperty(0);
-		addPort(inputView.getFxInput(), inputX, inputY);
+		addPort("input",inputView.getFxInput());
 		// Bind knob value and text field value
 		StringConverter<Number> converter = new DoubleStringConverter();
 		Bindings.bindBidirectional(inputView.getFxValueVolume().textProperty(), knobVolume.valueProperty(), converter);

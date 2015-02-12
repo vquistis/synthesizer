@@ -29,7 +29,7 @@ public class ViewWhiteNoise extends ViewComponent implements Initializable {
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("White noise");
 		
-		addPort(output, outputX, outputY);
+		addPort("output", output);
 		
 		// implementation of controller
 		controller = new ControllerWhiteNoise();

@@ -29,7 +29,7 @@ public class ViewLineIn extends ViewComponent implements Initializable {
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("IN");
 		
-		addPort(output, outputX, outputY);
+		addPort("output", output);
 		
 		// implementation of controller
 		controller = new ControllerLineIn();
