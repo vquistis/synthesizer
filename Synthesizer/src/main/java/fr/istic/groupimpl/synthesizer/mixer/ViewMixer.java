@@ -21,7 +21,8 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 public class ViewMixer extends ViewComponent implements Initializable {
-
+	final Integer NumberOfInputPort = 4;
+	
 	@FXML private Pane rootModulePane;
 	@FXML private HBox inputHBox;
 	@FXML private ImageView fxOutput;
@@ -33,8 +34,12 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {	
+		ConfigurateMixer(NumberOfInputPort);
+	}
+
+	public void ConfigurateMixer(Integer NumberOfInputPort) {
 		// Creation du controller
-		controller = new ControllerMixer();
+		controller = new ControllerMixer(NumberOfInputPort);
 		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setMinValue(-60);
@@ -44,7 +49,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		knobFact.setRayon(32);
 		
 		// Generate input port
-        for(int i = 0; i <= controller.NumberOfInputPort - 1; i++)
+        for(int i = 0; i <= controller.getNumberOfInputPort() - 1; i++)
         {
     		// Add the input view to Mixer
     		inputHBox.getChildren().add((HBox) createViewMixerInput(i, controller, knobFact));
@@ -61,7 +66,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
 			parent.getChildren().remove(rootModulePane);
 		});
 	}
-
+	
 	private ViewMixerInput createViewMixerInput(Integer index, ControllerMixer controler, PotentiometreFactory knobFact) {
 		// faire table de knobVolume
 		Potentiometre knobVolume = knobFact.getPotentiometre();
