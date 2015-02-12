@@ -99,8 +99,8 @@ public class ViewSeq extends ViewComponent implements Initializable {
 			parent.getChildren().remove(paneSeq);
 		});
 
-		addPort("gate",gate);
-		addPort("out",out);
+		addPort("sequencer_gate",gate);
+		addPort("sequencer_out",out);
 	}
 
 	@Override
