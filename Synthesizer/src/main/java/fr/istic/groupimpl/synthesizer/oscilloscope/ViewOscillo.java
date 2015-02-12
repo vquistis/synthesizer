@@ -59,8 +59,8 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 			parent.getChildren().remove(rootModulePane);
 		});
 		
-		addPort("in", in);
-		addPort("out", out);
+		addPort("oscillo_in", in);
+		addPort("oscillo_out", out);
 		
 		scope.start();
 	}
