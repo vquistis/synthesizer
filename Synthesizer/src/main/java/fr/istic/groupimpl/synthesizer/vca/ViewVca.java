@@ -3,8 +3,6 @@ package fr.istic.groupimpl.synthesizer.vca;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -77,8 +75,8 @@ public class ViewVca extends ViewComponent implements Initializable {
 		});
 
 		addPort("vca_input",input);
-		addPort("vca_am",am);
-		addPort("vca_out",out);
+		addPort("vca_inputam",am);
+		addPort("vca_output",out);
 		
 	}
 
