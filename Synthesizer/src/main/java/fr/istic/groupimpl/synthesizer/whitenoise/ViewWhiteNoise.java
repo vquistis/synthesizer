@@ -25,10 +25,10 @@ public class ViewWhiteNoise extends ViewComponent implements Initializable {
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("White noise");
 		
-		addPort("output", output);
-		
 		// implementation of controller
 		controller = new ControllerWhiteNoise();
+		
+		addPort("output", output);	
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
