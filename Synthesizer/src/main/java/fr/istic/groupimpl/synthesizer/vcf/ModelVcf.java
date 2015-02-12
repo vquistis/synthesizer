@@ -13,10 +13,11 @@ import fr.istic.groupimpl.synthesizer.vcf.jsyn.JsynVcfCircuit;
 public class ModelVcf extends ModelComponent {
 	
 	private JsynVcfCircuit circuit;
+	public static enum Type { LP24, HP12 }
 	
-	public ModelVcf() {
+	public ModelVcf(Type t) {
 		super();
-		circuit = new JsynVcfCircuit();
+		circuit = new JsynVcfCircuit(t);
 	}
 
 	public void setCutFrequency(double freq) {

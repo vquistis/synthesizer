@@ -103,4 +103,10 @@ public class ViewVcfLP extends ViewComponent implements Initializable {
 		// TODO Auto-generated method stub
 		return controller;
 	}
+
+	@Override
+	public String getFilename() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
