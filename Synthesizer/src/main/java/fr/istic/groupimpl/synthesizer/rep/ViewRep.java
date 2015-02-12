@@ -43,10 +43,10 @@ public class ViewRep extends ViewComponent implements Initializable{
 			parent.getChildren().remove(rootModulePane);
 		});
 		
-		addPort("in", in);
-		addPort("out1", out1);
-		addPort("out2",out2);
-		addPort("out3", out3);
+		addPort("rep_in", in);
+		addPort("rep_out1", out1);
+		addPort("rep_out2",out2);
+		addPort("rep_out3", out3);
 	}
 	
 	/**
