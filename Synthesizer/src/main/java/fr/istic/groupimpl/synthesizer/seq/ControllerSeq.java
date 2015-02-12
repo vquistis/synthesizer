@@ -4,6 +4,7 @@ import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+import fr.istic.groupimpl.synthesizer.logger.Log;
 
 public class ControllerSeq  extends ControllerComponent
 {
@@ -44,11 +45,14 @@ public class ControllerSeq  extends ControllerComponent
 	
 
 	/**
-	 * Methode appellé sur un changement de valeur d'un potentiometre
+	 *  * Methode appelée sur un changement de valeur d'un potentiometre
+	 * @param indice
+	 * 		indice de la valeur
 	 * @param newVal
 	 * 		nouvelle valeur
 	 */
 	public void handleValueViewChange(int indice, Number newVal) {
+		Log.getInstance().trace("indice="+indice+" newVal="+newVal);
 		model.setValue(indice, (Double)newVal);
 	}
 	
