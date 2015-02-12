@@ -7,9 +7,11 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
@@ -20,7 +22,7 @@ import fr.istic.groupimpl.synthesizer.util.OscilloscopeFactory;
 public class ViewOscillo extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;
-	@FXML private ImageView closeModuleFx;
+	@FXML private GridPane top;
 	@FXML private VBox screenScopePane;
 	@FXML private ImageView in;
 	@FXML private ImageView out;
@@ -37,7 +39,7 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
-
+		((Label) top.lookup("#titleModule")).setText("Oscilloscope");
 		
 		OscilloscopeFactory scopeFact = OscilloscopeFactory.getFactoryInstance();
 		scopeFact.setWidth(screenScopePane.getPrefWidth()-20);
@@ -60,7 +62,7 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 		out.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewOutputClick(outX, outY));
 		
 		// Listener close module
-		closeModuleFx.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			cleanupPorts();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
