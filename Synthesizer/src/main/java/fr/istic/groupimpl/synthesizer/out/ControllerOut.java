@@ -1,6 +1,5 @@
 package fr.istic.groupimpl.synthesizer.out;
 
-import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
