@@ -147,6 +147,10 @@ public class ViewVco extends ViewComponent implements Initializable {
 		
 		addParameters("choiceBaseFreq", ()-> {return  (double) choiceBaseFreq.getSelectionModel().getSelectedIndex();}, 
 				(val)-> choiceBaseFreq.getSelectionModel().select(val.intValue()));
+		
+		addParameters("choiceAmplitude", ()-> {return  (double) choiceAmplitude.getSelectionModel().getSelectedIndex();}, 
+				(val)-> choiceAmplitude.getSelectionModel().select(val.intValue()));
+		
 		addParameters("choiceAmplitude", ()-> {return  (double) choiceAmplitude.getSelectionModel().getSelectedIndex();}, 
 				(val)-> choiceAmplitude.getSelectionModel().select(val.intValue()));
 		addParameters("typeOutput", ()-> {return  (double) typeOutput.getToggles().indexOf(typeOutput.getSelectedToggle());},
