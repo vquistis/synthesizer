@@ -31,6 +31,7 @@ public class App extends Application
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setTitle("Synthetiser by GroupImpl");
 		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/global.fxml"));
 		Parent root = loader.load();
 		URL cssURL = getClass().getClassLoader().getResource("css/style.css");
@@ -38,6 +39,7 @@ public class App extends Application
 		scene.getStylesheets().add(cssURL.toExternalForm());
 		primaryStage.setScene(scene);		
 		ViewGlobal view = loader.getController();
+		
 		view.setStage(primaryStage);
 		view.init();		
 		primaryStage.show();		
