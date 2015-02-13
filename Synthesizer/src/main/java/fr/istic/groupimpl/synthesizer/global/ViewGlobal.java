@@ -611,7 +611,6 @@ public class ViewGlobal implements Initializable {
 		int index=0;
 		for (Supplier<Module> supplier : suppliers) {
 			Module module = supplier.get();
-			Log.getInstance().error("Added module : " + module.getFilename());
 			module.setId("Module"+index);
 			list.add(module);
 			index++;
