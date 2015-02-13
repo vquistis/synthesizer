@@ -44,7 +44,6 @@ import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 
-
 /**
  * The Class ViewGlobal.
  * Implements all the FXML components and sets them their corresponding commands.
@@ -246,6 +245,8 @@ public class ViewGlobal implements Initializable {
 	 * Creates a new module.
 	 *
 	 * @param filename the filename component fxml
+	 * @param module the module
+	 * @return the view component
 	 */
 
 	/**
@@ -292,6 +293,11 @@ public class ViewGlobal implements Initializable {
 		return res;
 	}
 	
+	/**
+	 * Creates the module.
+	 *
+	 * @param filename the filename
+	 */
 	public void createModule(String filename) {
 		createModule(filename, null);
 	}
@@ -657,6 +663,9 @@ public class ViewGlobal implements Initializable {
 
 	}
 
+	/**
+	 * Clear all component.
+	 */
 	private void clearAllComponent() {
 		ControllerGlobal.getInstance().clearAllComponent();
 		for (Node node : splitpane.getItems()) {
@@ -673,10 +682,30 @@ public class ViewGlobal implements Initializable {
 		this.stage=primaryStage;
 	}
 
+	/**
+	 * Gets the stage.
+	 *
+	 * @return the stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
-	
-	
 
+	/**
+	 * Gets the suppliers.
+	 *
+	 * @return the suppliers
+	 */
+	public List<Supplier<Module>> getSuppliers() {
+		return suppliers;
+	}
+
+	/**
+	 * Sets the suppliers.
+	 *
+	 * @param suppliers the new suppliers
+	 */
+	public void setSuppliers(List<Supplier<Module>> suppliers) {
+		this.suppliers = suppliers;
+	}
 }

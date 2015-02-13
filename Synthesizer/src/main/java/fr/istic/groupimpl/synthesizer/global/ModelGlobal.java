@@ -14,8 +14,6 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
-import fr.istic.groupimpl.synthesizer.logger.Log;
-
 public class ModelGlobal {
 
 	private List<UnitGenerator> unitGenerators = new ArrayList<UnitGenerator>();
@@ -168,8 +166,6 @@ public class ModelGlobal {
 				synth.stop();
 			}
 		} catch (Exception e) {
-			Log.getInstance().error("erreur");
-		}
-				
+		}				
 	}
 }
