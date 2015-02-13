@@ -7,11 +7,21 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 public class ControllerMixer extends ControllerComponent {
 	private ModelMixer model;
 	
-	public ControllerMixer(Integer NumberOfInputPort) {
+	public ControllerMixer(ViewMixer view, Integer NumberOfInputPort) {
 		model = new ModelMixer(NumberOfInputPort);
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
+		
+		model.setCommandProperty("OutputGaugeBar", () -> {
+			view.getOutputGauge().setProgress((double) model.getValProperty("OutputGaugeBar"));
+		});
+		
+		model.setCommandProperty("MaxOutputGaugeBar", () -> {
+			view.getMaxOutputGauge().setProgress((double) model.getValProperty("MaxOutputGaugeBar"));
+		});
+		
+		model.start();
 	}
-
+	
 	/**
 	 * Get the number of input port
 	 * 
@@ -43,10 +53,11 @@ public class ControllerMixer extends ControllerComponent {
 	
 	@Override
 	public void handleViewClose() {
+		model.stop();
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());
 	}
-
+	
 	@Override
 	public ModelComponent getModel() {
 		// TODO Auto-generated method stub

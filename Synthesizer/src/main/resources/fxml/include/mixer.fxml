@@ -50,7 +50,8 @@
 		         <RowConstraints prefHeight="160.00" valignment="CENTER" vgrow="SOMETIMES" />
 		      </rowConstraints>
 		      <children>
-
+					<ProgressBar fx:id="fxOutputGauge" opacity="0.6" prefWidth="200.0" progress="0.0" rotate="-90.0" />
+					<ProgressBar fx:id="fxMaxOutputGauge" opacity="0.3" prefWidth="200.0" progress="0.0" rotate="-90.0" />
 		      </children>
 		   </GridPane>
 	   </center>

@@ -4,9 +4,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -20,6 +23,10 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 public class ViewMixer extends ViewComponent implements Initializable {
+	private static final String RED_BAR    = "red-bar";
+	private static final String GREEN_BAR  = "green-bar";
+	private static final String[] barColorStyleClasses = { RED_BAR, GREEN_BAR };
+	  
 	private Integer NumberOfInputPort = 4;
 	
 	@FXML private Pane rootModulePane;
@@ -27,9 +34,9 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	@FXML private ImageView closeModuleFx;
 	@FXML private GridPane top;
 	private ImageView fxOutput;
+	private ProgressBar outputGauge;
+	private ProgressBar maxOutputGauge;
 	
-//	private DoubleProperty outputX = new SimpleDoubleProperty(0);
-//	private DoubleProperty outputY = new SimpleDoubleProperty(0);
 	private ControllerMixer controller;
 	
 	@Override
@@ -37,19 +44,47 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		configurate();
 	}
 
+	/**
+	 * Set the number of input port generated
+	 */
 	public Integer getNumberOfInputPort() {
 		return NumberOfInputPort;
 	}
 
+	/**
+	 * Set the number of input port to generate
+	 */
 	public void setNumberOfInputPort(Integer numberOfInputPort) {
 		NumberOfInputPort = numberOfInputPort;
 	}
 	
+	/**
+	 * Get instance of the ouput gauge
+	 * @return ProgressBar
+	 */
+	public ProgressBar getOutputGauge() {
+		return outputGauge;
+	}
+
+	/**
+	 * Get instance of the ouput gauge max
+	 * @return ProgressBar
+	 */
+	public ProgressBar getMaxOutputGauge() {
+		return maxOutputGauge;
+	}
+	
+	/**
+	 * Method to configurate the view
+	 */
 	public void configurate() {
 		((Label) top.lookup("#titleModule")).setText("MIXER");
 		
+		outputGauge = configureGaugeBar("#fxOutputGauge");
+		maxOutputGauge  = configureGaugeBar("#fxMaxOutputGauge");  
+		
 		// Creation du controller
-		controller = new ControllerMixer(NumberOfInputPort);
+		controller = new ControllerMixer(this, NumberOfInputPort);
 		
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setMinValue(-60);
@@ -76,7 +111,47 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		});
 	}
 	
-	private ViewMixerInput createViewMixerInput(Integer index, ControllerMixer controler, PotentiometreFactory knobFact) {
+	/**
+	 *  Configure Gauge Bar
+	 * 
+	 * @param fxmlNodeName
+	 *   Name of the xml node
+	 * @return ProgressBar
+	 */
+	private ProgressBar configureGaugeBar(String fxmlNodeName) {
+		ProgressBar gaugeBar;
+		gaugeBar = (ProgressBar) inputHBox.lookup(fxmlNodeName);
+		gaugeBar.progressProperty().addListener(new ChangeListener<Number>() {
+	        @Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+	          double progress = newValue == null ? 0 : newValue.doubleValue();
+	          if (progress < 0.85) {
+	            setBarStyleClass(gaugeBar, GREEN_BAR);
+	          } else {
+	            setBarStyleClass(gaugeBar, RED_BAR);
+	          }
+	        }
+
+	        private void setBarStyleClass(ProgressBar bar, String barStyleClass) {
+	          bar.getStyleClass().removeAll(barColorStyleClasses);
+	          bar.getStyleClass().add(barStyleClass);
+	        }
+	      });
+		return gaugeBar;
+	}
+	
+	/**
+	 * 
+	 * Generate the input view
+	 * 
+	 * @param index
+	 * 	index of the input port
+	 * @param controler
+	 *  Controller
+	 * @param knobFact
+	 *  PotentiometreFactory
+	 * @return
+	 */
+	private ViewMixerInput createViewMixerInput(Integer index, ControllerMixer controller, PotentiometreFactory knobFact) {
 		// faire table de knobVolume
 		Potentiometre knobVolume = knobFact.getPotentiometre();
 	 
