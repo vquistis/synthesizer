@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -634,7 +635,8 @@ public class ViewGlobal implements Initializable {
          if(file != null){
         	 	// traitement        	 
         	 clearAllComponent();        	 
-        	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);        	 
+        	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);
+        	 Collections.sort(configuration.getModules(), new Module());
         	 // configue component
         	 configuration.getModules().forEach((module) ->{
         		 views.put(module.getId(),createModule(module.getFilename(), module));
