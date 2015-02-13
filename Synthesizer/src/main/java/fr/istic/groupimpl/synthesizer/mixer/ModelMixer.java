@@ -21,13 +21,14 @@ public class ModelMixer extends ModelComponent {
 	private double OutputValue = 0.00;
 	private double decreaseValueIncrement = 0.04;
 	//private double decreaseMaxValueIncrement = 0.01;
+	private boolean Running=true;
 	
 	public ModelMixer(Integer NumberOfInputPort) {
 		super();
 		mixer = new Mixer(NumberOfInputPort);
 		
 		refreshThread = new Thread(() -> {
-			while (refreshThread.isAlive()) {
+			while (Running) {
 				try {
 					Thread.sleep(refreshPeriod);
 				} catch (InterruptedException e) {
@@ -50,6 +51,7 @@ public class ModelMixer extends ModelComponent {
 	 */
 	public void stop() {
 		if (refreshThread.isAlive()) {
+			Running=false;
 			refreshThread.interrupt();
 		}
 	}
