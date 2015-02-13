@@ -28,7 +28,7 @@ public class ViewWhiteNoise extends ViewComponent implements Initializable {
 		// implementation of controller
 		controller = new ControllerWhiteNoise();
 		
-		addPort("output", output);	
+		addPort("noise_output", output);	
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
