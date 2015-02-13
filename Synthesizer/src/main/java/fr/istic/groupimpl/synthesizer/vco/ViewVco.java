@@ -32,6 +32,8 @@ public class ViewVco extends ViewComponent implements Initializable {
 	@FXML
 	private ChoiceBox<String> choiceBaseFreq;
 	@FXML
+	private ChoiceBox<String> choiceAmplitude;
+	@FXML
 	private ImageView closeVco;
 	@FXML
 	private VBox knobOctavePane;
@@ -117,6 +119,25 @@ public class ViewVco extends ViewComponent implements Initializable {
 						break;
 				}
 		});
+		// Choice amplitude
+		choiceAmplitude.getItems().addAll("0.5 V", "1 V", "2 V", "5 V");
+		choiceAmplitude.getSelectionModel().select(1);
+		choiceAmplitude.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+				switch(newVal) {
+					case "0.5 V":
+						vcoControl.handleViewAmplitudeChange(0.5);
+						break;
+					case "1 V":
+						vcoControl.handleViewAmplitudeChange(1.);
+						break;
+					case "2 V":
+						vcoControl.handleViewAmplitudeChange(2.);
+						break;
+					case "5 V":
+						vcoControl.handleViewAmplitudeChange(5.);
+						break;
+				}
+		});
 
 		addPort("vco_inputFm",fm);
 		addPort("outputAmplitude",out);		
@@ -126,6 +147,8 @@ public class ViewVco extends ViewComponent implements Initializable {
 		
 		addParameters("choiceBaseFreq", ()-> {return  (double) choiceBaseFreq.getSelectionModel().getSelectedIndex();}, 
 				(val)-> choiceBaseFreq.getSelectionModel().select(val.intValue()));
+		addParameters("choiceAmplitude", ()-> {return  (double) choiceAmplitude.getSelectionModel().getSelectedIndex();}, 
+				(val)-> choiceAmplitude.getSelectionModel().select(val.intValue()));
 		addParameters("typeOutput", ()-> {return  (double) typeOutput.getToggles().indexOf(typeOutput.getSelectedToggle());},
 				(val)-> typeOutput.selectToggle(typeOutput.getToggles().get(val.intValue())));
 

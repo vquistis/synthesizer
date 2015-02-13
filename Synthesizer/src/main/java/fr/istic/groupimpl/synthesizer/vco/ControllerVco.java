@@ -1,6 +1,5 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.Label;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
@@ -50,6 +49,13 @@ public class ControllerVco extends ControllerComponent {
 	 */
 	public void handleViewBaseFreqChange(double value) {
 		modelVco.setBaseFreq(value);
+	}
+	/**
+	 * @param value The amplitude to set (in V)
+	 * Sets in the model the amplitude
+	 */
+	public void handleViewAmplitudeChange(double value) {
+		modelVco.setAmplitude(value);
 	}
 
 	@Override

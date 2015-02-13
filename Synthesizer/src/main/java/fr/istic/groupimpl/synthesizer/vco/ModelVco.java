@@ -91,5 +91,12 @@ public class ModelVco extends ModelComponent {
 		vcoCirc.getInputF0().set(value);
 		computeFrequency(vcoCirc.getInputOctave().get());
 	}
+	/**
+	 * @param value The amplitude in volt
+	 * Sets the amplitude of signal
+	 */
+	public void setAmplitude(double value) {
+		vcoCirc.setAmplitude(value);
+	}
 		
 }

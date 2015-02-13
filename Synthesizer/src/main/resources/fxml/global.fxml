@@ -69,30 +69,31 @@
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</Button>
-				<Button onAction="#handleAddMixer2" styleClass="moduleButton" text="MIXER 2">
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
+				<Button onAction="#handleAddLineIn" styleClass="moduleButton" text="IN">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
-				</Button>
-				<Button onAction="#handleAddMixer4" styleClass="moduleButton" text="MIXER 4">
 					<font>
 						<Font name="System Bold" size="12.0" />
 					</font>
+				</Button>
+				<Button onAction="#handleAddWhiteNoise" styleClass="moduleButton" text="NOISE">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
-				</Button>
-				<Button onAction="#handleAddRep" styleClass="moduleButton" text="REP">
 					<font>
 						<Font name="System Bold" size="12.0" />
 					</font>
+				</Button>
+				<Button onAction="#handleAddKeyboard" styleClass="moduleButton" text="KEY">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
 				</Button>
+				<Separator />
 				<Button onAction="#handleAddVco" styleClass="moduleButton" text="VCO">
 					<font>
 						<Font name="System Bold" size="12.0" />
@@ -108,22 +109,6 @@
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
-				</Button>
-				<Button onAction="#handleAddScope" styleClass="moduleButton" text="Scope">
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
-					<cursor>
-						<Cursor fx:constant="HAND" />
-					</cursor>
-				</Button>
-				<Button onAction="#handleAddEg" styleClass="moduleButton" text="Eg">
-					<cursor>
-						<Cursor fx:constant="HAND" />
-					</cursor>
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
 				</Button>
 				<Button onAction="#handleAddVcfLp" styleClass="moduleButton" text="VCF - LP">
 					<cursor>
@@ -141,7 +126,33 @@
 						<Font name="System Bold" size="12.0" />
 					</font>
 				</Button>
-				<Button onAction="#handleAddWhiteNoise" styleClass="moduleButton" text="WHITE NOISE">
+				<Separator />
+				<Button onAction="#handleAddRep" styleClass="moduleButton" text="REP">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</Button>
+				<Button onAction="#handleAddMixer2" styleClass="moduleButton" text="MIXER 2">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</Button>
+				<Button onAction="#handleAddMixer4" styleClass="moduleButton" text="MIXER 4">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</Button>
+				<Separator />
+				<Button onAction="#handleAddEg" styleClass="moduleButton" text="EG">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
@@ -149,7 +160,7 @@
 						<Font name="System Bold" size="12.0" />
 					</font>
 				</Button>
-				<Button onAction="#handleAddLineIn" styleClass="moduleButton" text="LINE IN">
+				<Button onAction="#handleAddSeq" styleClass="moduleButton" text="SEQ">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
@@ -157,21 +168,14 @@
 						<Font name="System Bold" size="12.0" />
 					</font>
 				</Button>
-				<Button onAction="#handleAddSeq" styleClass="moduleButton" text="Sequencer">
-					<cursor>
-						<Cursor fx:constant="HAND" />
-					</cursor>
+				<Separator />
+				<Button onAction="#handleAddScope" styleClass="moduleButton" text="SCOPE">
 					<font>
 						<Font name="System Bold" size="12.0" />
 					</font>
-				</Button>
-				<Button onAction="#handleAddKeyboard" styleClass="moduleButton" text="Keyboard">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
 				</Button>
 			</children>
 			<padding>
