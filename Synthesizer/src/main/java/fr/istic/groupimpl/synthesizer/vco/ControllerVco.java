@@ -1,6 +1,5 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.Label;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;

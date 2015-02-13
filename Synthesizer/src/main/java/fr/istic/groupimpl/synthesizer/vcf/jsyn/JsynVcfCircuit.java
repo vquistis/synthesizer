@@ -55,9 +55,9 @@ public class JsynVcfCircuit extends Circuit {
 				
 				add(filter1);
 				add(filter2);
-	
+
 				/* Connect SynthUnits to make control signal path. */
-				computeFreq.getOutput().connect(filter1.input);
+				input = (UnitInputPort) addNamedPort(filter1.input, "vcf_input");
 				filter1.output.connect(filter2.input);
 				break;
 			case HP12:
@@ -67,20 +67,19 @@ public class JsynVcfCircuit extends Circuit {
 				add(filter2);
 	
 				/* Connect SynthUnits to make control signal path. */
-				computeFreq.getOutput().connect(filter2.input);
+				input = (UnitInputPort) addNamedPort(filter2.input, "vcf_input");
 				break;
 		}
-		
-		/* Make ports on internal units appear as ports on circuit. */
-		/* Optionally give some circuit ports more meaningful names. */	
-		input = (UnitInputPort) addNamedPort(computeFreq.getInputf0(), "vcf_input");
+		/* Connect SynthUnits to make control signal path. */
 		fm = (UnitInputPort) addNamedPort(computeFreq.getInputfm(), "vcf_fm");
 		output = (UnitOutputPort) addNamedPort(filter2.output, "vcf_output");
+
+		filter1.frequency.connect(computeFreq.getOutput());
+		filter2.frequency.connect(computeFreq.getOutput());
 	}
 	
 	public void setCutFrequency(double value) {
-		filter1.frequency.set(value);
-		filter2.frequency.set(value);
+		computeFreq.getInputf0().set(value);
 	}
 	
 	public void setResonance(double value) {
