@@ -16,7 +16,7 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
 
 public class Oscilloscope extends Region {
 
-	private final long TIME_STABILITY=5000;
+	private final long TIME_STABILITY=2500;
 	
 	public static final int SIZE_BUFFER_READ = 2048;
 	final int nbDataUsed = 1024;

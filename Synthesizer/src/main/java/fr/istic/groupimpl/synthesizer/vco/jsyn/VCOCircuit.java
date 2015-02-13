@@ -171,6 +171,11 @@ public class VCOCircuit extends Circuit implements UnitSource
 		squareOscillator.output.connect(selectFrom3.getInput3());	
 	}
 	
+	public void setAmplitude( double volt )
+	{
+		passThroughAmplitude.getInput().set(volt*(UnitOscillator.DEFAULT_AMPLITUDE/SignalUtil.COEF_VOLT));
+	}
+	
 	/**
 	 * 
 	 * add a named port to the circuit and return its instance

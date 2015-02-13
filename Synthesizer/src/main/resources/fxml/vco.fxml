@@ -96,7 +96,8 @@
       <GridPane maxHeight="33.0" minHeight="33.0" prefHeight="33.0" styleClass="titlePane">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="35.0" prefWidth="39.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="-Infinity" prefWidth="148.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="80.0" prefWidth="60.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="80.0" prefWidth="60.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
          </columnConstraints>
          <rowConstraints>
@@ -108,7 +109,7 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
-            <ImageView fx:id="closeVco" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+            <ImageView fx:id="closeVco" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
                <image>
                   <Image url="@../img/close.png" />
                </image>
@@ -117,6 +118,7 @@
                </cursor>
             </ImageView>
             <ChoiceBox fx:id="choiceBaseFreq" minHeight="-Infinity" prefHeight="21.0" prefWidth="60.0" styleClass="choiceBaseFreq" GridPane.columnIndex="1" />
+            <ChoiceBox fx:id="choiceAmplitude" minHeight="-Infinity" prefHeight="21.0" prefWidth="60.0" styleClass="choiceBaseFreq" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </top>
