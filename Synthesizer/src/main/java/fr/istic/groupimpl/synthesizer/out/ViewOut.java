@@ -66,20 +66,9 @@ public class ViewOut extends ViewComponent implements Initializable {
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
 		});
-		
-		addParameters("attenuation", ()-> {return  knobVolume.getValue();}, (val)-> valueVolumeFx.setText(String.valueOf(val)));
-		addParameters("muteVolumeFx", ()-> {return  knobVolume.getValue();}, (val)-> valueVolumeFx.setText(String.valueOf(val)));
-		addParameters("muteVolumeFx", 
-				() -> {
-					return  (muteVolumeFx.selectedProperty().get() == true) ? 1.0 : 0.0;}, 
-				(val)-> {
-					if (val ==1) {
-						muteVolumeFx.setSelected(true);
-					} else {
-						muteVolumeFx.setSelected(false);
-					}
-					
-				});		
+
+		addParameters("knobVolume", () -> knobVolume.getValue(), (val) -> knobVolume.setValue(val));
+		addParameters("muteVolumeFx", () -> muteVolumeFx.selectedProperty().get() ? 1.0 : 0.0, (val) -> muteVolumeFx.setSelected(val==1));
 	}
 
 	@Override

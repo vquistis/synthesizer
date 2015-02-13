@@ -84,7 +84,6 @@ public class ControllerGlobal {
 	 * @param unitGen the unit gen
 	 */
 	public void registerUnitGenerator(UnitGenerator unitGen) {
-		Log.getInstance().error("Registered " + unitGen);
 		model.addUnitGenerator(unitGen);
 	}
 
@@ -94,7 +93,6 @@ public class ControllerGlobal {
 	 * @param unitGen the unit gen
 	 */
 	public void registerOutUnitGenerator(UnitGenerator unitGen) {
-		Log.getInstance().error("Registered " + unitGen);
 		model.addOutUnit(unitGen);
 	}
 
