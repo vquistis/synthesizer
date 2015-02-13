@@ -14,10 +14,10 @@
 			<items>
 				<ColorPicker fx:id="colorpicker" />
 				<Button onAction="#handlePaint" text="Paint cable" />
-				<Button onAction="#handleDelete" text="Delete Mode" />
+				<Button onAction="#handleDelete" text="Delete cable" />
 
-				<Button onAction="#handleSaveConfiguration" text="Sauvegarder la configuration" />
-				<Button onAction="#handleLoadConfiguration" text="Charger la configuration" />
+				<Button onAction="#handleSaveConfiguration" text="save configuration" />
+				<Button onAction="#handleLoadConfiguration" text="load configuration" />
 
 				<!-- GENERATE GRAPH SCENE DEBUG ONLY <Button onAction="#handleMenuDevmodeNodeHierarchy_1" 
 					text="JavaFX Node Hierarchy dump 1" /> <Button onAction="#handleMenuDevmodeNodeHierarchy_2" 
