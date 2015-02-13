@@ -36,6 +36,9 @@
 	</top>
    <center>
       <VBox alignment="CENTER" prefHeight="159.0" styleClass="contentPane">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
          <children>
             <ImageView fitHeight="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
