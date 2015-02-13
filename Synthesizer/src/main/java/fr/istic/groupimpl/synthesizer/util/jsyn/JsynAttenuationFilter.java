@@ -9,7 +9,6 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  */
 public class JsynAttenuationFilter extends UnitFilter {
 	
-	public final static double DECIBEL_MINIMUM_VALUE = -60;
 	private boolean mute=false;
 	
 	// Coef diviseur car le voltage en entrée est entre -5V et +5V
@@ -58,7 +57,7 @@ public class JsynAttenuationFilter extends UnitFilter {
 	public void setMute(boolean value) {
 		mute=value;
 		if (value) {
-			coef = convertDecibelToCoef(DECIBEL_MINIMUM_VALUE);
+			coef = 0.;
 		} else {
 			coef = lastCoefValue;
 		}
