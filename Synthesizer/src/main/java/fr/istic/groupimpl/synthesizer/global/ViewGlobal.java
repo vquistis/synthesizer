@@ -641,10 +641,11 @@ public class ViewGlobal implements Initializable {
         	 
         	 configuration.getConnections().forEach((connection) -> {
         		 Cable cable = new Cable(Color.valueOf(connection.getColor()));
-        		 ViewComponent view = views.get(connection.getInputPort().getIdModule());
-        		 ControllerGlobal.getInstance().createConnection(cable, view.getStuff(connection.getInputPort().getName()),
-        				 view.getStuff(connection.getOutputPort().getName()), view.getPort(connection.getInputPort().getName()),
-        				 view.getPort(connection.getOutputPort().getName()));
+        		 ViewComponent viewIn = views.get(connection.getInputPort().getIdModule());
+        		 ViewComponent viewOut = views.get(connection.getOutputPort().getIdModule());
+        		 ControllerGlobal.getInstance().createConnection(cable, viewIn.getStuff(connection.getInputPort().getName()),
+        				 viewOut.getStuff(connection.getOutputPort().getName()), viewIn.getPort(connection.getInputPort().getName()),
+        				 viewOut.getPort(connection.getOutputPort().getName()));
         	 });
         	 
          }

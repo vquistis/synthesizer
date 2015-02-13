@@ -330,5 +330,9 @@ public abstract class ViewComponent implements IViewComponent {
 	public void setOnCloseCmd(ICommand cmd) {
 		this.cmd = cmd;
 	}
+
+	public void printStuff() {
+		Log.getInstance().error("Map = " + cablesProperties);
+	}
 	
 }
