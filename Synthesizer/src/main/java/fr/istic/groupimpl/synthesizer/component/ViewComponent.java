@@ -20,6 +20,7 @@ import javafx.util.Pair;
 
 import com.jsyn.ports.UnitPort;
 
+import fr.istic.groupimpl.synthesizer.command.ICommand;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.io.architecture.Port;
 import fr.istic.groupimpl.synthesizer.logger.Log;
@@ -36,17 +37,21 @@ public abstract class ViewComponent implements IViewComponent {
 	private List<ChangeListener> portBindings = new ArrayList<ChangeListener>();
 	
 	/** The save action map. */
-	private Map<String, Supplier<Double>> saveActionMap =new HashMap<>();
+	private Map<String, Supplier<Double>> saveActionMap = new HashMap<>();
 	
 	/** The load action map. */
-	private Map<String, Consumer<Double>> loadActionMap =new HashMap<>();
+	private Map<String, Consumer<Double>> loadActionMap = new HashMap<>();
 	
 	private Map<String, Pair<DoubleProperty, DoubleProperty>> cablesProperties= new HashMap<>();
 
+	private final Supplier<Module> sup = (() -> getConfiguration());
+	
 	/** The debug. */
 	private static boolean debug = false;
 	
 	private ChangeListener<? super Number> listener = (a,b,c) -> {refreshComponent();};
+
+	private ICommand cmd;
 
 	public ChangeListener<? super Number> getListener() {
 		return listener;
@@ -105,11 +110,13 @@ public abstract class ViewComponent implements IViewComponent {
 		root.boundsInParentProperty().addListener(posChangeListener);
 	}
 
+	
 	/**
 	 * Cleanup ports.
 	 */
-	final protected void cleanupPorts() {
+	final protected void cleanup() {
 		Node root = getComponentRoot();
+		cmd.execute();
 		for(ChangeListener c : portBindings) {
 			root.parentProperty().removeListener(c);
 			root.boundsInParentProperty().removeListener(c);
@@ -218,7 +225,6 @@ public abstract class ViewComponent implements IViewComponent {
 	 * @return the save supplier
 	 */
 	public final Supplier<Module> getSaveSupplier() {
-		Supplier<Module> sup = (() -> getConfiguration());
 		return sup;
 	}
 	
@@ -319,6 +325,10 @@ public abstract class ViewComponent implements IViewComponent {
 			}
 		}
 		return res;
+	}
+
+	public void setOnCloseCmd(ICommand cmd) {
+		this.cmd = cmd;
 	}
 	
 }

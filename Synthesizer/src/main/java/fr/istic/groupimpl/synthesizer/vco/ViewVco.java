@@ -94,7 +94,7 @@ public class ViewVco extends ViewComponent implements Initializable {
 		
 		// Listener close VCO
 		closeVco.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();
+			cleanup();
 			vcoControl.handleViewClose();
 			Pane parent = (Pane) paneVco.getParent();
 			parent.getChildren().remove(paneVco);

@@ -93,7 +93,7 @@ public class ViewSeq extends ViewComponent implements Initializable {
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();
+			cleanup();
 			controller.handleViewClose();
 			Pane parent = (Pane) paneSeq.getParent();
 			parent.getChildren().remove(paneSeq);

@@ -68,7 +68,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 		vcaControl.handleViewVoltChange((double) newVal));		
 		// Listener close VCA
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();
+			cleanup();
 			vcaControl.handleViewClose();
 			Pane parent = (Pane) paneVca.getParent();
 			parent.getChildren().remove(paneVca);

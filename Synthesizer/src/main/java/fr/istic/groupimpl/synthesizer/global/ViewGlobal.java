@@ -86,7 +86,7 @@ public class ViewGlobal implements Initializable {
 	private ControllerGlobal ctl;
 
 	/** The suppliers. */
-	private List<Supplier<Module>> suppliers=new ArrayList<Supplier<Module>>();
+	private List<Supplier<Module>> suppliers = new ArrayList<Supplier<Module>>();
 
 	/** The stage. */
 	private Stage stage;	
@@ -286,6 +286,10 @@ public class ViewGlobal implements Initializable {
 			});
 			
 			suppliers.add(view.getSaveSupplier());
+			view.setOnCloseCmd(() -> {
+				suppliers.remove(view.getSaveSupplier());
+				Log.getInstance().error("Suppliers = " + suppliers);
+			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -332,15 +336,11 @@ public class ViewGlobal implements Initializable {
 	 */
 	private void enableDrag(Node node) {
 		node.setOnDragDetected((event) -> {
-			Log.getInstance().debug("DROP STARTED");
 			ClipboardContent content = new ClipboardContent();
 			content.putString(getString(node));
 			Dragboard db = scrollpane.startDragAndDrop(TransferMode.ANY);
 			db.setContent(content);
 			event.consume();
-		});
-		node.setOnDragDone((event) -> {
-			Log.getInstance().debug("DROPPED");
 		});
 	}
 
@@ -352,19 +352,6 @@ public class ViewGlobal implements Initializable {
 	public Color getCableColor() {
 		return colorpicker.getValue();
 	}
-
-	//	/**
-	//	 * Sets the all modules transparent.
-	//	 *
-	//	 * @param t the new all modules transparent
-	//	 */
-	//	private void setAllModulesTransparent(boolean t) {
-	//		splitpane.getItems().forEach((b) -> {
-	//			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
-	//				m.setMouseTransparent(t);
-	//			});
-	//		});
-	//	}
 
 	/**
 	 * Handle add replicator. This method adds a new Rep component 
@@ -622,6 +609,7 @@ public class ViewGlobal implements Initializable {
 		int index=0;
 		for (Supplier<Module> supplier : suppliers) {
 			Module module = supplier.get();
+			Log.getInstance().error("Added module : " + module.getFilename());
 			module.setId("Module"+index);
 			list.add(module);
 			index++;

@@ -61,7 +61,7 @@ public class ViewOut extends ViewComponent implements Initializable {
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();			
+			cleanup();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);

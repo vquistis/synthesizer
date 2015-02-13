@@ -560,14 +560,12 @@ public class ControllerGlobal {
 	 * Clear all component.
 	 */
 	public void resetWorkbench(){
-		cables.clear();
 		view.getSuppliers().clear();
 		model.stopSynth();
-		Set<UnitPort> set= cables.keySet();
-		for (UnitPort unitPort : set) {
-			Cable cable=cables.get(unitPort);
-			view.removeCable(cable);
-		}
+		cables.forEach((k,v) -> {
+			view.removeCable(v);
+		});
+		cables.clear();
 		model = new ModelGlobal();
 	}
 

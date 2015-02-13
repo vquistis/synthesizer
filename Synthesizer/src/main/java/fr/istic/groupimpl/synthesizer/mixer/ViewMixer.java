@@ -69,7 +69,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
         fxOutput = (ImageView) inputHBox.lookup("#fxOutput");
         addPort("output",fxOutput);
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();
+			cleanup();
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
