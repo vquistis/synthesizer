@@ -83,7 +83,7 @@ public class ViewVco extends ViewComponent implements Initializable {
 		knobFreqPane.getChildren().add(precisionKnob);
 
 		// VcoController creation and listeners on knob values
-		vcoControl = new ControllerVco(freqLabel);
+		vcoControl = new ControllerVco(freqLabel.textProperty());
 		octaveKnob.valueProperty().addListener((p, oldVal, newVal) ->
 		vcoControl.handleViewOctaveChange((double) newVal, precisionKnob.getValue()));
 		precisionKnob.valueProperty().addListener((p, oldVal, newVal) ->
