@@ -53,7 +53,7 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 		}); 
 		// Recovery keyboards keys when key is pressed
 		ControllerGlobal.getInstance().getStage().addEventHandler(KeyEvent.KEY_RELEASED, (event) ->  {
-			controller.handleViewkeyEvent("B");
+			controller.handleViewkeyReleaseEvent();
 
 		}); 
 	}
