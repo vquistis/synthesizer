@@ -18,10 +18,10 @@
          <children>
             <VBox alignment="CENTER">
                <children>
-                  <Label text="gate" />
+                  <Label text="cv" />
                   <ImageView fx:id="outputKeyCV" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
                      <image>
-                        <Image url="@../img/inoutVert.png" />
+                        <Image url="@../img/inoutRouge.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -31,7 +31,7 @@
             </VBox>
             <VBox alignment="CENTER">
                <children>
-                  <Label text="cv" />
+                  <Label text="gate" />
                   <ImageView fx:id="outputKeyGate" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
                      <image>
                         <Image url="@../img/inoutRouge.png" />

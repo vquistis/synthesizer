@@ -31,7 +31,7 @@ public class ControllerKeyboard extends ControllerComponent {
 				model.getUnitGenerator());
 	}
 
-	public void handleViewkeyReleaseKey() {
+	public void handleViewkeyReleaseEvent() {
 		model.setPress(false);
 	}
 

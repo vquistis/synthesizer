@@ -7,6 +7,7 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
  * 
@@ -61,6 +62,7 @@ public class ModelKeyboard extends ModelComponent {
 	 */
 	public void setKey(int n) {
 		double v = (double)octave + ((double)n)/12.;
+		v /=SignalUtil.COEF_VOLT;
 		keyboard.setVolt(v);
 	}
 	
