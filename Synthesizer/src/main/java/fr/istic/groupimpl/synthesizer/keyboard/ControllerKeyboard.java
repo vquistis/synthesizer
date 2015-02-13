@@ -27,6 +27,7 @@ public class ControllerKeyboard extends ControllerComponent {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
+	
 	public void handleViewkeyEvent(String key) {
 		switch (key) {
 		case "S":
