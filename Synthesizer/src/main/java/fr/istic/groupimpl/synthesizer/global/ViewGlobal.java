@@ -667,10 +667,10 @@ public class ViewGlobal implements Initializable {
 	 * Clear all component.
 	 */
 	private void clearAllComponent() {
-		ControllerGlobal.getInstance().clearAllComponent();
+		ControllerGlobal.getInstance().resetWorkbench();
 		for (Node node : splitpane.getItems()) {
 			((HBox) node).getChildren().clear();
-		}	 
+		}
 	}
 
 	/**

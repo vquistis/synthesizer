@@ -84,6 +84,7 @@ public class ControllerGlobal {
 	 * @param unitGen the unit gen
 	 */
 	public void registerUnitGenerator(UnitGenerator unitGen) {
+		Log.getInstance().error("Registered " + unitGen);
 		model.addUnitGenerator(unitGen);
 	}
 
@@ -93,6 +94,7 @@ public class ControllerGlobal {
 	 * @param unitGen the unit gen
 	 */
 	public void registerOutUnitGenerator(UnitGenerator unitGen) {
+		Log.getInstance().error("Registered " + unitGen);
 		model.addOutUnit(unitGen);
 	}
 
@@ -394,7 +396,7 @@ public class ControllerGlobal {
 			Pair<DoubleProperty,DoubleProperty> outputPos, UnitPort inputPort, UnitPort outputPort) {
 		cable.bindInput(inputPos.getKey(), inputPos.getValue());
 		cable.bindOutput(outputPos.getKey(), outputPos.getValue());
-		this.model.connectPorts(inputPort,outputPort);
+		this.model.connectPorts(outputPort,inputPort);
 		cables.put(inputPort,cable);
 		cables.put(outputPort,cable);
 		view.addCable(cable);
@@ -557,7 +559,7 @@ public class ControllerGlobal {
 	/**
 	 * Clear all component.
 	 */
-	public void clearAllComponent(){
+	public void resetWorkbench(){
 		cables.clear();
 		view.getSuppliers().clear();
 		model.stopSynth();
@@ -566,6 +568,7 @@ public class ControllerGlobal {
 			Cable cable=cables.get(unitPort);
 			view.removeCable(cable);
 		}
+		model = new ModelGlobal();
 	}
 
 
