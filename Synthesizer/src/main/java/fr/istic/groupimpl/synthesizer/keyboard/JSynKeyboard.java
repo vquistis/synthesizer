@@ -8,47 +8,47 @@ import com.jsyn.unitgen.UnitSource;
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 
-public class JSynKeyboard extends UnitGenerator implements UnitSource {
+public class JSynKeyboard extends UnitGenerator  {
 
 	/* Declare ports */
-	public UnitInputPort key;
-	public UnitOutputPort output;
+	private UnitOutputPort outputCV;
+	private UnitOutputPort outputGate;
+	
+	private double voltCV;
+	private double voltGate;
 	
 	/**
 	 * constructor
 	 */
 	public JSynKeyboard() {
-		addPort(key = new UnitInputPort("key"));
-		addPort(output = new UnitOutputPort("output"));
+		addPort(outputCV = new UnitOutputPort("outputKeyCV"));
+		addPort(outputGate = new UnitOutputPort("outputKeyGate"));
 	}
+	
+	
+	void setVolt( double volt )
+	{
+		this.voltCV = volt;
+	}
+	
+	void setPress( boolean press )
+	{
+		voltGate = press ? 5/SignalUtil.COEF_VOLT : -5/SignalUtil.COEF_VOLT;
+	}
+	
 	
 	@Override
 	public void generate(int start, int limit) {
-		double[] keys = key.getValues();
-		double[] outputs = output.getValues();
+		double[] outputs_CV = outputCV.getValues();
+		double[] outputs_Gate = outputGate.getValues();
 
 		for (int i = start; i < limit; i++) {
-			outputs[i] = (keys[i] / 12) / SignalUtil.COEF_VOLT;
+			outputs_CV[i] = voltCV;
+			outputs_Gate[i] = voltGate;
 		}
 	}
 
-	/**
-	 * Signal output
-	 *
-	 * @return output
-	 */
-	@Override
-	public UnitOutputPort getOutput() {
-		return output;
-	}
 
-	/**
-	 * Signal input
-	 *
-	 * @return input
-	 */
-	public UnitInputPort getKey() {
-		return key;
-	}
 
+	
 }
