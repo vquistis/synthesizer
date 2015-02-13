@@ -27,7 +27,8 @@ public class Mixer extends Circuit implements UnitSource {
 	/* Declare ports. */
 	private ArrayList<UnitInputPort> unitInputPorts = new ArrayList<UnitInputPort>();
 	private UnitOutputPort output;
-
+	private UnitOutputPort averageOutputValue;
+	
     /**
      * Get Number Of Input Port
      * @return UnitInputPort
@@ -52,6 +53,13 @@ public class Mixer extends Circuit implements UnitSource {
 	 */
 	public UnitOutputPort getOutput() {
 		return output;
+	}
+
+	/**
+	 * Get the average output value of Mixer module.
+	 */
+	public UnitOutputPort getAverageOutputValue() {
+		return averageOutputValue;
 	}
 	
     /**
@@ -101,6 +109,7 @@ public class Mixer extends Circuit implements UnitSource {
         }
 		
 		output = (UnitOutputPort) addNamedPort(mixerSum.getOutput(), "output");
+		averageOutputValue = (UnitOutputPort) addNamedPort(mixerSum.getAverageOutputValue(), "mixer_averageOutputValue");
 	}
 	
 	/**
