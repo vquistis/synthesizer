@@ -97,18 +97,8 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		// Listener input
 		//inputView.getFxInput().addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(index, inputX, inputY));
 		
-		addParameters("knobVolume" + (index + 1), ()-> {return  knobVolume.getValue();}, (val)-> knobVolume.setValue(val));
-		addParameters("muteVolumeFx"+ (index + 1), 
-				() -> {
-					return  (inputView.getFxMuteVolume().selectedProperty().get() == true) ? 1.0 : 0.0;}, 
-				(val)-> {
-					if (val ==1) {
-						inputView.getFxMuteVolume().setSelected(true);
-					} else {
-						inputView.getFxMuteVolume().setSelected(false);
-					}
-					
-				});	
+		addParameters("knobVolume" + (index + 1), () -> knobVolume.getValue(), (val) -> knobVolume.setValue(val));
+		addParameters("muteVolumeFx"+ (index + 1), () -> inputView.getFxMuteVolume().selectedProperty().get() ? 1.0 : 0.0, (val) -> inputView.getFxMuteVolume().setSelected(val==1));	
 		
 		return inputView;
 	}

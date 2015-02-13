@@ -51,6 +51,9 @@ public abstract class ViewVcf extends ViewComponent {
 		addPort("vcf_input",port.lookup("#input"));
 		addPort("vcf_fm",port.lookup("#fm"));
 		addPort("vcf_output",port.lookup("#output"));
+
+		addParameters("knobCutoff", () -> knobCutoff.getValue(), (val) -> knobCutoff.setValue(val));
+		addParameters("knobResonance", () -> knobResonance.getValue(), (val) -> knobResonance.setValue(val));
 	}
 	
 	@Override

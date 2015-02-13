@@ -142,21 +142,13 @@ public class ViewVco extends ViewComponent implements Initializable {
 		addPort("vco_inputFm",fm);
 		addPort("outputAmplitude",out);		
 		
-		addParameters("octave", ()-> {return  octaveKnob.getValue();}, (val)-> octaveKnob.setValue(val));
-		addParameters("precision", ()-> {return  precisionKnob.getValue();}, (val)-> precisionKnob.setValue(val));
+		addParameters("octave", () -> octaveKnob.getValue(), (val)-> octaveKnob.setValue(val));
+		addParameters("precision", () -> precisionKnob.getValue(), (val) -> precisionKnob.setValue(val));
 		
-		addParameters("choiceBaseFreq", ()-> {return  (double) choiceBaseFreq.getSelectionModel().getSelectedIndex();}, 
-				(val)-> choiceBaseFreq.getSelectionModel().select(val.intValue()));
-		
-		addParameters("choiceAmplitude", ()-> {return  (double) choiceAmplitude.getSelectionModel().getSelectedIndex();}, 
-				(val)-> choiceAmplitude.getSelectionModel().select(val.intValue()));
-		
-		addParameters("choiceAmplitude", ()-> {return  (double) choiceAmplitude.getSelectionModel().getSelectedIndex();}, 
-				(val)-> choiceAmplitude.getSelectionModel().select(val.intValue()));
-		addParameters("typeOutput", ()-> {return  (double) typeOutput.getToggles().indexOf(typeOutput.getSelectedToggle());},
-				(val)-> typeOutput.selectToggle(typeOutput.getToggles().get(val.intValue())));
+		addParameters("choiceBaseFreq", () -> (double) choiceBaseFreq.getSelectionModel().getSelectedIndex(), (val) -> choiceBaseFreq.getSelectionModel().select(val.intValue()));
+		addParameters("choiceAmplitude", () -> (double) choiceAmplitude.getSelectionModel().getSelectedIndex(), (val) -> choiceAmplitude.getSelectionModel().select(val.intValue()));
 
-
+		addParameters("typeOutput", () -> (double) typeOutput.getToggles().indexOf(typeOutput.getSelectedToggle()), (val) -> typeOutput.selectToggle(typeOutput.getToggles().get(val.intValue())));
 	}
 
 	@Override
