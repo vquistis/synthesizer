@@ -5,6 +5,8 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.UnitGenerator;
 import com.jsyn.unitgen.UnitSource;
 
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
+
 
 public class JSynKeyboard extends UnitGenerator implements UnitSource {
 
@@ -26,7 +28,7 @@ public class JSynKeyboard extends UnitGenerator implements UnitSource {
 		double[] outputs = output.getValues();
 
 		for (int i = start; i < limit; i++) {
-			outputs[i] = keys[i] / 12;
+			outputs[i] = (keys[i] / 12) / SignalUtil.COEF_VOLT;
 		}
 	}
 
