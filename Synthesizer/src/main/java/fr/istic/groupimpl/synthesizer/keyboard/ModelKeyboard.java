@@ -55,8 +55,6 @@ public class ModelKeyboard extends ModelComponent {
 		octave = Math.max(MIN_OCTAVE, octave-1);
 	}
 	
-	
-	
 	/**
 	 * sets the key of the keyboard
 	 * @param key, Time stamp
