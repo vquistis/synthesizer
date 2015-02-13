@@ -260,18 +260,6 @@ public class ViewGlobal implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
 			Node root = loader.load();
 			ViewComponent view = loader.getController();			
-			res = view;
-			if (module != null) {
-				HBox hb = (HBox) splitpane.getItems().get(module.getPosY());
-				hb.getChildren().add(root);
-				enableDrag(root);
-				view.initComponent(module);
-			} else {
-				HBox hb = (HBox) splitpane.getItems().get(0);
-				hb.getChildren().add(root);
-				enableDrag(root);
-			}
-			
 			root.parentProperty().addListener((obs,oldVal,newVal) -> {
 				if(oldVal != null) {
 					hb1.heightProperty().removeListener(view.getListener());
@@ -284,6 +272,19 @@ public class ViewGlobal implements Initializable {
 					hb3.heightProperty().addListener(view.getListener());
 				}
 			});
+			res = view;
+			if (module != null) {
+				HBox hb = (HBox) splitpane.getItems().get(module.getPosY());
+				hb.getChildren().add(root);
+				enableDrag(root);
+				view.initComponent(module);
+			} else {
+				HBox hb = (HBox) splitpane.getItems().get(0);
+				hb.getChildren().add(root);
+				enableDrag(root);
+			}
+			
+			
 			
 			suppliers.add(view.getSaveSupplier());
 			view.setOnCloseCmd(() -> {
