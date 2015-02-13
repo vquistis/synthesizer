@@ -3,8 +3,6 @@ package fr.istic.groupimpl.synthesizer.rep;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -37,7 +35,7 @@ public class ViewRep extends ViewComponent implements Initializable{
 		
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();			
+			cleanup();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);

@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -63,14 +61,14 @@ public class ViewOut extends ViewComponent implements Initializable {
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();			
+			cleanup();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
 		});
-		
-		addParameters("attenuation", ()-> {return  knobVolume.getValue();}, (val)-> valueVolumeFx.setText(String.valueOf(val)));
-		addParameters("muteVolumeFx", ()-> {return  knobVolume.getValue();}, (val)-> valueVolumeFx.setText(String.valueOf(val)));
+
+		addParameters("knobVolume", () -> knobVolume.getValue(), (val) -> knobVolume.setValue(val));
+		addParameters("muteVolumeFx", () -> muteVolumeFx.selectedProperty().get() ? 1.0 : 0.0, (val) -> muteVolumeFx.setSelected(val==1));
 	}
 
 	@Override

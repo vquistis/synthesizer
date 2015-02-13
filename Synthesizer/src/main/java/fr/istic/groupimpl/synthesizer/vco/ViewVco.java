@@ -32,6 +32,8 @@ public class ViewVco extends ViewComponent implements Initializable {
 	@FXML
 	private ChoiceBox<String> choiceBaseFreq;
 	@FXML
+	private ChoiceBox<String> choiceAmplitude;
+	@FXML
 	private ImageView closeVco;
 	@FXML
 	private VBox knobOctavePane;
@@ -81,7 +83,7 @@ public class ViewVco extends ViewComponent implements Initializable {
 		knobFreqPane.getChildren().add(precisionKnob);
 
 		// VcoController creation and listeners on knob values
-		vcoControl = new ControllerVco(freqLabel);
+		vcoControl = new ControllerVco(freqLabel.textProperty());
 		octaveKnob.valueProperty().addListener((p, oldVal, newVal) ->
 		vcoControl.handleViewOctaveChange((double) newVal, precisionKnob.getValue()));
 		precisionKnob.valueProperty().addListener((p, oldVal, newVal) ->
@@ -92,7 +94,7 @@ public class ViewVco extends ViewComponent implements Initializable {
 		
 		// Listener close VCO
 		closeVco.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();
+			cleanup();
 			vcoControl.handleViewClose();
 			Pane parent = (Pane) paneVco.getParent();
 			parent.getChildren().remove(paneVco);
@@ -117,9 +119,36 @@ public class ViewVco extends ViewComponent implements Initializable {
 						break;
 				}
 		});
+		// Choice amplitude
+		choiceAmplitude.getItems().addAll("0.5 V", "1 V", "2 V", "5 V");
+		choiceAmplitude.getSelectionModel().select(1);
+		choiceAmplitude.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+				switch(newVal) {
+					case "0.5 V":
+						vcoControl.handleViewAmplitudeChange(0.5);
+						break;
+					case "1 V":
+						vcoControl.handleViewAmplitudeChange(1.);
+						break;
+					case "2 V":
+						vcoControl.handleViewAmplitudeChange(2.);
+						break;
+					case "5 V":
+						vcoControl.handleViewAmplitudeChange(5.);
+						break;
+				}
+		});
 
 		addPort("vco_inputFm",fm);
-		addPort("outputAmplitude",out);
+		addPort("outputAmplitude",out);		
+		
+		addParameters("octave", () -> octaveKnob.getValue(), (val)-> octaveKnob.setValue(val));
+		addParameters("precision", () -> precisionKnob.getValue(), (val) -> precisionKnob.setValue(val));
+		
+		addParameters("choiceBaseFreq", () -> (double) choiceBaseFreq.getSelectionModel().getSelectedIndex(), (val) -> choiceBaseFreq.getSelectionModel().select(val.intValue()));
+		addParameters("choiceAmplitude", () -> (double) choiceAmplitude.getSelectionModel().getSelectedIndex(), (val) -> choiceAmplitude.getSelectionModel().select(val.intValue()));
+
+		addParameters("typeOutput", () -> (double) typeOutput.getToggles().indexOf(typeOutput.getSelectedToggle()), (val) -> typeOutput.selectToggle(typeOutput.getToggles().get(val.intValue())));
 	}
 
 	@Override

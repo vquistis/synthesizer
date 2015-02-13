@@ -104,7 +104,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
         fxOutput = (ImageView) inputHBox.lookup("#fxOutput");
         addPort("output",fxOutput);
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();
+			cleanup();
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
@@ -171,6 +171,9 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		inputView.getFxMuteVolume().selectedProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewMuteChange(index, newVal));
 		// Listener input
 		//inputView.getFxInput().addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> controller.handleViewInputClick(index, inputX, inputY));
+		
+		addParameters("knobVolume" + (index + 1), () -> knobVolume.getValue(), (val) -> knobVolume.setValue(val));
+		addParameters("muteVolumeFx"+ (index + 1), () -> inputView.getFxMuteVolume().selectedProperty().get() ? 1.0 : 0.0, (val) -> inputView.getFxMuteVolume().setSelected(val==1));	
 		
 		return inputView;
 	}

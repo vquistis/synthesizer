@@ -1,6 +1,7 @@
 package fr.istic.groupimpl.synthesizer.io.architecture;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +12,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * The Class Module.
  */
 @XmlRootElement(name="module")
-public class Module {
+public class Module implements Comparator<Module>{
 	
 	/** The id. */
 	private String id;
 	
+	/** The filename. */
 	private String filename;
 	
 	/** The map. */
@@ -129,12 +131,30 @@ public class Module {
 		this.posY = posY;
 	}
 
+	/**
+	 * Gets the filename.
+	 *
+	 * @return the filename
+	 */
 	public String getFilename() {
 		return filename;
 	}
 
+	/**
+	 * Sets the filename.
+	 *
+	 * @param filename the new filename
+	 */
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+	 */
+	@Override
+	public int compare(Module o1, Module o2) {
+		return new Integer(o1.getPosX()).compareTo(new Integer(o2.getPosX()));
 	}
 	
 	

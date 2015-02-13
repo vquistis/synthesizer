@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.vco;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.scene.control.Label;
+import javafx.beans.property.StringProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
@@ -11,10 +10,10 @@ public class ControllerVco extends ControllerComponent {
 	private ModelVco modelVco;
 	private ControllerGlobal ctrlGlob;
 	
-	public ControllerVco(Label uiFreqLabel) {
+	public ControllerVco(StringProperty uiFreqLabel) {
 		modelVco = new ModelVco();
 		modelVco.setCommandProperty("freq", () ->
-			uiFreqLabel.setText(modelVco.getValProperty("freq") + " Hz")
+			uiFreqLabel.set(modelVco.getValProperty("freq") + " Hz")
 		);
 		modelVco.setOctave(0.0);
 		ctrlGlob = ControllerGlobal.getInstance();
@@ -50,6 +49,13 @@ public class ControllerVco extends ControllerComponent {
 	 */
 	public void handleViewBaseFreqChange(double value) {
 		modelVco.setBaseFreq(value);
+	}
+	/**
+	 * @param value The amplitude to set (in V)
+	 * Sets in the model the amplitude
+	 */
+	public void handleViewAmplitudeChange(double value) {
+		modelVco.setAmplitude(value);
 	}
 
 	@Override

@@ -3,8 +3,6 @@ package fr.istic.groupimpl.synthesizer.oscilloscope;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -53,7 +51,7 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();			
+			cleanup();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
@@ -62,6 +60,7 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 		addPort("oscillo_in", in);
 		addPort("oscillo_out", out);
 		
+		addParameters("refreshPeriodSlider", ()-> {return  refreshPeriodSlider.getValue();}, (val)-> refreshPeriodSlider.setValue(val));
 		scope.start();
 	}
 

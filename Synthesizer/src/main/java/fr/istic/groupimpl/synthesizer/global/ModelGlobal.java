@@ -161,6 +161,11 @@ public class ModelGlobal {
 	}
 	
 	public void stopSynth(){
-		synth.stop();
+		try {
+			if (synth.isRunning()) {
+				synth.stop();
+			}
+		} catch (Exception e) {
+		}				
 	}
 }

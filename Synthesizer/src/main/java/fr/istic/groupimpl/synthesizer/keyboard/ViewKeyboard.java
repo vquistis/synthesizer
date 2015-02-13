@@ -25,29 +25,34 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 
 
 	private ControllerKeyboard controller;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("Keyboard");
 
 		// implementation of controller
 		controller = new ControllerKeyboard(); 
-		
+
 		// add ports
 		addPort("output", output);
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();			
+			cleanup();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
 		});
 
-		// Recovery keyboards keys
+		// Recovery keyboards keys when key is pressed
 		ControllerGlobal.getInstance().getStage().addEventHandler(KeyEvent.KEY_PRESSED, (event) ->  {
 			controller.handleViewkeyEvent(event.getCode().toString());
-							
+
+		}); 
+		// Recovery keyboards keys when key is pressed
+		ControllerGlobal.getInstance().getStage().addEventHandler(KeyEvent.KEY_RELEASED, (event) ->  {
+			controller.handleViewkeyEvent("B");
+
 		}); 
 	}
 

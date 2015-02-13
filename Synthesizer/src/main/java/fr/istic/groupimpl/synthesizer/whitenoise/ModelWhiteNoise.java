@@ -26,6 +26,7 @@ public class ModelWhiteNoise extends ModelComponent {
 	public ModelWhiteNoise() {
 		super();
 		whiteNoise = new WhiteNoise();
+		whiteNoise.output.setName("noise_output");
 	}
 	
 	@Override

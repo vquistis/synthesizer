@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import fr.istic.groupimpl.synthesizer.cable.Cable;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.io.FileUtil;
@@ -44,7 +44,6 @@ import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
-
 
 /**
  * The Class ViewGlobal.
@@ -88,7 +87,7 @@ public class ViewGlobal implements Initializable {
 	private ControllerGlobal ctl;
 
 	/** The suppliers. */
-	private List<Supplier<Module>> suppliers=new ArrayList<Supplier<Module>>();
+	private List<Supplier<Module>> suppliers = new ArrayList<Supplier<Module>>();
 
 	/** The stage. */
 	private Stage stage;	
@@ -247,6 +246,8 @@ public class ViewGlobal implements Initializable {
 	 * Creates a new module.
 	 *
 	 * @param filename the filename component fxml
+	 * @param module the module
+	 * @return the view component
 	 */
 
 	/**
@@ -260,18 +261,6 @@ public class ViewGlobal implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));
 			Node root = loader.load();
 			ViewComponent view = loader.getController();			
-			res = view;
-			if (module != null) {
-				HBox hb = (HBox) splitpane.getItems().get(module.getPosY());
-				hb.getChildren().add(root);
-				enableDrag(root);
-				view.initComponent(module);
-			} else {
-				HBox hb = (HBox) splitpane.getItems().get(0);
-				hb.getChildren().add(root);
-				enableDrag(root);
-			}
-			
 			root.parentProperty().addListener((obs,oldVal,newVal) -> {
 				if(oldVal != null) {
 					hb1.heightProperty().removeListener(view.getListener());
@@ -284,8 +273,25 @@ public class ViewGlobal implements Initializable {
 					hb3.heightProperty().addListener(view.getListener());
 				}
 			});
+			res = view;
+			if (module != null) {
+				HBox hb = (HBox) splitpane.getItems().get(module.getPosY());
+				hb.getChildren().add(root);
+				enableDrag(root);
+				view.initComponent(module);
+			} else {
+				HBox hb = (HBox) splitpane.getItems().get(0);
+				hb.getChildren().add(root);
+				enableDrag(root);
+			}
+			
+			
 			
 			suppliers.add(view.getSaveSupplier());
+			view.setOnCloseCmd(() -> {
+				suppliers.remove(view.getSaveSupplier());
+				Log.getInstance().error("Suppliers = " + suppliers);
+			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -293,6 +299,11 @@ public class ViewGlobal implements Initializable {
 		return res;
 	}
 	
+	/**
+	 * Creates the module.
+	 *
+	 * @param filename the filename
+	 */
 	public void createModule(String filename) {
 		createModule(filename, null);
 	}
@@ -327,15 +338,11 @@ public class ViewGlobal implements Initializable {
 	 */
 	private void enableDrag(Node node) {
 		node.setOnDragDetected((event) -> {
-			Log.getInstance().debug("DROP STARTED");
 			ClipboardContent content = new ClipboardContent();
 			content.putString(getString(node));
 			Dragboard db = scrollpane.startDragAndDrop(TransferMode.ANY);
 			db.setContent(content);
 			event.consume();
-		});
-		node.setOnDragDone((event) -> {
-			Log.getInstance().debug("DROPPED");
 		});
 	}
 
@@ -347,19 +354,6 @@ public class ViewGlobal implements Initializable {
 	public Color getCableColor() {
 		return colorpicker.getValue();
 	}
-
-	//	/**
-	//	 * Sets the all modules transparent.
-	//	 *
-	//	 * @param t the new all modules transparent
-	//	 */
-	//	private void setAllModulesTransparent(boolean t) {
-	//		splitpane.getItems().forEach((b) -> {
-	//			((HBox) b).getChildrenUnmodifiable().forEach((m) -> {
-	//				m.setMouseTransparent(t);
-	//			});
-	//		});
-	//	}
 
 	/**
 	 * Handle add replicator. This method adds a new Rep component 
@@ -617,6 +611,7 @@ public class ViewGlobal implements Initializable {
 		int index=0;
 		for (Supplier<Module> supplier : suppliers) {
 			Module module = supplier.get();
+			Log.getInstance().error("Added module : " + module.getFilename());
 			module.setId("Module"+index);
 			list.add(module);
 			index++;
@@ -640,7 +635,8 @@ public class ViewGlobal implements Initializable {
          if(file != null){
         	 	// traitement        	 
         	 clearAllComponent();        	 
-        	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);        	 
+        	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);
+        	 Collections.sort(configuration.getModules(), new Module());
         	 // configue component
         	 configuration.getModules().forEach((module) ->{
         		 views.put(module.getId(),createModule(module.getFilename(), module));
@@ -648,22 +644,25 @@ public class ViewGlobal implements Initializable {
         	 
         	 configuration.getConnections().forEach((connection) -> {
         		 Cable cable = new Cable(Color.valueOf(connection.getColor()));
-        		 ViewComponent view = views.get(connection.getInputPort().getIdModule());
-        		 ControllerGlobal.getInstance().createConnection(cable, view.getStuff(connection.getInputPort().getName()),
-        				 view.getStuff(connection.getOutputPort().getName()), view.getPort(connection.getInputPort().getName()),
-        				 view.getPort(connection.getOutputPort().getName()));
+        		 ViewComponent viewIn = views.get(connection.getInputPort().getIdModule());
+        		 ViewComponent viewOut = views.get(connection.getOutputPort().getIdModule());
+        		 ControllerGlobal.getInstance().createConnection(cable, viewIn.getStuff(connection.getInputPort().getName()),
+        				 viewOut.getStuff(connection.getOutputPort().getName()), viewIn.getPort(connection.getInputPort().getName()),
+        				 viewOut.getPort(connection.getOutputPort().getName()));
         	 });
         	 
          }
 
 	}
 
+	/**
+	 * Clear all component.
+	 */
 	private void clearAllComponent() {
+		ControllerGlobal.getInstance().resetWorkbench();
 		for (Node node : splitpane.getItems()) {
 			((HBox) node).getChildren().clear();
 		}
-		 
-		 ControllerGlobal.getInstance().clearAllComponent();
 	}
 
 	/**
@@ -675,10 +674,30 @@ public class ViewGlobal implements Initializable {
 		this.stage=primaryStage;
 	}
 
+	/**
+	 * Gets the stage.
+	 *
+	 * @return the stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
-	
-	
 
+	/**
+	 * Gets the suppliers.
+	 *
+	 * @return the suppliers
+	 */
+	public List<Supplier<Module>> getSuppliers() {
+		return suppliers;
+	}
+
+	/**
+	 * Sets the suppliers.
+	 *
+	 * @param suppliers the new suppliers
+	 */
+	public void setSuppliers(List<Supplier<Module>> suppliers) {
+		this.suppliers = suppliers;
+	}
 }

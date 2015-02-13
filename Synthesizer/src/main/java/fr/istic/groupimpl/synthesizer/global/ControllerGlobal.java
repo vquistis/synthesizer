@@ -132,6 +132,13 @@ public class ControllerGlobal {
 		}
 	}
 
+	/**
+	 * Handle port clicked.
+	 *
+	 * @param port the port
+	 * @param x the x
+	 * @param y the y
+	 */
 	public void handlePortClicked(UnitPort port, DoubleProperty x, DoubleProperty y) {
 		if(port instanceof UnitInputPort) {
 			handleInputClicked((UnitInputPort)port, x, y);
@@ -374,11 +381,20 @@ public class ControllerGlobal {
 
 	}
 
+	/**
+	 * Creates the connection.
+	 *
+	 * @param cable the cable
+	 * @param inputPos the input pos
+	 * @param outputPos the output pos
+	 * @param inputPort the input port
+	 * @param outputPort the output port
+	 */
 	public void createConnection(Cable cable, Pair<DoubleProperty,DoubleProperty> inputPos,
 			Pair<DoubleProperty,DoubleProperty> outputPos, UnitPort inputPort, UnitPort outputPort) {
 		cable.bindInput(inputPos.getKey(), inputPos.getValue());
 		cable.bindOutput(outputPos.getKey(), outputPos.getValue());
-		this.model.connectPorts(inputPort,outputPort);
+		this.model.connectPorts(outputPort,inputPort);
 		cables.put(inputPort,cable);
 		cables.put(outputPort,cable);
 		view.addCable(cable);
@@ -538,17 +554,25 @@ public class ControllerGlobal {
 		return connections;
 	}
 
-	public void clearAllComponent(){
+	/**
+	 * Clear all component.
+	 */
+	public void resetWorkbench(){
+		view.getSuppliers().clear();
 		model.stopSynth();
-		Set<UnitPort> set= cables.keySet();
-		for (UnitPort unitPort : set) {
-			Cable cable=cables.get(unitPort);
-			view.removeCable(cable);
-		}
+		cables.forEach((k,v) -> {
+			view.removeCable(v);
+		});
+		cables.clear();
 		model = new ModelGlobal();
 	}
 
 
+	/**
+	 * Gets the stage.
+	 *
+	 * @return the stage
+	 */
 	public Stage getStage(){
 		return view.getStage();
 	}

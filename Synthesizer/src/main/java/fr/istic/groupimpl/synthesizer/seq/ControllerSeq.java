@@ -1,6 +1,5 @@
 package fr.istic.groupimpl.synthesizer.seq;
 
-import javafx.beans.property.DoubleProperty;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;

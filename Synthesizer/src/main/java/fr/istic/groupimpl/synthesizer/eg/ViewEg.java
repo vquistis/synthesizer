@@ -78,7 +78,7 @@ public class ViewEg extends ViewComponent implements Initializable {
 		
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();			
+			cleanup();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
@@ -86,6 +86,11 @@ public class ViewEg extends ViewComponent implements Initializable {
 
 		addPort("eg_input", input);
 		addPort("eg_output", output);
+		
+		addParameters("knobAttack", () -> knobAttack.getValue(), (val) -> knobAttack.setValue(val));
+		addParameters("knobDecay", () -> knobDecay.getValue(), (val) -> knobDecay.setValue(val));
+		addParameters("knobSustain", () -> knobSustain.getValue(), (val) -> knobSustain.setValue(val));
+		addParameters("knobRelease", () -> knobRelease.getValue(), (val) -> knobRelease.setValue(val));
 	}
 
 	@Override

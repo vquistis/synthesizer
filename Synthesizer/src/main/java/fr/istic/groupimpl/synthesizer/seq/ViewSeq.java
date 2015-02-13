@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -88,12 +86,13 @@ public class ViewSeq extends ViewComponent implements Initializable {
 						
 			Bindings.bindBidirectional(tf1.textProperty(), knob.valueProperty(), converter);
 			Bindings.bindBidirectional(tf2.textProperty(), knob.valueProperty(), converter12);
-
+			
+			addParameters("knob"+i, () -> knob.getValue(), (val) -> knob.setValue(val));
 		}
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();
+			cleanup();
 			controller.handleViewClose();
 			Pane parent = (Pane) paneSeq.getParent();
 			parent.getChildren().remove(paneSeq);

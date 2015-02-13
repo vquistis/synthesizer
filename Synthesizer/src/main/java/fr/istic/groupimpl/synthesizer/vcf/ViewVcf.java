@@ -38,7 +38,7 @@ public abstract class ViewVcf extends ViewComponent {
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanupPorts();			
+			cleanup();			
 			controller.handleViewClose();
 			Pane parent = (Pane) rootModulePane.getParent();
 			parent.getChildren().remove(rootModulePane);
@@ -51,6 +51,9 @@ public abstract class ViewVcf extends ViewComponent {
 		addPort("vcf_input",port.lookup("#input"));
 		addPort("vcf_fm",port.lookup("#fm"));
 		addPort("vcf_output",port.lookup("#output"));
+
+		addParameters("knobCutoff", () -> knobCutoff.getValue(), (val) -> knobCutoff.setValue(val));
+		addParameters("knobResonance", () -> knobResonance.getValue(), (val) -> knobResonance.setValue(val));
 	}
 	
 	@Override

@@ -2,6 +2,7 @@ package fr.istic.groupimpl.synthesizer.io.architecture;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -13,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Configuration {
 	
 	/** The modules. */
-	private Collection<Module> modules;
+	private List<Module> modules;
 	
 	/** The connections. */
 	private Collection<Connection> connections;
@@ -30,7 +31,7 @@ public class Configuration {
 	 * @return the modules
 	 */
 	@XmlElement(name="modules")
-	public Collection<Module> getModules() {
+	public List<Module> getModules() {
 		return modules;
 	}
 
@@ -39,7 +40,7 @@ public class Configuration {
 	 *
 	 * @param modules the new modules
 	 */
-	public void setModules(Collection<Module> modules) {
+	public void setModules(List<Module> modules) {
 		this.modules = modules;
 	}
 
