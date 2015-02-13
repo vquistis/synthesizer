@@ -104,3 +104,7 @@
 	-fx-background-image: url("../img/knob.png");
 	-fx-background-size: stretch;
 }
+/* ========================== */
+
+.green-bar  { -fx-accent: green;  }
+.red-bar    { -fx-accent: red;    }
