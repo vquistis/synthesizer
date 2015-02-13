@@ -87,8 +87,7 @@ public class ViewSeq extends ViewComponent implements Initializable {
 			Bindings.bindBidirectional(tf1.textProperty(), knob.valueProperty(), converter);
 			Bindings.bindBidirectional(tf2.textProperty(), knob.valueProperty(), converter12);
 			
-			addParameters("knob"+i, ()-> {return  knob.getValue();}, (val)-> knob.setValue(val));
-
+			addParameters("knob"+i, () -> knob.getValue(), (val) -> knob.setValue(val));
 		}
 
 		// Listener close module

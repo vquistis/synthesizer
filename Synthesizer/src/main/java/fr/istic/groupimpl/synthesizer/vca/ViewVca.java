@@ -78,8 +78,7 @@ public class ViewVca extends ViewComponent implements Initializable {
 		addPort("vca_inputam",am);
 		addPort("vca_output",out);
 		
-		addParameters("amplitudeKnod", ()-> {return  amplitudeKnod.getValue();}, (val)-> amplitudeKnod.setValue(val));
-		
+		addParameters("amplitudeKnod", () -> amplitudeKnod.getValue(), (val) -> amplitudeKnod.setValue(val));
 	}
 
 
