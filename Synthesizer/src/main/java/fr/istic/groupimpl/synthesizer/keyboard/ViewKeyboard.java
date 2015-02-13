@@ -20,7 +20,8 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 	@FXML private Pane rootModulePane;
 	@FXML private ImageView closeModuleFx;
 	@FXML private GridPane top;
-	@FXML private ImageView output;
+	@FXML private ImageView outputKeyCV;
+	@FXML private ImageView outputKeyGate;
 	@FXML private Label keyboard;
 
 
@@ -34,7 +35,8 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 		controller = new ControllerKeyboard(); 
 
 		// add ports
-		addPort("output", output);
+		addPort("outputKeyCV", outputKeyCV);
+		addPort("outputKeyGate", outputKeyGate);
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
