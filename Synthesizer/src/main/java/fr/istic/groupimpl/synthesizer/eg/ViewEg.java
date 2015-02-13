@@ -53,6 +53,7 @@ public class ViewEg extends ViewComponent implements Initializable {
 		knobAttackPane.getChildren().add(1,knobAttack);
 		Potentiometre knobDecay = knobFact.getPotentiometre();
 		knobDecayPane.getChildren().add(1,knobDecay);
+		knobFact.setMaxValue(5);
 		Potentiometre knobRelease = knobFact.getPotentiometre();
 		knobReleasePane.getChildren().add(1,knobRelease);
 		knobFact.setMinValue(-60);

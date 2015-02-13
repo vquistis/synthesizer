@@ -283,14 +283,11 @@ public class ViewGlobal implements Initializable {
 				HBox hb = (HBox) splitpane.getItems().get(0);
 				hb.getChildren().add(root);
 				enableDrag(root);
-			}
-			
-			
+			}			
 			
 			suppliers.add(view.getSaveSupplier());
 			view.setOnCloseCmd(() -> {
 				suppliers.remove(view.getSaveSupplier());
-				Log.getInstance().error("Suppliers = " + suppliers);
 			});
 		} catch (IOException e) {
 			e.printStackTrace();

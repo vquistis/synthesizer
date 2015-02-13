@@ -11,15 +11,28 @@
 <BorderPane fx:id="rootModulePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="moduleBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
             fx:controller="fr.istic.groupimpl.synthesizer.keyboard.ViewKeyboard">
    <bottom>
-      <HBox alignment="CENTER" styleClass="portPane">
+      <HBox styleClass="portPane"  spacing="30.0">
          <padding>
-            <Insets bottom="5.0" top="5.0" />
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
          </padding>
          <children>
             <VBox alignment="CENTER">
                <children>
-                  <Label text="out" />
-                  <ImageView fx:id="output" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
+                  <Label text="gate" />
+                  <ImageView fx:id="outputKeyCV" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
+                     <image>
+                        <Image url="@../img/inoutVert.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label text="cv" />
+                  <ImageView fx:id="outputKeyGate" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="outputPort">
                      <image>
                         <Image url="@../img/inoutRouge.png" />
                      </image>
