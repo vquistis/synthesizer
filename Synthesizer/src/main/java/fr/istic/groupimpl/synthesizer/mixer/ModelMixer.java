@@ -16,10 +16,11 @@ public class ModelMixer extends ModelComponent {
 
 	private Mixer mixer;
 	private Thread refreshThread;
-	private long refreshPeriod = 20;
-	private double MaxOutputValue = 0.00;
-	private double residualValue = 0.1;
-	private double decreaseMaxValueIncrement = 0.01;
+	private long refreshPeriod = 50;
+	//private double MaxOutputValue = 0.00;
+	private double OutputValue = 0.00;
+	private double decreaseValueIncrement = 0.04;
+	//private double decreaseMaxValueIncrement = 0.01;
 	
 	public ModelMixer(Integer NumberOfInputPort) {
 		super();
@@ -101,6 +102,14 @@ public class ModelMixer extends ModelComponent {
 	public UnitOutputPort getOutputPort() {
 		return mixer.getOutput();
 	}
+
+	/**
+	 * Get the jsyn average output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getAverageOutputValue() {
+		return mixer.getAverageOutputValue();
+	}
 	
 	/**
 	 * Get the jsyn input port.
@@ -118,10 +127,22 @@ public class ModelMixer extends ModelComponent {
 	 * 
 	 */
 	private void computeOutputGaugeBar() {
-		double OutputValue = Math.abs(getOutputPort().get());
-		if (OutputValue < residualValue) OutputValue = 0.00;
-		this.setValProperty("OutputGaugeBar", OutputValue);
-		computeMaxOutputGaugeBar(OutputValue);
+		double getOutputValue = getAverageOutputValue().get();
+		
+		if (getOutputValue > OutputValue) {
+			OutputValue = getOutputValue;
+			this.setValProperty("OutputGaugeBar", OutputValue);
+		} else {
+			if ((OutputValue > 0.00) 
+				 && ((OutputValue - getOutputValue) > decreaseValueIncrement)) {
+				OutputValue = OutputValue - decreaseValueIncrement;
+				this.setValProperty("OutputGaugeBar", OutputValue);
+			}
+		}
+		
+		// gardé pour le jour ou l'on fait un vrai
+		// composant Gauge
+		//computeMaxOutputGaugeBar(getOutputValue);
 	}
 	
 	/**
@@ -129,7 +150,7 @@ public class ModelMixer extends ModelComponent {
 	 * Get the output max level value, generate a slow down value
 	 * 
 	 */
-	private void computeMaxOutputGaugeBar(double OutputValue) {
+/*	private void computeMaxOutputGaugeBar(double OutputValue) {
 		if (OutputValue > MaxOutputValue) {
 			MaxOutputValue = OutputValue;
 			this.setValProperty("MaxOutputGaugeBar", MaxOutputValue);
@@ -139,5 +160,5 @@ public class ModelMixer extends ModelComponent {
 				this.setValProperty("MaxOutputGaugeBar", MaxOutputValue);
 			}
 		}
-	}
+	}*/
 }

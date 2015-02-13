@@ -19,6 +19,7 @@ import com.jsyn.unitgen.UnitGenerator;
 public class MixerSum extends UnitGenerator {
 	private ArrayList<UnitInputPort> unitInputPorts = new ArrayList<UnitInputPort>();
 	private UnitOutputPort output;
+	private UnitOutputPort averageOutputValue;
     
     /**
      * Get Number Of Input Port
@@ -44,6 +45,14 @@ public class MixerSum extends UnitGenerator {
 		return output;
 	}
 
+	/**
+	 * Output Average value
+	 * @return
+	 */
+	public UnitOutputPort getAverageOutputValue() {
+		return averageOutputValue;
+	}
+	
     /**
      * Constructor
      * 
@@ -59,13 +68,16 @@ public class MixerSum extends UnitGenerator {
         	addPort(unitInputPorts.get(i));
         } 
         addPort(output = new UnitOutputPort("Output"));
+        addPort(averageOutputValue = new UnitOutputPort("averageOutputValue"));
     }
 
     @Override
     public void generate(int start, int limit) {
+    	double inputAverage=0;
     	double inputSum=0;
     	final ArrayList<double[]> ArrayInputs = new ArrayList<double[]>();
         double[] outputs = output.getValues();
+        double[] averageOutputValues = averageOutputValue.getValues();
 
         for(int i = 0; i < unitInputPorts.size(); i++)
         {
@@ -78,6 +90,12 @@ public class MixerSum extends UnitGenerator {
         		inputSum = inputSum + ArrayInputs.get(inputIndex)[i];
         	}
         	outputs[i] = inputSum;
+        	inputAverage = inputAverage + Math.abs(inputSum);
+        }
+
+        inputAverage=inputAverage/limit;
+        for (int i = start; i < limit; i++) {
+        	averageOutputValues[i] = inputAverage;
         }
     }
 }
