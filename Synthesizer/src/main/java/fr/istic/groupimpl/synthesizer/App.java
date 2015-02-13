@@ -1,7 +1,5 @@
 package fr.istic.groupimpl.synthesizer;
 
-import java.net.URL;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,15 +32,13 @@ public class App extends Application
 		primaryStage.setTitle("Synthesizer by GroupImpl");
 		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/global.fxml"));
 		Parent root = loader.load();
-		URL cssURL = getClass().getClassLoader().getResource("css/style.css");
 		Scene scene = new Scene(root,1100,700);
-		scene.getStylesheets().add(cssURL.toExternalForm());
-		primaryStage.setScene(scene);		
-		ViewGlobal view = loader.getController();
-		
-		view.setStage(primaryStage);
-		view.init();		
+		primaryStage.setScene(scene);
 		primaryStage.show();		
         primaryStage.setOnCloseRequest((event) -> System.exit(0));
+        
+		ViewGlobal view = loader.getController();
+		view.setStage(primaryStage);
+		view.init();
 	}
 }

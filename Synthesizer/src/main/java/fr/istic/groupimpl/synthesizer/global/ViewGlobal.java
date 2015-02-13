@@ -22,6 +22,7 @@ import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
@@ -76,6 +77,7 @@ public class ViewGlobal implements Initializable {
 
 	/** The colorpicker. */
 	@FXML private ColorPicker colorpicker; 
+	@FXML private ComboBox<String> lookAndFeel; 
 
 	/** The mouse x. */
 	private DoubleProperty mouseX = new SimpleDoubleProperty(0);
@@ -238,8 +240,19 @@ public class ViewGlobal implements Initializable {
 	 */
 	public void init() {
 		//primaryStage = (Stage) borderpane.getScene().getWindow();
+		
+		lookAndFeel.getItems().addAll("metal");
+		lookAndFeel.getSelectionModel().selectFirst();
+		lookAndFeel.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+			URL cssURL = getClass().getClassLoader().getResource("css/"+newVal+".css");
+			stage.getScene().getStylesheets().clear();
+			stage.getScene().getStylesheets().add(cssURL.toExternalForm());
+		});
+		// Default css
+		URL cssURL = getClass().getClassLoader().getResource("css/metal.css");
+		stage.getScene().getStylesheets().add(cssURL.toExternalForm());
+		
 		createModule("fxml/out.fxml");
-
 	}
 
 	/**
