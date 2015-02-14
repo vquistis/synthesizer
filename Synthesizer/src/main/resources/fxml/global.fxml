@@ -18,6 +18,7 @@
 
 				<Button onAction="#handleSaveConfiguration" text="Save configuration" />
 				<Button onAction="#handleLoadConfiguration" text="Load configuration" />
+            <ComboBox fx:id="lookAndFeel" />
 
 				<!-- GENERATE GRAPH SCENE DEBUG ONLY <Button onAction="#handleMenuDevmodeNodeHierarchy_1" 
 					text="JavaFX Node Hierarchy dump 1" /> <Button onAction="#handleMenuDevmodeNodeHierarchy_2" 
@@ -59,7 +60,7 @@
 		</BorderPane>
 	</center>
 	<left>
-		<VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-background-color: #383838;" BorderPane.alignment="CENTER">
+		<VBox alignment="CENTER" spacing="10.0" styleClass="menuModule" BorderPane.alignment="CENTER">
 			<children>
 				<Button onAction="#handleAddOut" styleClass="moduleButton" text="OUT">
 					<font>
