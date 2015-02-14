@@ -35,7 +35,6 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	@FXML private GridPane top;
 	private ImageView fxOutput;
 	private ProgressBar outputGauge;
-	private ProgressBar maxOutputGauge;
 	
 	private ControllerMixer controller;
 	
@@ -65,14 +64,6 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	public ProgressBar getOutputGauge() {
 		return outputGauge;
 	}
-
-	/**
-	 * Get instance of the ouput gauge max
-	 * @return ProgressBar
-	 */
-	public ProgressBar getMaxOutputGauge() {
-		return maxOutputGauge;
-	}
 	
 	/**
 	 * Method to configurate the view
@@ -80,8 +71,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	public void configurate() {
 		((Label) top.lookup("#titleModule")).setText("MIXER");
 		
-		outputGauge = configureGaugeBar("#fxOutputGauge");
-		maxOutputGauge  = configureGaugeBar("#fxMaxOutputGauge");  
+		outputGauge = configureGaugeBar("#fxOutputGauge"); 
 		
 		// Creation du controller
 		controller = new ControllerMixer(this, NumberOfInputPort);

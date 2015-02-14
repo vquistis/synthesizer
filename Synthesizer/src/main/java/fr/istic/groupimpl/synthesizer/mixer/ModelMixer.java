@@ -17,18 +17,16 @@ public class ModelMixer extends ModelComponent {
 	private Mixer mixer;
 	private Thread refreshThread;
 	private long refreshPeriod = 50;
-	//private double MaxOutputValue = 0.00;
 	private double OutputValue = 0.00;
 	private double decreaseValueIncrement = 0.04;
-	//private double decreaseMaxValueIncrement = 0.01;
-	private boolean Running=true;
+	private boolean isActiveThread=true;
 	
 	public ModelMixer(Integer NumberOfInputPort) {
 		super();
 		mixer = new Mixer(NumberOfInputPort);
 		
 		refreshThread = new Thread(() -> {
-			while (Running) {
+			while (isActiveThread) {
 				try {
 					Thread.sleep(refreshPeriod);
 				} catch (InterruptedException e) {
@@ -43,6 +41,7 @@ public class ModelMixer extends ModelComponent {
 	 * To start the refresh thread
 	 */
 	public void start() {
+		isActiveThread=true;
 		refreshThread.start();
 	}
 
@@ -51,7 +50,7 @@ public class ModelMixer extends ModelComponent {
 	 */
 	public void stop() {
 		if (refreshThread.isAlive()) {
-			Running=false;
+			isActiveThread=false;
 			refreshThread.interrupt();
 		}
 	}
@@ -141,26 +140,5 @@ public class ModelMixer extends ModelComponent {
 				this.setValProperty("OutputGaugeBar", OutputValue);
 			}
 		}
-		
-		// gardé pour le jour ou l'on fait un vrai
-		// composant Gauge
-		//computeMaxOutputGaugeBar(getOutputValue);
 	}
-	
-	/**
-	 * 
-	 * Get the output max level value, generate a slow down value
-	 * 
-	 */
-/*	private void computeMaxOutputGaugeBar(double OutputValue) {
-		if (OutputValue > MaxOutputValue) {
-			MaxOutputValue = OutputValue;
-			this.setValProperty("MaxOutputGaugeBar", MaxOutputValue);
-		} else {
-			if (MaxOutputValue > 0.00) {
-				MaxOutputValue = MaxOutputValue - decreaseMaxValueIncrement;
-				this.setValProperty("MaxOutputGaugeBar", MaxOutputValue);
-			}
-		}
-	}*/
 }

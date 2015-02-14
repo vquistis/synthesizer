@@ -13,12 +13,7 @@ public class ControllerMixer extends ControllerComponent {
 		
 		model.setCommandProperty("OutputGaugeBar", () -> {
 			view.getOutputGauge().setProgress((double) model.getValProperty("OutputGaugeBar"));
-		});
-		
-		model.setCommandProperty("MaxOutputGaugeBar", () -> {
-			view.getMaxOutputGauge().setProgress((double) model.getValProperty("MaxOutputGaugeBar"));
-		});
-		
+		});		
 		model.start();
 	}
 	
