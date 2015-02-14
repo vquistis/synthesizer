@@ -455,6 +455,14 @@ public class ViewGlobal implements Initializable {
 	}
 
 	/**
+	 * Handle add player. This method adds a new Player component
+	 */
+	@FXML
+	public void handleAddPlayer(){
+		createModule("fxml/player.fxml");		
+	}
+	
+	/**
 	 * Handle add Line In. This method adds a new Line In component
 	 */
 	@FXML
