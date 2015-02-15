@@ -18,8 +18,7 @@ public class Main extends Application{
 
 		//Group root = new Group();
 		ClassLoader loader = getClass().getClassLoader();
-	    Parent root = FXMLLoader.load(loader.getResource("fxml/testPot.fxml"));		
-	 
+	    Parent root = FXMLLoader.load(loader.getResource("fxml/testPot.fxml"));		 
 		Scene scene = new Scene(root, 400,400);
 		URL cssURL = loader.getResource("css/style.css");
 		

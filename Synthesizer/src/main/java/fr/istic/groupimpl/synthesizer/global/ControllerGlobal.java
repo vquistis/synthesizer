@@ -1,5 +1,6 @@
 package fr.istic.groupimpl.synthesizer.global;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -575,6 +576,18 @@ public class ControllerGlobal {
 	 */
 	public Stage getStage(){
 		return view.getStage();
+	}
+	
+	public void handleStartSynth(){
+		model.start();
+	}
+	
+	public void handleStopSynth(){
+		model.stop();
+	}
+	
+	public void handleRecordSynth() throws IOException{
+		model.recordWavTemp();
 	}
 
 }

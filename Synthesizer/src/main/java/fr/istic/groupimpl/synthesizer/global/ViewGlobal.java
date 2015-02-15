@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -93,6 +94,15 @@ public class ViewGlobal implements Initializable {
 
 	/** The stage. */
 	private Stage stage;	
+	
+	@FXML
+	private Button play;
+	@FXML
+	private Button record;
+	@FXML
+	private Button stop;
+
+	
 
 	/**
 	 * Adds the cable.
@@ -233,6 +243,8 @@ public class ViewGlobal implements Initializable {
 		});
 
 		ctl.setView(this);
+		stop.setDisable(true);
+		record.setDisable(true);
 	}
 
 	/**
@@ -716,5 +728,28 @@ public class ViewGlobal implements Initializable {
 	 */
 	public void setSuppliers(List<Supplier<Module>> suppliers) {
 		this.suppliers = suppliers;
+	}
+	
+	
+	public void handleStart(){
+		ControllerGlobal.getInstance().handleStartSynth();	
+		play.setDisable(true);
+		stop.setDisable(false);
+		record.setDisable(false);
+	}
+	
+	public void handleStop(){
+		ControllerGlobal.getInstance().handleStopSynth();	
+		play.setDisable(false);
+		stop.setDisable(true);
+		record.setDisable(true);
+	}
+	
+	public void handleRecord(){
+		try {
+			ControllerGlobal.getInstance().handleRecordSynth();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 	}
 }

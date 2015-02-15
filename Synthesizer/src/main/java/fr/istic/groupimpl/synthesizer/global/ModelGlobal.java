@@ -1,5 +1,8 @@
 package fr.istic.groupimpl.synthesizer.global;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,6 +16,7 @@ import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
+import com.jsyn.util.WaveRecorder;
 
 public class ModelGlobal {
 
@@ -24,16 +28,17 @@ public class ModelGlobal {
 
 	private Map<UnitInputPort, UnitOutputPort> inputConnections;
 
+	private WaveRecorder recorder;
+
 	/**
 	 * Instantiates the underlying JSyn synthesizer and starts it.
 	 */
 	public ModelGlobal() {
 		this.outputConnections = new HashMap<UnitOutputPort, UnitInputPort>();
 		this.inputConnections = new HashMap<UnitInputPort, UnitOutputPort>();
-		this.synth = JSyn.createSynthesizer();
-		//this.synth.start();
-		this.synth.start( 44100, AudioDeviceManager.USE_DEFAULT_DEVICE, 2, 
-							AudioDeviceManager.USE_DEFAULT_DEVICE,2);
+		this.synth = JSyn.createSynthesizer();		
+//		this.synth.start( 44100, AudioDeviceManager.USE_DEFAULT_DEVICE, 2, 
+//				AudioDeviceManager.USE_DEFAULT_DEVICE,2);
 	}
 
 	/**
@@ -167,5 +172,22 @@ public class ModelGlobal {
 			}
 		} catch (Exception e) {
 		}				
+	}
+	
+	public void recordWavTemp() throws IOException{
+		File temp = File.createTempFile("tempfile", ".wav");
+		recorder = new WaveRecorder( synth, temp, 0 );
+	}
+	
+	public void start(){
+		this.synth.start();
+	}
+	
+	public void stop(){
+		synth.stop();
+	}
+	
+	public Synthesizer getSynth(){
+		return synth;
 	}
 }
