@@ -245,6 +245,7 @@ public class ViewGlobal implements Initializable {
 		ctl.setView(this);
 		stop.setDisable(true);
 		record.setDisable(true);
+		play.setDisable(true);
 	}
 
 	/**

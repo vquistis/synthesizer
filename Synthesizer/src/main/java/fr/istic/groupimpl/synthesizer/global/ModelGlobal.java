@@ -37,8 +37,8 @@ public class ModelGlobal {
 		this.outputConnections = new HashMap<UnitOutputPort, UnitInputPort>();
 		this.inputConnections = new HashMap<UnitInputPort, UnitOutputPort>();
 		this.synth = JSyn.createSynthesizer();		
-//		this.synth.start( 44100, AudioDeviceManager.USE_DEFAULT_DEVICE, 2, 
-//				AudioDeviceManager.USE_DEFAULT_DEVICE,2);
+		this.synth.start( 44100, AudioDeviceManager.USE_DEFAULT_DEVICE, 2, 
+				AudioDeviceManager.USE_DEFAULT_DEVICE,2);
 	}
 
 	/**
