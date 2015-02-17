@@ -101,7 +101,9 @@ public class PlayerGate extends VariableRateStereoReader { //VariableRateMonoRea
 	    	} else 	{
 	      		if ( inputs[i] >= sigMaxFrontMontant ) {
 	    			etat = State.ATTENTE_MIN;
-	    	    	this.dataQueue.queueOn(sample);
+	    			if (sample!=null) {
+	    				this.dataQueue.queueOn(sample);
+	    			}
 	    		}
 	    	}
 	     }

@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.player;
+package fr.istic.groupimpl.synthesizer.recorder;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,28 +14,26 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 
-public class ViewPlayer extends ViewComponent implements Initializable {
+public class ViewRecorder extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;
 	@FXML private GridPane top;
-	@FXML private ImageView output;
-	@FXML private ImageView gate;
+	@FXML private ImageView input;
 	@FXML private Label fxSampleName;
-	@FXML private Button fxBtnLoad;
-	@FXML private Button fxBtnPlay;
+	@FXML private Button fxBtnPrepare;
+	@FXML private Button fxBtnStart;
 	@FXML private Button fxBtnStop;
 
-	private ControllerPlayer controller;
+	private ControllerRecorder controller;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
-		((Label) top.lookup("#titleModule")).setText("Player");
+		((Label) top.lookup("#titleModule")).setText("Recorder");
 		
 		// implementation of controller
-		controller = new ControllerPlayer(this);
+		controller = new ControllerRecorder(this);
 		
-		addPort("player_output", output);	
-		addPort("player_gate", gate);	
+		addPort("player_input", input);		
 		
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
@@ -45,7 +43,8 @@ public class ViewPlayer extends ViewComponent implements Initializable {
 			parent.getChildren().remove(rootModulePane);
 		});
 		
-   	 	fxBtnPlay.setDisable(true);
+		fxBtnPrepare.setDisable(false);
+   	 	fxBtnStart.setDisable(true);
    	 	fxBtnStop.setDisable(true);
 	}
 
@@ -61,15 +60,18 @@ public class ViewPlayer extends ViewComponent implements Initializable {
 
 	@Override
 	public String getFilename() {
-		return "fxml/player.fxml";
+		return "fxml/recorder.fxml";
 	}
 	
 	/**
-	 * Handles the click on the play button
+	 * Handles the click on the start button
 	 */
 	@FXML
-	public void handlePlayClicked() {
-		controller.handleViewPlayClicked();
+	public void handleStartClicked() {
+		fxBtnPrepare.setDisable(true);
+   	 	fxBtnStart.setDisable(true);
+   	 	fxBtnStop.setDisable(false);
+		controller.handleViewStartClicked();
 	}
 
 	/**
@@ -77,17 +79,19 @@ public class ViewPlayer extends ViewComponent implements Initializable {
 	 */
 	@FXML
 	public void handleStopClicked() {
+		fxBtnPrepare.setDisable(false);
+   	 	fxBtnStart.setDisable(true);
+   	 	fxBtnStop.setDisable(true);
 		controller.handleViewStopClicked();
 	}
 	
 	/**
-	 * Handles the click on the load button
+	 * Handles the click on the prepare button
 	 */
 	@FXML
-	public void handleLoadClicked() {
-   	 	controller.loadSample();
-   	 	fxBtnPlay.setDisable(false);
-   	 	fxBtnStop.setDisable(false);
+	public void handlePrepareClicked() {
+   	 	controller.prepare();
+   	 	fxBtnStart.setDisable(false);
 	}
 	
 	

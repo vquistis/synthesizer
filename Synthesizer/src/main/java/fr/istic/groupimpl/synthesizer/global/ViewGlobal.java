@@ -474,6 +474,14 @@ public class ViewGlobal implements Initializable {
 	public void handleAddPlayer(){
 		createModule("fxml/player.fxml");		
 	}
+
+	/**
+	 * Handle add recorder. This method adds a new Recorder component
+	 */
+	@FXML
+	public void handleAddRecorder(){
+		createModule("fxml/recorder.fxml");		
+	}
 	
 	/**
 	 * Handle add Line In. This method adds a new Line In component

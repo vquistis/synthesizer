@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.player;
+package fr.istic.groupimpl.synthesizer.recorder;
 
 import java.io.File;
 
@@ -9,20 +9,20 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 /**
  * 
- * Controller of Player module
+ * Controller of Recorder module
  *  
  * @author Team GroupImpl
  *
  */
-public class ControllerPlayer extends ControllerComponent {
+public class ControllerRecorder extends ControllerComponent {
 
-	private ModelPlayer model = new ModelPlayer();
+	private ModelRecorder model = new ModelRecorder();
 	/**
 	 * Constructor
 	 */
-	public ControllerPlayer(ViewPlayer viewPlayer) {
+	public ControllerRecorder(ViewRecorder viewRecorder) {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
-		viewPlayer.getFxSampleName().textProperty().bind(model.getSampleFileName());
+		viewRecorder.getFxSampleName().textProperty().bind(model.getSampleFileName());
 	}
 
 	@Override
@@ -36,24 +36,25 @@ public class ControllerPlayer extends ControllerComponent {
 		return model;
 	}
 	
-	public void handleViewPlayClicked() {
-		model.play();
+	public void handleViewStartClicked() {
+		model.start();
 	}
 
 	public void handleViewStopClicked() {
 		model.stop();
 	}
 	
-	public void loadSample(){
+	public void prepare(){
 		 FileChooser fileChooser = new FileChooser();         
 	     //Set extension filter
 	     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("music wave file (*.wav)", "*.wav");
 	     fileChooser.getExtensionFilters().add(extFilter);
+	     fileChooser.setInitialFileName(model.getSampleFileName().get());
 	     
 	     //Show save file dialog
-	     File file = fileChooser.showOpenDialog(null);
+	     File file = fileChooser.showSaveDialog(null);
 	     if(file != null){
-	    	 model.loadSample(file.getAbsolutePath());	 
+	    	 model.prepareFile(file.getAbsolutePath());	 
 	     }
 	}
 }

@@ -98,6 +98,14 @@
 						<Font name="System Bold" size="12.0" />
 					</font>
 				</Button>
+				<Button onAction="#handleAddRecorder" styleClass="moduleButton" text="RECORDER">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Button>
 				<Button onAction="#handleAddKeyboard" styleClass="moduleButton" text="KEY">
 					<cursor>
 						<Cursor fx:constant="HAND" />

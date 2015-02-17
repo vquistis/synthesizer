@@ -1,4 +1,4 @@
-package fr.istic.groupimpl.synthesizer.player;
+package fr.istic.groupimpl.synthesizer.recorder;
 
 import java.io.File;
 import java.util.Collection;
@@ -6,49 +6,45 @@ import java.util.Collection;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.player.jsyn.PlayerGate;
+import fr.istic.groupimpl.synthesizer.recorder.jsyn.Recorder;
 
 /**
  * 
- * Model of Player module
+ * Model of Recorder module
  * 
  * @author Team GroupImpl
  *
  */
-public class ModelPlayer extends ModelComponent {
+public class ModelRecorder extends ModelComponent {
 
-	private PlayerGate player;
+	private Recorder recorder;
 	private StringProperty sampleFileName = new SimpleStringProperty();
-	
-	private final double sigMin = 0.00001;
-	private final double sigMax = 0.1;
 	
 	/**
 	 * Constructor
 	 */
-	public ModelPlayer() {
+	public ModelRecorder() {
 		super();
-		player = new PlayerGate(sigMin, sigMax);
-		player.output.setName("player_output");
-		player.getGate().setName("player_gate");
+		recorder = new Recorder();
+		recorder.getInput().setName("player_input");
 	}
 	
 	@Override
 	public UnitGenerator getUnitGenerator() {
-		return player;
+		return recorder;
 	}
 
 	/**
-	 * Get the jsyn output port.
+	 * Get the jsyn input port.
 	 * @return UnitInputPort
 	 */
-	public UnitOutputPort getOutputPort() {
-		return player.output;
+	public UnitInputPort getInputPort() {
+		return recorder.getInput();
 	}
 
 	/**
@@ -61,35 +57,31 @@ public class ModelPlayer extends ModelComponent {
 	
 	@Override
 	public Collection<UnitPort> getAllPorts() {
-		return player.getPorts();
+		return recorder.getPorts();
 	}
 
 	/**
-	 * Load wav file sample
+	 * Prepare Wave file
 	 * 
 	 * @param fileName
 	 */
-	public void loadSample(String fileName) {
+	public void prepareFile(String fileName) {
 		File sampleFile = new File( fileName );
 		sampleFileName.set(sampleFile.getName());
-		player.loadSample(sampleFile);
+		recorder.prepareFile(sampleFile);
 	}
 	
 	/**
-	 * Play the sample
+	 * Start recording
 	 */
-	public void play() {
-		player.play();
+	public void start() {
+		recorder.start();
 	}
 
 	/**
-	 * Stop playing the sample
+	 * Stop recording
 	 */
 	public void stop() {
-		player.stop();
-	}
-
-	public boolean isPlayRunning() {
-		return player.dataQueue.hasMore();
+		recorder.stop();
 	}
 }
