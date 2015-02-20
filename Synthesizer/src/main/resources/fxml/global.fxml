@@ -20,10 +20,12 @@
 				<Button onAction="#handleLoadConfiguration" text="Load configuration" />
             <ComboBox fx:id="lookAndFeel" />
            
-            <Button fx:id="play" mnemonicParsing="false" text="play" styleClass="play" onAction="#handleStart"/>
-            <Button fx:id="stop" mnemonicParsing="false" text="Stop" onAction="#handleStop"/>
-            <Button fx:id="record" mnemonicParsing="false" text="record" onAction="#handleRecord" />
-
+            <Button fx:id="record" mnemonicParsing="false" onAction="#handleRecord" />
+            <Button fx:id="play" mnemonicParsing="false" onAction="#handleStart" styleClass="play" />
+<!--             <Button fx:id="pause" mnemonicParsing="false" styleClass="pause" onAction="#handlePause"/> -->
+            <Button fx:id="stop" mnemonicParsing="false" onAction="#handleStop" />
+            <Label fx:id="chronoLabel" />
+            
 				<!-- GENERATE GRAPH SCENE DEBUG ONLY <Button onAction="#handleMenuDevmodeNodeHierarchy_1" 
 					text="JavaFX Node Hierarchy dump 1" /> <Button onAction="#handleMenuDevmodeNodeHierarchy_2" 
 					text="JavaFX Node Hierarchy dump 2" /> -->

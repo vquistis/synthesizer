@@ -1,11 +1,15 @@
 package fr.istic.groupimpl.synthesizer.out;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
@@ -57,18 +62,46 @@ public class ViewOut extends ViewComponent implements Initializable {
 		// Listener volume
 		knobVolume.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewVolumeChange(newVal));
 		// Listener mute
-		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewMuteChange(newVal));
+		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) ->{
+			if (ControllerGlobal.getInstance().isRecordStarted()) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Synthesizer");
+				alert.setHeaderText("Voulez-vous vraiment arrêter l'enregistrement de son ?");
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK){
+					controller.handleViewMuteChange(newVal);
+					ControllerGlobal.getInstance().handleStopView();
+				}
+			} else {
+				controller.handleViewMuteChange(newVal);
+			}
+		});
 
 		// Listener close module
 		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanup();			
-			controller.handleViewClose();
-			Pane parent = (Pane) rootModulePane.getParent();
-			parent.getChildren().remove(rootModulePane);
+			if (ControllerGlobal.getInstance().isRecordStarted()) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Synthesizer");
+				alert.setHeaderText("Voulez-vous vraiment arrêter l'enregistrement de son ?");
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK){
+					handleCloseModule();
+					ControllerGlobal.getInstance().handleStopView();
+				}
+			} else {
+				handleCloseModule();
+			}
 		});
 
 		addParameters("knobVolume", () -> knobVolume.getValue(), (val) -> knobVolume.setValue(val));
 		addParameters("muteVolumeFx", () -> muteVolumeFx.selectedProperty().get() ? 1.0 : 0.0, (val) -> muteVolumeFx.setSelected(val==1));
+	}
+
+	private void handleCloseModule() {
+		cleanup();			
+		controller.handleViewClose();
+		Pane parent = (Pane) rootModulePane.getParent();
+		parent.getChildren().remove(rootModulePane);
 	}
 
 	@Override
