@@ -37,6 +37,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.controlsfx</groupId>
+			<artifactId>controlsfx</artifactId>
+			<version>8.20.8</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.jsyn</groupId>
 			<artifactId>jsyn</artifactId>
 			<version>16.7.3</version>
