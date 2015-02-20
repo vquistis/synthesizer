@@ -51,13 +51,12 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 			controller.handleViewkeyEvent(event.getCode().toString());
 
 		}); 
-		// Recovery keyboards keys when key is pressed
+		// Recovery keyboards keys when key is released
 		ControllerGlobal.getInstance().getStage().addEventHandler(KeyEvent.KEY_RELEASED, (event) ->  {
 			controller.handleViewkeyReleaseEvent();
 
 		}); 
 	}
-
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;

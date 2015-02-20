@@ -26,7 +26,9 @@ import fr.istic.groupimpl.synthesizer.io.architecture.Port;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
- * The Class ViewComponent.
+ * The abstract Class ViewComponent.
+ * 
+ * @author Team groupImpl 
  */
 public abstract class ViewComponent implements IViewComponent {
 
@@ -34,6 +36,7 @@ public abstract class ViewComponent implements IViewComponent {
 	public static final double COMPONENT_HEIGHT = 300;
 
 	/** The port bindings. */
+	@SuppressWarnings("rawtypes")
 	private List<ChangeListener> portBindings = new ArrayList<ChangeListener>();
 	
 	/** The save action map. */
@@ -66,6 +69,7 @@ public abstract class ViewComponent implements IViewComponent {
 	/**
 	 * Refresh component.
 	 */
+	@SuppressWarnings("unchecked")
 	public void refreshComponent() {
 		portBindings.forEach((c) -> {
 			c.changed(null, null, null);
@@ -83,6 +87,7 @@ public abstract class ViewComponent implements IViewComponent {
 	 * @param portY The property that will be bounds to the y coordinate of the node in the
 	 * coordinate space of the parent node.
 	 */
+	@SuppressWarnings("unchecked")
 	final protected void addPort(String portName, Node portNode) {
 		
 		DoubleProperty portX = new SimpleDoubleProperty(0);
@@ -93,6 +98,7 @@ public abstract class ViewComponent implements IViewComponent {
 		ControllerComponent ctl = getController();
 		ctl.setupPort(portName, portNode, portX, portY);
 				
+		@SuppressWarnings("rawtypes")
 		ChangeListener posChangeListener = ((a,b,c) -> {
 			Point2D point2D = computeNodeCenter(portNode);
 
@@ -114,10 +120,11 @@ public abstract class ViewComponent implements IViewComponent {
 	/**
 	 * Cleanup ports.
 	 */
+	@SuppressWarnings("unchecked")
 	final protected void cleanup() {
 		Node root = getComponentRoot();
 		cmd.execute();
-		for(ChangeListener c : portBindings) {
+		for(@SuppressWarnings("rawtypes") ChangeListener c : portBindings) {
 			root.parentProperty().removeListener(c);
 			root.boundsInParentProperty().removeListener(c);
 		}
@@ -310,13 +317,27 @@ public abstract class ViewComponent implements IViewComponent {
 		});
 	}
 	
-	
+	/**
+	 * get name of file FXML
+	 */
 	public abstract String getFilename();
 	
+	/**
+	 * get name of connection
+	 * 
+	 * @param inputName
+	 * @return
+	 */
 	public Pair<DoubleProperty, DoubleProperty> getStuff(String inputName) {
 		return cablesProperties.get(inputName);
 	}
 	
+	/**
+	 * get a port
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public UnitPort getPort(String name) {
 		UnitPort res = null;
 		for(Port p : getController().getAllPort()) {
@@ -327,6 +348,10 @@ public abstract class ViewComponent implements IViewComponent {
 		return res;
 	}
 
+	/**
+	 * set command to close a component
+	 * @param cmd
+	 */
 	public void setOnCloseCmd(ICommand cmd) {
 		this.cmd = cmd;
 	}

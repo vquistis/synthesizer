@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.global;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +17,12 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 import com.jsyn.util.WaveRecorder;
 
+/**
+ * The Class ModelGlobal
+ * 
+ * @author Team groupImpl 
+ *
+ */
 public class ModelGlobal {
 
 	private List<UnitGenerator> unitGenerators = new ArrayList<UnitGenerator>();
@@ -28,6 +33,7 @@ public class ModelGlobal {
 
 	private Map<UnitInputPort, UnitOutputPort> inputConnections;
 
+	@SuppressWarnings("unused")
 	private WaveRecorder recorder;
 
 	/**
@@ -165,6 +171,9 @@ public class ModelGlobal {
 		});
 	}
 	
+	/**
+	 * Stop Synthesizer of JSyn
+	 */
 	public void stopSynth(){
 		try {
 			if (synth.isRunning()) {
@@ -179,14 +188,24 @@ public class ModelGlobal {
 		recorder = new WaveRecorder( synth, temp, 0 );
 	}
 	
+	/**
+	 * to start Synthesizer of JSyn
+	 */
 	public void start(){
 		this.synth.start();
 	}
 	
+	/**
+	 * to stop Synthesizer of JSyn
+	 */
 	public void stop(){
 		synth.stop();
 	}
 	
+	/**
+	 * get Synthesizer
+	 * @return
+	 */
 	public Synthesizer getSynth(){
 		return synth;
 	}

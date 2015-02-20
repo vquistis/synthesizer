@@ -6,7 +6,10 @@ import javax.xml.bind.annotation.XmlTransient;
 import com.jsyn.ports.UnitPort;
 
 /**
- * The Class Port.
+ * The Class Port
+ * 
+ * @author Team groupImpl
+ * 
  */
 @XmlRootElement(name="port")
 public class Port {

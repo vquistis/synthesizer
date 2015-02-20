@@ -20,6 +20,12 @@ import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
+/**
+ * The Class ViewEg : view of EG component
+ * 
+ * @author Team groupImpl
+ *
+ */
 public class ViewEg extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;

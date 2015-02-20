@@ -4,10 +4,19 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
+/**
+ * The Class ControllerEg : controller of EG component
+ * 
+ * @author Team groupImpl
+ *
+ */
 public class ControllerEg extends ControllerComponent {
 
 	private ModelEg model = new ModelEg();
 	
+	/**
+	 * Constructor
+	 */
 	public ControllerEg() {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
@@ -52,7 +61,6 @@ public class ControllerEg extends ControllerComponent {
 
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return model;
 	}
 }

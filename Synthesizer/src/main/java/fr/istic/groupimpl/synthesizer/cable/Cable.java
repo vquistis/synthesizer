@@ -14,7 +14,7 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * 
- * Permet de relier 2 composants par un câble
+ * Connects two components by a cable
  *    
  * @author Team groupImpl
  *
@@ -28,7 +28,7 @@ public class Cable extends Path {
 	MoveTo move;
 
 	/**
-	 * Constructeur
+	 * Constructor
 	 */
 	public Cable(Color color) {
 		setMouseTransparent(true);
@@ -58,7 +58,7 @@ public class Cable extends Path {
 	}
 
 	/**
-	 * Branchement de la fin du câble au port d'entrée du premier module
+	 * Connecting the end of the first module input port cable
 	 * @param endX
 	 * @param endY
 	 */
@@ -70,7 +70,7 @@ public class Cable extends Path {
 	}
 
 	/**
-	 * Branchement du début du câble au port de sortie du deuxième module
+	 * Cable connection to the beginning of the second module output port
 	 * @param startX
 	 * @param startY
 	 */
@@ -82,13 +82,13 @@ public class Cable extends Path {
 	}
 
 	/**
-	 * Classe permettant de calculer la distance entre 2 modules
-	 * pour l'effet pendouillant du câble.
+	 * Class for calculating the distance between two modules 
+	 * for the dangling end of the cable.
 	 */
 	private class ComputeDistance extends DoubleBinding {
 
 		/**
-		 * Constructeur
+		 * Constructor
 		 */
 		public ComputeDistance() {
 			super.bind(move.xProperty(),move.yProperty(),curve.xProperty(),curve.yProperty());

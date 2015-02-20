@@ -2,11 +2,11 @@ package fr.istic.groupimpl.synthesizer.keyboard;
 
 import java.util.Collection;
 
-import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.keyboard.jsyn.JSynKeyboard;
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
@@ -46,11 +46,17 @@ public class ModelKeyboard extends ModelComponent {
 		return keyboard.getPorts();
 	}
 
+	/**
+	 * increase 1 octave
+	 */
 	void incOctave()
 	{
 		octave = Math.min(MAX_OCTAVE, octave+1);
 	}
 	
+	/**
+	 * decrease 1 octave
+	 */
 	void decOctave()
 	{
 		octave = Math.max(MIN_OCTAVE, octave-1);
@@ -66,6 +72,10 @@ public class ModelKeyboard extends ModelComponent {
 		keyboard.setVolt(v);
 	}
 	
+	/**
+	 * to know if a key is pressed
+	 * @param press
+	 */
 	public void setPress( boolean press )
 	{
 		keyboard.setPress(press);

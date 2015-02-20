@@ -8,11 +8,16 @@ import com.jsyn.unitgen.UnitGate;
 import com.jsyn.unitgen.UnitSource;
 
 /**
+ * The class JsynEnvelopeADSR
+ * 
  * Four stage envelope similar to an ADSR. The envelope is triggered when the input goes above THRESHOLD. The
  * envelope is released when the input goes below THRESHOLD. The THRESHOLD is currently 0.01 but may
  * change so it would be best to use an input signal that went from 0 to 1. Mathematically an
  * exponential Release will never reach 0.0. But when it reaches -96 dB the DAHDSR just sets its
  * output to 0.0 and stops.
+ * 
+ * @author Team groupImpl
+ * 
  */
 public class JsynEnvelopeADSR extends UnitGate implements UnitSource {
     private static final double MIN_DURATION = (1.0 / 100000.0);

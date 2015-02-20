@@ -50,8 +50,9 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 /**
  * The Class ViewGlobal.
  * Implements all the FXML components and sets them their corresponding commands.
- * @version 1.0
- * @since 1.0
+ *
+ * @author Team groupImpl
+ * 
  */
 public class ViewGlobal implements Initializable {
 

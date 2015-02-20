@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * The Class Configuration.
+ * 
+ * @author Team groupImpl
  */
 @XmlRootElement
 public class Configuration {
@@ -19,7 +21,9 @@ public class Configuration {
 	/** The connections. */
 	private Collection<Connection> connections;
 	
-	
+	/**
+	 * Constructor
+	 */
 	public Configuration() {
 		modules = new ArrayList<Module>();
 		connections = new ArrayList<Connection>();

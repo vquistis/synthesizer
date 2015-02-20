@@ -25,6 +25,9 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * The Class ControllerGlobal.
+ * 
+ * @author Team groupImpl
+ * 
  */
 public class ControllerGlobal {
 
@@ -578,14 +581,24 @@ public class ControllerGlobal {
 		return view.getStage();
 	}
 	
+	/**
+	 * handle Start Synthesizer
+	 */
 	public void handleStartSynth(){
 		model.start();
 	}
 	
+	/**
+	 * handle Stop Synthesizer
+	 */
 	public void handleStopSynth(){
 		model.stop();
 	}
 	
+	/**
+	 * handle Record Synthesizer
+	 * @throws IOException
+	 */
 	public void handleRecordSynth() throws IOException{
 		model.recordWavTemp();
 	}

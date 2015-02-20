@@ -4,6 +4,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * The Class Connection.
+ * 
+ * @author Team groupImpl
+ * 
  */
 @XmlRootElement(name="connection")
 public class Connection {

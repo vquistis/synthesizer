@@ -31,10 +31,18 @@ public class ControllerKeyboard extends ControllerComponent {
 				model.getUnitGenerator());
 	}
 
+	/**
+	 * Release of key
+	 */
 	public void handleViewkeyReleaseEvent() {
 		model.setPress(false);
 	}
 
+	/**
+	 * handle key pressed
+	 * 
+	 * @param key
+	 */
 	public void handleViewkeyEvent(String key) {
 
 		String str = "QZSEDFTGYHUJK";

@@ -9,7 +9,10 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * The Class Module.
+ * The Class Module
+ * 
+ * @author Team groupImpl
+ * 
  */
 @XmlRootElement(name="module")
 public class Module implements Comparator<Module>{

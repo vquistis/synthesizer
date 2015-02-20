@@ -77,14 +77,14 @@ public class ChebyshevSong extends JApplet implements Runnable {
         mixer.output.connect(0, lineOut.input, 0);
         mixer.output.connect(0, lineOut.input, 1);
 
-        WaveShapingVoice[] voices = new WaveShapingVoice[MAX_VOICES];
-        for (int i = 0; i < MAX_VOICES; i++) {
-            WaveShapingVoice voice = new WaveShapingVoice();
-            synth.add(voice);
-            voice.usePreset(0);
-            voice.getOutput().connect(mixer.inputA);
-            voices[i] = voice;
-        }
+            WaveShapingVoice[] voices = new WaveShapingVoice[MAX_VOICES];
+            for (int i = 0; i < MAX_VOICES; i++) {
+                WaveShapingVoice voice = new WaveShapingVoice();
+                synth.add(voice);
+                voice.usePreset(0);
+                voice.getOutput().connect(mixer.inputA);
+                voices[i] = voice;
+            }
         allocator = new VoiceAllocator(voices);
 
         // Start synthesizer using default stereo output at 44100 Hz.

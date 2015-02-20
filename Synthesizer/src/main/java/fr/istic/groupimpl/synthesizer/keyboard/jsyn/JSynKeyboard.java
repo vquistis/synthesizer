@@ -1,9 +1,7 @@
-package fr.istic.groupimpl.synthesizer.keyboard;
+package fr.istic.groupimpl.synthesizer.keyboard.jsyn;
 
-import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.UnitGenerator;
-import com.jsyn.unitgen.UnitSource;
 
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
@@ -25,13 +23,21 @@ public class JSynKeyboard extends UnitGenerator  {
 		addPort(outputGate = new UnitOutputPort("outputKeyGate"));
 	}
 	
-	
-	void setVolt( double volt )
+	/**
+	 * set volt
+	 * @param volt
+	 */
+	public void setVolt( double volt )
 	{
 		this.voltCV = volt;
 	}
 	
-	void setPress( boolean press )
+	/**
+	 * set Volt of gate
+	 * 
+	 * @param press
+	 */
+	public void setPress( boolean press )
 	{
 		voltGate = press ? 5/SignalUtil.COEF_VOLT : -5/SignalUtil.COEF_VOLT;
 	}
@@ -47,8 +53,5 @@ public class JSynKeyboard extends UnitGenerator  {
 			outputs_Gate[i] = voltGate;
 		}
 	}
-
-
-
 	
 }

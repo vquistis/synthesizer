@@ -13,6 +13,9 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * The Class xmlio.
+ * 
+ * @author Team groupImpl
+ * 
  */
 public class FileUtil {	
 	

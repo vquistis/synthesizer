@@ -7,6 +7,12 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.command.ICommand;
 
+/**
+ * The interface IModelComponent
+ * 
+ * @author Team groupImpl
+ *
+ */
 public interface IModelComponent {
 	/**
 	 * Get value of the property passed as parameter.

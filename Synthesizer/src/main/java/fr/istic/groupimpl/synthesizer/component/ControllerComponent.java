@@ -17,6 +17,8 @@ import fr.istic.groupimpl.synthesizer.io.architecture.Type;
 
 /**
  * The Class ControllerComponent.
+ * 
+ * @author Team groupImpl 
  */
 public abstract class ControllerComponent {	
 	
@@ -59,10 +61,21 @@ public abstract class ControllerComponent {
 		return ports;
 	}
 	
+	/**
+	 * Handle port clicked
+	 */
 	public void handlePortClicked(UnitPort port, DoubleProperty x, DoubleProperty y) {
 		ControllerGlobal.getInstance().handlePortClicked(port, x, y);
 	}
 
+	/**
+	 * setup ports
+	 * 
+	 * @param portName
+	 * @param portNode
+	 * @param portX
+	 * @param portY
+	 */
 	public void setupPort(String portName, Node portNode, DoubleProperty portX,	DoubleProperty portY) {
 		getModel().getAllPorts().forEach((p) -> {				
 			if(p.getName().equals(portName)) {

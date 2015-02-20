@@ -10,10 +10,19 @@ import com.jsyn.unitgen.UnitGenerator;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.eg.jsyn.JsynEnvelopeADSR;
 
+/**
+ * The Class ModelEg : model of EG component
+ * 
+ * @author Team groupImpl
+ *
+ */
 public class ModelEg extends ModelComponent {
-	
+
 	private JsynEnvelopeADSR adsr;
-	
+
+	/**
+	 * Constructor
+	 */
 	public ModelEg() {
 		super();
 		adsr = new JsynEnvelopeADSR();
@@ -42,7 +51,7 @@ public class ModelEg extends ModelComponent {
 	public Collection<UnitPort> getAllPorts() {
 		return adsr.getPorts();
 	}
-	
+
 	/**
 	 * @param attack Delay in seconds of attack
 	 * Sets the attack time to the ADSR
@@ -50,7 +59,7 @@ public class ModelEg extends ModelComponent {
 	public void setAttack(double attack) {
 		adsr.attack.set(attack);
 	}
-	
+
 	/**
 	 * @param decay Delay in seconds of the decay
 	 * Sets THE decay time to the ADSR
@@ -58,7 +67,7 @@ public class ModelEg extends ModelComponent {
 	public void setDecay(double decay) {
 		adsr.decay.set(decay);
 	}
-	
+
 	/**
 	 * @param sustainDb Value in dB of the sustain
 	 * Sets the decibels sustain to the ADSR
@@ -66,7 +75,7 @@ public class ModelEg extends ModelComponent {
 	public void setSustain(double sustainDb) {
 		adsr.sustain.set(Math.pow(2, sustainDb/6));
 	}
-	
+
 	/**
 	 * @param release Delay in seconds of the release
 	 * Sets the release time to the ADSR
