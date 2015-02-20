@@ -1,7 +1,6 @@
 package fr.istic.groupimpl.synthesizer.global;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,16 +17,27 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 import com.jsyn.util.WaveRecorder;
 
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
+import fr.istic.groupimpl.synthesizer.io.architecture.Port;
+
+/**
+ * The Class ModelGlobal.
+ */
 public class ModelGlobal {
 
+	/** The unit generators. */
 	private List<UnitGenerator> unitGenerators = new ArrayList<UnitGenerator>();
 
+	/** The synth. */
 	private Synthesizer synth;
 
+	/** The output connections. */
 	private Map<UnitOutputPort, UnitInputPort> outputConnections;
 
+	/** The input connections. */
 	private Map<UnitInputPort, UnitOutputPort> inputConnections;
 
+	/** The recorder. */
 	private WaveRecorder recorder;
 
 	/**
@@ -36,14 +46,18 @@ public class ModelGlobal {
 	public ModelGlobal() {
 		this.outputConnections = new HashMap<UnitOutputPort, UnitInputPort>();
 		this.inputConnections = new HashMap<UnitInputPort, UnitOutputPort>();
-		this.synth = JSyn.createSynthesizer();		
+		
+		this.synth = JSyn.createSynthesizer();	
+		synth.setRealTime( true );
 		this.synth.start( 44100, AudioDeviceManager.USE_DEFAULT_DEVICE, 2, 
 				AudioDeviceManager.USE_DEFAULT_DEVICE,2);
+		
 	}
 
 	/**
 	 * Adds the given UnitGenerator to the underlying JSyn synthesizer.
-	 * @param unitGen
+	 *
+	 * @param unitGen the unit gen
 	 */
 	public void addUnitGenerator(UnitGenerator unitGen) {
 		unitGenerators.add(unitGen);
@@ -53,7 +67,8 @@ public class ModelGlobal {
 	/**
 	 * Adds the given UnitGenerator as an output module to the underlying
 	 * JSyn synthesizer.
-	 * @param unitGen
+	 *
+	 * @param unitGen the unit gen
 	 */
 	public void addOutUnit(UnitGenerator unitGen) {
 		unitGenerators.add(unitGen);
@@ -63,23 +78,41 @@ public class ModelGlobal {
 
 	/**
 	 * Removes the given UnitGenerator from the underlying JSyn synthesizer.
-	 * @param unitGen
+	 *
+	 * @param unitGen the unit gen
 	 */
 	public void removeUnitGenerator(UnitGenerator unitGen) {
 		synth.remove(unitGen);
 		unitGenerators.remove(unitGen);
 	}
 
+	/**
+	 * Removes the out unit generator.
+	 *
+	 * @param unitGen the unit gen
+	 */
 	public void removeOutUnitGenerator(UnitGenerator unitGen) {
 		unitGen.stop();
 		synth.remove(unitGen);
 		unitGenerators.remove(unitGen);
 	}
 
+	/**
+	 * Checks if is port connected.
+	 *
+	 * @param port the port
+	 * @return true, if is port connected
+	 */
 	public boolean isPortConnected(UnitPort port) {
 		return inputConnections.containsKey(port) || outputConnections.containsKey(port);
 	}
 
+	/**
+	 * Gets the connected port.
+	 *
+	 * @param port the port
+	 * @return the connected port
+	 */
 	public UnitPort getConnectedPort(UnitPort port) {
 		UnitPort res = null;
 		if(inputConnections.containsKey(port)) {
@@ -92,8 +125,9 @@ public class ModelGlobal {
 
 	/**
 	 * Connects the two given output and input ports.
-	 * @param outputPort
-	 * @param inputPort
+	 *
+	 * @param outputPort the output port
+	 * @param inputPort the input port
 	 */
 	public void connectPorts(UnitPort outputPort, UnitPort inputPort) {
 		UnitOutputPort out = (UnitOutputPort) outputPort;
@@ -106,7 +140,8 @@ public class ModelGlobal {
 	/**
 	 * Retrieves the output port connected to the given input port
 	 * and disconnects them.
-	 * @param port
+	 *
+	 * @param port the port
 	 */
 	public void disconnectInputPort(UnitInputPort port) {
 		UnitOutputPort out = inputConnections.get(port);
@@ -120,7 +155,8 @@ public class ModelGlobal {
 	/**
 	 * Retrieves the input port connected to the given output port
 	 * and disconnects them.
-	 * @param port
+	 *
+	 * @param port the port
 	 */
 	public void disconnectOutputPort(UnitOutputPort port) {
 		UnitInputPort in = outputConnections.get(port);
@@ -134,8 +170,9 @@ public class ModelGlobal {
 	/**
 	 * Adds an entry in the output connexions map with the output port as a key
 	 * and the input port as a value.
-	 * @param outputPort
-	 * @param inputPort
+	 *
+	 * @param outputPort the output port
+	 * @param inputPort the input port
 	 */
 	private void putOutputConnection(UnitOutputPort outputPort, UnitInputPort inputPort) {
 		outputConnections.put(outputPort, inputPort);
@@ -144,8 +181,9 @@ public class ModelGlobal {
 	/**
 	 * Adds an entry in the input connections map with the output port as a key
 	 * and the output port as a value.
-	 * @param inputPort
-	 * @param outputPort
+	 *
+	 * @param inputPort the input port
+	 * @param outputPort the output port
 	 */
 	private void putInputConnection(UnitInputPort inputPort, UnitOutputPort outputPort) {
 		inputConnections.put(inputPort, outputPort);
@@ -153,7 +191,8 @@ public class ModelGlobal {
 
 	/**
 	 * Removes every connection originating from each port in the given list.
-	 * @param unitports
+	 *
+	 * @param unitports the unitports
 	 */
 	public void removeAllConnections(Collection<UnitPort> unitports) {
 		unitports.forEach((p1) -> {
@@ -165,28 +204,75 @@ public class ModelGlobal {
 		});
 	}
 	
+	/**
+	 * Stop synth.
+	 */
 	public void stopSynth(){
-		try {
-			if (synth.isRunning()) {
-				synth.stop();
-			}
-		} catch (Exception e) {
-		}				
+		if (synth.isRunning()) {
+			synth.stop();
+		}		
 	}
 	
-	public void recordWavTemp() throws IOException{
-		File temp = File.createTempFile("tempfile", ".wav");
-		recorder = new WaveRecorder( synth, temp, 0 );
+	/**
+	 * Record wav file.
+	 *
+	 * @param file the file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void recordWavFile( File file) throws IOException{
+		recorder = new WaveRecorder(synth, file);
 	}
 	
-	public void start(){
+	/**
+	 * Start synth.
+	 */
+	public void startSynth(){
 		this.synth.start();
 	}
 	
-	public void stop(){
-		synth.stop();
+	/**
+	 * Start recoder.
+	 * 
+	 * @param moduleOut the module out
+	 */
+	public void startRecoder(List<Module> moduleOut){
+		for (int i = 0; i < moduleOut.size(); i++) {
+			Module module = moduleOut.get(i);
+			
+			if (module.getParameters().get("muteVolumeFx") == 0) {
+				List<Port> ports = module.getPorts();
+				for (Port port : ports) {
+					UnitPort unitPort = port.getUnitPort();
+					if (unitPort instanceof UnitInputPort) {
+						UnitInputPort unitIntputPort = (UnitInputPort)unitPort;
+						UnitOutputPort unitOutputPort = (UnitOutputPort) getConnectedPort(unitIntputPort);
+						if (unitOutputPort != null) {
+							unitOutputPort.connect(0, recorder.getInput(), 0 );
+						}					
+					}
+				}
+			}			
+		}
+		this.recorder.start();
 	}
 	
+	/**
+	 * Stop recorder.
+	 */
+	public void stopRecorder(){
+		try {
+			recorder.stop();
+			recorder.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Gets the synth.
+	 *
+	 * @return the synth
+	 */
 	public Synthesizer getSynth(){
 		return synth;
 	}

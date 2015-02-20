@@ -1,5 +1,6 @@
 package fr.istic.groupimpl.synthesizer.global;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -578,16 +579,59 @@ public class ControllerGlobal {
 		return view.getStage();
 	}
 	
+	/**
+	 * Handle start synth.
+	 */
 	public void handleStartSynth(){
-		model.start();
+		model.startSynth();
 	}
 	
+	/**
+	 * Handle stop synth.
+	 */
 	public void handleStopSynth(){
-		model.stop();
+		model.stopSynth();
 	}
 	
-	public void handleRecordSynth() throws IOException{
-		model.recordWavTemp();
+	/**
+	 * Handle create record synth.
+	 *
+	 * @param moduleOut the module out
+	 * @param file the file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void handleCreateRecordSynth(File file) throws IOException{
+		model.recordWavFile(file);
+	}
+	
+	/**
+	 * Handle start record synth.
+	 */
+	public void handleStartRecordSynth(List<Module> moduleOut){
+		model.startRecoder(moduleOut);
+	}
+	
+	/**
+	 * Handle stop record synth.
+	 */
+	public void handleStopRecordSynth(){
+		model.stopRecorder();
+	}
+	
+	/**
+	 * Checks if is record started.
+	 *
+	 * @return true, if is record started
+	 */
+	public boolean isRecordStarted() {
+		return view.isRecordStarted();
+	}
+	
+	/**
+	 * Handle stop view.
+	 */
+	public void handleStopView(){
+		view.handleStop();
 	}
 
 }

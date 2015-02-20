@@ -3,14 +3,19 @@ package fr.istic.groupimpl.synthesizer.global;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.function.Supplier;
 
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ListChangeListener;
@@ -24,9 +29,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -78,6 +85,8 @@ public class ViewGlobal implements Initializable {
 
 	/** The colorpicker. */
 	@FXML private ColorPicker colorpicker; 
+	
+	/** The look and feel. */
 	@FXML private ComboBox<String> lookAndFeel; 
 
 	/** The mouse x. */
@@ -95,14 +104,33 @@ public class ViewGlobal implements Initializable {
 	/** The stage. */
 	private Stage stage;	
 	
+	/** The play. */
 	@FXML
 	private Button play;
+	
+	/** The chrono label. */
+	@FXML
+	private Label chronoLabel;
+	
+	/** The record. */
 	@FXML
 	private Button record;
+	
+	/** The stop. */
 	@FXML
 	private Button stop;
-
 	
+	/** The cronometre timer. */
+	private Timer chronometreTimer;
+	
+	/** The date start record. */
+	private Date dateStartRecord;
+	
+	/** The date format. */
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss");
+	
+	/** The record started. */
+	private boolean recordStarted;
 
 	/**
 	 * Adds the cable.
@@ -243,9 +271,15 @@ public class ViewGlobal implements Initializable {
 		});
 
 		ctl.setView(this);
-		stop.setDisable(true);
-		record.setDisable(true);
+		record.setDisable(false);
 		play.setDisable(true);
+//		pause.setDisable(true);
+		stop.setDisable(true);
+		
+		record.setGraphic(new ImageView("/img/record/record.png"));
+		play.setGraphic(new ImageView("/img/record/play.png"));
+		stop.setGraphic(new ImageView("/img/record/stop.png"));
+//		pause.setGraphic(new ImageView("/img/record/pause.png"));
 	}
 
 	/**
@@ -740,25 +774,118 @@ public class ViewGlobal implements Initializable {
 	}
 	
 	
+	/**
+	 * Handle start record.
+	 */
 	public void handleStart(){
-		ControllerGlobal.getInstance().handleStartSynth();	
+		ControllerGlobal.getInstance().handleStartRecordSynth(getAllModulesOut());
+		setLabelTimer(0);
+		dateStartRecord = new Date();
+		chronometreTimer.scheduleAtFixedRate(new ChronometreTimer(), 0, 1000);
 		play.setDisable(true);
 		stop.setDisable(false);
-		record.setDisable(false);
-	}
-	
-	public void handleStop(){
-		ControllerGlobal.getInstance().handleStopSynth();	
-		play.setDisable(false);
-		stop.setDisable(true);
 		record.setDisable(true);
+		recordStarted = true;
 	}
 	
-	public void handleRecord(){
+	/**
+	 * Handle stop record.
+	 */
+	public void handleStop(){
+		ControllerGlobal.getInstance().handleStopRecordSynth();	
+		chronometreTimer.cancel();
+		play.setDisable(true);
+		stop.setDisable(true);
+		record.setDisable(false);
+		recordStarted = false;
+	}
+	
+	/**
+	 * Handle record.
+	 */
+	public void handleRecord(){	
 		try {
-			ControllerGlobal.getInstance().handleRecordSynth();
+			FileChooser fileChooser = new FileChooser();         
+		     //Set extension filter
+		     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("music wave file (*.wav)", "*.wav");
+		     fileChooser.getExtensionFilters().add(extFilter);
+		     
+		     //Show save file dialog
+		     File file = fileChooser.showSaveDialog(null);
+		     if(file != null){
+		    	ControllerGlobal.getInstance().handleCreateRecordSynth(file); 
+		    	chronometreTimer = new Timer();
+		    	setLabelTimer(0);
+		    	play.setDisable(false);
+		 		stop.setDisable(true);
+		 		record.setDisable(false);
+		 		recordStarted = false;
+		     }			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
 	}
+	
+	/**
+	 * Gets the all modules out.
+	 *
+	 * @return the all modules out
+	 */
+	public List<Module> getAllModulesOut(){
+		List<Module> list = new ArrayList<>();
+		for (Module module : getModules()) {
+			if ("fxml/out.fxml".equalsIgnoreCase(module.getFilename())) {
+				list.add(module);
+			}
+		}		
+		return list;
+	}
+	
+	/**
+	 * Sets the label timer.
+	 *
+	 * @param diff the new label timer
+	 */
+	private void setLabelTimer(long diff) {
+		Date date = new Date();
+		  date.setTime(diff);
+		  Platform.runLater(()->{
+			  chronoLabel.setText(dateFormat.format(date));
+		  });
+	}	
+	
+	/**
+	 * The Class ChronometreTimer.
+	 */
+	class ChronometreTimer extends TimerTask {
+	    
+    	/* (non-Javadoc)
+    	 * @see java.util.TimerTask#run()
+    	 */
+    	public void run() {
+	      long diff = (new Date().getTime() - dateStartRecord.getTime());
+	      setLabelTimer(diff);	    
+	  }
+	}
+
+	/**
+	 * Checks if is record started.
+	 *
+	 * @return true, if is record started
+	 */
+	public boolean isRecordStarted() {
+		return recordStarted;
+	}
+
+	/**
+	 * Sets the record started.
+	 *
+	 * @param recordStarted the new record started
+	 */
+	public void setRecordStarted(boolean recordStarted) {
+		this.recordStarted = recordStarted;
+	}
+	
+	
 }
