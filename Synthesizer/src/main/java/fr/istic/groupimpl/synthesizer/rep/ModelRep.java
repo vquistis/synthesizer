@@ -10,10 +10,19 @@ import com.jsyn.unitgen.UnitGenerator;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.rep.jsyn.JsynRepCircuit;
 
+/**
+ * 
+ * Model of rep module
+ *  
+ * @author Team GroupImpl
+ */
 public class ModelRep extends ModelComponent{
 	
 	private JsynRepCircuit rep;
 	
+	/**
+	 * Constructor
+	 */
 	public ModelRep(){
 		super();
 		rep = new JsynRepCircuit();

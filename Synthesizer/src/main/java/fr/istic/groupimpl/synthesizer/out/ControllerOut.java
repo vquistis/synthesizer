@@ -4,10 +4,20 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
+/**
+ * 
+ * Controller of out module
+ *  
+ * @author Team GroupImpl
+ *
+ */
 public class ControllerOut extends ControllerComponent {
 
 	private ModelOut model = new ModelOut();
 	
+	/**
+	 * Constructor
+	 */
 	public ControllerOut() {
 		ControllerGlobal.getInstance().registerOutUnitGenerator(model.getUnitGenerator());
 	}

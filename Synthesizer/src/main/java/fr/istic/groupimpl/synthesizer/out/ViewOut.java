@@ -26,6 +26,12 @@ import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
+/**
+ * 
+ * View of out module
+ *  
+ * @author Team GroupImpl
+ */
 public class ViewOut extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;

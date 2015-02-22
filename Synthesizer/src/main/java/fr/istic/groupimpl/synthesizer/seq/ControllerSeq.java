@@ -5,12 +5,22 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
+/**
+ * 
+ * Controller of Seq module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ControllerSeq  extends ControllerComponent
 {
 	static final int NB_BUTTONS=8;
 	
 	private final ModelSeq model = new ModelSeq(NB_BUTTONS);
 	
+	/**
+	 * Constructor
+	 */
 	public ControllerSeq() {	
 		
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
@@ -24,11 +34,11 @@ public class ControllerSeq  extends ControllerComponent
 	
 
 	/**
-	 *  * Methode appelée sur un changement de valeur d'un potentiometre
+	 *  this method is called when a value of a potentiometer changes
 	 * @param indice
-	 * 		indice de la valeur
+	 * 		index of data
 	 * @param newVal
-	 * 		nouvelle valeur
+	 * 		new data
 	 */
 	public void handleValueViewChange(int indice, Number newVal) {
 		Log.getInstance().trace("indice="+indice+" newVal="+newVal);
@@ -45,7 +55,6 @@ public class ControllerSeq  extends ControllerComponent
 
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return model;
 	}
 

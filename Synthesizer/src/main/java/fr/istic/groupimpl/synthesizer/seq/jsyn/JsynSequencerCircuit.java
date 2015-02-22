@@ -6,6 +6,13 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
+/**
+ * 
+ * Jsyn Sequencer Circuit
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class JsynSequencerCircuit extends UnitGenerator {
 
 	private enum State 

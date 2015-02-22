@@ -10,10 +10,21 @@ import com.jsyn.unitgen.UnitGenerator;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
 
+/**
+ * 
+ * Model of oscilloscope module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ModelOscillo extends ModelComponent {
 
 	private JsynOscilloCircuit circuit;
 	
+	/**
+	 * Constructor
+	 * @param sizeBuffer
+	 */
 	public ModelOscillo( int sizeBuffer ) {
 		super();
 
@@ -21,9 +32,9 @@ public class ModelOscillo extends ModelComponent {
 	}
 
 	/**
-	 * Méthode pour transmettre les dernière données valides
-	 * @return 
-	 * 		buffer de données
+	 * Transmits the last valid data 
+	 * @return buffer of data
+	 * 	
 	 */
 	public double [] getBuffer()
 	{

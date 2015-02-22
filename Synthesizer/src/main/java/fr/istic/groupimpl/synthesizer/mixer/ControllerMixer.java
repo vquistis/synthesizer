@@ -4,8 +4,21 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
+/**
+ * 
+ * Controller of mixer module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ControllerMixer extends ControllerComponent {
 	private ModelMixer model;
+	
+	/**
+	 * Constructor
+	 * @param view
+	 * @param NumberOfInputPort
+	 */
 	
 	public ControllerMixer(ViewMixer view, Integer NumberOfInputPort) {
 		model = new ModelMixer(NumberOfInputPort);
@@ -55,7 +68,6 @@ public class ControllerMixer extends ControllerComponent {
 	
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return model;
 	}
 }

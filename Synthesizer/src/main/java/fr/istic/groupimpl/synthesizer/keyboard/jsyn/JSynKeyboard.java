@@ -5,7 +5,13 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
-
+/**
+ * 
+ * The Class JSynKeyboard
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class JSynKeyboard extends UnitGenerator  {
 
 	/* Declare ports */

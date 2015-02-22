@@ -15,6 +15,13 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
+/**
+ * 
+ * View of keyboard module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ViewKeyboard extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;

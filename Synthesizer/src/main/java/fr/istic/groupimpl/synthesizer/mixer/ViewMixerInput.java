@@ -11,6 +11,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * 
+ * View of Mixer module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ViewMixerInput extends HBox {
 	@FXML private ImageView fxInput;
 	@FXML private Label fxLabelInput;
@@ -38,6 +45,10 @@ public class ViewMixerInput extends HBox {
 		return fxMuteVolume;
 	}
 	
+	/**
+	 * Constructor
+	 * @param label
+	 */
 	public ViewMixerInput(String label) {
 	    try {
 	        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/mixerInput.fxml"));

@@ -18,6 +18,9 @@ import fr.istic.groupimpl.synthesizer.util.jsyn.JsynAttenuationFilter;
  * UnitGenerator included :
  * - JsynAttenuationFilter
  * - MixerSum
+ * 
+ * @author Team GroupImpl
+ * 
  */
 public class Mixer extends Circuit implements UnitSource {	
 	/* Declare units that will be part of the circuit. */

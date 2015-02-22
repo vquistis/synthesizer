@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 /**
  * 
- * Tip to instanciate a module with configuration
+ * Tip to instantiate a module with configuration
  * 
  * @author groupimpl Team
  *

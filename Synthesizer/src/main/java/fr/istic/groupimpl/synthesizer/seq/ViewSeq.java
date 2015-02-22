@@ -23,6 +23,13 @@ import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
+/**
+ * 
+ * View of Seq module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ViewSeq extends ViewComponent implements Initializable {
 
 	@FXML private BorderPane paneSeq;

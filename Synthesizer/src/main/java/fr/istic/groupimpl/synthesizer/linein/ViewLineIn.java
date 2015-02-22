@@ -13,6 +13,13 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 
+/**
+ * 
+ * View of LineIn module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ViewLineIn extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;

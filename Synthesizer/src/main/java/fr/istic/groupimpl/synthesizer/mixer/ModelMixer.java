@@ -12,6 +12,13 @@ import com.jsyn.unitgen.UnitGenerator;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.mixer.jsyn.Mixer;
 
+/**
+ * 
+ * Model of mixer module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ModelMixer extends ModelComponent {
 
 	private Mixer mixer;
@@ -21,6 +28,10 @@ public class ModelMixer extends ModelComponent {
 	private double decreaseValueIncrement = 0.04;
 	private boolean isActiveThread=true;
 	
+	/**
+	 * Constructor
+	 * @param NumberOfInputPort
+	 */
 	public ModelMixer(Integer NumberOfInputPort) {
 		super();
 		mixer = new Mixer(NumberOfInputPort);

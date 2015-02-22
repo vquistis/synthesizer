@@ -4,19 +4,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import com.jsyn.data.FloatSample;
 import com.jsyn.ports.UnitInputPort;
-import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.Circuit;
 import com.jsyn.unitgen.PassThrough;
-import com.jsyn.unitgen.UnitOscillator;
-import com.jsyn.unitgen.VariableRateStereoReader;
-import com.jsyn.util.SampleLoader;
 import com.jsyn.util.WaveRecorder;
 
-import fr.istic.groupimpl.synthesizer.util.SignalUtil;
-
+/**
+ * Jsyn Recorder module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class Recorder extends Circuit {
 
 	private UnitInputPort input; 

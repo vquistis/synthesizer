@@ -17,6 +17,13 @@ import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
 import fr.istic.groupimpl.synthesizer.util.OscilloscopeFactory;
 
+/**
+ * 
+ * View of oscilloscope module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ViewOscillo extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;

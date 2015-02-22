@@ -10,6 +10,13 @@ import com.jsyn.unitgen.UnitGenerator;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.seq.jsyn.JsynSequencerCircuit;
 
+/**
+ * 
+ * Model of Seq module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ModelSeq extends ModelComponent {
 
 	private final double sigMin = 0.00001;
@@ -17,6 +24,10 @@ public class ModelSeq extends ModelComponent {
 	
 	private JsynSequencerCircuit circuit;
 	
+	/**
+	 * Constructor
+	 * @param nbPas
+	 */
 	public ModelSeq( int nbPas ) {
 		super();
 

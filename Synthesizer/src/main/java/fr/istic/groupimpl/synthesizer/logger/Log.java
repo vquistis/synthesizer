@@ -3,6 +3,13 @@ package fr.istic.groupimpl.synthesizer.logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * 
+ * The Class Log
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class Log {
 
 	private Logger logManager = LogManager.getLogger();

@@ -5,7 +5,7 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 /**
- * Replicator UnitGenerator
+ * Jsyn Replicator UnitGenerator
  * 
  * @author Team GroupImpl
  *

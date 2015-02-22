@@ -14,6 +14,12 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 
+/**
+ * 
+ * View of recorder module
+ *  
+ * @author Team GroupImpl
+ */
 public class ViewRecorder extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;

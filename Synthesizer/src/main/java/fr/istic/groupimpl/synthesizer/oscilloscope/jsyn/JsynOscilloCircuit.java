@@ -9,12 +9,17 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
+/**
+ * 
+ * The Class of Jsyn oscilloscope module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class JsynOscilloCircuit extends UnitGenerator {
 
 	private UnitInputPort input; 		//Volt
 	private UnitOutputPort output; 		//Volt
-
-	
 	
 	/**
 	 * Constructor
@@ -34,10 +39,18 @@ public class JsynOscilloCircuit extends UnitGenerator {
         blocBuf[0].set(true);
     }
     
+    /**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
 	public UnitInputPort getInput() {
 		return input;
 	}
 
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}
@@ -50,7 +63,7 @@ public class JsynOscilloCircuit extends UnitGenerator {
 	private int indice;
 	
 	/**
-	 * rend un nouvel index qui etait libre tout en le bloquant
+	 * Makes a new index which was free while blocking
 	 * @return indice
 	 */
 	private int newIndBuf()
@@ -69,13 +82,12 @@ public class JsynOscilloCircuit extends UnitGenerator {
 	}
 
 	/**
-	 * fonction qui rend un buffer de donnee lu recemment
+	 * Makes a given buffer read recently
 	 * @return
 	 */
 	public double [] getBuffer()
 	{
 		int ind = newIndBuf();
-		
 		
 		double [] ret = Arrays.copyOf(buf[ind], buf[ind].length);
 		
@@ -85,15 +97,13 @@ public class JsynOscilloCircuit extends UnitGenerator {
 		{
 			ret[i] *= SignalUtil.COEF_VOLT;
 		}
-		
-		
 		return ret;
 	}	
 		
     /**
-     * Fonction qui stocke un élément de donné
+     * Stores a given element
      * @param v
-     * 	Element de donnée
+     * 	buffer of data
      */
     private void storeBuf( double v )
     {

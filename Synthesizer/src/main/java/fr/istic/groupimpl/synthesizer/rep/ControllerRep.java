@@ -4,11 +4,20 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
+/**
+ * 
+ * Controller of REP module
+ *  
+ * @author Team GroupImpl
+ */
 public class ControllerRep extends ControllerComponent{
 	
 	private ModelRep modelRep;
 	private ControllerGlobal ctrlGlob;
 
+	/**
+	 * Constructor
+	 */
 	public ControllerRep(){
 		modelRep = new ModelRep();
 		ctrlGlob = ControllerGlobal.getInstance();
@@ -23,7 +32,6 @@ public class ControllerRep extends ControllerComponent{
 
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return modelRep;
 	}
 

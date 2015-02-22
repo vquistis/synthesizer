@@ -11,6 +11,12 @@ import com.jsyn.util.SampleLoader;
 
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
+/**
+ * 
+ * Jsyn Play module
+ *  
+ * @author Team GroupImpl
+ */
 public class PlayerGate extends VariableRateStereoReader { //VariableRateMonoReader
 
 	private UnitInputPort gate; 		//Volt

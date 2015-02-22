@@ -9,10 +9,20 @@ import com.jsyn.unitgen.UnitGenerator;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.out.jsyn.JsynOutCircuit;
 
+/**
+ * 
+ * Model of out module
+ *  
+ * @author Team GroupImpl
+ *
+ */
 public class ModelOut extends ModelComponent {
 
 	private JsynOutCircuit out;
 	
+	/**
+	 * Constructor
+	 */
 	public ModelOut() {
 		super();
 

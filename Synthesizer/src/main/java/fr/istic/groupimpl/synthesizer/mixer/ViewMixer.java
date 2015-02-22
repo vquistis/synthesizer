@@ -22,6 +22,13 @@ import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
+/**
+ * 
+ * View of mixer module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ViewMixer extends ViewComponent implements Initializable {
 	private static final String RED_BAR    = "red-bar";
 	private static final String GREEN_BAR  = "green-bar";

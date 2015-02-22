@@ -5,12 +5,23 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
 
+/**
+ * 
+ * Controller of oscilloscope module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ControllerOscillo  extends ControllerComponent
 {
 	
 	private ModelOscillo model = new ModelOscillo(Oscilloscope.SIZE_BUFFER_READ);
 	private Oscilloscope scope;
 	
+	/**
+	 * Constructor
+	 * @param scope
+	 */
 	public ControllerOscillo(Oscilloscope scope) {
 		this.scope = scope;
 		ControllerGlobal.getInstance().registerOutUnitGenerator(model.getUnitGenerator());
@@ -24,9 +35,9 @@ public class ControllerOscillo  extends ControllerComponent
 	}
 	
 	/**
-	 * méthode qui transmet les données venant du model
-	 * @return 
-	 * 	Le buffer de données
+	 * Transmits the data from the model
+	 * @return data of buffer
+	 * 	
 	 */
 	public double [] getbufferData()
 	{
@@ -35,9 +46,9 @@ public class ControllerOscillo  extends ControllerComponent
 
 
 	/**
-	 * Methode appellé sur un changement de valeur 
+	 * handle change value 
 	 * @param newVal
-	 * 		nouvelle valeur
+	 * 		
 	 */
 	public void handleRefreshPeriodViewChange(Number newVal) {
 		scope.setRefreshPeriod((Double)newVal);
@@ -45,7 +56,6 @@ public class ControllerOscillo  extends ControllerComponent
 
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return model;
 	}
 

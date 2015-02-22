@@ -15,8 +15,10 @@ import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 
 
 /**
- * @authors GroupImpl
- * Rep module - JavaFX Controller
+ * View of Rep module 
+ * 
+ * @authors Team GroupImpl
+ * 
  */
 public class ViewRep extends ViewComponent implements Initializable{
 	
