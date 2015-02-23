@@ -11,17 +11,17 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.eg.jsyn.JsynEnvelopeADSR;
 
 /**
- * The Class ModelEg : model of EG component
- * 
- * @author Team groupImpl
+ * The Class ModelEg : model of EG component.
  *
+ * @author Team groupImpl
  */
 public class ModelEg extends ModelComponent {
 
+	/** The adsr. */
 	private JsynEnvelopeADSR adsr;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ModelEg() {
 		super();
@@ -30,6 +30,9 @@ public class ModelEg extends ModelComponent {
 		adsr.output.setName("eg_output");
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return adsr;
@@ -43,16 +46,26 @@ public class ModelEg extends ModelComponent {
 		return adsr.input;
 	}
 
+	/**
+	 * Gets the output port.
+	 *
+	 * @return the output port
+	 */
 	public UnitOutputPort getOutputPort() {
 		return adsr.output;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return adsr.getPorts();
 	}
 
 	/**
+	 * Sets the attack.
+	 *
 	 * @param attack Delay in seconds of attack
 	 * Sets the attack time to the ADSR
 	 */
@@ -61,6 +74,8 @@ public class ModelEg extends ModelComponent {
 	}
 
 	/**
+	 * Sets the decay.
+	 *
 	 * @param decay Delay in seconds of the decay
 	 * Sets THE decay time to the ADSR
 	 */
@@ -69,6 +84,8 @@ public class ModelEg extends ModelComponent {
 	}
 
 	/**
+	 * Sets the sustain.
+	 *
 	 * @param sustainDb Value in dB of the sustain
 	 * Sets the decibels sustain to the ADSR
 	 */
@@ -77,6 +94,8 @@ public class ModelEg extends ModelComponent {
 	}
 
 	/**
+	 * Sets the release.
+	 *
 	 * @param release Delay in seconds of the release
 	 * Sets the release time to the ADSR
 	 */

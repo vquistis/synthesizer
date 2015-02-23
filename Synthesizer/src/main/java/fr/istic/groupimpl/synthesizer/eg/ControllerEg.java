@@ -4,18 +4,19 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
+// TODO: Auto-generated Javadoc
 /**
- * The Class ControllerEg : controller of EG component
- * 
- * @author Team groupImpl
+ * The Class ControllerEg : controller of EG component.
  *
+ * @author Team groupImpl
  */
 public class ControllerEg extends ControllerComponent {
 
+	/** The model. */
 	private ModelEg model = new ModelEg();
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ControllerEg() {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
@@ -53,12 +54,18 @@ public class ControllerEg extends ControllerComponent {
 		model.setRelease((double) newVal);
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
 	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
 	@Override
 	public ModelComponent getModel() {
 		return model;

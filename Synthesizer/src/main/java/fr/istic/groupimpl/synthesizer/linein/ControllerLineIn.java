@@ -13,21 +13,28 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
  */
 public class ControllerLineIn extends ControllerComponent {
 
+	/** The model. */
 	private ModelLineIn model = new ModelLineIn();
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ControllerLineIn() {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
 	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
 	@Override
 	public ModelComponent getModel() {
 		return model;

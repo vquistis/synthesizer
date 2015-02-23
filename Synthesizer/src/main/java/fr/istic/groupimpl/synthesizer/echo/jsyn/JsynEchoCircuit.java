@@ -8,28 +8,37 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 /**
- * 
- * Jsyn Echo Circuit
- * 
- * @author Team GroupImpl
+ * Jsyn Echo Circuit.
  *
+ * @author Team GroupImpl
  */
 public class JsynEchoCircuit extends UnitGenerator {
 
+	/** The frame rate. */
 	private final int frameRate=44100;
 	
+	/** The in. */
 	private UnitInputPort in; 		//Volt
+	
+	/** The output. */
 	private UnitOutputPort output; 		//Volt
 
+	/** The period nb. */
 	private AtomicInteger periodNb =new AtomicInteger();
+	
+	/** The coef attenuation. */
 	private AtomicLong coefAttenuation=new AtomicLong(); // en fait c'est un double
 	
+	/** The buffer. */
 	final private double [] buffer;
 	
+	/** The current index. */
 	int currentIndex=0;
 	
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
+	 * @param maxPeriod the max period
 	 */
     public JsynEchoCircuit( double maxPeriod ) {
         addPort(in = new UnitInputPort("echo_in"));
@@ -45,9 +54,9 @@ public class JsynEchoCircuit extends UnitGenerator {
     
     
     /**
-     * set the period Value in seconds
-     * @param period
-     *  value of the period in seconds
+     * set the period Value in seconds.
+     *
+     * @param period  value of the period in seconds
      */
     public void setPeriodValue( double period )
     {
@@ -61,8 +70,9 @@ public class JsynEchoCircuit extends UnitGenerator {
     }
     
     /**
-     * set the attenuation value ( decibel, allways negative )
-     * @param v
+     * set the attenuation value ( decibel, allways negative ).
+     *
+     * @param v the new attenuation value
      */
     public void setAttenuationValue( double v )
     {
@@ -72,24 +82,28 @@ public class JsynEchoCircuit extends UnitGenerator {
     
      
 	/**
-	 * get the input port
-	 * @return
-	 *  the input port
+	 * get the input port.
+	 *
+	 * @return  the input port
 	 */
 	public UnitInputPort getInput() {
 		return in;
 	}
 
 	/**
-	 * get the output port
-	 * @return
-	 * the output port
+	 * get the output port.
+	 *
+	 * @return the output port
 	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}
 
 
+    /**
+     * generate son
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
     @Override
     public void generate(int start, int limit) {
         double[] inputs = in.getValues();
