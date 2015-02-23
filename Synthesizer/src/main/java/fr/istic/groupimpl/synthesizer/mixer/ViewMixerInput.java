@@ -2,7 +2,6 @@ package fr.istic.groupimpl.synthesizer.mixer;
 
 import java.io.IOException;
 
-import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -11,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * View of Mixer module.

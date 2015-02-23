@@ -1,8 +1,8 @@
 package fr.istic.groupimpl.synthesizer.util;
 
-import org.junit.Test;
-
 import junit.framework.TestCase;
+
+import org.junit.Test;
 
 public class TestDoubleDuodecimalConverter extends TestCase {
 	

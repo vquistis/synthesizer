@@ -9,7 +9,6 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.echo.jsyn.JsynEchoCircuit;
-import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
 
 /**
  * 
