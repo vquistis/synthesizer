@@ -1,7 +1,10 @@
 package fr.istic.groupimpl.synthesizer.util;
 
 /**
- * The Class SignalUtil.
+ * The Class SignalUtil
+ * 
+ * @author Team GroupImpl
+ * 
  */
 public class SignalUtil {
 	

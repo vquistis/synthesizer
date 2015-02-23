@@ -6,6 +6,12 @@ import java.util.Locale;
 
 import javafx.util.StringConverter;
 
+/**
+ * Converter double in string
+ * 
+ * @author GroupImpl
+ *
+ */
 public class DoubleStringConverter extends StringConverter<Number> {
 	@Override
 	public String toString(Number value) {

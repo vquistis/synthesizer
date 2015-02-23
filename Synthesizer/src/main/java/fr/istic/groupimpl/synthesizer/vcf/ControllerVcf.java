@@ -4,10 +4,20 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
+/**
+ * 
+ * Controller of vcf module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ControllerVcf extends ControllerComponent {
 
 	private ModelVcf model;
 	
+	/**
+	 * Constructor
+	 */
 	public ControllerVcf(ModelVcf.Type t) {
 		model = new ModelVcf(t);
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
@@ -37,7 +47,6 @@ public class ControllerVcf extends ControllerComponent {
 
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return model;
 	}
 }

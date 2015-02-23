@@ -17,6 +17,9 @@ import fr.istic.groupimpl.synthesizer.vcf.ModelVcf;
  * UnitGenerator included :
  * - JsynFrequencyModulation
  * - FilterBiquadCommon : FilterLowPass or FilterHighPass
+ * 
+ * @author Team GroupImpl
+ * 
  */
 public class JsynVcfCircuit extends Circuit {
 	/* Declare units that will be part of the circuit. */

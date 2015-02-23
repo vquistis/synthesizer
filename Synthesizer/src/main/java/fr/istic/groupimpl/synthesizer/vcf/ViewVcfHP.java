@@ -8,6 +8,13 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
+/**
+ * View vcf HighPass module
+ * 
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ViewVcfHP extends ViewVcf implements Initializable {
 
 	private ControllerVcf controller;

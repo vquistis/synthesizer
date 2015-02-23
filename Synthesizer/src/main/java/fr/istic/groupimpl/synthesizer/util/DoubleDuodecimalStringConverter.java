@@ -27,7 +27,7 @@ public class DoubleDuodecimalStringConverter extends StringConverter<Number> {
 		int ind = str.length() - 3;
 		str = str.substring(0, ind) + "." + str.substring(ind);
 
-		// supression des 0 à la fin
+		// suppress of zero endings
 		boolean flagCont = true;
 		while (flagCont) {
 			
@@ -35,7 +35,7 @@ public class DoubleDuodecimalStringConverter extends StringConverter<Number> {
 			switch (last) {
 			case ".":
 				flagCont = false;
-				// Il n'y pas de break c'est voulu
+				// NO BREAK  FALLS THROUGHT
 			case "0":
 				str = str.substring(0, str.length() - 1);
 				break;

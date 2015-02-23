@@ -21,11 +21,11 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
  */
 public class Cable extends Path {
 
-	ComputeDistance binding;
-	InnerShadow innerShadow;
-	DropShadow dropShadow;
-	CubicCurveTo curve;
-	MoveTo move;
+	private ComputeDistance binding;
+	private InnerShadow innerShadow;
+	private DropShadow dropShadow;
+	private CubicCurveTo curve;
+	private MoveTo move;
 
 	/**
 	 * Constructor

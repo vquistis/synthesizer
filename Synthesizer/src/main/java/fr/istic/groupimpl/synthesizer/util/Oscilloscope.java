@@ -14,6 +14,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
+/**
+ * Oscilloscope module
+ * 
+ * @author GroupImpl
+ *
+ */
 public class Oscilloscope extends Region {
 
 	private final long TIME_STABILITY=2500;

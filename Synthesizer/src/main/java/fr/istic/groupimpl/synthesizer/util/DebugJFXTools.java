@@ -7,6 +7,12 @@ import java.text.DecimalFormat;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
+/**
+ * Dump tree of javafx node
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class DebugJFXTools {
 
 	public void GenerateNodeHierarchy(Node node, String fileName) {
@@ -21,7 +27,6 @@ public class DebugJFXTools {
 		     try {
 				writer.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		  }

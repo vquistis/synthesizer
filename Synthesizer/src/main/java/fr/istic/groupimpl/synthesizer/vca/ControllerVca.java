@@ -5,7 +5,10 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 /**
- * The Class ControllerVca.
+ * Controller of Vca module
+ * 
+ * @author Team GroupImpl
+ * 
  */
 public class ControllerVca extends ControllerComponent {
 	
@@ -48,7 +51,6 @@ public class ControllerVca extends ControllerComponent {
 
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return modelVca;
 	}
 }
