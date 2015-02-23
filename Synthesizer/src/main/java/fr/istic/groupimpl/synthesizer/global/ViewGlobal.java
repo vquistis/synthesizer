@@ -535,6 +535,14 @@ public class ViewGlobal implements Initializable {
 	}
 	
 	/**
+	 * Handle add echo. This method adds a new Echo component
+	 */
+	@FXML
+	public void handleAddEcho(){
+		createModule("fxml/echo.fxml");		
+	}
+	
+	/**
 	 * Handle add sequencer. This method adds a new Sequencer component
 	 */
 	@FXML
