@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 
 import com.jsyn.engine.SynthesisEngine;
 
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
+
 public class JsynFrequencyModulationTest extends TestCase {
     SynthesisEngine synthesisEngine;
 
@@ -112,13 +114,6 @@ public class JsynFrequencyModulationTest extends TestCase {
         oVCFrequency.getInputOctave().set(OctaveTested);
         synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
         assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, OctaveTested), oVCFrequency.getOutput().get(), tolerance);
-       
-        f0Tested = 440.0;
-        OctaveTested = 6.0;
-        oVCFrequency.getInputf0().set(f0Tested);
-        oVCFrequency.getInputOctave().set(OctaveTested);
-        synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
-        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, OctaveTested), oVCFrequency.getOutput().get(), tolerance);
     }
     
     public void testVCFrequency_fm() throws InterruptedException {
@@ -141,7 +136,7 @@ public class JsynFrequencyModulationTest extends TestCase {
         oVCFrequency.getInputfm().set(fmTested);
         oVCFrequency.getInputOctave().set(OctaveTested);
         synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
-        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, fmTested), oVCFrequency.getOutput().get(), tolerance);
+        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, fmTested*SignalUtil.COEF_VOLT), oVCFrequency.getOutput().get(), tolerance);
        
         f0Tested = 440.0;
         fmTested = 0.5;
@@ -149,7 +144,7 @@ public class JsynFrequencyModulationTest extends TestCase {
         oVCFrequency.getInputfm().set(fmTested);
         oVCFrequency.getInputOctave().set(OctaveTested);
         synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
-        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, fmTested), oVCFrequency.getOutput().get(), tolerance);
+        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, fmTested*SignalUtil.COEF_VOLT), oVCFrequency.getOutput().get(), tolerance);
         
         f0Tested = 440.0;
         fmTested = 1;
@@ -157,7 +152,7 @@ public class JsynFrequencyModulationTest extends TestCase {
         oVCFrequency.getInputfm().set(fmTested);
         oVCFrequency.getInputOctave().set(OctaveTested);
         synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
-        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, fmTested), oVCFrequency.getOutput().get(), tolerance);
+        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, fmTested*SignalUtil.COEF_VOLT), oVCFrequency.getOutput().get(), tolerance);
         
         f0Tested = 440.0;
         fmTested = -0.5;
@@ -165,7 +160,7 @@ public class JsynFrequencyModulationTest extends TestCase {
         oVCFrequency.getInputfm().set(fmTested);
         oVCFrequency.getInputOctave().set(OctaveTested);
         synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
-        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, fmTested), oVCFrequency.getOutput().get(), tolerance);
+        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, fmTested*SignalUtil.COEF_VOLT), oVCFrequency.getOutput().get(), tolerance);
         
         f0Tested = 440.0;
         fmTested = -1;
@@ -173,6 +168,6 @@ public class JsynFrequencyModulationTest extends TestCase {
         oVCFrequency.getInputfm().set(fmTested);
         oVCFrequency.getInputOctave().set(OctaveTested);
         synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
-        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, fmTested), oVCFrequency.getOutput().get(), tolerance);
+        assertEquals("oVCFrequency ouput value", f0Tested*Math.pow(2, fmTested*SignalUtil.COEF_VOLT), oVCFrequency.getOutput().get(), tolerance);
     }
 }
