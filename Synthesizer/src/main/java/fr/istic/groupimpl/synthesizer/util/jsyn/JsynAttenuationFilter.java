@@ -6,15 +6,13 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
  * The input signal is attenuated by an decibel value.
+ * 
+ * @author Team GroupImpl
+ * 
  */
 public class JsynAttenuationFilter extends UnitFilter {
 	
 	private boolean mute=false;
-	
-	// Coef diviseur car le voltage en entrée est entre -5V et +5V
-	// et on veut pouvoir augmenté le son de 12 DB et le resultat
-	// doit être inférieur à 1 ( pour ne pas saturer ).
-//	private final double COEF_DIV=4.*5.;
 	 	
 	// Attenuation coefficient
 	private double coef = 1.;

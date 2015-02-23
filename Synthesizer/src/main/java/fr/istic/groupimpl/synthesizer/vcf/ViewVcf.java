@@ -14,6 +14,13 @@ import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 
+/**
+ * View vcf module
+ * 
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public abstract class ViewVcf extends ViewComponent {
 	
 	@FXML private Pane rootModulePane;

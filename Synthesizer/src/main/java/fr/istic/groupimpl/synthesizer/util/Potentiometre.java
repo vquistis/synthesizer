@@ -16,7 +16,7 @@ import javafx.scene.transform.Rotate;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
- * Implémentation d'un bouton tournant (knob) avec graduations paramétrables
+ * Implementation of knob with configurable graduations
  * 
  * To create a Potentiometre object, you must use PotentiometreFactory
  * 
@@ -80,12 +80,8 @@ public class Potentiometre extends Region {
 		return majorTickUnit;
 	}
 
-	// value interne differente de value que si discret
+	// intern value is different from value only if it is discrete
 	private double val;
-
-	/**
-	 * Constructeur
-	 */
 
 	private double debDragAngle;
 	boolean dragOK = false;
@@ -110,6 +106,10 @@ public class Potentiometre extends Region {
 
 	private boolean dragValid = false;
 
+
+	/**
+	 * Constructor
+	 */
 	Potentiometre(PotentiometreFactory initPot) {
 
 		super();
@@ -300,7 +300,7 @@ public class Potentiometre extends Region {
 		return Math.floor(v + 0.5);
 	}
 
-	// rend un angle equivalent mais entre -Math.PI et Math.PI
+	// makes an equivalent angle between -Math.PI and Math.PI
 	private double correctAngle(double angle) {
 		double sens = Math.signum(angle);
 		int n = (int) Math.floor(Math.abs(angle) / Math.PI);

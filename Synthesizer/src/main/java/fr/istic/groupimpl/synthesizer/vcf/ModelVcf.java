@@ -10,11 +10,21 @@ import com.jsyn.unitgen.UnitGenerator;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.vcf.jsyn.JsynVcfCircuit;
 
+/**
+ * Model of vcf module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ModelVcf extends ModelComponent {
 	
 	private JsynVcfCircuit circuit;
 	public static enum Type { LP24, HP12 }
 	
+	/**
+	 * Constructor
+	 * @param t : type
+	 */
 	public ModelVcf(Type t) {
 		super();
 		circuit = new JsynVcfCircuit(t);

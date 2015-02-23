@@ -22,8 +22,10 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
+ * View of VCO module  
+ * 
  * @authors GroupImpl
- * VCO module - JavaFX Controller
+ * 
  */
 public class ViewVco extends ViewComponent implements Initializable {
 

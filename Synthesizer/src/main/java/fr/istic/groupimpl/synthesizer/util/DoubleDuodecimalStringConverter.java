@@ -3,6 +3,12 @@ package fr.istic.groupimpl.synthesizer.util;
 import javafx.util.StringConverter;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
+/**
+ * 
+ * 
+ * @author Team GrouplImpl
+ *
+ */
 public class DoubleDuodecimalStringConverter extends StringConverter<Number> {
 	@Override
 	public String toString(Number value) {

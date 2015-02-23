@@ -1,20 +1,27 @@
 package fr.istic.groupimpl.synthesizer.util;
 
 /**
- * @author Yves Mocquard
+ *  The Class PotentiometreFactory
  *
- *         Classe d'initialisation du potentiometre the default values are :
- *         private String title = ""; private double rayon =
- *         Potentiometre.RAYON_REF; private double minValue = 0.; private double
- *         maxValue = 100.; private boolean discret = false; private double
- *         nbSpins = 1.; private double valueDef; private boolean valueDefInit;
+ *    The default values are :
+ *         private String title = ""
+ *         private double rayon = Potentiometre.RAYON_REF
+ *         private double minValue = 0
+ *         private double maxValue = 100
+ *         private boolean discret = false
+ *         private double nbSpins = 1
+ *         private boolean showTickMarks = false
+ *         private boolean showTickLabels = false
+ *         private double majorTickUnit = 5
  *
- *         private boolean showTickMarks = false; private boolean showTickLabels
- *         = false; private double majorTickUnit = 5.;
+ * @author Team GroupImpl
  *
  */
 public class PotentiometreFactory {
 
+	/**
+	 * Constructor
+	 */
 	private PotentiometreFactory() {
 	}
 

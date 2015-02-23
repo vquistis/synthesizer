@@ -25,7 +25,7 @@ import fr.istic.groupimpl.synthesizer.util.jsyn.JsynFrequencyModulation;
  * - SelectFrom3Input
  * - PassThrough
  * 
- * @author GoupImpl
+ * @author Team GoupImpl
  */
 
 public class VCOCircuit extends Circuit implements UnitSource
