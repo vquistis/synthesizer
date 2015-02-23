@@ -7,11 +7,9 @@ import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.UnitGenerator;
 
-import fr.istic.groupimpl.synthesizer.util.SignalUtil;
-
 /**
  * 
- * Jsyn Sequencer Circuit
+ * Jsyn Echo Circuit
  * 
  * @author Team GroupImpl
  *
@@ -26,7 +24,7 @@ public class JsynEchoCircuit extends UnitGenerator {
 	private AtomicInteger periodNb =new AtomicInteger();
 	private AtomicLong coefAttenuation=new AtomicLong(); // en fait c'est un double
 	
-	final double [] buffer;
+	final private double [] buffer;
 	
 	int currentIndex=0;
 	
@@ -47,23 +45,25 @@ public class JsynEchoCircuit extends UnitGenerator {
     
     
     /**
-     * set the value of a step
-     * @param indice
-     * 	indice of the step from 0 to 7
-     * @param volt
-     *  value of the step from -1 to 1
+     * set the period Value in seconds
+     * @param period
+     *  value of the period in seconds
      */
     public void setPeriodValue( double period )
     {
     	int locPeriodNb = (int)(period*(double)frameRate);
-    	if ( locPeriodNb > buffer.length )
+    	if ( locPeriodNb >= buffer.length )
     	{
-    		locPeriodNb = buffer.length;
+    		locPeriodNb = buffer.length-1;
     	}
     	periodNb.set(locPeriodNb);
     	
     }
     
+    /**
+     * set the attenuation value ( decibel, allways negative )
+     * @param v
+     */
     public void setAttenuationValue( double v )
     {
     	coefAttenuation.set(Double.doubleToLongBits(Math.pow(2.,v/6.)));
@@ -72,9 +72,9 @@ public class JsynEchoCircuit extends UnitGenerator {
     
      
 	/**
-	 * get the gate port
+	 * get the input port
 	 * @return
-	 *  the gate port
+	 *  the input port
 	 */
 	public UnitInputPort getInput() {
 		return in;

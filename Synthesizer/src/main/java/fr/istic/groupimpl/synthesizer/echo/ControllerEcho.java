@@ -7,7 +7,7 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * 
- * Controller of Seq module
+ * Controller of Echo module
  * 
  * @author Team GroupImpl
  *
@@ -17,7 +17,11 @@ public class ControllerEcho  extends ControllerComponent
 	
 	private final double maxPeriod=10.;
 	
-	double getMaxPeriod()
+	/**
+	 * getter for the maximum period
+	 * @return the maximum period
+	 */
+	public double getMaxPeriod()
 	{
 		return maxPeriod;
 	}
@@ -42,7 +46,7 @@ public class ControllerEcho  extends ControllerComponent
 	/**
 	 *  this method is called when period value changes
 	 * @param newVal
-	 * 		new data
+	 * 		new period in seconds
 	 */
 	public void handlePeriodViewChange( Number newVal) {
 		Log.getInstance().trace("handlePeriodViewChange newVal="+newVal);
@@ -52,7 +56,7 @@ public class ControllerEcho  extends ControllerComponent
 	/**
 	 *  this method is called when attenuation value changes
 	 * @param newVal
-	 * 		new data
+	 * 		new value in decibel
 	 */
 	public void handleAttenuationViewChange( Number newVal) {
 		Log.getInstance().trace("handleAttenuationViewChange newVal="+newVal);

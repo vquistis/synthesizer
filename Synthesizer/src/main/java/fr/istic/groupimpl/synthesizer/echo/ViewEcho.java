@@ -6,18 +6,12 @@ import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
@@ -39,13 +33,10 @@ public class ViewEcho extends ViewComponent implements Initializable {
 	private VBox knobPeriod;
 	@FXML
 	private VBox knobAttenuation;
-	
 	@FXML
 	private TextField tfPeriod;
-	
 	@FXML
 	private TextField tfAttenuation;
-	
 	@FXML
 	private ImageView inEcho;
 	@FXML
