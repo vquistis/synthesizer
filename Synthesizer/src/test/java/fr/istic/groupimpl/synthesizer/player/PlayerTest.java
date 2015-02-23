@@ -1,5 +1,7 @@
 package fr.istic.groupimpl.synthesizer.player;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +19,7 @@ public class PlayerTest {
 		synth = JSyn.createSynthesizer();
 		model = new ModelPlayer();
 		
-		model.loadSample("temp_recording.wav");
+		model.loadSample("junit_PlayerTest.wav");
 		
 		synth.add(model.getUnitGenerator());
 		
@@ -34,6 +36,19 @@ public class PlayerTest {
 	public void testModel() throws InterruptedException {
 		model.play();
 		synth.sleepFor(8);
+		synth.stop();
+	}
+	
+	@Test
+	public void testOutput() throws InterruptedException {
+		double sumOutput = 0;
+		model.play();
+		for (int i=0; i<20; i++) {
+			synth.sleepUntil(synth.getCurrentTime() + 0.1);
+			sumOutput =+ Math.abs(model.getOutputPort().get());
+		}
+		
+		assertTrue("ouput", sumOutput > 0.00);
 		synth.stop();
 	}
 }
