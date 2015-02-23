@@ -26,22 +26,47 @@ public class ViewMixerInput extends HBox {
 	@FXML private TextField fxValueVolume;
 	@FXML private CheckBox fxMuteVolume;
 	
+	/**
+	 * Get the instance of the Input Image View
+	 * 
+	 * @return ImageView
+	 */
 	public ImageView getFxInput() {
 		return fxInput;
 	}
 
+	/**
+	 * Get the instance of the Input Label
+	 * 
+	 * @return Label
+	 */
 	public Label getFxLabelInput() {
 		return fxLabelInput;
 	}
 
+	/**
+	 * Get the instance of the Volume Knob
+	 * 
+	 * @return VBox
+	 */
 	public VBox getFxKnobVolumePane() {
 		return fxKnobVolumePane;
 	}
 
+	/**
+	 * Get the instance of the Volume TextField
+	 * 
+	 * @return TextField
+	 */
 	public TextField getFxValueVolume() {
 		return fxValueVolume;
 	}
 
+	/**
+	 * Get the instance of the Mute Volume CheckBox
+	 * 
+	 * @return CheckBox
+	 */
 	public CheckBox getFxMuteVolume() {
 		return fxMuteVolume;
 	}
@@ -49,6 +74,7 @@ public class ViewMixerInput extends HBox {
 	/**
 	 * Constructor
 	 * @param label
+	 * 	input label
 	 */
 	public ViewMixerInput(String label) {
 	    try {
