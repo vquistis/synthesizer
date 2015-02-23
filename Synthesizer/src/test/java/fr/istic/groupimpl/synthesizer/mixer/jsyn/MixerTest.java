@@ -18,7 +18,28 @@ public class MixerTest extends TestCase {
         super.tearDown();
         synthesisEngine.stop();
     }
+    
+    public void testMixer_getNumberOfInputPort() throws InterruptedException {
+        Integer NbPortTested = 3;
+        Mixer mixer = new Mixer(NbPortTested);
+        
+        assertEquals("Get the number of input port", NbPortTested, mixer.getNumberOfInputPort(),0);
+    }
 
+    public void testMixer_getNumberOfInputPortMax() throws InterruptedException {
+        Integer NbPortTested = 11;
+        Mixer mixer = new Mixer(NbPortTested);
+        
+        assertEquals("Get the number of input port", 10, mixer.getNumberOfInputPort(),0);
+    }
+    
+    public void testMixer_getNumberOfInputPortMin() throws InterruptedException {
+        Integer NbPortTested = 1;
+        Mixer mixer = new Mixer(NbPortTested);
+        
+        assertEquals("Get the number of input port", 2, mixer.getNumberOfInputPort(),0);
+    }
+    
     public void testMixer_Sum() throws InterruptedException {
     	double tolerance = 0.01;
         Integer NbPortTested = 3;
@@ -117,5 +138,73 @@ public class MixerTest extends TestCase {
 		// is the sum correct ?
 		assertEquals("mixer out value", 0.0, mixer.getOutput().get(), tolerance);
 		
+    }
+    
+    public void testMixer_Attenuator() throws InterruptedException {
+    	double tolerance = 0.01;
+        Integer NbPortTested = 3;
+        Mixer mixer = new Mixer(NbPortTested);
+        synthesisEngine.add(mixer);
+       
+        // replicator VCO to mixer
+        mixer.getInput(0).set(1); // amplitude = 1
+        mixer.getInput(1).set(1); // amplitude = 1
+        mixer.getInput(2).set(1); // amplitude = 1
+        
+        mixer.setAttenuation(0, -6); // -6db => amplitude/2
+        mixer.setAttenuation(1, -6); // -6db => amplitude/2
+        mixer.setAttenuation(2, -6); // -6db => amplitude/2
+        
+        synthesisEngine.start();
+        mixer.start();
+		
+        synthesisEngine.sleepUntil( synthesisEngine.getCurrentTime() + 0.1 );
+        
+		// is the sum correct ?
+		assertEquals("mixer out value", 1.5, mixer.getOutput().get(), tolerance);
+
+        mixer.setAttenuation(0, -6); // -6db => amplitude/2
+        mixer.setAttenuation(1, 0);
+        mixer.setAttenuation(2, 0);
+        
+        synthesisEngine.start();
+        mixer.start();
+		
+        synthesisEngine.sleepUntil( synthesisEngine.getCurrentTime() + 0.1 );
+        
+		// is the sum correct ?
+		assertEquals("mixer out value", 2.5, mixer.getOutput().get(), tolerance);
+    }
+    
+    public void testMixer_AverageOutputValue() throws InterruptedException {
+    	double tolerance = 0.01;
+        Integer NbPortTested = 3;
+        Mixer mixer = new Mixer(NbPortTested);
+        synthesisEngine.add(mixer);
+       
+        // replicator VCO to mixer
+        mixer.getInput(0).set(1); // amplitude = 1
+        mixer.getInput(1).set(1); // amplitude = 1
+        mixer.getInput(2).set(1); // amplitude = 1
+
+        synthesisEngine.start();
+        mixer.start();
+		
+        synthesisEngine.sleepUntil( synthesisEngine.getCurrentTime() + 0.1 );
+        
+		// is the sum correct ?
+		assertEquals("mixer out value", 3, mixer.getAverageOutputValue().get(), tolerance);
+
+        mixer.setAttenuation(0, -6); // -6db => amplitude/2
+        mixer.setAttenuation(1, 0);
+        mixer.setAttenuation(2, 0);
+        
+        synthesisEngine.start();
+        mixer.start();
+		
+        synthesisEngine.sleepUntil( synthesisEngine.getCurrentTime() + 0.1 );
+        
+		// is the sum correct ?
+		assertEquals("mixer out value", 2.5, mixer.getAverageOutputValue().get(), tolerance);
     }
 }
