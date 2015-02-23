@@ -18,24 +18,37 @@ import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
 import fr.istic.groupimpl.synthesizer.util.OscilloscopeFactory;
 
 /**
- * 
- * View of oscilloscope module
- * 
- * @author Team GroupImpl
+ * View of oscilloscope module.
  *
+ * @author Team GroupImpl
  */
 public class ViewOscillo extends ViewComponent implements Initializable {
 
+	/** The root module pane. */
 	@FXML private Pane rootModulePane;
+	
+	/** The top pane. */
 	@FXML private GridPane top;
+	
+	/** The screen scope pane. */
 	@FXML private VBox screenScopePane;
+	
+	/** The in. */
 	@FXML private ImageView in;
+	
+	/** The out. */
 	@FXML private ImageView out;
+	
+	/** The refresh period slider. */
 	@FXML private Slider refreshPeriodSlider;
 	
+	/** The controller. */
 	private ControllerOscillo controller;
 
 
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("Oscilloscope");
@@ -71,16 +84,25 @@ public class ViewOscillo extends ViewComponent implements Initializable {
 		scope.start();
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/oscillo.fxml";

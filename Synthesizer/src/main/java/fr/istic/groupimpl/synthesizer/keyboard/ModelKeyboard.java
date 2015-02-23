@@ -10,24 +10,27 @@ import fr.istic.groupimpl.synthesizer.keyboard.jsyn.JSynKeyboard;
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
- * 
- * Model of keyboard module
- * 
- * @author Team GroupImpl
+ * Model of keyboard module.
  *
+ * @author Team GroupImpl
  */
 public class ModelKeyboard extends ModelComponent {
 
+	/** The keyboard. */
 	private JSynKeyboard keyboard;
 	
+	/** The min octave. */
 	private final int MIN_OCTAVE=-9;
+	
+	/** The max octave. */
 	private final int MAX_OCTAVE=8;
 	
 	
+	/** The octave. */
 	private int octave; // from -9 to +9
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ModelKeyboard() {
 		super();
@@ -35,19 +38,25 @@ public class ModelKeyboard extends ModelComponent {
 		octave = 0;
 	}
 	
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return keyboard;
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return keyboard.getPorts();
 	}
 
 	/**
-	 * increase 1 octave
+	 * increase 1 octave.
 	 */
 	void incOctave()
 	{
@@ -55,7 +64,7 @@ public class ModelKeyboard extends ModelComponent {
 	}
 	
 	/**
-	 * decrease 1 octave
+	 * decrease 1 octave.
 	 */
 	void decOctave()
 	{
@@ -63,8 +72,9 @@ public class ModelKeyboard extends ModelComponent {
 	}
 	
 	/**
-	 * sets the key of the keyboard
-	 * @param key, Time stamp
+	 * sets the key of the keyboard.
+	 *
+	 * @param n the new key
 	 */
 	public void setKey(int n) {
 		double v = (double)octave + ((double)n)/12.;
@@ -73,8 +83,9 @@ public class ModelKeyboard extends ModelComponent {
 	}
 	
 	/**
-	 * to know if a key is pressed
-	 * @param press
+	 * to know if a key is pressed.
+	 *
+	 * @param press the new press
 	 */
 	public void setPress( boolean press )
 	{

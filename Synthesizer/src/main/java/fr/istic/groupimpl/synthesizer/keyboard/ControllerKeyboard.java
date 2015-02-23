@@ -5,24 +5,26 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 /**
- * 
- * Controller of keyboard module
- * 
- * @author Team GroupImpl
+ * Controller of keyboard module.
  *
+ * @author Team GroupImpl
  */
 public class ControllerKeyboard extends ControllerComponent {
 
+	/** The model. */
 	private ModelKeyboard model = new ModelKeyboard();
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ControllerKeyboard() {
 		ControllerGlobal.getInstance().registerUnitGenerator(
 				model.getUnitGenerator());
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
 	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance()
@@ -32,16 +34,16 @@ public class ControllerKeyboard extends ControllerComponent {
 	}
 
 	/**
-	 * Release of key
+	 * Release of key.
 	 */
 	public void handleViewkeyReleaseEvent() {
 		model.setPress(false);
 	}
 
 	/**
-	 * handle key pressed
-	 * 
-	 * @param key
+	 * handle key pressed.
+	 *
+	 * @param key the key
 	 */
 	public void handleViewkeyEvent(String key) {
 
@@ -61,6 +63,9 @@ public class ControllerKeyboard extends ControllerComponent {
 		}
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
 	@Override
 	public ModelComponent getModel() {
 		return model;

@@ -10,24 +10,26 @@ import com.jsyn.unitgen.UnitGenerator;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 
 /**
- * 
- * Model of line In module
- * 
- * @author Team GroupImpl
+ * Model of line In module.
  *
+ * @author Team GroupImpl
  */
 public class ModelLineIn extends ModelComponent {
 
+	/** The line in. */
 	private LineIn lineIn;
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ModelLineIn() {
 		super();
 		lineIn = new LineIn();
 	}
 	
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return lineIn;
@@ -41,6 +43,9 @@ public class ModelLineIn extends ModelComponent {
 		return lineIn.output;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return lineIn.getPorts();

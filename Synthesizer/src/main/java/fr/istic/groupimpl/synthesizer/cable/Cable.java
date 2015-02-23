@@ -11,7 +11,6 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.StrokeLineCap;
 import fr.istic.groupimpl.synthesizer.logger.Log;
-
 /**
  * 
  * Connects two components by a cable
@@ -21,14 +20,25 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
  */
 public class Cable extends Path {
 
+	/** The binding. */
 	private ComputeDistance binding;
+	
+	/** The inner shadow. */
 	private InnerShadow innerShadow;
+	
+	/** The drop shadow. */
 	private DropShadow dropShadow;
+	
+	/** The curve. */
 	private CubicCurveTo curve;
+	
+	/** The move. */
 	private MoveTo move;
 
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
+	 * @param color the color
 	 */
 	public Cable(Color color) {
 		setMouseTransparent(true);
@@ -58,9 +68,10 @@ public class Cable extends Path {
 	}
 
 	/**
-	 * Connecting the end of the first module input port cable
-	 * @param endX
-	 * @param endY
+	 * Connecting the end of the first module input port cable.
+	 *
+	 * @param endX the end x
+	 * @param endY the end y
 	 */
 	public void bindInput(DoubleProperty endX, DoubleProperty endY) {
 		curve.xProperty().bind(endX);
@@ -70,9 +81,10 @@ public class Cable extends Path {
 	}
 
 	/**
-	 * Cable connection to the beginning of the second module output port
-	 * @param startX
-	 * @param startY
+	 * Cable connection to the beginning of the second module output port.
+	 *
+	 * @param startX the start x
+	 * @param startY the start y
 	 */
 	public void bindOutput(DoubleProperty startX, DoubleProperty startY) {
 		move.xProperty().bind(startX);
@@ -88,12 +100,15 @@ public class Cable extends Path {
 	private class ComputeDistance extends DoubleBinding {
 
 		/**
-		 * Constructor
+		 * Constructor.
 		 */
 		public ComputeDistance() {
 			super.bind(move.xProperty(),move.yProperty(),curve.xProperty(),curve.yProperty());
 		}
 
+		/* (non-Javadoc)
+		 * @see javafx.beans.binding.DoubleBinding#computeValue()
+		 */
 		@Override
 		protected double computeValue() {
 			double xCarre = Math.pow(move.xProperty().get()-curve.xProperty().get(), 2) ;

@@ -17,12 +17,19 @@ import com.jsyn.unitgen.UnitGenerator;
  */
 
 public class MixerSum extends UnitGenerator {
+	
+	/** The unit input ports. */
 	private ArrayList<UnitInputPort> unitInputPorts = new ArrayList<UnitInputPort>();
+	
+	/** The output. */
 	private UnitOutputPort output;
+	
+	/** The average output value. */
 	private UnitOutputPort averageOutputValue;
     
     /**
-     * Get Number Of Input Port
+     * Get Number Of Input Port.
+     *
      * @return UnitInputPort
      */
     public Integer getNumberOfInputPort() {
@@ -30,7 +37,9 @@ public class MixerSum extends UnitGenerator {
 	}
     
     /**
-     * Input(index) [first index = 0]
+     * Input(index) [first index = 0].
+     *
+     * @param index the index
      * @return UnitInputPort
      */
     public UnitInputPort getInput(Integer index) {
@@ -38,26 +47,27 @@ public class MixerSum extends UnitGenerator {
 	}
 
 	/**
-	 * Output source
-	 * @return
+	 * Output source.
+	 *
+	 * @return the output
 	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}
 
 	/**
-	 * Output Average value
-	 * @return
+	 * Output Average value.
+	 *
+	 * @return the average output value
 	 */
 	public UnitOutputPort getAverageOutputValue() {
 		return averageOutputValue;
 	}
 	
     /**
-     * Constructor
-     * 
-     * @param NumberOfInputPort
-     *   number of input port to instantiate
+     * Constructor.
+     *
+     * @param NumberOfInputPort   number of input port to instantiate
      */
     public MixerSum(Integer NumberOfInputPort) {
     	Integer index=0;
@@ -71,6 +81,9 @@ public class MixerSum extends UnitGenerator {
         addPort(averageOutputValue = new UnitOutputPort("averageOutputValue"));
     }
 
+    /* (non-Javadoc)
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
     @Override
     public void generate(int start, int limit) {
     	double inputAverage=0;

@@ -20,6 +20,8 @@ import com.jsyn.unitgen.UnitSource;
  * 
  */
 public class JsynEnvelopeADSR extends UnitGate implements UnitSource {
+    
+    /** The Constant MIN_DURATION. */
     private static final double MIN_DURATION = (1.0 / 100000.0);
 
     /**
@@ -45,17 +47,42 @@ public class JsynEnvelopeADSR extends UnitGate implements UnitSource {
      * sustain level.
      */
     public UnitInputPort release;
+    
+    /** The amplitude. */
     public UnitInputPort amplitude;
 
+    /**
+     * The Enum State.
+     */
     enum State {
-        IDLE, ATTACKING, DECAYING, SUSTAINING, RELEASING
+        
+        /** The idle. */
+        IDLE, 
+ /** The attacking. */
+ ATTACKING, 
+ /** The decaying. */
+ DECAYING, 
+ /** The sustaining. */
+ SUSTAINING, 
+ /** The releasing. */
+ RELEASING
     }
 
+    /** The state. */
     private State state = State.IDLE;
+    
+    /** The scaler. */
     private double scaler = 1.0;
+    
+    /** The level. */
     private double level;
+    
+    /** The increment. */
     private double increment;
 
+    /**
+     * Instantiates a new jsyn envelope adsr.
+     */
     public JsynEnvelopeADSR() {
         super();
         addPort(attack = new UnitInputPort("Attack", 0.1));
@@ -69,6 +96,9 @@ public class JsynEnvelopeADSR extends UnitGate implements UnitSource {
         addPort(amplitude = new UnitInputPort("Amplitude", 1.0));
     }
 
+    /* (non-Javadoc)
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
     @Override
     public void generate(int start, int limit) {
         double[] sustains = sustain.getValues();
@@ -161,11 +191,19 @@ public class JsynEnvelopeADSR extends UnitGate implements UnitSource {
         }
     }
 
+    /**
+     * Start idle.
+     */
     private void startIdle() {
         state = State.IDLE;
         level = 0.0;
     }
 
+    /**
+     * Start attack.
+     *
+     * @param i the i
+     */
     private void startAttack(int i) {
         double[] attacks = attack.getValues();
         double duration = attacks[i];
@@ -178,6 +216,11 @@ public class JsynEnvelopeADSR extends UnitGate implements UnitSource {
         }
     }
 
+    /**
+     * Start decay.
+     *
+     * @param i the i
+     */
     private void startDecay(int i) {
         double[] decays = decay.getValues();
         double duration = decays[i];
@@ -190,10 +233,20 @@ public class JsynEnvelopeADSR extends UnitGate implements UnitSource {
         }
     }
 
+    /**
+     * Start sustain.
+     *
+     * @param i the i
+     */
     private void startSustain(int i) {
         state = State.SUSTAINING;
     }
 
+    /**
+     * Start release.
+     *
+     * @param i the i
+     */
     private void startRelease(int i) {
         double[] releases = release.getValues();
         double duration = releases[i];
@@ -204,6 +257,12 @@ public class JsynEnvelopeADSR extends UnitGate implements UnitSource {
         state = State.RELEASING;
     }
 
+    /**
+     * Export.
+     *
+     * @param circuit the circuit
+     * @param prefix the prefix
+     */
     public void export(Circuit circuit, String prefix) {
         circuit.addPort(attack, prefix + attack.getName());
         circuit.addPort(decay, prefix + decay.getName());
@@ -211,6 +270,9 @@ public class JsynEnvelopeADSR extends UnitGate implements UnitSource {
         circuit.addPort(release, prefix + release.getName());
     }
 
+    /* (non-Javadoc)
+     * @see com.jsyn.unitgen.UnitGate#getOutput()
+     */
     @Override
     public UnitOutputPort getOutput() {
         return output;

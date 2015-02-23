@@ -16,24 +16,37 @@ import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 /**
- * 
- * View of keyboard module
- * 
- * @author Team GroupImpl
+ * View of keyboard module.
  *
+ * @author Team GroupImpl
  */
 public class ViewKeyboard extends ViewComponent implements Initializable {
 
+	/** The root module pane. */
 	@FXML private Pane rootModulePane;
+	
+	/** The close module fx. */
 	@FXML private ImageView closeModuleFx;
+	
+	/** The top. */
 	@FXML private GridPane top;
+	
+	/** The output key cv. */
 	@FXML private ImageView outputKeyCV;
+	
+	/** The output key gate. */
 	@FXML private ImageView outputKeyGate;
+	
+	/** The keyboard. */
 	@FXML private Label keyboard;
 
 
+	/** The controller. */
 	private ControllerKeyboard controller;
 
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("Keyboard");
@@ -64,16 +77,26 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 
 		}); 
 	}
+	
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/keyboard.fxml";

@@ -13,24 +13,34 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.mixer.jsyn.Mixer;
 
 /**
- * 
- * Model of mixer module
- * 
- * @author Team GroupImpl
+ * Model of mixer module.
  *
+ * @author Team GroupImpl
  */
 public class ModelMixer extends ModelComponent {
 
+	/** The mixer. */
 	private Mixer mixer;
+	
+	/** The refresh thread. */
 	private Thread refreshThread;
+	
+	/** The refresh period. */
 	private long refreshPeriod = 50;
+	
+	/** The Output value. */
 	private double OutputValue = 0.00;
+	
+	/** The decrease value increment. */
 	private double decreaseValueIncrement = 0.04;
+	
+	/** The is active thread. */
 	private boolean isActiveThread=true;
 	
 	/**
-	 * Constructor
-	 * @param NumberOfInputPort
+	 * Constructor.
+	 *
+	 * @param NumberOfInputPort the number of input port
 	 */
 	public ModelMixer(Integer NumberOfInputPort) {
 		super();
@@ -49,7 +59,7 @@ public class ModelMixer extends ModelComponent {
 	}
 
 	/**
-	 * To start the refresh thread
+	 * To start the refresh thread.
 	 */
 	public void start() {
 		isActiveThread=true;
@@ -57,7 +67,7 @@ public class ModelMixer extends ModelComponent {
 	}
 
 	/**
-	 * To stop the refresh thread
+	 * To stop the refresh thread.
 	 */
 	public void stop() {
 		if (refreshThread.isAlive()) {
@@ -67,8 +77,8 @@ public class ModelMixer extends ModelComponent {
 	}
 	
 	/**
-	 * Get the number of input port
-	 * 
+	 * Get the number of input port.
+	 *
 	 * @return Integer
 	 */
 	public Integer getNumberOfInputPort() {
@@ -76,32 +86,37 @@ public class ModelMixer extends ModelComponent {
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return mixer;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return mixer.getPorts();
 	}
 	
 	/**
-	 * Set an attenuation to the output signal of the index input
-	 * @param index
-	 * 		Input index
-	 * @param dbValue
+	 * Set an attenuation to the output signal of the index input.
+	 *
+	 * @param index 		Input index
+	 * @param dbValue the db value
 	 */
 	public void setAttenuation(Integer index, double dbValue) {
 		mixer.setAttenuation(index, dbValue);
 	}
 
 	/**
-	 * Set Mute to the output signal of the index input
-	 * @param index
-	 * 		Input index
-	 * @param value
-	 *     true|false
+	 * Set Mute to the output signal of the index input.
+	 *
+	 * @param index 		Input index
+	 * @param value     true|false
 	 */
 	public void setMute(Integer index, boolean value) {
 		mixer.setMute(index, value);
@@ -125,18 +140,16 @@ public class ModelMixer extends ModelComponent {
 	
 	/**
 	 * Get the jsyn input port.
-	 * @param index
-	 * 		Input index
-	 * @return
+	 *
+	 * @param index 		Input index
+	 * @return the input port
 	 */
 	public UnitInputPort getInputPort(Integer index) {
 		return mixer.getInput(index);
 	}
 	
 	/**
-	 * 
-	 * Get the output level value
-	 * 
+	 * Get the output level value.
 	 */
 	private void computeOutputGaugeBar() {
 		double getOutputValue = getAverageOutputValue().get();
