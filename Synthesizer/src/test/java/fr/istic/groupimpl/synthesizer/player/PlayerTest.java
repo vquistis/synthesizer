@@ -19,7 +19,7 @@ public class PlayerTest {
 		synth = JSyn.createSynthesizer();
 		model = new ModelPlayer();
 		
-		model.loadSample("junit_PlayerTest.wav");
+		model.loadSample("src/main/resources/sound/junit_PlayerTest.wav");
 		
 		synth.add(model.getUnitGenerator());
 		
