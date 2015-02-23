@@ -19,6 +19,13 @@ public class MixerSumTest extends TestCase {
         synthesisEngine.stop();
     }
 
+    public void testMixerSum_getNumberOfInputPort() throws InterruptedException {
+        Integer NbPortTested = 4;
+        MixerSum mixerSum = new MixerSum(NbPortTested);
+        
+        assertEquals("Get the number of input port", NbPortTested, mixerSum.getNumberOfInputPort(),0);
+    }
+    
     public void testMixerSum() throws InterruptedException {
         double tolerance = 0.002;
         

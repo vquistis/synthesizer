@@ -60,6 +60,8 @@ public class Mixer extends Circuit implements UnitSource {
 
 	/**
 	 * Get the average output value of Mixer module.
+	 * It's a first try at smoothing the gauge value, 
+	 * will surely be improved in the future.
 	 */
 	public UnitOutputPort getAverageOutputValue() {
 		return averageOutputValue;
@@ -119,7 +121,7 @@ public class Mixer extends Circuit implements UnitSource {
 	 * Set an attenuation decibel value value to the input
 	 * 
 	 * @param index
-	 * 		index of the atteanuator (first = 0)
+	 * 		index of the attenuator (first = 0)
 	 * @param dbValue    
 	 */
 	public void setAttenuation(Integer index, double dbValue) {
