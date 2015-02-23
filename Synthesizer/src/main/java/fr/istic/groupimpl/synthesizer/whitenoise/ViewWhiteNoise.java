@@ -13,6 +13,11 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 
+/**
+ * View of White noise module
+ * 
+ * @author Team GroupImpl
+ */
 public class ViewWhiteNoise extends ViewComponent implements Initializable {
 
 	@FXML private Pane rootModulePane;

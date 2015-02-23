@@ -1,5 +1,11 @@
 package fr.istic.groupimpl.synthesizer.util;
 
+/**
+ * The class OscilloscopeFactory
+ * 
+ * @author GroupImpl
+ *
+ */
 public class OscilloscopeFactory {
 	
 	

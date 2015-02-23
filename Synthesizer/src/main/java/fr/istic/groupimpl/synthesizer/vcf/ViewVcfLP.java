@@ -8,16 +8,20 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
+/**
+ * View vcf LowPass module
+ *
+ * @author Team GroupImpl
+ *
+ */
 public class ViewVcfLP extends ViewVcf implements Initializable {
 
 	private ControllerVcf controller;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// Creation du controller
 		controller = new ControllerVcf(ModelVcf.Type.LP24);
 
-		// Creation des potentiometres
 		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();
 		knobFact.setRayon(32);
 

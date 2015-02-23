@@ -14,6 +14,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
+/**
+ * Oscilloscope module
+ * 
+ * @author GroupImpl
+ *
+ */
 public class Oscilloscope extends Region {
 
 	private final long TIME_STABILITY=2500;
@@ -137,6 +143,15 @@ public class Oscilloscope extends Region {
 			refreshPeriod = MIN_REFRESH_PERIOD;
 		if (refreshPeriod > MAX_REFRESH_PERIOD)
 			refreshPeriod = MAX_REFRESH_PERIOD;
+	}
+	/**
+	 * Get the refresh period
+	 * 
+	 * @param v
+	 *            Value of the period in seconds
+	 */
+	public double getRefreshPeriod() {
+		return (double)refreshPeriod/1000.; 
 	}
 
 	/**

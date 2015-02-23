@@ -8,15 +8,17 @@ import com.jsyn.ports.UnitPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
-import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.vca.jsyn.JSynVCA;
 
 /**
  * The Class Model Vca.
+ * 
+ * @author Team GroupImpl
+ * 
  */
 public class ModelVca extends ModelComponent {
 
-	/** The vcaj syn. */
+	/** The vca Jsyn. */
 	private JSynVCA vcajSyn;
 
 	/**
@@ -55,10 +57,8 @@ public class ModelVca extends ModelComponent {
 	public UnitInputPort getInputPort(String portName) {
 		switch (portName) {
 		case "vca_input":
-			Log.getInstance().debug("!!!!!!");
 			return vcajSyn.getInput();
 		case "vca_inputam":
-			Log.getInstance().debug("????");
 			return vcajSyn.getInputam();
 		case "vca_inputa0":
 			return vcajSyn.getInputa0();

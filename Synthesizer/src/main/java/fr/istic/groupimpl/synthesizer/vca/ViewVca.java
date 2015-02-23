@@ -19,10 +19,10 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
- * The Class ViewVca.
+ * View of vca module
  *
  * @authors GroupImpl
- * VCA module - JavaFX Controller
+ * 
  */
 public class ViewVca extends ViewComponent implements Initializable {
 
@@ -81,10 +81,6 @@ public class ViewVca extends ViewComponent implements Initializable {
 		addParameters("amplitudeKnod", () -> amplitudeKnod.getValue(), (val) -> amplitudeKnod.setValue(val));
 	}
 
-
-	/** (non-Javadoc)
-	 * get vca pane
-	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return paneVca;

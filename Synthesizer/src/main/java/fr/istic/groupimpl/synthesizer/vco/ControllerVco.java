@@ -5,16 +5,27 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
+/**
+ * Controller of vco module
+ * 
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ControllerVco extends ControllerComponent {
-	
+
 	private ModelVco modelVco;
 	private ControllerGlobal ctrlGlob;
-	
+
+	/**
+	 * Constructor
+	 * @param uiFreqLabel
+	 */
 	public ControllerVco(StringProperty uiFreqLabel) {
 		modelVco = new ModelVco();
 		modelVco.setCommandProperty("freq", () ->
-			uiFreqLabel.set(modelVco.getValProperty("freq") + " Hz")
-		);
+		uiFreqLabel.set(modelVco.getValProperty("freq") + " Hz")
+				);
 		modelVco.setOctave(0.0);
 		ctrlGlob = ControllerGlobal.getInstance();
 		ctrlGlob.registerUnitGenerator(modelVco.getUnitGenerator());
@@ -25,7 +36,7 @@ public class ControllerVco extends ControllerComponent {
 		ctrlGlob.removeAllConnections(modelVco.getAllPorts());
 		ctrlGlob.unregisterUnitGenerator(modelVco.getUnitGenerator());
 	}
-	
+
 	/**
 	 * @param octave The octave value (1 : 8) from the octave knob
 	 * @param precision The precision value (-1 : 1) from the precision knob
@@ -34,7 +45,7 @@ public class ControllerVco extends ControllerComponent {
 	public void handleViewOctaveChange(double octave, double precision) {
 		modelVco.setOctave(octave + precision);
 	}
-	
+
 	/**
 	 * @param typeName : square | triangle | sawtooth
 	 * Sets in the model the type of output signal
@@ -42,7 +53,7 @@ public class ControllerVco extends ControllerComponent {
 	public void handleViewOutputTypeChange(String typeName) {
 		modelVco.setOutputType(typeName);
 	}
-	
+
 	/**
 	 * @param value The frequency to set (in Hz)
 	 * Sets in the model the base frequency
@@ -60,7 +71,6 @@ public class ControllerVco extends ControllerComponent {
 
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return modelVco;
 	}
 

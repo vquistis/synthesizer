@@ -11,11 +11,20 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.vco.jsyn.VCOCircuit;
 
+/**
+ * Model of vco module
+ * 
+ * @author Team GroupImpl
+ *
+ */
 public class ModelVco extends ModelComponent {
-	
+
 	private VCOCircuit vcoCirc;
 	private double f0 = 1.0;
-		
+
+	/**
+	 * Constructor
+	 */
 	public ModelVco() {
 		super();		
 		vcoCirc = new VCOCircuit();
@@ -27,7 +36,7 @@ public class ModelVco extends ModelComponent {
 	public UnitGenerator getUnitGenerator() {
 		return this.vcoCirc;
 	}
-	
+
 	/**
 	 * @param octave
 	 * Sets the octave value to the VCO Circuit
@@ -36,22 +45,22 @@ public class ModelVco extends ModelComponent {
 		vcoCirc.getInputOctave().set(octave);
 		computeFrequency(octave);
 	}
-	
+
 	/**
 	 * @param typeName The name of the output type : square | triangle | sawtooth
 	 * Sets the type of output signal
 	 */
 	protected void setOutputType(String typeName) {		
 		switch(typeName) {
-			case "square":
-				vcoCirc.getInputShape().set(3);
-				break;
-			case "triangle":
-				vcoCirc.getInputShape().set(1);
-				break;
-			case "sawtooth":
-				vcoCirc.getInputShape().set(2);
-				break;
+		case "square":
+			vcoCirc.getInputShape().set(3);
+			break;
+		case "triangle":
+			vcoCirc.getInputShape().set(1);
+			break;
+		case "sawtooth":
+			vcoCirc.getInputShape().set(2);
+			break;
 		}
 	}
 
@@ -75,13 +84,13 @@ public class ModelVco extends ModelComponent {
 	public Collection<UnitPort> getAllPorts() {
 		return this.vcoCirc.getPorts();
 	}
-	
+
 	private void computeFrequency(double octave) {
 		double frequency = f0 * Math.pow(2, octave);
 		DoubleStringConverter dsc = new DoubleStringConverter();
 		this.setValProperty("freq", dsc.toString(frequency));
 	}
-	
+
 	/**
 	 * @param value The frequency to set (in Hz)
 	 * Sets the base frequency of the VCO
@@ -98,5 +107,5 @@ public class ModelVco extends ModelComponent {
 	public void setAmplitude(double value) {
 		vcoCirc.setAmplitude(value);
 	}
-		
+
 }
