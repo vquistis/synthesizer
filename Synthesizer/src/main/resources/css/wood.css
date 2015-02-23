@@ -3,16 +3,17 @@
 /* ----- Menu module ----- */
 .menuModule {
 	-fx-background-color: #383838;
-    -fx-background-image: url("../img/metal/bg.png");
+    -fx-background-image: url("../img/wood/wood-left.jpg");
     -fx-background-size: stretch;
+    -fx-border-color: #B47640;
+	-fx-border-width: 0 1 0 0;
+	-fx-border-style: solid;
 }
 
 .moduleButton {
     -fx-background-color: 
         #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-        linear-gradient(#20262b, #191d22),
-        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+        linear-gradient(#59270C, #191d22);
     -fx-background-radius: 5,4,3,5;
     -fx-background-insets: 0,1,2,0;
     -fx-text-fill: white;
@@ -32,12 +33,13 @@
 /* ----------------------- */
 
 .workspace, .split-pane {
-	-fx-background-color:  transparent, #4a4c4e;
+	-fx-background-image: url("../img/wood/wood.jpg");
+	-fx-background-size: stretch;
 }
 
 .split-pane:vertical .split-pane-divider {
 	-fx-padding: 3px;
-	-fx-background-color: transparent, derive(#1d1d1d, 20%);
+	-fx-background-color: transparent, derive(#000, 20%);
 }
 
 /* ----- CSS Scroll bar ----- */
@@ -45,14 +47,14 @@
 	-fx-padding: 0px;
 }
 .scroll-pane > * {
-	-fx-background-color: transparent, derive(#1d1d1d, 20%);
+	-fx-background-color: transparent, derive(#331100, 20%);
 	-fx-padding: 0px;
 }
 .scroll-pane .scroll-bar .track {
-	-fx-background-color: transparent, derive(#1d1d1d, 20%);
+	-fx-background-color: transparent, derive(#331100, 20%);
 }
 .scroll-pane .scroll-bar .thumb {
-    -fx-background-color: transparent, derive(#1d1d1d, 80%);
+    -fx-background-color: transparent, derive(#331100, 80%);
 }
 .scroll-pane .scroll-bar .increment-button ,
 .scroll-pane .scroll-bar .decrement-button {
@@ -68,16 +70,17 @@
 
 /* ----- CSS Module ----- */
 .moduleBox {
-	-fx-border-color: #1d1d1d;
+	-fx-border-color: #742600;
 	-fx-border-width: 1;
 	-fx-border-style: solid;
 }
 
 .titlePane {
-	-fx-background-color: linear-gradient(#bbb, #E3E3E3);
 	-fx-border-color: #bbb;
 	-fx-border-width: 0 0 1 0;
 	-fx-border-style: solid;
+	-fx-background-image: url("../img/wood/wood-title.jpg");
+	-fx-background-size: stretch;
 }
 
 .choiceBaseFreq {
@@ -85,11 +88,13 @@
 }
 
 .contentPane {
-	-fx-background-color: #f4f4f4;
+	-fx-background-image: url("../img/wood/wood-module.jpg");
+    -fx-background-size: stretch;
 }
 
 .portPane {
-	-fx-background-color: linear-gradient(#E3E3E3, #bbb);
+	-fx-background-image: url("../img/wood/wood-port.jpg");
+	-fx-background-size: stretch;
 	-fx-border-color: #bbb;
 	-fx-border-width: 1 0 0 0;
 	-fx-border-style: solid;
@@ -103,7 +108,7 @@
 	-fx-background-color: transparent;
 }
 .knob {
-	-fx-background-image: url("../img/metal/metal-knob.png");
+	-fx-background-image: url("../img/wood/wood-knob.png");
 	-fx-background-size: stretch;
 }
 /* ---------------------- */
