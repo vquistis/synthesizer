@@ -2,6 +2,7 @@ package fr.istic.groupimpl.synthesizer.mixer;
 
 import java.io.IOException;
 
+import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -57,7 +58,7 @@ public class ViewMixerInput extends HBox {
 	        loader.load();
 	        fxLabelInput.setText(label);
 	    } catch (IOException e) {
-			e.printStackTrace();
+			Log.getInstance().error("Failed to initialize mixer", e );
 	    }
 	}
 }

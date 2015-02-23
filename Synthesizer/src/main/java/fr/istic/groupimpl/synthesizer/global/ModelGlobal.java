@@ -19,6 +19,7 @@ import com.jsyn.util.WaveRecorder;
 
 import fr.istic.groupimpl.synthesizer.io.architecture.Module;
 import fr.istic.groupimpl.synthesizer.io.architecture.Port;
+import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
  * The Class ModelGlobal
@@ -267,7 +268,7 @@ public class ModelGlobal {
 			recorder.stop();
 			recorder.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.getInstance().error("Failed to stop Recording", e );
 		}
 	}
 	

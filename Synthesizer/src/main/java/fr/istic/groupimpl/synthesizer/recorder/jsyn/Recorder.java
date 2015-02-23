@@ -10,6 +10,8 @@ import com.jsyn.unitgen.Circuit;
 import com.jsyn.unitgen.PassThrough;
 import com.jsyn.util.WaveRecorder;
 
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
 /**
  * Jsyn Recorder module
  * 
@@ -57,7 +59,7 @@ public class Recorder extends Circuit {
 			try {
 				recorder.close(); // close and flush
 			} catch (IOException e) {
-				e.printStackTrace();
+				Log.getInstance().error("Failed to stop recording", e );
 			}
 		}
 	}
@@ -66,7 +68,7 @@ public class Recorder extends Circuit {
 		try {
 			recorder = new WaveRecorder(synthesisEngine, sampleFile);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Log.getInstance().error("Failed to initialize the sample file", e );
 		}
 		// connect InputPort
 		passThroughInput.output.connect(recorder.getInput());
