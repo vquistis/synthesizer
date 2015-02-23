@@ -49,5 +49,119 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/libs/jsyn_16_7_3.jar</systemPath>
 		</dependency>
+
 	</dependencies>
+
+
+	<build>
+		<plugins>
+
+			<!-- Javadoc plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<tags>
+						<tag>
+							<name>type</name>
+							<placement>m</placement>
+							<head>Type:</head>
+							new
+						</tag>
+						<tag>
+							<name>input</name>
+							<placement>m</placement>
+							<head>Input:</head>
+						</tag>
+						<tag>
+							<name>oracle</name>
+							<placement>m</placement>
+							<head>Oracle:</head>
+						</tag>
+						<tag>
+							<name>passed</name>
+							<placement>m</placement>
+							<head>Passed:</head>
+						</tag>
+						<tag>
+							<name>correction</name>
+							<placement>m</placement>
+							<head>Correction:</head>
+						</tag>
+					</tags>
+				</configuration>
+			</plugin>
+
+			<!-- Jacoco (code coverage) plugin -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.1.201405082137</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+
+
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.jacoco</groupId>
+										<artifactId>
+											jacoco-maven-plugin
+										</artifactId>
+										<versionRange>
+											[0.7.1.201405082137,)
+										</versionRange>
+										<goals>
+											<goal>prepare-agent</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
 </project>
