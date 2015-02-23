@@ -6,10 +6,12 @@ import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
@@ -27,8 +29,8 @@ public class ViewEcho extends ViewComponent implements Initializable {
 
 	@FXML
 	private BorderPane paneEcho;
-	@FXML
-	private ImageView closeEcho;
+	/** The top. */
+	@FXML private GridPane top;
 	@FXML
 	private VBox knobPeriod;
 	@FXML
@@ -46,7 +48,7 @@ public class ViewEcho extends ViewComponent implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		((Label) top.lookup("#titleModule")).setText("Echo chamber");
 		
 		// EchoController creation and listeners on knob values
 		echoController = new ControllerEcho();
@@ -90,9 +92,9 @@ public class ViewEcho extends ViewComponent implements Initializable {
 		addParameters("knobEchoAttenuation", () -> attenuationKnob.getValue(), (val) -> attenuationKnob.setValue(val));
 
 		
-		// Listener close ECHO
-		closeEcho.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			cleanup();
+		// Listener close module
+		top.lookup("#closeModuleFx").addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+			cleanup();			
 			echoController.handleViewClose();
 			Pane parent = (Pane) paneEcho.getParent();
 			parent.getChildren().remove(paneEcho);

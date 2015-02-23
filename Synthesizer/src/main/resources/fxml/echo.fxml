@@ -50,32 +50,9 @@
           </children>
       </GridPane>
    </bottom>
-   <top>
-      <GridPane maxHeight="33.0" minHeight="33.0" prefHeight="33.0" styleClass="titlePane">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="35.0" prefWidth="39.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <Label alignment="CENTER" text="Echo chamber">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </Label>
-            <ImageView fx:id="closeEcho" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@../img/close.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-         </children>
-      </GridPane>
-   </top>
+  	<top>
+		<fx:include source="include/top.fxml" fx:id="top"/>
+	</top>
    <center>
       <VBox alignment="TOP_CENTER" styleClass="contentPane">
          <children>
