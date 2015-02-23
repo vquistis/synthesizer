@@ -21,28 +21,54 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
- * The Class ViewEg : view of EG component
- * 
- * @author Team groupImpl
+ * The Class ViewEg : view of EG component.
  *
+ * @author Team groupImpl
  */
 public class ViewEg extends ViewComponent implements Initializable {
 
+	/** The root module pane. */
 	@FXML private Pane rootModulePane;
+	
+	/** The top. */
 	@FXML private GridPane top;
+	
+	/** The knob attack pane. */
 	@FXML private VBox knobAttackPane;
+	
+	/** The knob decay pane. */
 	@FXML private VBox knobDecayPane;
+	
+	/** The knob sustain pane. */
 	@FXML private VBox knobSustainPane;
+	
+	/** The knob release pane. */
 	@FXML private VBox knobReleasePane;
+	
+	/** The value attack fx. */
 	@FXML private TextField valueAttackFx;
+	
+	/** The value decay fx. */
 	@FXML private TextField valueDecayFx;
+	
+	/** The value sustain fx. */
 	@FXML private TextField valueSustainFx;
+	
+	/** The value release fx. */
 	@FXML private TextField valueReleaseFx;
+	
+	/** The input. */
 	@FXML private ImageView input;
+	
+	/** The output. */
 	@FXML private ImageView output;
 
+	/** The controller. */
 	private ControllerEg controller;
 	
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("EG");
@@ -100,16 +126,25 @@ public class ViewEg extends ViewComponent implements Initializable {
 		addParameters("knobRelease", () -> knobRelease.getValue(), (val) -> knobRelease.setValue(val));
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/eg.fxml";

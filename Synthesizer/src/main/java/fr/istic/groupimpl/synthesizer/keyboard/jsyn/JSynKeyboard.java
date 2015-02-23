@@ -6,23 +6,26 @@ import com.jsyn.unitgen.UnitGenerator;
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
- * 
- * The Class JSynKeyboard
- * 
- * @author Team GroupImpl
+ * The Class JSynKeyboard.
  *
+ * @author Team GroupImpl
  */
 public class JSynKeyboard extends UnitGenerator  {
 
-	/* Declare ports */
+	/** The output cv. */
 	private UnitOutputPort outputCV;
+	
+	/** The output gate. */
 	private UnitOutputPort outputGate;
 	
+	/** The volt cv. */
 	private double voltCV;
+	
+	/** The volt gate. */
 	private double voltGate;
 	
 	/**
-	 * constructor
+	 * constructor.
 	 */
 	public JSynKeyboard() {
 		addPort(outputCV = new UnitOutputPort("outputKeyCV"));
@@ -30,8 +33,9 @@ public class JSynKeyboard extends UnitGenerator  {
 	}
 	
 	/**
-	 * set volt
-	 * @param volt
+	 * set volt.
+	 *
+	 * @param volt the new volt
 	 */
 	public void setVolt( double volt )
 	{
@@ -39,9 +43,9 @@ public class JSynKeyboard extends UnitGenerator  {
 	}
 	
 	/**
-	 * set Volt of gate
-	 * 
-	 * @param press
+	 * set Volt of gate.
+	 *
+	 * @param press the new press
 	 */
 	public void setPress( boolean press )
 	{
@@ -49,6 +53,9 @@ public class JSynKeyboard extends UnitGenerator  {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+	 */
 	@Override
 	public void generate(int start, int limit) {
 		double[] outputs_CV = outputCV.getValues();

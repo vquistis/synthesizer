@@ -23,49 +23,74 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
- * 
- * View of mixer module
- * 
- * @author Team GroupImpl
+ * View of mixer module.
  *
+ * @author Team GroupImpl
  */
 public class ViewMixer extends ViewComponent implements Initializable {
+	
+	/** The Constant RED_BAR. */
 	private static final String RED_BAR    = "red-bar";
+	
+	/** The Constant GREEN_BAR. */
 	private static final String GREEN_BAR  = "green-bar";
+	
+	/** The Constant barColorStyleClasses. */
 	private static final String[] barColorStyleClasses = { RED_BAR, GREEN_BAR };
 	  
+	/** The Number of input port. */
 	private Integer NumberOfInputPort = 4;
 	
+	/** The root module pane. */
 	@FXML private Pane rootModulePane;
+	
+	/** The input h box. */
 	@FXML private HBox inputHBox;
+	
+	/** The close module fx. */
 	@FXML private ImageView closeModuleFx;
+	
+	/** The top. */
 	@FXML private GridPane top;
+	
+	/** The fx output. */
 	private ImageView fxOutput;
+	
+	/** The output gauge. */
 	private ProgressBar outputGauge;
 	
+	/** The controller. */
 	private ControllerMixer controller;
 	
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {	
 		configurate();
 	}
 
 	/**
-	 * Set the number of input port generated
+	 * Set the number of input port generated.
+	 *
+	 * @return the number of input port
 	 */
 	public Integer getNumberOfInputPort() {
 		return NumberOfInputPort;
 	}
 
 	/**
-	 * Set the number of input port to generate
+	 * Set the number of input port to generate.
+	 *
+	 * @param numberOfInputPort the new number of input port
 	 */
 	public void setNumberOfInputPort(Integer numberOfInputPort) {
 		NumberOfInputPort = numberOfInputPort;
 	}
 	
 	/**
-	 * Get instance of the ouput gauge
+	 * Get instance of the ouput gauge.
+	 *
 	 * @return ProgressBar
 	 */
 	public ProgressBar getOutputGauge() {
@@ -73,7 +98,7 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	}
 	
 	/**
-	 * Method to configurate the view
+	 * Method to configurate the view.
 	 */
 	public void configurate() {
 		((Label) top.lookup("#titleModule")).setText("MIXER");
@@ -109,10 +134,9 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	}
 	
 	/**
-	 *  Configure Gauge Bar
-	 * 
-	 * @param fxmlNodeName
-	 *   Name of the xml node
+	 *  Configure Gauge Bar.
+	 *
+	 * @param fxmlNodeName   Name of the xml node
 	 * @return ProgressBar
 	 */
 	private ProgressBar configureGaugeBar(String fxmlNodeName) {
@@ -137,16 +161,12 @@ public class ViewMixer extends ViewComponent implements Initializable {
 	}
 	
 	/**
-	 * 
-	 * Generate the input view
-	 * 
-	 * @param index
-	 * 	index of the input port
-	 * @param controler
-	 *  Controller
-	 * @param knobFact
-	 *  PotentiometreFactory
-	 * @return
+	 * Generate the input view.
+	 *
+	 * @param index 	index of the input port
+	 * @param controller the controller
+	 * @param knobFact  PotentiometreFactory
+	 * @return the view mixer input
 	 */
 	private ViewMixerInput createViewMixerInput(Integer index, ControllerMixer controller, PotentiometreFactory knobFact) {
 		// faire table de knobVolume
@@ -175,16 +195,25 @@ public class ViewMixer extends ViewComponent implements Initializable {
 		return inputView;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/mixer.fxml";

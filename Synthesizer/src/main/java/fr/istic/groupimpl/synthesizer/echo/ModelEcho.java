@@ -9,11 +9,10 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.echo.jsyn.JsynEchoCircuit;
-import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
 
 /**
  * 
- * Model of oscilloscope module
+ * Model of echo module
  * 
  * @author Team GroupImpl
  *
@@ -24,7 +23,7 @@ public class ModelEcho extends ModelComponent {
 	
 	/**
 	 * Constructor
-	 * @param sizeBuffer
+	 * @param period
 	 */
 	public ModelEcho( double period ) {
 		super();
@@ -32,11 +31,20 @@ public class ModelEcho extends ModelComponent {
 		circuit = new JsynEchoCircuit(period);
 	}
 
+	/**
+	 * set period value in seconds
+	 * @param period
+	 * 	the period for the echoes
+	 */
 	public void setPeriodValue( double period )
 	{
 		circuit.setPeriodValue( period );
 	}
 	
+	/**
+	 * set the attenuation value in decibel
+	 * @param attenuation
+	 */
 	public void setAttenuationValue( double attenuation )
 	{
 		circuit.setAttenuationValue( attenuation );

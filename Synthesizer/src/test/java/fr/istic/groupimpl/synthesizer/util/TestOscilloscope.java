@@ -2,15 +2,24 @@ package fr.istic.groupimpl.synthesizer.util;
 
 import junit.framework.TestCase;
 
+import org.junit.Test;
+
 public class TestOscilloscope extends TestCase {
 	
 	private Oscilloscope scope;
-	private double [] bufferScope;
+	private double [] bufferScope=new double[2048];
+	private int nbGetBuffer=0;
+	private double [] getBuffer()
+	{
+		nbGetBuffer++;
+		return bufferScope;
+		
+	}
     @Override
     protected void setUp() throws Exception {
         super.setUp();
 		OscilloscopeFactory scopeFact = OscilloscopeFactory.getFactoryInstance();
-		scopeFact.setCmdGetBuffer(()->bufferScope );
+		scopeFact.setCmdGetBuffer( ()->getBuffer() );
 		
 		scope = scopeFact.getOscilloscope();	
 	}
@@ -19,27 +28,31 @@ public class TestOscilloscope extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
     }
-	
-//	@Test
-//	public void testCompress()
-//	{
-//		double [] buf = new double[128];
-//		
-//		double v = -50.;
-//		double inc= 1.;
-//		for ( int i = 0 ; i < buf.length ; i++, v += inc )
-//		{
-//			buf[i] = v;
-//		}
-//		
-//		bufferScope = buf;
-//		
-//		List<Oscilloscope.EltComp> result= scope.compress(buf);
-//		
-//		assertEquals(2,result.size());
-//		
-//		assertEquals(-50,result.get(0).val);
-//		assertEquals(1,result.get(0).indice);	
-//	}
+    
+    
+    @Test
+    public void testSetPeriod()
+    {
+     	scope.setRefreshPeriod(0.5);
+     	
+     	assertEquals(0.5,scope.getRefreshPeriod(),0.000001);
+     	
+    }
+    @Test
+    public void testSetNullPeriod()
+    {
+     	scope.setRefreshPeriod(0.0);
+     	
+     	assertEquals(0.1,scope.getRefreshPeriod(),0.000001);
+     	
+    }
+    @Test
+    public void testSetBigPeriod()
+    {
+     	scope.setRefreshPeriod(1123.);
+     	
+     	assertEquals(2.,scope.getRefreshPeriod(),0.000001);
+     	
+    }
 
 }

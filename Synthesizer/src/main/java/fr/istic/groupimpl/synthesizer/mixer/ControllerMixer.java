@@ -5,19 +5,20 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 /**
- * 
- * Controller of mixer module
- * 
- * @author Team GroupImpl
+ * Controller of mixer module.
  *
+ * @author Team GroupImpl
  */
 public class ControllerMixer extends ControllerComponent {
+	
+	/** The model. */
 	private ModelMixer model;
 	
 	/**
-	 * Constructor
-	 * @param view
-	 * @param NumberOfInputPort
+	 * Constructor.
+	 *
+	 * @param view the view
+	 * @param NumberOfInputPort the number of input port
 	 */
 	
 	public ControllerMixer(ViewMixer view, Integer NumberOfInputPort) {
@@ -31,8 +32,8 @@ public class ControllerMixer extends ControllerComponent {
 	}
 	
 	/**
-	 * Get the number of input port
-	 * 
+	 * Get the number of input port.
+	 *
 	 * @return Integer
 	 */
 	public Integer getNumberOfInputPort() {
@@ -50,15 +51,18 @@ public class ControllerMixer extends ControllerComponent {
 	}
 
 	/**
-	 * Change listener for mute choice
-	 * @param index
-	 * 		index input port
+	 * Change listener for mute choice.
+	 *
+	 * @param index 		index input port
 	 * @param newVal - true for mute
 	 */
 	public void handleViewMuteChange(Integer index, Boolean newVal) {
 		model.setMute(index, newVal);
 	}
 	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
 	@Override
 	public void handleViewClose() {
 		model.stop();
@@ -66,6 +70,9 @@ public class ControllerMixer extends ControllerComponent {
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());
 	}
 	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
 	@Override
 	public ModelComponent getModel() {
 		return model;

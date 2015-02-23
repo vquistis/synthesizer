@@ -289,7 +289,7 @@ public class ViewGlobal implements Initializable {
 	public void init() {
 		//primaryStage = (Stage) borderpane.getScene().getWindow();
 		
-		lookAndFeel.getItems().addAll("metal");
+		lookAndFeel.getItems().addAll("metal", "wood");
 		lookAndFeel.getSelectionModel().selectFirst();
 		lookAndFeel.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
 			URL cssURL = getClass().getClassLoader().getResource("css/"+newVal+".css");

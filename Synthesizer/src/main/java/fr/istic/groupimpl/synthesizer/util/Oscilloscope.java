@@ -195,6 +195,15 @@ public class Oscilloscope extends Region {
 		if (refreshPeriod > MAX_REFRESH_PERIOD)
 			refreshPeriod = MAX_REFRESH_PERIOD;
 	}
+	/**
+	 * Get the refresh period
+	 * 
+	 * @param v
+	 *            Value of the period in seconds
+	 */
+	public double getRefreshPeriod() {
+		return (double)refreshPeriod/1000.; 
+	}
 
 	/**
 	 * To start the refresh thread.

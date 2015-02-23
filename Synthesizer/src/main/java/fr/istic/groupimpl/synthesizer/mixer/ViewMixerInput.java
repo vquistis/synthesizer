@@ -2,7 +2,6 @@ package fr.istic.groupimpl.synthesizer.mixer;
 
 import java.io.IOException;
 
-import fr.istic.groupimpl.synthesizer.logger.Log;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -11,24 +10,33 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
- * 
- * View of Mixer module
- * 
- * @author Team GroupImpl
+ * View of Mixer module.
  *
+ * @author Team GroupImpl
  */
 public class ViewMixerInput extends HBox {
+	
+	/** The fx input. */
 	@FXML private ImageView fxInput;
+	
+	/** The fx label input. */
 	@FXML private Label fxLabelInput;
+	
+	/** The fx knob volume pane. */
 	@FXML private VBox fxKnobVolumePane;
+	
+	/** The fx value volume. */
 	@FXML private TextField fxValueVolume;
+	
+	/** The fx mute volume. */
 	@FXML private CheckBox fxMuteVolume;
 	
 	/**
-	 * Get the instance of the Input Image View
-	 * 
+	 * Get the instance of the Input Image View.
+	 *
 	 * @return ImageView
 	 */
 	public ImageView getFxInput() {
@@ -36,8 +44,8 @@ public class ViewMixerInput extends HBox {
 	}
 
 	/**
-	 * Get the instance of the Input Label
-	 * 
+	 * Get the instance of the Input Label.
+	 *
 	 * @return Label
 	 */
 	public Label getFxLabelInput() {
@@ -45,8 +53,8 @@ public class ViewMixerInput extends HBox {
 	}
 
 	/**
-	 * Get the instance of the Volume Knob
-	 * 
+	 * Get the instance of the Volume Knob.
+	 *
 	 * @return VBox
 	 */
 	public VBox getFxKnobVolumePane() {
@@ -54,8 +62,8 @@ public class ViewMixerInput extends HBox {
 	}
 
 	/**
-	 * Get the instance of the Volume TextField
-	 * 
+	 * Get the instance of the Volume TextField.
+	 *
 	 * @return TextField
 	 */
 	public TextField getFxValueVolume() {
@@ -63,8 +71,8 @@ public class ViewMixerInput extends HBox {
 	}
 
 	/**
-	 * Get the instance of the Mute Volume CheckBox
-	 * 
+	 * Get the instance of the Mute Volume CheckBox.
+	 *
 	 * @return CheckBox
 	 */
 	public CheckBox getFxMuteVolume() {
@@ -72,9 +80,9 @@ public class ViewMixerInput extends HBox {
 	}
 	
 	/**
-	 * Constructor
-	 * @param label
-	 * 	input label
+	 * Constructor.
+	 *
+	 * @param label 
 	 */
 	public ViewMixerInput(String label) {
 	    try {

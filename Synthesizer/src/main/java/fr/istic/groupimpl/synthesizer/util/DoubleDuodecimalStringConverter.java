@@ -4,7 +4,9 @@ import javafx.util.StringConverter;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
- * Converter double in duo decimal.
+ * Convert String to Double, string is in duodecimal format ( radix 12 ).
+ * the interest of this radix is that in this base 
+ * when one is one octave then 0.1 is one semitone.
  *
  * @author Team GrouplImpl
  */
@@ -28,7 +30,7 @@ public class DoubleDuodecimalStringConverter extends StringConverter<Number> {
 		int ind = str.length() - 3;
 		str = str.substring(0, ind) + "." + str.substring(ind);
 
-		// supression des 0 à la fin
+		// suppress of zero endings
 		boolean flagCont = true;
 		while (flagCont) {
 			
@@ -36,7 +38,7 @@ public class DoubleDuodecimalStringConverter extends StringConverter<Number> {
 			switch (last) {
 			case ".":
 				flagCont = false;
-				// Il n'y pas de break c'est voulu
+				// NO BREAK  FALLS THROUGHT
 			case "0":
 				str = str.substring(0, str.length() - 1);
 				break;

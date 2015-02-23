@@ -15,13 +15,15 @@ import fr.istic.groupimpl.synthesizer.util.jsyn.JsynAttenuationFilter;
  * UnitGenerator included :
  * - JsynAttenuationFilter
  * - LineOut
+ * 
+ * @author Team GroupImpl
  */
 public class JsynOutCircuit extends Circuit {
-	/* Declare units that will be part of the circuit. */
+	/** Declare units that will be part of the circuit. **/
 	private JsynAttenuationFilter attenuator;
 	private LineOut out;
 
-	/* Declare ports. */
+	/** Declare ports. **/
 	private UnitInputPort input;
 	
 	/**

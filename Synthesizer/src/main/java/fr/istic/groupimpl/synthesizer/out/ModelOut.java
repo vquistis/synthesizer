@@ -18,10 +18,11 @@ import fr.istic.groupimpl.synthesizer.out.jsyn.JsynOutCircuit;
  */
 public class ModelOut extends ModelComponent {
 
+	/** The out. */
 	private JsynOutCircuit out;
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ModelOut() {
 		super();
@@ -31,13 +32,17 @@ public class ModelOut extends ModelComponent {
 	}
 
 	/**
-	 * Set an attenuation to the output signal
-	 * @param value - attenuation in db
+	 * Set an attenuation to the output signal.
+	 *
+	 * @param dbValue the new attenuation
 	 */
 	public void setAttenuation(double dbValue) {
 		out.setAttenuation(dbValue);
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return out;
@@ -51,6 +56,9 @@ public class ModelOut extends ModelComponent {
 		return out.getInput();
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return out.getPorts();

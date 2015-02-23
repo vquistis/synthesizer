@@ -201,7 +201,6 @@ public class VCATest extends TestCase {
 		assertEquals("vca out value - with in = 1 am = 5 & a0 = 0", valueTested, vca.getOutput().getValue());
 		assertEquals("vca out value - with in = 1 am = 5 & a0 = 0", vca.getInput().getValue(), vca.getOutput().getValue());
 		assertEquals("vca out value - with am = 5 & a0 = 0", vca.getInput().getValue(), vca.getOutput().getValue());
-		System.out.println("test 2 " + vca.getOutput().get());
 	}
 
 	/**
@@ -279,7 +278,6 @@ public class VCATest extends TestCase {
 		
 		synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 1);
 		double out1 = vca.getOutput().getValue();
-		System.out.println("2 " + out/4 + " " + out1);
 		assertEquals("vca out value - with am + 1V ", out/4, out1, 0.0001);
 	}
 }

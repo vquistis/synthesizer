@@ -4,6 +4,7 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
+// TODO: Auto-generated Javadoc
 /**
  * 
  * Controller of out module
@@ -13,10 +14,11 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
  */
 public class ControllerOut extends ControllerComponent {
 
+	/** The model. */
 	private ModelOut model = new ModelOut();
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ControllerOut() {
 		ControllerGlobal.getInstance().registerOutUnitGenerator(model.getUnitGenerator());
@@ -31,7 +33,8 @@ public class ControllerOut extends ControllerComponent {
 	}
 
 	/**
-	 * Change listener for mute choice
+	 * Change listener for mute choice.
+	 *
 	 * @param newVal - true for mute
 	 */
 	public void handleViewMuteChange(Boolean newVal) {
@@ -42,14 +45,19 @@ public class ControllerOut extends ControllerComponent {
 		}
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
 	@Override
 	public ModelComponent getModel() {
-		// TODO Auto-generated method stub
 		return model;
 	}
 	

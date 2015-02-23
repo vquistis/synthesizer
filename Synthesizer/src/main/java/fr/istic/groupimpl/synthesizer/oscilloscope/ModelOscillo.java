@@ -11,19 +11,19 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.oscilloscope.jsyn.JsynOscilloCircuit;
 
 /**
- * 
- * Model of oscilloscope module
- * 
- * @author Team GroupImpl
+ * Model of oscilloscope module.
  *
+ * @author Team GroupImpl
  */
 public class ModelOscillo extends ModelComponent {
 
+	/** The circuit. */
 	private JsynOscilloCircuit circuit;
 	
 	/**
-	 * Constructor
-	 * @param sizeBuffer
+	 * Constructor.
+	 *
+	 * @param sizeBuffer the size buffer
 	 */
 	public ModelOscillo( int sizeBuffer ) {
 		super();
@@ -32,15 +32,18 @@ public class ModelOscillo extends ModelComponent {
 	}
 
 	/**
-	 * Transmits the last valid data 
+	 * Transmits the last valid data .
+	 *
 	 * @return buffer of data
-	 * 	
 	 */
 	public double [] getBuffer()
 	{
 		return circuit.getBuffer();
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return circuit;
@@ -62,6 +65,9 @@ public class ModelOscillo extends ModelComponent {
 		return circuit.getOutput();
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return circuit.getPorts();
