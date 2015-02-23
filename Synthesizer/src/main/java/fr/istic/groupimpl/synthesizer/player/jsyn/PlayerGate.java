@@ -9,6 +9,7 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.VariableRateStereoReader;
 import com.jsyn.util.SampleLoader;
 
+import fr.istic.groupimpl.synthesizer.logger.Log;
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
@@ -80,7 +81,7 @@ public class PlayerGate extends VariableRateStereoReader { //VariableRateMonoRea
 		try {
 			sample = SampleLoader.loadFloatSample(sampleFile);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.getInstance().error("Failed to load sample", e );
 		}
 		
 		/*

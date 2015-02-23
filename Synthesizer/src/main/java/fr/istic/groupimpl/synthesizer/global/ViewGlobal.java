@@ -121,7 +121,7 @@ public class ViewGlobal implements Initializable {
 	@FXML
 	private Button stop;
 	
-	/** The cronometre timer. */
+	/** The chronometre timer. */
 	private Timer chronometreTimer;
 	
 	/** The date start record. */
@@ -351,7 +351,7 @@ public class ViewGlobal implements Initializable {
 				suppliers.remove(view.getSaveSupplier());
 			});
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.getInstance().error("Creates a new module failed", e );
 		}
 		
 		return res;
@@ -832,7 +832,7 @@ public class ViewGlobal implements Initializable {
 		     }			
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.getInstance().error("Failed to handle recording", e );
 		}	
 	}
 	

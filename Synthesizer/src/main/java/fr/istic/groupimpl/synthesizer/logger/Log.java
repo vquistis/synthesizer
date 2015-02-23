@@ -42,5 +42,28 @@ public class Log {
 	public void fatal(String msg) {
 		logManager.fatal(msg);
 	}
+	
+	public void trace(String msg, Exception e) {
+		logManager.trace(msg, e);
+	}
 
+	public void debug(String msg, Exception e) {
+		logManager.debug(msg, e);
+	}
+
+	public void info(String msg, Exception e) {
+		logManager.info(msg, e);
+	}
+
+	public void warn(String msg, Exception e) {
+		logManager.warn(msg, e);
+	}
+
+	public void error(String msg, Exception e) {
+		logManager.error(msg, e);
+	}
+
+	public void fatal(String msg, Exception e) {
+		logManager.fatal(msg, e);
+	}
 }
