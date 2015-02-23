@@ -1,8 +1,5 @@
 package fr.istic.groupimpl.synthesizer.recorder;
 
-import java.io.File;
-
-import javafx.stage.FileChooser;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
@@ -16,45 +13,65 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
  */
 public class ControllerRecorder extends ControllerComponent {
 
+	/** The model. */
 	private ModelRecorder model = new ModelRecorder();
+	
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
+	 * @param viewRecorder the view recorder
 	 */
 	public ControllerRecorder(ViewRecorder viewRecorder) {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 		viewRecorder.getFxSampleName().textProperty().bind(model.getSampleFileName());
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
 	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
 	@Override
 	public ModelComponent getModel() {
 		return model;
 	}
 	
+	/**
+	 * Handle view start clicked.
+	 */
 	public void handleViewStartClicked() {
 		model.start();
 	}
 
+	/**
+	 * Handle view stop clicked.
+	 */
 	public void handleViewStopClicked() {
 		model.stop();
 	}
 	
-	public void prepare(){
-		 FileChooser fileChooser = new FileChooser();         
-	     //Set extension filter
-	     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("music wave file (*.wav)", "*.wav");
-	     fileChooser.getExtensionFilters().add(extFilter);
-	     fileChooser.setInitialFileName(model.getSampleFileName().get());
-	     
-	     //Show save file dialog
-	     File file = fileChooser.showSaveDialog(null);
-	     if(file != null){
-	    	 model.prepareFile(file.getAbsolutePath());	 
-	     }
+	/**
+	 * Gets the sample file name.
+	 *
+	 * @return the sample file name
+	 */
+	public String getSampleFileName(){
+		return model.getSampleFileName().get();
+	}
+	
+	/**
+	 * Prepare file.
+	 *
+	 * @param absolutePath the absolute path
+	 */
+	public void prepareFile(String absolutePath){
+		model.prepareFile(absolutePath);
 	}
 }

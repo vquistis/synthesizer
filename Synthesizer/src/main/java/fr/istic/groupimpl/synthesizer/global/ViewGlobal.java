@@ -121,7 +121,7 @@ public class ViewGlobal implements Initializable {
 	@FXML
 	private Button stop;
 	
-	/** The cronometre timer. */
+	/** The chronometre timer. */
 	private Timer chronometreTimer;
 	
 	/** The date start record. */
