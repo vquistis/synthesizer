@@ -9,20 +9,25 @@ import com.jsyn.unitgen.UnitGenerator;
 
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * The Class of Jsyn oscilloscope module
- * 
- * @author Team GroupImpl
+ * The Class of Jsyn oscilloscope module.
  *
+ * @author Team GroupImpl
  */
 public class JsynOscilloCircuit extends UnitGenerator {
 
-	private UnitInputPort input; 		//Volt
-	private UnitOutputPort output; 		//Volt
+	/** The input volt. */
+	private UnitInputPort input; 		
+	
+	/** The output Volt. */
+	private UnitOutputPort output; 	
 	
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
+	 * @param nbBuf the nb buf
+	 * @param sizeBuf the size buf
 	 */
     public JsynOscilloCircuit( int nbBuf, int sizeBuf ) {
         addPort(input = new UnitInputPort("oscillo_in"));
@@ -55,15 +60,21 @@ public class JsynOscilloCircuit extends UnitGenerator {
 		return output;
 	}
 
+	/** The buf. */
 	private final double [][] buf;
 	
+	/** The bloc buf. */
 	private final AtomicBoolean [] blocBuf;
 	
+	/** The ind buf. */
 	private int indBuf;
+	
+	/** The indice. */
 	private int indice;
 	
 	/**
-	 * Makes a new index which was free while blocking
+	 * Makes a new index which was free while blocking.
+	 *
 	 * @return indice
 	 */
 	private int newIndBuf()
@@ -82,8 +93,9 @@ public class JsynOscilloCircuit extends UnitGenerator {
 	}
 
 	/**
-	 * Makes a given buffer read recently
-	 * @return
+	 * Makes a given buffer read recently.
+	 *
+	 * @return the buffer
 	 */
 	public double [] getBuffer()
 	{
@@ -101,9 +113,9 @@ public class JsynOscilloCircuit extends UnitGenerator {
 	}	
 		
     /**
-     * Stores a given element
-     * @param v
-     * 	buffer of data
+     * Stores a given element.
+     *
+     * @param v 	buffer of data
      */
     private void storeBuf( double v )
     {
@@ -118,6 +130,9 @@ public class JsynOscilloCircuit extends UnitGenerator {
     }
     
 
+    /**
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
     @Override
     public void generate(int start, int limit) {
         double[] inputs = input.getValues();

@@ -34,15 +34,30 @@ import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
  */
 public class ViewOut extends ViewComponent implements Initializable {
 
+	/** The root module pane. */
 	@FXML private Pane rootModulePane;
+	
+	/** The top. */
 	@FXML private GridPane top;
+	
+	/** The knob volume pane. */
 	@FXML private VBox knobVolumePane;
+	
+	/** The value volume fx. */
 	@FXML private TextField valueVolumeFx;
+	
+	/** The mute volume fx. */
 	@FXML private CheckBox muteVolumeFx;
+	
+	/** The input. */
 	@FXML private ImageView input;
 
+	/** The controller. */
 	private ControllerOut controller;
 
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("OUT");
@@ -77,6 +92,8 @@ public class ViewOut extends ViewComponent implements Initializable {
 				if (result.get() == ButtonType.OK){
 					controller.handleViewMuteChange(newVal);
 					ControllerGlobal.getInstance().handleStopView();
+				} else {
+					muteVolumeFx.setSelected(oldVal);;
 				}
 			} else {
 				controller.handleViewMuteChange(newVal);
@@ -103,6 +120,9 @@ public class ViewOut extends ViewComponent implements Initializable {
 		addParameters("muteVolumeFx", () -> muteVolumeFx.selectedProperty().get() ? 1.0 : 0.0, (val) -> muteVolumeFx.setSelected(val==1));
 	}
 
+	/**
+	 * Handle close module.
+	 */
 	private void handleCloseModule() {
 		cleanup();			
 		controller.handleViewClose();
@@ -110,16 +130,25 @@ public class ViewOut extends ViewComponent implements Initializable {
 		parent.getChildren().remove(rootModulePane);
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/out.fxml";
