@@ -32,7 +32,7 @@ public class PlayerTest {
 	
 	@Test
 	public void testModel() throws InterruptedException {
-		model.playSample();
+		model.play();
 		synth.sleepFor(8);
 		synth.stop();
 	}
