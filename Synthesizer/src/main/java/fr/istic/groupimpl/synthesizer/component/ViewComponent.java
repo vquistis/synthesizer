@@ -30,7 +30,7 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
  * 
  * @author Team groupImpl 
  */
-public abstract class ViewComponent implements IViewComponent {
+public abstract class ViewComponent {
 
 	/** The Constant COMPONENT_HEIGHT. */
 	public static final double COMPONENT_HEIGHT = 300;

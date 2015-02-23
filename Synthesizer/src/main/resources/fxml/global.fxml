@@ -191,6 +191,14 @@
 						<Font name="System Bold" size="12.0" />
 					</font>
 				</Button>
+				<Button onAction="#handleAddEcho" styleClass="moduleButton" text="ECHO">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Button>
 				<Separator />
 				<Button onAction="#handleAddScope" styleClass="moduleButton" text="SCOPE">
 					<font>

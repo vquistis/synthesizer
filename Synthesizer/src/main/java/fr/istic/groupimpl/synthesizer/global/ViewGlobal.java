@@ -121,7 +121,7 @@ public class ViewGlobal implements Initializable {
 	@FXML
 	private Button stop;
 	
-	/** The cronometre timer. */
+	/** The chronometre timer. */
 	private Timer chronometreTimer;
 	
 	/** The date start record. */
@@ -351,7 +351,7 @@ public class ViewGlobal implements Initializable {
 				suppliers.remove(view.getSaveSupplier());
 			});
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.getInstance().error("Creates a new module failed", e );
 		}
 		
 		return res;
@@ -532,6 +532,14 @@ public class ViewGlobal implements Initializable {
 	@FXML
 	public void handleAddSeq(){
 		createModule("fxml/seq.fxml");		
+	}
+	
+	/**
+	 * Handle add echo. This method adds a new Echo component
+	 */
+	@FXML
+	public void handleAddEcho(){
+		createModule("fxml/echo.fxml");		
 	}
 	
 	/**
@@ -824,7 +832,7 @@ public class ViewGlobal implements Initializable {
 		     }			
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.getInstance().error("Failed to handle recording", e );
 		}	
 	}
 	
