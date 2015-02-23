@@ -4,21 +4,37 @@ import junit.framework.TestCase;
 
 import com.jsyn.engine.SynthesisEngine;
 
+/**
+ * The Class SelectFrom3InputTest.
+ */
 public class SelectFrom3InputTest extends TestCase {
+    
+    /** The synthesis engine. */
     SynthesisEngine synthesisEngine;
 
+    /** set up method
+     * @see junit.framework.TestCase#setUp()
+     */
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         synthesisEngine = new SynthesisEngine();
     }
 
+    /** tear down method
+     * @see junit.framework.TestCase#tearDown()
+     */
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         synthesisEngine.stop();
     }
 
+    /**
+     * Test select from3 input.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void testSelectFrom3Input() throws InterruptedException {
         double tolerance = 0.002;
         
