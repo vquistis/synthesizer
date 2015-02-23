@@ -23,25 +23,57 @@ import fr.istic.groupimpl.synthesizer.vcf.ModelVcf;
  */
 public class JsynVcfCircuit extends Circuit {
 	/* Declare units that will be part of the circuit. */
+	/** The compute freq. */
 	private JsynFrequencyModulation computeFreq;
+	
+	/** The filter1. */
 	private FilterBiquadCommon filter1; // filter LP or HP : 12dB/octave
+	
+	/** The filter2. */
 	private FilterBiquadCommon filter2; // filter LP or HP : 12dB/octave
 
 	/* Declare ports. */
+	/** The input. */
 	private UnitInputPort input;
+	
+	/** The fm. */
 	private UnitInputPort fm;
+	
+	/** The output. */
 	private UnitOutputPort output;
 	
+	/**
+	 * Gets the input.
+	 *
+	 * @return the input
+	 */
 	public UnitInputPort getInput() {
 		return input;
 	}
+	
+	/**
+	 * Gets the fm.
+	 *
+	 * @return the fm
+	 */
 	public UnitInputPort getFm() {
 		return fm;
 	}
+	
+	/**
+	 * Gets the output.
+	 *
+	 * @return the output
+	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}
 	
+	/**
+	 * Instantiates a new jsyn vcf circuit.
+	 *
+	 * @param t the t
+	 */
 	public JsynVcfCircuit(ModelVcf.Type t) {
 		/* Create various unit generators. */
 		computeFreq = new JsynFrequencyModulation();
@@ -81,25 +113,31 @@ public class JsynVcfCircuit extends Circuit {
 		filter2.frequency.connect(computeFreq.getOutput());
 	}
 	
+	/**
+	 * Sets the cut frequency.
+	 *
+	 * @param value the new cut frequency
+	 */
 	public void setCutFrequency(double value) {
 		computeFreq.getInputf0().set(value);
 	}
 	
+	/**
+	 * Sets the resonance.
+	 *
+	 * @param value the new resonance
+	 */
 	public void setResonance(double value) {
 		filter1.Q.set(value);
 		filter2.Q.set(value);
 	}
 	
 	/**
-	 * 
-	 * add a named port to the circuit and return its instance
-	 * 
-	 * @param UnitPort
-	 *   instance to add
-	 * @param name
-	 *   Port Name
-	 * @return
-	 *   Instance named port
+	 * add a named port to the circuit and return its instance.
+	 *
+	 * @param UnitPort   instance to add
+	 * @param name   Port Name
+	 * @return   Instance named port
 	 */
 	private UnitPort addNamedPort(UnitPort UnitPort, String name) {
 		addPort(UnitPort, name);

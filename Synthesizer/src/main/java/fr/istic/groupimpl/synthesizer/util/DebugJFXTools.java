@@ -8,13 +8,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 
 /**
- * Dump tree of javafx node
- * 
- * @author Team GroupImpl
+ * Dump tree of javafx node.
  *
+ * @author Team GroupImpl
  */
 public class DebugJFXTools {
 
+	/**
+	 * Generate node hierarchy.
+	 *
+	 * @param node the node
+	 * @param fileName the file name
+	 */
 	public void GenerateNodeHierarchy(Node node, String fileName) {
 		FileWriter writer = null;
 		try{
@@ -33,6 +38,14 @@ public class DebugJFXTools {
 		}
 	}
 	
+	/**
+	 * Dump.
+	 *
+	 * @param node the node
+	 * @param depth the depth
+	 * @param writer the writer
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static void dump(Node node, int depth, FileWriter writer) throws IOException {
 		DecimalFormat df = new DecimalFormat("0.00");
 		String descString = "";

@@ -5,19 +5,22 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.UnitGenerator;
 
 /**
- * Jsyn Replicator UnitGenerator
- * 
- * @author Team GroupImpl
+ * Jsyn Replicator UnitGenerator.
  *
+ * @author Team GroupImpl
  */
 public class JsynRepCircuit extends UnitGenerator {
 	
+	/** The input. */
 	private UnitInputPort input; 	
+	
+	/** The output3. */
 	private UnitOutputPort output1, output2, output3; 
 	
 	/**
 	 * Get the input of REP module.
-	 * @return
+	 *
+	 * @return the input
 	 */
 	public UnitInputPort getInput() {
 		return input;
@@ -25,9 +28,9 @@ public class JsynRepCircuit extends UnitGenerator {
 	
 	/**
 	 * Get an output of REP module.
-	 * @param i
-	 * 	  chose an output
-	 * @return
+	 *
+	 * @param i 	  chose an output
+	 * @return the output
 	 */
 	public UnitOutputPort getOutput(int i) {
 		if(i == 1)
@@ -41,7 +44,7 @@ public class JsynRepCircuit extends UnitGenerator {
 	}
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public JsynRepCircuit(){
 		addPort(input = new UnitInputPort("rep_in"));
@@ -51,6 +54,9 @@ public class JsynRepCircuit extends UnitGenerator {
         
 	}
 	
+	/**
+	 * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+	 */
 	@Override
     public void generate(int start, int limit) {
         double[] in = input.getValues();

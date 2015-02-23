@@ -9,15 +9,18 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
- * View vcf LowPass module
+ * View vcf LowPass module.
  *
  * @author Team GroupImpl
- *
  */
 public class ViewVcfLP extends ViewVcf implements Initializable {
 
+	/** The controller. */
 	private ControllerVcf controller;
 
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		controller = new ControllerVcf(ModelVcf.Type.LP24);
@@ -40,11 +43,17 @@ public class ViewVcfLP extends ViewVcf implements Initializable {
 		super.configurate("VCF - LP24", controller, knobCutoff, knobResonance);
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/vcf-lp.fxml";

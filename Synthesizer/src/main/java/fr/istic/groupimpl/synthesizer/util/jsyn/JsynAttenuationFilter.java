@@ -12,12 +12,19 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  */
 public class JsynAttenuationFilter extends UnitFilter {
 	
+	/** The mute. */
 	private boolean mute=false;
 	 	
 	// Attenuation coefficient
+	/** The coef. */
 	private double coef = 1.;
+	
+	/** The last coef value. */
 	private double lastCoefValue=coef;
 
+    /**
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
     @Override
     public void generate(int start, int limit) {
 		// Get signal arrays from ports.
@@ -33,7 +40,9 @@ public class JsynAttenuationFilter extends UnitFilter {
     }
 
 	/**
-	 * Set an attenuation decibel value
+	 * Set an attenuation decibel value.
+	 *
+	 * @param dbValue the db value
 	 */
 	public void set(double dbValue) {
 		lastCoefValue = convertDecibelToCoef(dbValue);
@@ -41,16 +50,18 @@ public class JsynAttenuationFilter extends UnitFilter {
 	}
 	
 	/**
-	 * Get an attenuation decibel value
+	 * Get an attenuation decibel value.
+	 *
+	 * @return the double
 	 */
 	public Double get() {
 		return convertCoefToDecibel(coef);
 	}
 	
 	/**
-	 * Set Mute to the output signal
-	 * @param value
-	 *     true|false
+	 * Set Mute to the output signal.
+	 *
+	 * @param value     true|false
 	 */
 	public void setMute(boolean value) {
 		mute=value;
@@ -62,8 +73,8 @@ public class JsynAttenuationFilter extends UnitFilter {
 	}
 	
     /**
-     * Get mute state
-     * 
+     * Get mute state.
+     *
      * @return boolean
      */
     public boolean isMute() {
@@ -71,10 +82,9 @@ public class JsynAttenuationFilter extends UnitFilter {
 	}
     
     /**
-     * Calculate the coef value from the decibel value
-     * 
-     * @param dbValue
-     * 		Decibel
+     * Calculate the coef value from the decibel value.
+     *
+     * @param decibel the decibel
      * @return double
      * 		Coefficient d'attenuation
      */
@@ -83,10 +93,9 @@ public class JsynAttenuationFilter extends UnitFilter {
     }
     
     /**
-     * Calculate the decibel value from the coef value
-     * 
-     * @param coef
-     * 		coefficient d'attenuation
+     * Calculate the decibel value from the coef value.
+     *
+     * @param coef 		coefficient d'attenuation
      * @return double
      * 		Decibel value
      */

@@ -14,19 +14,20 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.recorder.jsyn.Recorder;
 
 /**
- * 
- * Model of Recorder module
- * 
- * @author Team GroupImpl
+ * Model of Recorder module.
  *
+ * @author Team GroupImpl
  */
 public class ModelRecorder extends ModelComponent {
 
+	/** The recorder. */
 	private Recorder recorder;
+	
+	/** The sample file name. */
 	private StringProperty sampleFileName = new SimpleStringProperty();
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ModelRecorder() {
 		super();
@@ -34,6 +35,9 @@ public class ModelRecorder extends ModelComponent {
 		recorder.getInput().setName("player_input");
 	}
 	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return recorder;
@@ -55,15 +59,18 @@ public class ModelRecorder extends ModelComponent {
 		return sampleFileName;
 	}
 	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return recorder.getPorts();
 	}
 
 	/**
-	 * Prepare Wave file
-	 * 
-	 * @param fileName
+	 * Prepare Wave file.
+	 *
+	 * @param fileName the file name
 	 */
 	public void prepareFile(String fileName) {
 		File sampleFile = new File( fileName );
@@ -72,14 +79,14 @@ public class ModelRecorder extends ModelComponent {
 	}
 	
 	/**
-	 * Start recording
+	 * Start recording.
 	 */
 	public void start() {
 		recorder.start();
 	}
 
 	/**
-	 * Stop recording
+	 * Stop recording.
 	 */
 	public void stop() {
 		recorder.stop();

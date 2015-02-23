@@ -11,18 +11,27 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.vcf.jsyn.JsynVcfCircuit;
 
 /**
- * Model of vcf module
- * 
- * @author Team GroupImpl
+ * Model of vcf module.
  *
+ * @author Team GroupImpl
  */
 public class ModelVcf extends ModelComponent {
 	
+	/** The circuit. */
 	private JsynVcfCircuit circuit;
-	public static enum Type { LP24, HP12 }
 	
 	/**
-	 * Constructor
+	 * The Enum Type.
+	 */
+	public static enum Type { 
+ /** The L p24. */
+ LP24, 
+ /** The H p12. */
+ HP12 }
+	
+	/**
+	 * Constructor.
+	 *
 	 * @param t : type
 	 */
 	public ModelVcf(Type t) {
@@ -30,14 +39,27 @@ public class ModelVcf extends ModelComponent {
 		circuit = new JsynVcfCircuit(t);
 	}
 
+	/**
+	 * Sets the cut frequency.
+	 *
+	 * @param freq the new cut frequency
+	 */
 	public void setCutFrequency(double freq) {
 		circuit.setCutFrequency(freq);
 	}
 	
+	/**
+	 * Sets the resonance.
+	 *
+	 * @param res the new resonance
+	 */
 	public void setResonance(double res) {
 		circuit.setResonance(res);
 	}
 	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return circuit;
@@ -67,6 +89,9 @@ public class ModelVcf extends ModelComponent {
 		return circuit.getOutput();
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return circuit.getPorts();

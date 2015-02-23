@@ -13,7 +13,7 @@ public class VCOCircuitTest extends TestCase {
     /** The synthesis engine. */
     SynthesisEngine synthesisEngine;
 
-    /** set up methode
+    /** set up method
      * @see junit.framework.TestCase#setUp()
      */
     @Override
@@ -75,7 +75,6 @@ public class VCOCircuitTest extends TestCase {
 	    		//assertEquals("select ouput value", 1.0, oVCOCircuit.getOutput().get(), tolerance);
 	    	}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    

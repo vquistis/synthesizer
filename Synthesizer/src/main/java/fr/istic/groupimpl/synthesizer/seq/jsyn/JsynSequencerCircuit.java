@@ -7,38 +7,58 @@ import com.jsyn.unitgen.UnitGenerator;
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
- * 
- * Jsyn Sequencer Circuit
- * 
- * @author Team GroupImpl
+ * Jsyn Sequencer Circuit.
  *
+ * @author Team GroupImpl
  */
 public class JsynSequencerCircuit extends UnitGenerator {
 
+	/**
+	 * The Enum State.
+	 */
 	private enum State 
 	{
+		
+		/** The attente min. */
 		ATTENTE_MIN,
+		
+		/** The attente max. */
 		ATTENTE_MAX
 	}
 	
+	/** The gate. */
 	private UnitInputPort gate; 		//Volt
+	
+	/** The output. */
 	private UnitOutputPort output; 		//Volt
 
+	/** The value. */
 	private final double [] value;
 	
+	/** The pas courant. */
 	private int pasCourant=0;
 	
+	/** The sig min front montant. */
 	private final double sigMinFrontMontant;
+	
+	/** The sig max front montant. */
 	private final double sigMaxFrontMontant;
+	
+	/** The nb pas. */
 	private final int nbPas;
 	
 	
+	/** The etat. */
 	private State etat=State.ATTENTE_MIN;
 	
 	
 	
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
+	 * @param nbPas the nb pas
+	 * @param sigMinFrontMontantVolt the sig min front montant volt
+	 * @param sigMaxFrontMontantVolt the sig max front montant volt
 	 */
     public JsynSequencerCircuit( int nbPas, double sigMinFrontMontantVolt, double sigMaxFrontMontantVolt ) {
         addPort(gate = new UnitInputPort("sequencer_gate"));
@@ -54,11 +74,10 @@ public class JsynSequencerCircuit extends UnitGenerator {
     
     
     /**
-     * set the value of a step
-     * @param indice
-     * 	indice of the step from 0 to 7
-     * @param volt
-     *  value of the step from -1 to 1
+     * set the value of a step.
+     *
+     * @param indice 	indice of the step from 0 to 7
+     * @param volt  value of the step from -1 to 1
      */
     public void setValue( int indice, double volt )
     {
@@ -66,11 +85,10 @@ public class JsynSequencerCircuit extends UnitGenerator {
     }
     
     /**
-     * get the value of a step
-     * @param indice
-     * 	indice of the step from 0 to 7
-     * @return
-     *  the value of the step
+     * get the value of a step.
+     *
+     * @param indice 	indice of the step from 0 to 7
+     * @return  the value of the step
      */
     public double getValue( int indice )
     {
@@ -78,7 +96,7 @@ public class JsynSequencerCircuit extends UnitGenerator {
     }
    
     /**
-     * initalyse the step to 0
+     * initalyse the step to 0.
      */
     public void resetPas()
     {
@@ -86,24 +104,27 @@ public class JsynSequencerCircuit extends UnitGenerator {
     }
     
 	/**
-	 * get the gate port
-	 * @return
-	 *  the gate port
+	 * get the gate port.
+	 *
+	 * @return  the gate port
 	 */
 	public UnitInputPort getGate() {
 		return gate;
 	}
 
 	/**
-	 * get the output port
-	 * @return
-	 * the output port
+	 * get the output port.
+	 *
+	 * @return the output port
 	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}
 
 
+    /**
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
     @Override
     public void generate(int start, int limit) {
         double[] inputs = gate.getValues();

@@ -12,11 +12,14 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
  */
 public class ControllerRep extends ControllerComponent{
 	
+	/** The model rep. */
 	private ModelRep modelRep;
+	
+	/** The ctrl glob. */
 	private ControllerGlobal ctrlGlob;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ControllerRep(){
 		modelRep = new ModelRep();
@@ -24,12 +27,18 @@ public class ControllerRep extends ControllerComponent{
 		ctrlGlob.registerUnitGenerator(modelRep.getUnitGenerator());
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
 	@Override
 	public void handleViewClose() {
 		ctrlGlob.removeAllConnections(modelRep.getAllPorts());
 		ctrlGlob.unregisterUnitGenerator(modelRep.getUnitGenerator());		
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
 	@Override
 	public ModelComponent getModel() {
 		return modelRep;

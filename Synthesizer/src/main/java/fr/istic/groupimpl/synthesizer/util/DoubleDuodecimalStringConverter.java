@@ -4,12 +4,15 @@ import javafx.util.StringConverter;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
- * 
- * 
- * @author Team GrouplImpl
+ * Converter double in duo decimal.
  *
+ * @author Team GrouplImpl
  */
 public class DoubleDuodecimalStringConverter extends StringConverter<Number> {
+	
+	/**
+	 * @see javafx.util.StringConverter#toString(java.lang.Object)
+	 */
 	@Override
 	public String toString(Number value) {
 
@@ -48,6 +51,9 @@ public class DoubleDuodecimalStringConverter extends StringConverter<Number> {
 		return str;
 	}
 
+	/**
+	 * @see javafx.util.StringConverter#fromString(java.lang.String)
+	 */
 	@Override
 	public Number fromString(String string) {
 		Log.getInstance().trace("DoubleDuoDecimal.fromString debut string="+string);

@@ -31,36 +31,65 @@ import fr.istic.groupimpl.synthesizer.util.jsyn.JsynFrequencyModulation;
 public class VCOCircuit extends Circuit implements UnitSource
 {
 	/* Declare units that will be part of the circuit. */
+	/** The triangle oscillator. */
 	private TriangleOscillator triangleOscillator;
+	
+	/** The sawtooth oscillator. */
 	private SawtoothOscillator sawtoothOscillator;
+	
+	/** The square oscillator. */
 	private SquareOscillator squareOscillator;
+	
+	/** The vc freq. */
 	private JsynFrequencyModulation vcFreq;
+	
+	/** The select from3. */
 	private SelectFrom3Input selectFrom3;
+	
+	/** The pass through amplitude. */
 	private PassThrough passThroughAmplitude;
 	
 	/* Declare ports. */
+	/** The input fm. */
 	private UnitInputPort inputFM;
+	
+	/** The input f0. */
 	private UnitInputPort inputF0;
+	
+	/** The input octave. */
 	private UnitInputPort inputOctave;
+	
+	/** The input shape. */
 	private UnitInputPort inputShape;
+	
+	/** The input amplitude. */
 	private UnitInputPort inputAmplitude;
+	
+	/** The output. */
 	private UnitOutputPort output; // fonction du sélecteur de la forme (shape)
 	
+	/** The output square. */
 	private UnitOutputPort outputSquare;
+	
+	/** The output sawtooth. */
 	private UnitOutputPort outputSawtooth;
+	
+	/** The output triangle. */
 	private UnitOutputPort outputTriangle;
 
 	/**
-	 * Frequency modulation input (Volt)
-	 * @return
+	 * Frequency modulation input (Volt).
+	 *
+	 * @return the input fm
 	 */
 	public UnitInputPort getInputFM() {
 		return inputFM;
 	}
 
 	/**
-	 * Default Frequency input (Hz)
-	 * @return
+	 * Default Frequency input (Hz).
+	 *
+	 * @return the input f0
 	 */
 	public UnitInputPort getInputF0() {
 		return inputF0;
@@ -70,32 +99,37 @@ public class VCOCircuit extends Circuit implements UnitSource
 	 * Select shape input (1 | 2 | 3)
 	 * - 1 triangleOscillator
 	 * - 2 sawtoothOscillator
-	 * - 3 squareOscillator
-	 * @return
+	 * - 3 squareOscillator.
+	 *
+	 * @return the input shape
 	 */
 	public UnitInputPort getInputShape() {
 		return inputShape;
 	}
 
 	/**
-	 * Octave input
-	 * @return
+	 * Octave input.
+	 *
+	 * @return the input octave
 	 */
 	public UnitInputPort getInputOctave() {
 		return inputOctave;
 	}
 
 	/**
-	 * Amplitude input
-	 * @return
+	 * Amplitude input.
+	 *
+	 * @return the input amplitude
 	 */
 	public UnitInputPort getInputAmplitude() {
 		return inputAmplitude;
 	}
 
-	/** 
-	 * Output of the selected shape
-	 * @return
+	/**
+	 *  
+	 * Output of the selected shape.
+	 *
+	 * @return the output
 	 */
 	public UnitOutputPort getOutput()
 	{
@@ -103,31 +137,34 @@ public class VCOCircuit extends Circuit implements UnitSource
 	}
 	
 	/**
-	 * Output Square shape
-	 * @return
+	 * Output Square shape.
+	 *
+	 * @return the output square
 	 */
 	public UnitOutputPort getOutputSquare() {
 		return outputSquare;
 	}
 
 	/**
-	 * Output Sawtooth shape
-	 * @return
+	 * Output Sawtooth shape.
+	 *
+	 * @return the output sawtooth
 	 */
 	public UnitOutputPort getOutputSawtooth() {
 		return outputSawtooth;
 	}
 
 	/**
-	 * Output Triangle shape
-	 * @return
+	 * Output Triangle shape.
+	 *
+	 * @return the output triangle
 	 */
 	public UnitOutputPort getOutputTriangle() {
 		return outputTriangle;
 	}
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public VCOCircuit()
 	{
@@ -171,21 +208,22 @@ public class VCOCircuit extends Circuit implements UnitSource
 		squareOscillator.output.connect(selectFrom3.getInput3());	
 	}
 	
+	/**
+	 * Sets the amplitude.
+	 *
+	 * @param volt the new amplitude
+	 */
 	public void setAmplitude( double volt )
 	{
 		passThroughAmplitude.getInput().set(volt*(UnitOscillator.DEFAULT_AMPLITUDE/SignalUtil.COEF_VOLT));
 	}
 	
 	/**
-	 * 
-	 * add a named port to the circuit and return its instance
-	 * 
-	 * @param UnitPort
-	 *   instance to add
-	 * @param name
-	 *   Port Name
-	 * @return
-	 *   Instance named port
+	 * add a named port to the circuit and return its instance.
+	 *
+	 * @param UnitPort   instance to add
+	 * @param name   Port Name
+	 * @return   Instance named port
 	 */
 	private UnitPort addNamedPort(UnitPort UnitPort, String name) {
 		addPort(UnitPort, name);

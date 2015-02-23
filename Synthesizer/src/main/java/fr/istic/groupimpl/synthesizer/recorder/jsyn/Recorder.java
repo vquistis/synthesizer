@@ -13,19 +13,23 @@ import com.jsyn.util.WaveRecorder;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
- * Jsyn Recorder module
- * 
- * @author Team GroupImpl
+ * Jsyn Recorder module.
  *
+ * @author Team GroupImpl
  */
 public class Recorder extends Circuit {
 
+	/** The input. */
 	private UnitInputPort input; 
+	
+	/** The recorder. */
 	private WaveRecorder recorder;
+	
+	/** The pass through input. */
 	private PassThrough passThroughInput;
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
     public Recorder() {
 		/*
@@ -39,7 +43,8 @@ public class Recorder extends Circuit {
      }
 
 	/**
-	 * get the input port
+	 * get the input port.
+	 *
 	 * @return UnitInputPort
 	 * the input port
 	 */
@@ -47,12 +52,18 @@ public class Recorder extends Circuit {
 		return input;
 	}
 
+	/**
+	 * @see com.jsyn.unitgen.UnitGenerator#start()
+	 */
 	public void start() {
 		if (recorder != null) {
 			recorder.start();
 		};
 	}
 
+	/**
+	 * @see com.jsyn.unitgen.UnitGenerator#stop()
+	 */
 	public void stop() {
 		if (recorder != null) {
 			recorder.stop();
@@ -64,6 +75,11 @@ public class Recorder extends Circuit {
 		}
 	}
 	
+	/**
+	 * Prepare file.
+	 *
+	 * @param sampleFile the sample file
+	 */
 	public void prepareFile(File sampleFile) {
 		try {
 			recorder = new WaveRecorder(synthesisEngine, sampleFile);
@@ -75,15 +91,11 @@ public class Recorder extends Circuit {
 	}
 	
 	/**
-	 * 
-	 * add a named port to the circuit and return its instance
-	 * 
-	 * @param UnitPort
-	 *   instance to add
-	 * @param name
-	 *   Port Name
-	 * @return
-	 *   Instance named port
+	 * add a named port to the circuit and return its instance.
+	 *
+	 * @param UnitPort   instance to add
+	 * @param name   Port Name
+	 * @return   Instance named port
 	 */
 	private UnitPort addNamedPort(UnitPort UnitPort, String name) {
 		addPort(UnitPort, name);

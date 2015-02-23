@@ -14,22 +14,26 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.player.jsyn.PlayerGate;
 
 /**
- * 
- * Model of Player module
- * 
- * @author Team GroupImpl
+ * Model of Player module.
  *
+ * @author Team GroupImpl
  */
 public class ModelPlayer extends ModelComponent {
 
+	/** The player. */
 	private PlayerGate player;
+	
+	/** The sample file name. */
 	private StringProperty sampleFileName = new SimpleStringProperty();
 	
+	/** The sig min. */
 	private final double sigMin = 0.00001;
+	
+	/** The sig max. */
 	private final double sigMax = 0.1;
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ModelPlayer() {
 		super();
@@ -38,6 +42,9 @@ public class ModelPlayer extends ModelComponent {
 		player.getGate().setName("player_gate");
 	}
 	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return player;
@@ -59,15 +66,18 @@ public class ModelPlayer extends ModelComponent {
 		return sampleFileName;
 	}
 	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return player.getPorts();
 	}
 
 	/**
-	 * Load wav file sample
-	 * 
-	 * @param fileName
+	 * Load wav file sample.
+	 *
+	 * @param fileName the file name
 	 */
 	public void loadSample(String fileName) {
 		File sampleFile = new File( fileName );
@@ -76,19 +86,24 @@ public class ModelPlayer extends ModelComponent {
 	}
 	
 	/**
-	 * Play the sample
+	 * Play the sample.
 	 */
 	public void play() {
 		player.play();
 	}
 
 	/**
-	 * Stop playing the sample
+	 * Stop playing the sample.
 	 */
 	public void stop() {
 		player.stop();
 	}
 
+	/**
+	 * Checks if is play running.
+	 *
+	 * @return true, if is play running
+	 */
 	public boolean isPlayRunning() {
 		return player.dataQueue.hasMore();
 	}

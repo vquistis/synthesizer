@@ -10,18 +10,17 @@ import com.jsyn.unitgen.WhiteNoise;
 import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 
 /**
- * 
- * Model of White Noise module
- * 
- * @author Team GroupImpl
+ * Model of White Noise module.
  *
+ * @author Team GroupImpl
  */
 public class ModelWhiteNoise extends ModelComponent {
 
+	/** The white noise. */
 	private WhiteNoise whiteNoise;
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ModelWhiteNoise() {
 		super();
@@ -29,6 +28,9 @@ public class ModelWhiteNoise extends ModelComponent {
 		whiteNoise.output.setName("noise_output");
 	}
 	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return whiteNoise;
@@ -42,6 +44,9 @@ public class ModelWhiteNoise extends ModelComponent {
 		return whiteNoise.getOutput();
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return whiteNoise.getPorts();

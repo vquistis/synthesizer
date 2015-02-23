@@ -24,23 +24,36 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
- * 
- * View of Seq module
- * 
- * @author Team GroupImpl
+ * View of Seq module.
  *
+ * @author Team GroupImpl
  */
 public class ViewSeq extends ViewComponent implements Initializable {
 
+	/** The pane seq. */
 	@FXML private BorderPane paneSeq;
+	
+	/** The top. */
 	@FXML private GridPane top;
+	
+	/** The screen seq pane. */
 	@FXML private VBox screenSeqPane;
+	
+	/** The gate. */
 	@FXML private ImageView gate;
+	
+	/** The out. */
 	@FXML private ImageView out;
+	
+	/** The grid seq. */
 	@FXML private GridPane gridSeq;
 
+	/** The controller. */
 	private ControllerSeq controller;
 
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("SEQ");
@@ -109,24 +122,33 @@ public class ViewSeq extends ViewComponent implements Initializable {
 		addPort("sequencer_out",out);
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return paneSeq;
 	}
 	
 	/**
-	 * Handles the click on the reset button
+	 * Handles the click on the reset button.
 	 */
 	@FXML
 	public void handleDebutClicked() {
 		controller.handleViewBeginClicked();
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/seq.fxml";

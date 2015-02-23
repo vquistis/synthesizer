@@ -26,46 +26,57 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  */
 public class JsynFrequencyModulation extends UnitGenerator {
 	
+	/** The inputfm. */
 	private UnitInputPort inputfm; 		//Volt
+	
+	/** The inputf0. */
 	private UnitInputPort inputf0; 		//HZ
+	
+	/** The input octave. */
 	private UnitInputPort inputOctave; 	//UnitVariablePort 
+	
+	/** The output. */
 	private UnitOutputPort output; 		//HZ
 	
     
     /**
-     * Modulation frequency input
-     * @return
+     * Modulation frequency input.
+     *
+     * @return the inputfm
      */
     public UnitInputPort getInputfm() {
 		return inputfm;
 	}
 
 	/**
-	 * Default Frequency input
-	 * @return
+	 * Default Frequency input.
+	 *
+	 * @return the inputf0
 	 */
 	public UnitInputPort getInputf0() {
 		return inputf0;
 	}
 
 	/**
-	 * Octave value input
-	 * @return
+	 * Octave value input.
+	 *
+	 * @return the input octave
 	 */
 	public UnitInputPort getInputOctave() {
 		return inputOctave;
 	}
 	
 	/**
-	 * Frequency Output
-	 * @return
+	 * Frequency Output.
+	 *
+	 * @return the output
 	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
     public JsynFrequencyModulation() {
         addPort(inputfm = new UnitInputPort("Inputfm"));
@@ -74,6 +85,9 @@ public class JsynFrequencyModulation extends UnitGenerator {
         addPort(output = new UnitOutputPort("Output"));
     }
 
+    /**
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
     @Override
     public void generate(int start, int limit) {
         double[] inputfms = inputfm.getValues();
@@ -90,14 +104,12 @@ public class JsynFrequencyModulation extends UnitGenerator {
     
     
     /**
-     * @param fm
-     *   Modulation Frequency 
-     * @param f0
-     *   Default frequency
-     * @param octave
-     *   octave value
-     * @return
-     *   Frequency
+     * Converter.
+     *
+     * @param fm   Modulation Frequency 
+     * @param f0   Default frequency
+     * @param octave   octave value
+     * @return   Frequency
      */
     public double converter(double fm, double f0, double octave) {
     	return f0*Math.pow(2, octave + fm*SignalUtil.COEF_VOLT);

@@ -14,18 +14,27 @@ import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 
 /**
- * View of White noise module
- * 
+ * View of White noise module.
+ *
  * @author Team GroupImpl
  */
 public class ViewWhiteNoise extends ViewComponent implements Initializable {
 
+	/** The root module pane. */
 	@FXML private Pane rootModulePane;
+	
+	/** The top. */
 	@FXML private GridPane top;
+	
+	/** The output. */
 	@FXML private ImageView output;
 
+	/** The controller. */
 	private ControllerWhiteNoise controller;
 
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("White noise");
@@ -44,16 +53,25 @@ public class ViewWhiteNoise extends ViewComponent implements Initializable {
 		});
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/whiteNoise.fxml";

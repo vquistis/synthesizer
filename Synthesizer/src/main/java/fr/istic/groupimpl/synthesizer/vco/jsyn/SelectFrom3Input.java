@@ -20,53 +20,69 @@ import com.jsyn.unitgen.UnitGenerator;
  */
 
 public class SelectFrom3Input extends UnitGenerator {
+	
+	/** The input1. */
 	private UnitInputPort input1;
+	
+	/** The input2. */
 	private UnitInputPort input2;
+	
+	/** The input3. */
 	private UnitInputPort input3;
+	
+	/** The input select. */
 	private UnitInputPort inputSelect;  // 1 | 2 | 3
+	
+	/** The output. */
 	private UnitOutputPort output;
     
     /**
-     * Input 1
-     * @return
+     * Input 1.
+     *
+     * @return the input1
      */
     public UnitInputPort getInput1() {
 		return input1;
 	}
+	
 	/**
-	 * Input 2
-	 * @return
+	 * Input 2.
+	 *
+	 * @return the input2
 	 */
 	public UnitInputPort getInput2() {
 		return input2;
 	}
 
 	/**
-	 * Input 3
-	 * @return
+	 * Input 3.
+	 *
+	 * @return the input3
 	 */
 	public UnitInputPort getInput3() {
 		return input3;
 	}
 
 	/**
-	 * Input source selected
-	 * @return
+	 * Input source selected.
+	 *
+	 * @return the input select
 	 */
 	public UnitInputPort getInputSelect() {
 		return inputSelect;
 	}
 
 	/**
-	 * Output selected source
-	 * @return
+	 * Output selected source.
+	 *
+	 * @return the output
 	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}
 
     /**
-     * Constructor
+     * Constructor.
      */
     public SelectFrom3Input() {
         addPort(input1 = new UnitInputPort("Input1"));
@@ -76,6 +92,9 @@ public class SelectFrom3Input extends UnitGenerator {
         addPort(output = new UnitOutputPort("Output"));
     }
 
+    /**
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
     @Override
     public void generate(int start, int limit) {
         double[] input1s = input1.getValues();

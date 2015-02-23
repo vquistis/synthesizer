@@ -18,16 +18,20 @@ import fr.istic.groupimpl.synthesizer.rep.jsyn.JsynRepCircuit;
  */
 public class ModelRep extends ModelComponent{
 	
+	/** The rep. */
 	private JsynRepCircuit rep;
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ModelRep(){
 		super();
 		rep = new JsynRepCircuit();
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return rep;
@@ -57,6 +61,9 @@ public class ModelRep extends ModelComponent{
 		return null;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return rep.getPorts();
