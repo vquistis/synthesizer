@@ -84,20 +84,20 @@ public class ViewOut extends ViewComponent implements Initializable {
 		knobVolume.valueProperty().addListener((obsVal, oldVal, newVal) -> controller.handleViewVolumeChange(newVal));
 		// Listener mute
 		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) ->{
-			if (ControllerGlobal.getInstance().isRecordStarted()) {
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Synthesizer");
-				alert.setHeaderText("Voulez-vous vraiment arrêter l'enregistrement de son ?");
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == ButtonType.OK){
-					controller.handleViewMuteChange(newVal);
-					ControllerGlobal.getInstance().handleStopView();
-				} else {
-					muteVolumeFx.setSelected(oldVal);;
-				}
-			} else {
+//			if (ControllerGlobal.getInstance().isRecordStarted()) {
+//				Alert alert = new Alert(AlertType.CONFIRMATION);
+//				alert.setTitle("Synthesizer");
+//				alert.setHeaderText("Voulez-vous vraiment arrêter l'enregistrement de son ?");
+//				Optional<ButtonType> result = alert.showAndWait();
+//				if (result.get() == ButtonType.OK){
+//					controller.handleViewMuteChange(newVal);
+//					ControllerGlobal.getInstance().handleStopView();
+//				} else {
+//					muteVolumeFx.setSelected(oldVal);;
+//				}
+//			} else {
 				controller.handleViewMuteChange(newVal);
-			}
+//			}
 		});
 
 		// Listener close module

@@ -9,11 +9,20 @@ import com.jsyn.unitgen.SineOscillator;
 
 import fr.istic.groupimpl.synthesizer.out.jsyn.JsynOutCircuit;
 
+/**
+ * The Class JsynOutCircuitTest.
+ */
 public class JsynOutCircuitTest {
 	
+    /** The synthesis engine. */
     private SynthesisEngine synthesisEngine;
+    
+    /** The circuit. */
     private JsynOutCircuit circuit;
 
+    /**
+     * Inits the.
+     */
     @Before
     public void init() {
         synthesisEngine = new SynthesisEngine();
@@ -31,11 +40,19 @@ public class JsynOutCircuitTest {
         synthesisEngine.start();
     }
     
+    /**
+     * Uninit.
+     */
     @After
     public void uninit() {
         synthesisEngine.stop();
     }
 
+	/**
+	 * Test attenuation.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testAttenuation() throws InterruptedException {
 		circuit.start();
@@ -55,6 +72,11 @@ public class JsynOutCircuitTest {
 	}
 	
 
+	/**
+	 * Test mute.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testMute() throws InterruptedException {
 		for (int i = 5; i > 0; i--) {

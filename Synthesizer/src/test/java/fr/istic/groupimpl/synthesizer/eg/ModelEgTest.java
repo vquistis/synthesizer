@@ -9,11 +9,20 @@ import com.jsyn.unitgen.LineOut;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 
+/**
+ * The Class ModelEgTest.
+ */
 public class ModelEgTest {
 
+	/** The model. */
 	private ModelEg model;
+	
+	/** The synth. */
 	private Synthesizer synth;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		synth = JSyn.createSynthesizer();
@@ -40,6 +49,11 @@ public class ModelEgTest {
 		sineOsc.frequency.set(440.0);
 	}
 
+	/**
+	 * Test model.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testModel() throws InterruptedException {
 		model.getInputPort().set(1);

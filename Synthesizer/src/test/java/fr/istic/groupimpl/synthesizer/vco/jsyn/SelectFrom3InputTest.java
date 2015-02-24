@@ -12,7 +12,10 @@ public class SelectFrom3InputTest extends TestCase {
     /** The synthesis engine. */
     SynthesisEngine synthesisEngine;
 
-    /** set up method
+    /**
+     *  set up method.
+     *
+     * @throws Exception the exception
      * @see junit.framework.TestCase#setUp()
      */
     @Override
@@ -21,7 +24,10 @@ public class SelectFrom3InputTest extends TestCase {
         synthesisEngine = new SynthesisEngine();
     }
 
-    /** tear down method
+    /**
+     *  tear down method.
+     *
+     * @throws Exception the exception
      * @see junit.framework.TestCase#tearDown()
      */
     @Override

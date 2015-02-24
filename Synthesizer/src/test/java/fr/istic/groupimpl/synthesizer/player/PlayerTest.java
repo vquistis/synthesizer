@@ -9,11 +9,20 @@ import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.LineOut;
 
+/**
+ * The Class PlayerTest.
+ */
 public class PlayerTest {
 
+	/** The model. */
 	private ModelPlayer model;
+	
+	/** The synth. */
 	private Synthesizer synth;
 	
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		synth = JSyn.createSynthesizer();
@@ -32,6 +41,11 @@ public class PlayerTest {
 		lineout.start();
 	}
 	
+	/**
+	 * Test model.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testModel() throws InterruptedException {
 		model.play();
@@ -39,6 +53,11 @@ public class PlayerTest {
 		synth.stop();
 	}
 	
+	/**
+	 * Test output.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testOutput() throws InterruptedException {
 		double sumOutput = 0;
