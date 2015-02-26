@@ -38,7 +38,7 @@ public class ModelKeyboard extends ModelComponent {
 		octave = 0;
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
 	 */
 	@Override
@@ -47,7 +47,7 @@ public class ModelKeyboard extends ModelComponent {
 	}
 
 	
-	/* (non-Javadoc)
+	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
 	 */
 	@Override
@@ -58,7 +58,7 @@ public class ModelKeyboard extends ModelComponent {
 	/**
 	 * increase 1 octave.
 	 */
-	void incOctave()
+	public void incOctave()
 	{
 		octave = Math.min(MAX_OCTAVE, octave+1);
 	}
@@ -66,7 +66,7 @@ public class ModelKeyboard extends ModelComponent {
 	/**
 	 * decrease 1 octave.
 	 */
-	void decOctave()
+	public void decOctave()
 	{
 		octave = Math.max(MIN_OCTAVE, octave-1);
 	}
