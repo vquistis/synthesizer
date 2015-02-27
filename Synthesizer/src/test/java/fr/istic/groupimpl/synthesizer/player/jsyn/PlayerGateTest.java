@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import com.jsyn.engine.SynthesisEngine;
 
-import fr.istic.groupimpl.synthesizer.recorder.jsyn.Recorder;
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 public class PlayerGateTest {

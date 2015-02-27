@@ -18,7 +18,6 @@ package fr.isitic;
 
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
-import com.jsyn.ports.UnitVariablePort;
 import com.jsyn.unitgen.UnitGenerator;
 
 /**

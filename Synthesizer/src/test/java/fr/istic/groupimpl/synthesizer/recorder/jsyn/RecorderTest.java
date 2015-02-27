@@ -3,7 +3,6 @@ package fr.istic.groupimpl.synthesizer.recorder.jsyn;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -12,8 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jsyn.engine.SynthesisEngine;
-
-import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 public class RecorderTest {
 

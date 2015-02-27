@@ -2,16 +2,9 @@ package fr.isitic;
 
 import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
-import com.jsyn.devices.AudioDeviceManager;
-import com.jsyn.unitgen.FilterStateVariable;
 import com.jsyn.unitgen.LineOut;
-import com.jsyn.unitgen.MultiplyAdd;
-import com.jsyn.unitgen.RedNoise;
 import com.jsyn.unitgen.SineOscillator;
-import com.jsyn.unitgen.SquareOscillator;
-import com.jsyn.unitgen.UnitGenerator;
 import com.jsyn.unitgen.UnitOscillator;
-import com.jsyn.unitgen.WhiteNoise;
 
 /**
  * Hello world!

@@ -3,18 +3,11 @@ package fr.isitic;
 import com.jsyn.ports.UnitInputPort;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.Circuit;
-import com.jsyn.unitgen.FilterStateVariable;
-import com.jsyn.unitgen.MultiplyAdd;
 import com.jsyn.unitgen.PassThrough;
-import com.jsyn.unitgen.RedNoise;
 import com.jsyn.unitgen.SawtoothOscillator;
-import com.jsyn.unitgen.SawtoothOscillatorBL;
-import com.jsyn.unitgen.SawtoothOscillatorDPW;
 import com.jsyn.unitgen.SquareOscillator;
-import com.jsyn.unitgen.SquareOscillatorBL;
 import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitSource;
-import com.jsyn.unitgen.WhiteNoise;
 
 /**
  * VCO oscillator with a frequency modulation input.
