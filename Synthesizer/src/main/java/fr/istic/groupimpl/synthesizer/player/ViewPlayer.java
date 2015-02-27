@@ -92,8 +92,10 @@ public class ViewPlayer extends ViewComponent implements Initializable {
 	@FXML
 	public void handleLoadClicked() {
    	 	controller.loadSample();
-   	 	fxBtnPlay.setDisable(false);
-   	 	fxBtnStop.setDisable(false);
+   	 	if (fxSampleName.getText()!=null) {
+	   	 	fxBtnPlay.setDisable(false);
+	   	 	fxBtnStop.setDisable(false);
+   	 	}
 	}
 	
 	

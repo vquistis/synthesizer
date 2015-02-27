@@ -44,7 +44,7 @@ public class SelectFrom3InputTest extends TestCase {
         select.getInput1().set(1.0);
         select.getInput2().set(2.0);
         select.getInput3().set(3.0);
-       
+               
         synthesisEngine.start();
 //        double startTime = synthesisEngine.getCurrentTime();
         // pull from final UnitGenerator
@@ -61,5 +61,15 @@ public class SelectFrom3InputTest extends TestCase {
         select.getInputSelect().set(3.0); // input 3
         synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
         assertEquals("select ouput value", 3.0, select.getOutput().get(), tolerance);
+
+        // limit max
+        select.getInputSelect().set(4.0); // default value input 1
+        synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
+        assertEquals("select ouput value", 1.0, select.getOutput().get(), tolerance);
+        
+        // limit min
+        select.getInputSelect().set(0.0); // default value input 1
+        synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
+        assertEquals("select ouput value", 1.0, select.getOutput().get(), tolerance);
     }
 }

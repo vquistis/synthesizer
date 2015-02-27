@@ -75,13 +75,14 @@ public class PlayerGate extends VariableRateStereoReader { //VariableRateMonoRea
 		}
 	}
 	
-	public void loadSample(File sampleFile) {
+	public void loadSample(File sampleFile) throws IOException {
 		// Load the sample and display its properties.
 		SampleLoader.setJavaSoundPreferred( false );
 		try {
 			sample = SampleLoader.loadFloatSample(sampleFile);
 		} catch (IOException e) {
 			Log.getInstance().error("Failed to load sample", e );
+			throw e;
 		}
 		
 		/*
@@ -100,7 +101,7 @@ public class PlayerGate extends VariableRateStereoReader { //VariableRateMonoRea
 		super.generate(start, limit);
 	    double[] inputs = gate.getValues();
 	
-	    for (int i = start; i < limit; i++) { 
+	    for (int i = start; i < limit; i++) {
 	    	if ( etat == State.ATTENTE_MIN ) {
 	    		if ( inputs[i] <= sigMinFrontMontant ) {
 	    			etat = State.ATTENTE_MAX;

@@ -154,7 +154,9 @@ public class ViewRecorder extends ViewComponent implements Initializable {
 	    	 controller.prepareFile(file.getAbsolutePath());	
 	    	 chronometreTimer = new Timer();
 	     }
-   	 	fxBtnStart.setDisable(false);
+	    if (fxSampleName.getText()!=null) {
+   	 		fxBtnStart.setDisable(false);
+	    }
 	}
 	
 	

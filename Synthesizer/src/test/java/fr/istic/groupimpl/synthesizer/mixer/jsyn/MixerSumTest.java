@@ -76,4 +76,11 @@ public class MixerSumTest extends TestCase {
         synthesisEngine.sleepUntil(synthesisEngine.getCurrentTime() + 0.1);
         assertEquals("select ouput value", 8.0, mixerSum.getOutput().get(), tolerance);
     }
+    
+    public void testMixer_getNumberOfInputPort() throws InterruptedException {
+        Integer NbPortTested = 3;
+        MixerSum mixerSum = new MixerSum(NbPortTested);
+        
+        assertEquals("Get the number of input port", NbPortTested, mixerSum.getNumberOfInputPort(),0);
+    }
 }

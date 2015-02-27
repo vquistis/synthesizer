@@ -47,31 +47,34 @@ public class Recorder extends Circuit {
 		return input;
 	}
 
-	public void start() {
+	public void startRecording() {
 		if (recorder != null) {
 			recorder.start();
 		};
 	}
 
-	public void stop() {
+	public void stopRecording() throws IOException {
 		if (recorder != null) {
 			recorder.stop();
 			try {
 				recorder.close(); // close and flush
 			} catch (IOException e) {
 				Log.getInstance().error("Failed to stop recording", e );
+				throw e;
 			}
 		}
 	}
 	
-	public void prepareFile(File sampleFile) {
+	public void prepareFile(File sampleFile) throws FileNotFoundException {
 		try {
 			recorder = new WaveRecorder(synthesisEngine, sampleFile);
+			
+			// connect InputPort
+			passThroughInput.output.connect(recorder.getInput());
 		} catch (FileNotFoundException e) {
 			Log.getInstance().error("Failed to initialize the sample file", e );
+			throw e;
 		}
-		// connect InputPort
-		passThroughInput.output.connect(recorder.getInput());
 	}
 	
 	/**

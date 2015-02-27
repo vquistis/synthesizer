@@ -1,6 +1,8 @@
 package fr.istic.groupimpl.synthesizer.recorder;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Collection;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -68,20 +70,28 @@ public class ModelRecorder extends ModelComponent {
 	public void prepareFile(String fileName) {
 		File sampleFile = new File( fileName );
 		sampleFileName.set(sampleFile.getName());
-		recorder.prepareFile(sampleFile);
+		try {
+			recorder.prepareFile(sampleFile);
+		} catch (FileNotFoundException e) {
+			sampleFileName.set(null);
+		}
 	}
 	
 	/**
 	 * Start recording
 	 */
 	public void start() {
-		recorder.start();
+		recorder.startRecording();
 	}
 
 	/**
 	 * Stop recording
 	 */
 	public void stop() {
-		recorder.stop();
+		try {
+			recorder.stopRecording();
+		} catch (IOException e) {
+			sampleFileName.set("#ERROR# read the log file");
+		}
 	}
 }

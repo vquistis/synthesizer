@@ -1,6 +1,7 @@
 package fr.istic.groupimpl.synthesizer.player;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -48,7 +49,7 @@ public class ModelPlayer extends ModelComponent {
 	 * @return UnitInputPort
 	 */
 	public UnitOutputPort getOutputPort() {
-		return player.output;
+		return player.getOutput();
 	}
 
 	/**
@@ -70,9 +71,13 @@ public class ModelPlayer extends ModelComponent {
 	 * @param fileName
 	 */
 	public void loadSample(String fileName) {
-		File sampleFile = new File( fileName );
+		File sampleFile = new File( fileName);
 		sampleFileName.set(sampleFile.getName());
-		player.loadSample(sampleFile);
+		try {
+			player.loadSample(sampleFile);
+		} catch (IOException e) {
+			sampleFileName.set(null);
+		}
 	}
 	
 	/**
