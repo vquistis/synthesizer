@@ -11,22 +11,25 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.seq.jsyn.JsynSequencerCircuit;
 
 /**
- * 
- * Model of Seq module
- * 
- * @author Team GroupImpl
+ * Model of Seq module.
  *
+ * @author Team GroupImpl
  */
 public class ModelSeq extends ModelComponent {
 
+	/** The sig min. */
 	private final double sigMin = 0.00001;
+	
+	/** The sig max. */
 	private final double sigMax = 0.1;
 	
+	/** The circuit. */
 	private JsynSequencerCircuit circuit;
 	
 	/**
-	 * Constructor
-	 * @param nbPas
+	 * Constructor.
+	 *
+	 * @param nbPas the nb pas
 	 */
 	public ModelSeq( int nbPas ) {
 		super();
@@ -37,11 +40,10 @@ public class ModelSeq extends ModelComponent {
 	
 	
 	/**
-	 * Initialize a value for a step
-	 * @param indice
-	 * 	from 0 to 7 ( inclusive )
-	 * @param newVal
-	 *  new Value for -1. to 1. 
+	 * Initialize a value for a step.
+	 *
+	 * @param indice 	from 0 to 7 ( inclusive )
+	 * @param newVal  new Value for -1. to 1.
 	 */
 	public void setValue(int indice, Double newVal)
 	{
@@ -49,13 +51,16 @@ public class ModelSeq extends ModelComponent {
 	}
 	
 	/**
-	 * Initialize the step to 0 
+	 * Initialize the step to 0.
 	 */
 	public void initBegin()
 	{
 		circuit.resetPas();
 	}
 	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return circuit;
@@ -77,6 +82,9 @@ public class ModelSeq extends ModelComponent {
 		return circuit.getOutput();
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return circuit.getPorts();

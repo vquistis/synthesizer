@@ -15,37 +15,60 @@ import javafx.scene.text.Text;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
- * Oscilloscope module
- * 
- * @author GroupImpl
+ * Oscilloscope module.
  *
+ * @author GroupImpl
  */
 public class Oscilloscope extends Region {
 
+	/** The time stability. */
 	private final long TIME_STABILITY=2500;
 	
+	/** The Constant SIZE_BUFFER_READ. */
 	public static final int SIZE_BUFFER_READ = 2048;
+	
+	/** The nb data used. */
 	final int nbDataUsed = 1024;
 
+	/** The is running. */
 	private boolean isRunning = false;
 
+	/** The cmd get buffer. */
 	private final GetBuffer cmdGetBuffer;
+	
+	/** The refresh period. */
 	private long refreshPeriod;
 
+	/** The Constant MAX_REFRESH_PERIOD. */
 	public static final long MAX_REFRESH_PERIOD = 2000;
+	
+	/** The Constant MIN_REFRESH_PERIOD. */
 	public static final long MIN_REFRESH_PERIOD = 100;
 
+	/** The rectangle. */
 	private Rectangle rectangle;
 
+	/** The refresh thread. */
 	private Thread refreshThread;
 
 	/**
 	 * interface of the getBuffuer command.
 	 */
 	public interface GetBuffer {
+		
+		/**
+		 * Gets the buffer.
+		 *
+		 * @return the buffer
+		 */
 		double[] getBuffer();
 	}
 
+	/**
+	 * Instantiates a new oscilloscope.
+	 *
+	 * @param oscFact the osc fact
+	 */
 	Oscilloscope(OscilloscopeFactory oscFact) {
 		setHeight(oscFact.getHeight());
 		setWidth(oscFact.getWidth());
@@ -75,24 +98,49 @@ public class Oscilloscope extends Region {
 		});
 	}
 
+	/**
+	 * The Class HistMax.
+	 */
 	private class HistMax
 	{
 		
+		/**
+		 * Instantiates a new hist max.
+		 *
+		 * @param t the t
+		 * @param v the v
+		 */
 		public HistMax(long t, double v) {
 			super();
 			this.t = t;
 			this.v = v;
 		}
+		
+		/** The t. */
 		long t;
+		
+		/** The v. */
 		double v;
 	}
 	
+	/** The deque stability. */
 	private Deque<HistMax> dequeStability=new LinkedList<>();
+	
+	/**
+	 * Stab add.
+	 *
+	 * @param v the v
+	 */
 	private void stabAdd(double v)
 	{
 		dequeStability.addLast(new HistMax((new Date()).getTime(), Math.abs(v)));
 	}
 	
+	/**
+	 * Stab get max.
+	 *
+	 * @return the double
+	 */
 	private double stabGetMax()
 	{
 		double res=0.;
@@ -112,6 +160,10 @@ public class Oscilloscope extends Region {
 			dequeStability.clear();
 		return res;
 	}
+	
+	/**
+	 * Stab purge.
+	 */
 	private void stabPurge()
 	{
 		boolean flagCont=true;
@@ -131,10 +183,9 @@ public class Oscilloscope extends Region {
 	}
 
 	/**
-	 * Set the refresh period
-	 * 
-	 * @param v
-	 *            Value of the period in seconds
+	 * Set the refresh period.
+	 *
+	 * @param v            Value of the period in seconds
 	 */
 	public void setRefreshPeriod(double v) {
 		refreshPeriod = (long) (v * 1000);
@@ -155,7 +206,7 @@ public class Oscilloscope extends Region {
 	}
 
 	/**
-	 * To start the refresh thread
+	 * To start the refresh thread.
 	 */
 	public void start() {
 		Log.getInstance().trace("Oscilloscope : start");
@@ -166,7 +217,7 @@ public class Oscilloscope extends Region {
 	
 	
 	/**
-	 * To stop the refresh thread
+	 * To stop the refresh thread.
 	 */
 	public void stop() {
 		Log.getInstance().trace("Oscilloscope : stop");
@@ -178,20 +229,42 @@ public class Oscilloscope extends Region {
 		isRunning = false;
 	}
 
+	/** The mem line. */
 	private List<Line> memLine = new ArrayList<>();
 
+	/** The middle line. */
 	private Line middleLine;
+	
+	/** The hight line. */
 	private Line hightLine;
+	
+	/** The low line. */
 	private Line lowLine;
 
+	/** The middle text. */
 	private Text middleText;
+	
+	/** The hight text. */
 	private Text hightText;
+	
+	/** The low text. */
 	private Text lowText;
 
+	/** The coef x. */
 	private double coefX;
+	
+	/** The coef y. */
 	private double coefY;
+	
+	/** The base y. */
 	private double baseY;
 
+	/**
+	 * Str volt.
+	 *
+	 * @param value the value
+	 * @return the string
+	 */
 	private String strVolt(double value) {
 		if (value == Math.floor(value)) {
 			return "" + ((int) value) + " V";
@@ -200,7 +273,13 @@ public class Oscilloscope extends Region {
 		}
 
 	}
+	
+	/** The last h value. */
 	private double lastHValue=1.;
+	
+	/**
+	 * Aff buf.
+	 */
 	private void affBuf() {
 
 		double[] buf = cmdGetBuffer.getBuffer();

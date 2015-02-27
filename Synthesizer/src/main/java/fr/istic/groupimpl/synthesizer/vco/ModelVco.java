@@ -12,18 +12,20 @@ import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.vco.jsyn.VCOCircuit;
 
 /**
- * Model of vco module
- * 
- * @author Team GroupImpl
+ * Model of vco module.
  *
+ * @author Team GroupImpl
  */
 public class ModelVco extends ModelComponent {
 
+	/** The vco circ. */
 	private VCOCircuit vcoCirc;
+	
+	/** The f0. */
 	private double f0 = 1.0;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ModelVco() {
 		super();		
@@ -32,14 +34,18 @@ public class ModelVco extends ModelComponent {
 		vcoCirc.getInputShape().set(3); // Default type : square
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
 		return this.vcoCirc;
 	}
 
 	/**
-	 * @param octave
-	 * Sets the octave value to the VCO Circuit
+	 * Sets the octave.
+	 *
+	 * @param octave Sets the octave value to the VCO Circuit
 	 */
 	protected void setOctave(double octave) {
 		vcoCirc.getInputOctave().set(octave);
@@ -47,6 +53,8 @@ public class ModelVco extends ModelComponent {
 	}
 
 	/**
+	 * Sets the output type.
+	 *
 	 * @param typeName The name of the output type : square | triangle | sawtooth
 	 * Sets the type of output signal
 	 */
@@ -80,11 +88,19 @@ public class ModelVco extends ModelComponent {
 		return vcoCirc.getOutput();
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
 	@Override
 	public Collection<UnitPort> getAllPorts() {
 		return this.vcoCirc.getPorts();
 	}
 
+	/**
+	 * Compute frequency.
+	 *
+	 * @param octave the octave
+	 */
 	private void computeFrequency(double octave) {
 		double frequency = f0 * Math.pow(2, octave);
 		DoubleStringConverter dsc = new DoubleStringConverter();
@@ -92,6 +108,8 @@ public class ModelVco extends ModelComponent {
 	}
 
 	/**
+	 * Sets the base freq.
+	 *
 	 * @param value The frequency to set (in Hz)
 	 * Sets the base frequency of the VCO
 	 */
@@ -100,7 +118,10 @@ public class ModelVco extends ModelComponent {
 		vcoCirc.getInputF0().set(value);
 		computeFrequency(vcoCirc.getInputOctave().get());
 	}
+	
 	/**
+	 * Sets the amplitude.
+	 *
 	 * @param value The amplitude in volt
 	 * Sets the amplitude of signal
 	 */

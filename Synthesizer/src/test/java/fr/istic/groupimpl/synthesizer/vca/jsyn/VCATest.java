@@ -4,20 +4,41 @@ import junit.framework.TestCase;
 
 import com.jsyn.engine.SynthesisEngine;
 
+/**
+ * The Class VCATest.
+ */
 public class VCATest extends TestCase {
+	
+	/** The synthesis engine. */
 	SynthesisEngine synthesisEngine;
+	
+	/** The value tested. */
 	double valueTested;
+	
+	/** The in tested. */
 	double inTested;  // compris entre -1 et 1
+	
+	/** The a0 tested. */
 	double a0Tested ; // compris entre -5 et 5
+	
+	/** The am tested. */
 	double amTested ; // compris entre -1 et 1
+	
+	/** The out tested. */
 	double outTested;
 
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#setUp()
+	 */
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		synthesisEngine = new SynthesisEngine();
 	}
 
+	/** set up method
+	 * @see junit.framework.TestCase#tearDown()
+	 */
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
@@ -25,9 +46,9 @@ public class VCATest extends TestCase {
 	}
 
 	/**
-	 * test of intput in 
-	 * 
-	 * @throws InterruptedException
+	 * test of intput in .
+	 *
+	 * @throws InterruptedException the interrupted exception
 	 */
 	public void testVCA_in() throws InterruptedException {
 
@@ -57,9 +78,9 @@ public class VCATest extends TestCase {
 	}
 
 	/**
-	 * test of intput a0 
-	 * 
-	 * @throws InterruptedException
+	 * test of intput a0 .
+	 *
+	 * @throws InterruptedException the interrupted exception
 	 */
 	public void testVCA_a0() throws InterruptedException {
 
@@ -95,9 +116,9 @@ public class VCATest extends TestCase {
 	}
 
 	/**
-	 * test of input am
-	 * 
-	 * @throws InterruptedException
+	 * test of input am.
+	 *
+	 * @throws InterruptedException the interrupted exception
 	 */
 //	public void testVCA_am() throws InterruptedException {
 //
@@ -151,9 +172,9 @@ public class VCATest extends TestCase {
 
 	/**
 	 * test of output n°2
-	 * if am = 5V and a0 = 0 then out = in 
-	 * 
-	 * @throws InterruptedException
+	 * if am = 5V and a0 = 0 then out = in .
+	 *
+	 * @throws InterruptedException the interrupted exception
 	 */
 	public void testVCA_out2() throws InterruptedException {
 
@@ -205,9 +226,9 @@ public class VCATest extends TestCase {
 
 	/**
 	 * test of output n°3
-	 * if am increase of 1V then  out = in * 4
-	 * 
-	 * @throws InterruptedException
+	 * if am increase of 1V then  out = in * 4.
+	 *
+	 * @throws InterruptedException the interrupted exception
 	 */
 	public void testVCA_out3() throws InterruptedException {
 
@@ -244,9 +265,9 @@ public class VCATest extends TestCase {
 	
 	/**
 	 * test of output n°4
-	 * if am decrease of 1V then  out = in / 4
-	 * 
-	 * @throws InterruptedException
+	 * if am decrease of 1V then  out = in / 4.
+	 *
+	 * @throws InterruptedException the interrupted exception
 	 */
 	public void testVCA_out4() throws InterruptedException {
 

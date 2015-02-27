@@ -35,31 +35,59 @@ import fr.istic.groupimpl.synthesizer.logger.Log;
  */
 public class Potentiometre extends Region {
 
+	/** The Constant RAYON_REF. */
 	final public static double RAYON_REF = 50.;
 
+	/** The rg knob. */
 	private Region rgKnob = new Region();
 
+	/** The rotate. */
 	private Rotate rotate = new Rotate();
+	
+	/** The title. */
 	private final Text title = new Text("");
 
 	// valeur venant de initPotentiometre
+	/** The rayon. */
 	private final double rayon;
+	
+	/** The min value. */
 	private final double minValue;
+	
+	/** The max value. */
 	private final double maxValue;
+	
+	/** The discret. */
 	private final boolean discret;
+	
+	/** The nb spins. */
 	private final double nbSpins;
 
+	/** The show tick marks. */
 	private final boolean showTickMarks;
+	
+	/** The show tick labels. */
 	private final boolean showTickLabels;
+	
+	/** The major tick unit. */
 	private final double majorTickUnit;
+	
+	/** The minor tick unit. */
 	private final double minorTickUnit;
 
 	// angle en Radian
+	/** The min angle. */
 	private final double minAngle;
+	
+	/** The max angle. */
 	private final double maxAngle;
+	
+	/** The value def. */
 	private final double valueDef;
 
 	/**
+	 * Checks if is show tick marks.
+	 *
 	 * @return show Tick Marks flag
 	 */
 	public boolean isShowTickMarks() {
@@ -67,6 +95,8 @@ public class Potentiometre extends Region {
 	}
 
 	/**
+	 * Checks if is show tick labels.
+	 *
 	 * @return show Tick Labels flag
 	 */
 	public boolean isShowTickLabels() {
@@ -74,6 +104,8 @@ public class Potentiometre extends Region {
 	}
 
 	/**
+	 * Gets the major tick unit.
+	 *
 	 * @return Major Tick Unit
 	 */
 	public double getMajorTickUnit() {
@@ -81,12 +113,24 @@ public class Potentiometre extends Region {
 	}
 
 	// intern value is different from value only if it is discrete
+	/** The val. */
 	private double val;
 
+	/** The deb drag angle. */
 	private double debDragAngle;
+	
+	/** The drag ok. */
 	boolean dragOK = false;
+	
+	/** The right button pressed. */
 	boolean rightButtonPressed=false;
 
+	/**
+	 * Traite pos angle.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 */
 	private void traitePosAngle(double x, double y) {
 		double centerX = getWidth() / 2.0;
 		double centerY = getHeight() / 2.0;
@@ -102,13 +146,17 @@ public class Potentiometre extends Region {
 
 	}
 
+	/** The time release. */
 	private long timeRelease = 0;
 
+	/** The drag valid. */
 	private boolean dragValid = false;
 
 
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
+	 * @param initPot the init pot
 	 */
 	Potentiometre(PotentiometreFactory initPot) {
 
@@ -253,6 +301,11 @@ public class Potentiometre extends Region {
 
 	}
 
+	/**
+	 * Adds the value.
+	 *
+	 * @param deltaAngle the delta angle
+	 */
 	private void addValue(double deltaAngle) {
 
 		Log.getInstance().trace("1deltaAngle=" + deltaAngle);
@@ -296,11 +349,23 @@ public class Potentiometre extends Region {
 
 	}
 
+	/**
+	 * Discret.
+	 *
+	 * @param v the v
+	 * @return the double
+	 */
 	private double discret(double v) {
 		return Math.floor(v + 0.5);
 	}
 
 	// makes an equivalent angle between -Math.PI and Math.PI
+	/**
+	 * Correct angle.
+	 *
+	 * @param angle the angle
+	 * @return the double
+	 */
 	private double correctAngle(double angle) {
 		double sens = Math.signum(angle);
 		int n = (int) Math.floor(Math.abs(angle) / Math.PI);
@@ -341,8 +406,12 @@ public class Potentiometre extends Region {
 		}
 	}
 
+	/** The flag aff tick marks. */
 	private AtomicBoolean flagAffTickMarks = new AtomicBoolean(false);
 
+	/**
+	 * Aff tick marks.
+	 */
 	private void affTickMarks() {
 
 		if (flagAffTickMarks.getAndSet(true))
@@ -399,12 +468,24 @@ public class Potentiometre extends Region {
 		}
 	}
 
+	/**
+	 * Value to angle.
+	 *
+	 * @param value the value
+	 * @return the double
+	 */
 	private double valueToAngle(double value) {
 		double angle = minAngle + (maxAngle - minAngle) * (value - minValue)
 				/ (maxValue - minValue);
 		return angle;
 	}
 
+	/**
+	 * Angle to value.
+	 *
+	 * @param angle the angle
+	 * @return the double
+	 */
 	private double angleToValue(double angle) {
 		double value = minValue + (maxValue - minValue) * (angle - minAngle)
 				/ (maxAngle - minAngle);
@@ -413,14 +494,14 @@ public class Potentiometre extends Region {
 		return value;
 	}
 
+	/** The value. */
 	private final DoubleProperty value = new SimpleDoubleProperty(this,
 			"value", 0);
 
 	/**
-	 * set the value
-	 * 
-	 * @param v
-	 *            Value for initialization
+	 * set the value.
+	 *
+	 * @param v            Value for initialization
 	 */
 	public final void setValue(double v) {
 		value.set(v);
@@ -428,8 +509,8 @@ public class Potentiometre extends Region {
 	}
 
 	/**
-	 * get the value
-	 * 
+	 * get the value.
+	 *
 	 * @return value
 	 */
 	public final double getValue() {
@@ -437,6 +518,8 @@ public class Potentiometre extends Region {
 	}
 
 	/**
+	 * Value property.
+	 *
 	 * @return the value Property
 	 */
 	public final DoubleProperty valueProperty() {
@@ -444,8 +527,8 @@ public class Potentiometre extends Region {
 	}
 
 	/**
-	 * get the minimum value
-	 * 
+	 * get the minimum value.
+	 *
 	 * @return the minimum value
 	 */
 	public final double getMin() {
@@ -453,8 +536,8 @@ public class Potentiometre extends Region {
 	}
 
 	/**
-	 * get the maximum value
-	 * 
+	 * get the maximum value.
+	 *
 	 * @return the maximum value
 	 */
 	public final double getMax() {
@@ -462,8 +545,8 @@ public class Potentiometre extends Region {
 	}
 
 	/**
-	 * get the discret flag ( to have only integer values )
-	 * 
+	 * get the discret flag ( to have only integer values ).
+	 *
 	 * @return the discret flag
 	 */
 	public final boolean isDiscret() {
@@ -471,8 +554,8 @@ public class Potentiometre extends Region {
 	}
 
 	/**
-	 * get the number of spins
-	 * 
+	 * get the number of spins.
+	 *
 	 * @return The spin number
 	 */
 	public double getNbSpins() {

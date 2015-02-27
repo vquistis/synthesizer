@@ -20,21 +20,39 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  */
 public class PlayerGate extends VariableRateStereoReader { //VariableRateMonoReader
 
-	private UnitInputPort gate; 		//Volt
+	/** The gate. */
+ private UnitInputPort gate; 		//Volt
+	
+	/** The sample. */
 	private FloatSample sample;
 	
+	/** The sig min front montant. */
 	private final double sigMinFrontMontant;
+	
+	/** The sig max front montant. */
 	private final double sigMaxFrontMontant;
 	
+	/**
+	 * The Enum State.
+	 */
 	private enum State 
 	{
+		
+		/** The attente min. */
 		ATTENTE_MIN,
+		
+		/** The attente max. */
 		ATTENTE_MAX
 	}
+	
+	/** The etat. */
 	private State etat=State.ATTENTE_MIN;
 	
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
+	 * @param sigMinFrontMontantVolt the sig min front montant volt
+	 * @param sigMaxFrontMontantVolt the sig max front montant volt
 	 */
     public PlayerGate(double sigMinFrontMontantVolt, double sigMaxFrontMontantVolt) {
         addPort(gate = new UnitInputPort("player_gate"));
@@ -44,23 +62,26 @@ public class PlayerGate extends VariableRateStereoReader { //VariableRateMonoRea
      }
     
 	/**
-	 * get the gate port
-	 * @return
-	 *  the gate port
+	 * get the gate port.
+	 *
+	 * @return  the gate port
 	 */
 	public UnitInputPort getGate() {
 		return gate;
 	}
 
 	/**
-	 * get the output port
-	 * @return
-	 * the output port
+	 * get the output port.
+	 *
+	 * @return the output port
 	 */
 	public UnitOutputPort getOutput() {
 		return output;
 	}
 
+	/**
+	 * Play.
+	 */
 	public void play() {
 		if (sample!=null) {
 			// player.dataQueue.queue(sample);
@@ -69,13 +90,21 @@ public class PlayerGate extends VariableRateStereoReader { //VariableRateMonoRea
 		}
 	}
 
+	/**
+	 * @see com.jsyn.unitgen.UnitGenerator#stop()
+	 */
 	public void stop() {
 		if (sample!=null) {
 			this.dataQueue.clear();
 		}
 	}
 	
-	public void loadSample(File sampleFile) throws IOException {
+	/**
+	 * Load sample.
+	 *
+	 * @param sampleFile the sample file
+	 */
+public void loadSample(File sampleFile) throws IOException {
 		// Load the sample and display its properties.
 		SampleLoader.setJavaSoundPreferred( false );
 		try {
@@ -84,18 +113,13 @@ public class PlayerGate extends VariableRateStereoReader { //VariableRateMonoRea
 			Log.getInstance().error("Failed to load sample", e );
 			throw e;
 		}
-		
-		/*
-		System.out.println( "Sample has: channels  = " + sample.getChannelsPerFrame() );
-		System.out.println( "            frames    = " + sample.getNumFrames() );
-		System.out.println( "            rate      = " + sample.getFrameRate() );
-		System.out.println( "            loopStart = " + sample.getSustainBegin() );
-		System.out.println( "            loopEnd   = " + sample.getSustainEnd() );
-		*/
-		
+				
 		this.rate.set(sample.getFrameRate());	
 	}
 	
+    /**
+     * @see com.jsyn.unitgen.VariableRateStereoReader#generate(int, int)
+     */
     @Override
     public void generate(int start, int limit) {
 		super.generate(start, limit);

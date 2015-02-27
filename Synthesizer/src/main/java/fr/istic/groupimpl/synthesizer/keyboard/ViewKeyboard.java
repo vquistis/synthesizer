@@ -44,7 +44,7 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 	/** The controller. */
 	private ControllerKeyboard controller;
 
-	/* (non-Javadoc)
+	/**
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
 	 */
 	@Override
@@ -78,7 +78,7 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 		}); 
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
 	 */
 	@Override
@@ -86,7 +86,7 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 		return rootModulePane;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
 	 */
 	@Override
@@ -94,7 +94,7 @@ public class ViewKeyboard extends ViewComponent implements Initializable {
 		return controller;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
 	 */
 	@Override

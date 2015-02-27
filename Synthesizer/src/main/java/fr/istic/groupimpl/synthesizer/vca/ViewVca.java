@@ -19,28 +19,39 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
- * View of vca module
+ * View of vca module.
  *
  * @authors GroupImpl
- * 
  */
 public class ViewVca extends ViewComponent implements Initializable {
 
+	/** The pane vca. */
 	@FXML private BorderPane paneVca;
+	
+	/** The top. */
 	@FXML private GridPane top;
+	
+	/** The volt pane. */
 	@FXML private VBox voltPane;
+	
+	/** The am. */
 	@FXML private ImageView am;
+	
+	/** The out. */
 	@FXML private ImageView out;
+	
+	/** The input. */
 	@FXML private ImageView input;
 
+	/** The vca control. */
 	private ControllerVca vcaControl;
 
 	/**
 	 * Initializes the controller class.
 	 * This method is automatically called after the FXML file has been loaded. It creates a new view and set all the button with new created buttons.
 	 *
-	 * @param url the url
-	 * @param resourceBundle the resourceBundle
+	 * @param location the location
+	 * @param resources the resources
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -81,17 +92,26 @@ public class ViewVca extends ViewComponent implements Initializable {
 		addParameters("amplitudeKnod", () -> amplitudeKnod.getValue(), (val) -> amplitudeKnod.setValue(val));
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return paneVca;
 	}
 
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return vcaControl;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/vca.fxml";

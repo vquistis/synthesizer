@@ -22,17 +22,36 @@ import fr.istic.groupimpl.synthesizer.component.ViewComponent;
  */
 public class ViewPlayer extends ViewComponent implements Initializable {
 
+	/** The root module pane. */
 	@FXML private Pane rootModulePane;
+	
+	/** The top. */
 	@FXML private GridPane top;
+	
+	/** The output. */
 	@FXML private ImageView output;
+	
+	/** The gate. */
 	@FXML private ImageView gate;
+	
+	/** The fx sample name. */
 	@FXML private Label fxSampleName;
+	
+	/** The fx btn load. */
 	@FXML private Button fxBtnLoad;
+	
+	/** The fx btn play. */
 	@FXML private Button fxBtnPlay;
+	
+	/** The fx btn stop. */
 	@FXML private Button fxBtnStop;
 
+	/** The controller. */
 	private ControllerPlayer controller;
 
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
 		((Label) top.lookup("#titleModule")).setText("Player");
@@ -55,23 +74,32 @@ public class ViewPlayer extends ViewComponent implements Initializable {
    	 	fxBtnStop.setDisable(true);
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/player.fxml";
 	}
 	
 	/**
-	 * Handles the click on the play button
+	 * Handles the click on the play button.
 	 */
 	@FXML
 	public void handlePlayClicked() {
@@ -79,7 +107,7 @@ public class ViewPlayer extends ViewComponent implements Initializable {
 	}
 
 	/**
-	 * Handles the click on the stop button
+	 * Handles the click on the stop button.
 	 */
 	@FXML
 	public void handleStopClicked() {
@@ -87,7 +115,7 @@ public class ViewPlayer extends ViewComponent implements Initializable {
 	}
 	
 	/**
-	 * Handles the click on the load button
+	 * Handles the click on the load button.
 	 */
 	@FXML
 	public void handleLoadClicked() {
@@ -98,7 +126,11 @@ public class ViewPlayer extends ViewComponent implements Initializable {
    	 	}
 	}
 	
-	
+	/**
+	 * Gets the fx sample name.
+	 *
+	 * @return the fx sample name
+	 */
 	public Label getFxSampleName() {
 		return fxSampleName;
 	}

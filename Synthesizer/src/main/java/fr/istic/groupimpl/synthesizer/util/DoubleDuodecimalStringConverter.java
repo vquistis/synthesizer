@@ -4,14 +4,17 @@ import javafx.util.StringConverter;
 import fr.istic.groupimpl.synthesizer.logger.Log;
 
 /**
- * @author groupImpl
- * 
  * Convert String to Double, string is in duodecimal format ( radix 12 ).
  * the interest of this radix is that in this base 
  * when one is one octave then 0.1 is one semitone.
  *
+ * @author Team GrouplImpl
  */
 public class DoubleDuodecimalStringConverter extends StringConverter<Number> {
+	
+	/**
+	 * @see javafx.util.StringConverter#toString(java.lang.Object)
+	 */
 	@Override
 	public String toString(Number value) {
 
@@ -50,6 +53,9 @@ public class DoubleDuodecimalStringConverter extends StringConverter<Number> {
 		return str;
 	}
 
+	/**
+	 * @see javafx.util.StringConverter#fromString(java.lang.String)
+	 */
 	@Override
 	public Number fromString(String string) {
 		Log.getInstance().trace("DoubleDuoDecimal.fromString debut string="+string);

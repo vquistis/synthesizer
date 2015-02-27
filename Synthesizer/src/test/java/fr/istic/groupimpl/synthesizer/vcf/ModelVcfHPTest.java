@@ -11,12 +11,23 @@ import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 
+/**
+ * The Class ModelVcfHPTest.
+ */
 public class ModelVcfHPTest {
 
+	/** The synth. */
 	private Synthesizer synth;
+	
+	/** The sine osc. */
 	private UnitOscillator sineOsc;
+	
+	/** The model. */
 	private ModelVcf model;
 
+	/**
+	 * set up method.
+	 */
 	@Before
 	public void init() {
 		synth = JSyn.createSynthesizer();
@@ -34,6 +45,11 @@ public class ModelVcfHPTest {
 		synth.start();
 	}
 	
+	/**
+	 * Test close freq max.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testCloseFreqMax() throws InterruptedException {
 		// Configuration
@@ -51,6 +67,11 @@ public class ModelVcfHPTest {
 		}
 	}
 	
+	/**
+	 * Test open freq min.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testOpenFreqMin() throws InterruptedException {
 		// Configuration
@@ -68,6 +89,11 @@ public class ModelVcfHPTest {
 		}
 	}
 
+	/**
+	 * Test open freq not max.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testOpenFreqNotMax() throws InterruptedException {
 		// Configuration
@@ -85,6 +111,11 @@ public class ModelVcfHPTest {
 		}
 	}
 
+	/**
+	 * Test close freq min.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testCloseFreqMin() throws InterruptedException {
 		// Configuration
@@ -102,6 +133,11 @@ public class ModelVcfHPTest {
 		}
 	}
 
+	/**
+	 * Test close freq not min.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testCloseFreqNotMin() throws InterruptedException {
 		// Configuration

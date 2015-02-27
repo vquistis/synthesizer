@@ -22,40 +22,66 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
- * View of VCO module  
- * 
+ * View of VCO module  .
+ *
  * @authors GroupImpl
- * 
  */
 public class ViewVco extends ViewComponent implements Initializable {
 
+	/** The pane vco. */
 	@FXML
 	private BorderPane paneVco;
+	
+	/** The choice base freq. */
 	@FXML
 	private ChoiceBox<String> choiceBaseFreq;
+	
+	/** The choice amplitude. */
 	@FXML
 	private ChoiceBox<String> choiceAmplitude;
+	
+	/** The close vco. */
 	@FXML
 	private ImageView closeVco;
+	
+	/** The knob octave pane. */
 	@FXML
 	private VBox knobOctavePane;
+	
+	/** The knob freq pane. */
 	@FXML
 	private VBox knobFreqPane;
+	
+	/** The fm. */
 	@FXML
 	private ImageView fm;
+	
+	/** The out. */
 	@FXML
 	private ImageView out;
+	
+	/** The type output. */
 	@FXML
 	private ToggleGroup typeOutput;
+	
+	/** The display. */
 	@FXML
 	private Text display;
+	
+	/** The rg fm. */
 	@FXML
 	private Region rgFm;
+	
+	/** The freq label. */
 	@FXML
 	private Label freqLabel;
 
+	/** The vco control. */
 	private ControllerVco vcoControl;
 
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -153,16 +179,25 @@ public class ViewVco extends ViewComponent implements Initializable {
 		addParameters("typeOutput", () -> (double) typeOutput.getToggles().indexOf(typeOutput.getSelectedToggle()), (val) -> typeOutput.selectToggle(typeOutput.getToggles().get(val.intValue())));
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return paneVco;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return vcoControl;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/vco.fxml";

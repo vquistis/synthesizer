@@ -15,19 +15,32 @@ import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
 import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 
 /**
- * View vcf module
- * 
- * 
- * @author Team GroupImpl
+ * View vcf module.
  *
+ * @author Team GroupImpl
  */
 public abstract class ViewVcf extends ViewComponent {
 	
+	/** The root module pane. */
 	@FXML private Pane rootModulePane;
+	
+	/** The top. */
 	@FXML private GridPane top;
+	
+	/** The content. */
 	@FXML private HBox content;
+	
+	/** The port. */
 	@FXML private HBox port;
 	
+	/**
+	 * Configurate.
+	 *
+	 * @param title the title
+	 * @param controller the controller
+	 * @param knobCutoff the knob cutoff
+	 * @param knobResonance the knob resonance
+	 */
 	public void configurate(String title, ControllerVcf controller, Potentiometre knobCutoff, Potentiometre knobResonance) {
 		((Label) top.lookup("#titleModule")).setText(title);
 		
@@ -63,6 +76,9 @@ public abstract class ViewVcf extends ViewComponent {
 		addParameters("knobResonance", () -> knobResonance.getValue(), (val) -> knobResonance.setValue(val));
 	}
 	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;

@@ -53,7 +53,7 @@ public class JSynKeyboard extends UnitGenerator  {
 	}
 	
 	
-	/* (non-Javadoc)
+	/**
 	 * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
 	 */
 	@Override

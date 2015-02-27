@@ -17,27 +17,50 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
+/**
+ * The Class ViewTestPot.
+ */
 public class ViewTestPot implements Initializable {
 
+	/** The pane vco. */
 	@FXML
 	BorderPane paneVco;
+	
+	/** The hb left. */
 	@FXML
 	HBox hbLeft;
+	
+	/** The hb right. */
 	@FXML
 	HBox hbRight;
+	
+	/** The fm. */
 	@FXML
 	Circle fm;
+	
+	/** The square. */
 	@FXML
 	Circle square;
+	
+	/** The triangle. */
 	@FXML
 	Circle triangle;
+	
+	/** The saw tooth. */
 	@FXML
 	Circle sawTooth;
+	
+	/** The display. */
 	@FXML
 	Text display;
+	
+	/** The rg fm. */
 	@FXML
 	Region rgFm;
 
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		

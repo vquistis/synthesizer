@@ -29,7 +29,7 @@ public class ControllerVca extends ControllerComponent {
 		ctrlGlob.registerUnitGenerator(modelVca.getUnitGenerator());
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.IControllerComponent#handleViewClose()
 	 */
 	@Override

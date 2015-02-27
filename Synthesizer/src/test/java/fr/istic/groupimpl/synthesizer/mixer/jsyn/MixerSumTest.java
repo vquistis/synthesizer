@@ -15,7 +15,7 @@ public class MixerSumTest extends TestCase {
     /** The synthesis engine. */
     SynthesisEngine synthesisEngine;
 
-    /* (non-Javadoc)
+    /** set up method
      * @see junit.framework.TestCase#setUp()
      */
     @Override

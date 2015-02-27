@@ -26,7 +26,7 @@ public class ControllerRecorder extends ControllerComponent {
 		viewRecorder.getFxSampleName().textProperty().bind(model.getSampleFileName());
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
 	 */
 	@Override
@@ -35,7 +35,7 @@ public class ControllerRecorder extends ControllerComponent {
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
 	 */
 	@Override

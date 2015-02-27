@@ -13,22 +13,31 @@ import javafx.scene.layout.Pane;
 import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
 import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 
-
 /**
- * View of Rep module 
- * 
+ * View of Rep module .
+ *
  * @authors Team GroupImpl
- * 
  */
 public class ViewRep extends ViewComponent implements Initializable{
 	
+	/** The root module pane. */
 	@FXML private Pane rootModulePane;
+	
+	/** The top. */
 	@FXML private GridPane top;
+	
+	/** The in. */
 	@FXML private ImageView in;
+	
+	/** The out3. */
 	@FXML private ImageView out1, out2, out3;
 	
+	/** The controller. */
 	private ControllerRep controller;
 
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		((Label) top.lookup("#titleModule")).setText("REP");
@@ -50,21 +59,31 @@ public class ViewRep extends ViewComponent implements Initializable{
 	}
 	
 	/**
-	 * Handles the click on the close button
+	 * Handles the click on the close button.
 	 */
 	public void handleCloseClick() {
 		controller.handleViewClose();
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
 	@Override
 	protected Pane getComponentRoot() {
 		return rootModulePane;
 	}
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
 	@Override
 	protected ControllerComponent getController() {
 		return controller;
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
 	@Override
 	public String getFilename() {
 		return "fxml/rep.fxml";

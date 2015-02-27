@@ -1,8 +1,9 @@
 package fr.istic.groupimpl.synthesizer.player;
 
-import static org.junit.Assert.*;
-
-import java.io.FileNotFoundException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,13 +13,22 @@ import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.LineOut;
 
+/**
+ * The Class PlayerTest.
+ */
 public class PlayerTest {
 
+	/** The model. */
 	private ModelPlayer model;
+	
+	/** The synth. */
 	private Synthesizer synth;
 	private String sampleFileNameTest = "junit_PlayerTest.wav";
 	private String sampleFileTest = "src/main/resources/sound/" + sampleFileNameTest;
 	
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		synth = JSyn.createSynthesizer();
@@ -40,6 +50,11 @@ public class PlayerTest {
 		synth.stop();
 	}
 	
+	/**
+	 * Test model.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testModel() throws InterruptedException {
 		model.loadSample(sampleFileTest);
@@ -56,6 +71,11 @@ public class PlayerTest {
 		assertFalse("is not running ?", model.isPlayRunning());
 	}
 	
+	/**
+	 * Test output.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testOutput() throws InterruptedException {
 		double sumOutput = 0;
@@ -88,5 +108,4 @@ public class PlayerTest {
 		model.loadSample(sampleFileTest);
 		assertEquals("File name", model.getSampleFileName().get(), sampleFileNameTest);
 	}
-	
 }

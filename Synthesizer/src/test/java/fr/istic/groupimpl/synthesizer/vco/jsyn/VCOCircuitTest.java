@@ -16,7 +16,7 @@ public class VCOCircuitTest extends TestCase {
     /** The synthesis engine. */
     SynthesisEngine synthesisEngine;
 
-    /** set up methode
+    /** set up method
      * @see junit.framework.TestCase#setUp()
      */
     @Override

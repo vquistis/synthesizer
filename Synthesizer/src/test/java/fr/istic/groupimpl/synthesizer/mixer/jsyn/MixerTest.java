@@ -4,21 +4,37 @@ import junit.framework.TestCase;
 
 import com.jsyn.engine.SynthesisEngine;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MixerTest.
+ */
 public class MixerTest extends TestCase {
+    
+    /** The synthesis engine. */
     SynthesisEngine synthesisEngine;
 
-    @Override
+    /**
+     * @see junit.framework.TestCase#setUp()
+     */
     protected void setUp() throws Exception {
         super.setUp();
         synthesisEngine = new SynthesisEngine();
     }
 
+    /** tear down method
+     * @see junit.framework.TestCase#tearDown()
+     */
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         synthesisEngine.stop();
     }
     
+    /**
+     * Test mixer_get number of input port.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void testMixer_getNumberOfInputPort() throws InterruptedException {
         Integer NbPortTested = 3;
         Mixer mixer = new Mixer(NbPortTested);
@@ -26,6 +42,11 @@ public class MixerTest extends TestCase {
         assertEquals("Get the number of input port", NbPortTested, mixer.getNumberOfInputPort(),0);
     }
 
+    /**
+     * Test mixer_get number of input port max.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void testMixer_getNumberOfInputPortMax() throws InterruptedException {
         Integer NbPortTested = 11;
         Mixer mixer = new Mixer(NbPortTested);
@@ -33,6 +54,11 @@ public class MixerTest extends TestCase {
         assertEquals("Get the number of input port", 10, mixer.getNumberOfInputPort(),0);
     }
     
+    /**
+     * Test mixer_get number of input port min.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void testMixer_getNumberOfInputPortMin() throws InterruptedException {
         Integer NbPortTested = 1;
         Mixer mixer = new Mixer(NbPortTested);
@@ -40,6 +66,11 @@ public class MixerTest extends TestCase {
         assertEquals("Get the number of input port", 2, mixer.getNumberOfInputPort(),0);
     }
     
+    /**
+     * Test mixer_ sum.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void testMixer_Sum() throws InterruptedException {
     	double tolerance = 0.01;
         Integer NbPortTested = 3;
@@ -69,6 +100,11 @@ public class MixerTest extends TestCase {
 		assertEquals("mixer out value", 1.8, mixer.getOutput().get(), tolerance);
     }
     
+    /**
+     * Test mixer_ mute many.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void testMixer_MuteMany() throws InterruptedException {   
     	double tolerance = 0.01;
         Integer NbPortTested = 3;
@@ -106,6 +142,11 @@ public class MixerTest extends TestCase {
 		assertEquals("mixer out value", 0.7, mixer.getOutput().get(), tolerance);
     }
     
+    /**
+     * Test mixer_ mute all.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void testMixer_MuteAll() throws InterruptedException {
     	double tolerance = 0.01;
         Integer NbPortTested = 3;
@@ -140,6 +181,11 @@ public class MixerTest extends TestCase {
 		
     }
     
+    /**
+     * Test mixer_ attenuator.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void testMixer_Attenuator() throws InterruptedException {
     	double tolerance = 0.01;
         Integer NbPortTested = 3;
@@ -176,6 +222,11 @@ public class MixerTest extends TestCase {
 		assertEquals("mixer out value", 2.5, mixer.getOutput().get(), tolerance);
     }
     
+    /**
+     * Test mixer_ average output value.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void testMixer_AverageOutputValue() throws InterruptedException {
     	double tolerance = 0.01;
         Integer NbPortTested = 3;

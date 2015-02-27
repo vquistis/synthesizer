@@ -13,21 +13,28 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
  */
 public class ControllerWhiteNoise extends ControllerComponent {
 
+	/** The model. */
 	private ModelWhiteNoise model = new ModelWhiteNoise();
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ControllerWhiteNoise() {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
 	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
 	@Override
 	public ModelComponent getModel() {
 		return model;

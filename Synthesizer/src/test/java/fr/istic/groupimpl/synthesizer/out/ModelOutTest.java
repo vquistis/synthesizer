@@ -7,10 +7,17 @@ import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.SineOscillator;
 
+/**
+ * The Class ModelOutTest.
+ */
 public class ModelOutTest {
 
+	/** The model. */
 	private ModelOut model;
 	
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		model = new ModelOut();
@@ -25,6 +32,11 @@ public class ModelOutTest {
 		synth.start();
 	}
 	
+	/**
+	 * Test attenuation.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testAttenuation() throws InterruptedException {
 		model.getUnitGenerator().start();
@@ -43,6 +55,11 @@ public class ModelOutTest {
 		model.getUnitGenerator().stop();
 	}
 
+	/**
+	 * Test mute.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@Test
 	public void testMute() throws InterruptedException {
 		for (int i = 5; i > 0; i--) {

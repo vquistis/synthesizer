@@ -5,18 +5,19 @@ import fr.istic.groupimpl.synthesizer.component.ModelComponent;
 import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 
 /**
- * 
- * Controller of vcf module
- * 
- * @author Team GroupImpl
+ * Controller of vcf module.
  *
+ * @author Team GroupImpl
  */
 public class ControllerVcf extends ControllerComponent {
 
+	/** The model. */
 	private ModelVcf model;
 	
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
+	 * @param t the t
 	 */
 	public ControllerVcf(ModelVcf.Type t) {
 		model = new ModelVcf(t);
@@ -39,12 +40,18 @@ public class ControllerVcf extends ControllerComponent {
 		model.setResonance((double) newVal);
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
 	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
 	@Override
 	public ModelComponent getModel() {
 		return model;

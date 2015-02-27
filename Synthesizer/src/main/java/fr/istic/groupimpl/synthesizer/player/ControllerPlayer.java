@@ -16,34 +16,53 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
  */
 public class ControllerPlayer extends ControllerComponent {
 
+	/** The model. */
 	private ModelPlayer model = new ModelPlayer();
+	
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
+	 * @param viewPlayer the view player
 	 */
 	public ControllerPlayer(ViewPlayer viewPlayer) {
 		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());
 		viewPlayer.getFxSampleName().textProperty().bind(model.getSampleFileName());
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
 	@Override
 	public void handleViewClose() {
 		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());
 		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());
 	}
 
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
 	@Override
 	public ModelComponent getModel() {
 		return model;
 	}
 	
+	/**
+	 * Handle view play clicked.
+	 */
 	public void handleViewPlayClicked() {
 		model.play();
 	}
 
+	/**
+	 * Handle view stop clicked.
+	 */
 	public void handleViewStopClicked() {
 		model.stop();
 	}
 	
+	/**
+	 * Load sample.
+	 */
 	public void loadSample(){
 		 FileChooser fileChooser = new FileChooser();         
 	     //Set extension filter

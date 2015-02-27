@@ -6,20 +6,41 @@ import com.jsyn.engine.SynthesisEngine;
 
 import fr.istic.groupimpl.synthesizer.rep.jsyn.JsynRepCircuit;
 
+/**
+ * The Class REPTest.
+ */
 public class REPTest extends TestCase {
+	
+	/** The synthesis engine. */
 	SynthesisEngine synthesisEngine;
+	
+	/** The value tested. */
 	double valueTested;
+	
+	/** The in tested. */
 	double inTested;  
+	
+	/** The out1 tested. */
 	double out1Tested ; 
+	
+	/** The out2 tested. */
 	double out2Tested ;
+	
+	/** The out3 tested. */
 	double out3Tested;
 
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#setUp()
+	 */
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		synthesisEngine = new SynthesisEngine();
 	}
 
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#tearDown()
+	 */
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
@@ -27,9 +48,9 @@ public class REPTest extends TestCase {
 	}
 
 	/**
-	 * test of intput in 
-	 * 
-	 * @throws InterruptedException
+	 * test of intput in .
+	 *
+	 * @throws InterruptedException the interrupted exception
 	 */
 	public void testRep_in() throws InterruptedException {
 
@@ -59,9 +80,9 @@ public class REPTest extends TestCase {
 	}
 	
 	/**
-	 * test of output
-	 * 
-	 * @throws InterruptedException
+	 * test of output.
+	 *
+	 * @throws InterruptedException the interrupted exception
 	 */
 	public void testREP_out() throws InterruptedException {
 

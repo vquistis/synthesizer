@@ -22,7 +22,7 @@ public class ControllerKeyboard extends ControllerComponent {
 				model.getUnitGenerator());
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
 	 */
 	@Override
