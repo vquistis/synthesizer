@@ -40,15 +40,6 @@ public class ModelVca extends ModelComponent {
 	}
 
 	/**
-	 * Sets the a0.
-	 *
-	 * @param a0 the new a0
-	 */
-	protected void seta0(double a0) {
-		vcajSyn.getInputa0().set(a0);
-	}
-
-	/**
 	 * get input port.
 	 *
 	 * @param portName the port name
