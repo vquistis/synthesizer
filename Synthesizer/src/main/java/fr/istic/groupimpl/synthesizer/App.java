@@ -24,7 +24,7 @@ public class App extends Application
 
 	/**
 	 * start method javafx
-	 * @param primaryStage
+	 * @param primaryStage primary stage
 	 * @see javafx.application.Application#start(javafx.stage.Stage)
 	 */
 	@Override

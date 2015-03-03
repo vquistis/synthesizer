@@ -16,7 +16,7 @@ import fr.istic.groupimpl.synthesizer.component.ViewComponent;
 /**
  * View of Rep module .
  *
- * @authors Team GroupImpl
+ * @author Team GroupImpl
  */
 public class ViewRep extends ViewComponent implements Initializable{
 	

@@ -197,9 +197,8 @@ public class Oscilloscope extends Region {
 	}
 	/**
 	 * Get the refresh period
-	 * 
-	 * @param v
 	 *            Value of the period in seconds
+	 *  @return double
 	 */
 	public double getRefreshPeriod() {
 		return (double)refreshPeriod/1000.; 

@@ -599,7 +599,6 @@ public class ControllerGlobal {
 	/**
 	 * Handle create record synth.
 	 *
-	 * @param moduleOut the module out
 	 * @param file the file
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */

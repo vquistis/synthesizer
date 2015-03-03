@@ -20,7 +20,7 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  *    
  * <pre>
  * output = f0*Math.pow(2, octave + fm);
- * <pre>
+ * </pre>
  * 
  * @author Team GroupImpl
  */

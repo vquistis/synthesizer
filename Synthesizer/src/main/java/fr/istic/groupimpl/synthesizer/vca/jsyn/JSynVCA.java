@@ -19,7 +19,7 @@ import fr.istic.groupimpl.synthesizer.util.SignalUtil;
  * <pre>
  * decibel = (inputam + inputa0-5) * SignalUtil.COEF_VOLT * 12 );
  * output = input*Math.pow(10, decibel/20);
- * <pre>
+ * </pre>
  * 
  * @author Team GroupImpl
  */

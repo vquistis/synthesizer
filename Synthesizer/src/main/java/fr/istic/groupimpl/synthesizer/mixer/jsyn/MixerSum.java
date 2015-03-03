@@ -11,7 +11,7 @@ import com.jsyn.unitgen.UnitGenerator;
  * 
  * <pre>
  * output = sum of inputs
- * <pre>
+ * </pre>
  * 
  * @author Team GroupImpl
  */

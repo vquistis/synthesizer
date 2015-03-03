@@ -14,7 +14,7 @@ import com.jsyn.unitgen.UnitGenerator;
  *                case 3:  Input3
  *                default: Input1
  *            }
- * <pre>
+ * </pre>
  * 
  * @author Team GroupImpl
  */
