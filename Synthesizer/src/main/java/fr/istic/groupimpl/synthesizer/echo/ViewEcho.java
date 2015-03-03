@@ -22,7 +22,7 @@ import fr.istic.groupimpl.synthesizer.util.Potentiometre;
 import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 
 /**
- * @authors GroupImpl
+ * @author GroupImpl
  * ECHO module - JavaFX Controller
  */
 public class ViewEcho extends ViewComponent implements Initializable {

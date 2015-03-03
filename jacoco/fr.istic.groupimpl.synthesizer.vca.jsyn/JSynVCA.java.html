@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JSynVCA.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.vca.jsyn</a> &gt; <span class="el_source">JSynVCA.java</span></div><h1>JSynVCA.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.vca.jsyn;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
+
+/**
+ *  Voltage Controller Amplitude
+ *
+ * 
+ * a0 amplitude modulation with potentiometer
+ *  
+ * am amplitude modulation
+ * +1 Volt = +12 dB
+ * -1 Volt = -12 dB
+ *    
+ * &lt;pre&gt;
+ * decibel = (inputam + inputa0-5) * SignalUtil.COEF_VOLT * 12 );
+ * output = input*Math.pow(10, decibel/20);
+ * &lt;/pre&gt;
+ * 
+ * @author Team GroupImpl
+ */
+public class JSynVCA extends UnitGenerator {
+
+	/** The input. */
+	private UnitInputPort input;	 	//Volt
+
+	/** The inputam. */
+	private UnitInputPort inputam; 		//Volt
+
+	/** The inputa0. */
+	private UnitInputPort inputa0; 		//Volt
+
+	/** The output. */
+	private UnitOutputPort output; 		//Volt
+
+	/**
+	 * Signal input.
+	 *
+	 * @return input
+	 */
+	public UnitInputPort getInput() {
+<span class="fc" id="L46">		return input;</span>
+	}
+
+	/**
+	 * Modulation amplitude input.
+	 *
+	 * @return inputam
+	 */
+	public UnitInputPort getInputam() {
+<span class="fc" id="L55">		return inputam;</span>
+	}
+
+	/**
+	 * Modulation amplitude with potentiometer.
+	 *
+	 * @return inputa0
+	 */
+	public UnitInputPort getInputa0() {
+<span class="fc" id="L64">		return inputa0;</span>
+	}
+
+	/**
+	 * Signal Output.
+	 *
+	 * @return output
+	 */
+	public UnitOutputPort getOutput() {
+<span class="fc" id="L73">		return output;</span>
+	}
+
+	/**
+	 * constructor
+	 */
+<span class="fc" id="L79">	public JSynVCA() {</span>
+<span class="fc" id="L80">		addPort(input = new UnitInputPort(&quot;vca_input&quot;));</span>
+<span class="fc" id="L81">		addPort(inputam = new UnitInputPort(&quot;vca_inputam&quot;));</span>
+<span class="fc" id="L82">		addPort(inputa0 = new UnitInputPort(&quot;vca_inputa0&quot;));</span>
+<span class="fc" id="L83">		addPort(output = new UnitOutputPort(&quot;vca_output&quot;));</span>
+<span class="fc" id="L84">	}</span>
+
+	/** 
+	 * generate signal
+	 * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+	 */
+	@Override
+	public void generate(int start, int limit) {
+<span class="fc" id="L92">		double[] inputs = input.getValues();</span>
+<span class="fc" id="L93">		double[] inputams = inputam.getValues();</span>
+<span class="fc" id="L94">		double[] inputa0s = inputa0.getValues();</span>
+<span class="fc" id="L95">		double[] outputs = output.getValues();</span>
+
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		for (int i = start; i &lt; limit; i++) {</span>
+<span class="fc" id="L98">			double am = SignalUtil.verifyAmplitude(inputams[i])*SignalUtil.COEF_VOLT;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">			if (am &gt;0)</span>
+			{
+<span class="fc" id="L101">				double decibel = ((am+SignalUtil.verifyAmplitude(inputa0s[i])-SignalUtil.COEF_VOLT) * 12 );</span>
+<span class="fc" id="L102">				outputs[i]=converter(decibel, inputs[i]);</span>
+<span class="fc" id="L103">			}</span>
+			else
+			{
+<span class="fc" id="L106">				outputs[i] = 0;</span>
+			}
+		}
+<span class="fc" id="L109">	}</span>
+
+	/**
+	 * Converter decibel to volt.
+	 *
+	 * @param decibel the decibel
+	 * @param in the in
+	 * @return   Frequency to volt
+	 */
+	public double converter(double decibel, double in) {
+<span class="fc" id="L119">		return in*Math.pow(10, decibel/20);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Potentiometre.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.util</a> &gt; <span class="el_source">Potentiometre.java</span></div><h1>Potentiometre.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package fr.istic.groupimpl.synthesizer.util;</span>
+
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Region;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
+/**
+ * Implementation of knob with configurable graduations
+ * 
+ * To create a Potentiometre object, you must use PotentiometreFactory
+ * 
+ * Example :
+ * 
+ * PotentiometreFactory potentiometreFactory =
+ * PotentiometreFactory.getFactoryInstance();
+ * 
+ **** initialisations on the factory object
+ *
+ * Potentiometre potentiometre = potentiometreFactory.getPotentiometre();
+ * 
+ * 
+ * @author groupImpl
+ *
+ */
+public class Potentiometre extends Region {
+
+	/** The Constant RAYON_REF. */
+	final public static double RAYON_REF = 50.;
+
+	/** The rg knob. */
+<span class="nc" id="L42">	private Region rgKnob = new Region();</span>
+
+	/** The rotate. */
+<span class="nc" id="L45">	private Rotate rotate = new Rotate();</span>
+	
+	/** The title. */
+<span class="nc" id="L48">	private final Text title = new Text(&quot;&quot;);</span>
+
+	// valeur venant de initPotentiometre
+	/** The rayon. */
+	private final double rayon;
+	
+	/** The min value. */
+	private final double minValue;
+	
+	/** The max value. */
+	private final double maxValue;
+	
+	/** The discret. */
+	private final boolean discret;
+	
+	/** The nb spins. */
+	private final double nbSpins;
+
+	/** The show tick marks. */
+	private final boolean showTickMarks;
+	
+	/** The show tick labels. */
+	private final boolean showTickLabels;
+	
+	/** The major tick unit. */
+	private final double majorTickUnit;
+	
+	/** The minor tick unit. */
+	private final double minorTickUnit;
+
+	// angle en Radian
+	/** The min angle. */
+	private final double minAngle;
+	
+	/** The max angle. */
+	private final double maxAngle;
+	
+	/** The value def. */
+	private final double valueDef;
+
+	/**
+	 * Checks if is show tick marks.
+	 *
+	 * @return show Tick Marks flag
+	 */
+	public boolean isShowTickMarks() {
+<span class="nc" id="L94">		return showTickMarks;</span>
+	}
+
+	/**
+	 * Checks if is show tick labels.
+	 *
+	 * @return show Tick Labels flag
+	 */
+	public boolean isShowTickLabels() {
+<span class="nc" id="L103">		return showTickLabels;</span>
+	}
+
+	/**
+	 * Gets the major tick unit.
+	 *
+	 * @return Major Tick Unit
+	 */
+	public double getMajorTickUnit() {
+<span class="nc" id="L112">		return majorTickUnit;</span>
+	}
+
+	// intern value is different from value only if it is discrete
+	/** The val. */
+	private double val;
+
+	/** The deb drag angle. */
+	private double debDragAngle;
+	
+	/** The drag ok. */
+<span class="nc" id="L123">	boolean dragOK = false;</span>
+	
+	/** The right button pressed. */
+<span class="nc" id="L126">	boolean rightButtonPressed=false;</span>
+
+	/**
+	 * Traite pos angle.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 */
+	private void traitePosAngle(double x, double y) {
+<span class="nc" id="L135">		double centerX = getWidth() / 2.0;</span>
+<span class="nc" id="L136">		double centerY = getHeight() / 2.0;</span>
+<span class="nc" id="L137">		double ang = Math.atan2((y - centerY), (x - centerX));</span>
+<span class="nc" id="L138">		Log.getInstance().trace(&quot;traitePosAngle ang=&quot; + ang);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (dragOK) {</span>
+<span class="nc" id="L140">			double delta = ang - debDragAngle;</span>
+
+<span class="nc" id="L142">			addValue(delta);</span>
+		}
+<span class="nc" id="L144">		dragOK = true;</span>
+<span class="nc" id="L145">		debDragAngle = ang;</span>
+
+<span class="nc" id="L147">	}</span>
+
+	/** The time release. */
+<span class="nc" id="L150">	private long timeRelease = 0;</span>
+
+	/** The drag valid. */
+<span class="nc" id="L153">	private boolean dragValid = false;</span>
+
+
+	/**
+	 * Constructor.
+	 *
+	 * @param initPot the init pot
+	 */
+	Potentiometre(PotentiometreFactory initPot) {
+
+<span class="nc" id="L163">		super();</span>
+<span class="nc" id="L164">		rayon = initPot.getRayon();</span>
+<span class="nc" id="L165">		minValue = initPot.getMinValue();</span>
+<span class="nc" id="L166">		maxValue = initPot.getMaxValue();</span>
+<span class="nc" id="L167">		discret = initPot.isDiscret();</span>
+<span class="nc" id="L168">		nbSpins = initPot.getNbSpins();</span>
+<span class="nc" id="L169">		minAngle = -Math.PI * nbSpins;</span>
+<span class="nc" id="L170">		maxAngle = Math.PI * nbSpins;</span>
+<span class="nc" id="L171">		valueDef = initPot.getValueDef();</span>
+
+<span class="nc" id="L173">		showTickMarks = initPot.isShowTickMarks();</span>
+<span class="nc" id="L174">		showTickLabels = initPot.isShowTickLabels();</span>
+<span class="nc" id="L175">		majorTickUnit = initPot.getMajorTickUnit();</span>
+<span class="nc" id="L176">		minorTickUnit = initPot.getMinorTickUnit();</span>
+
+<span class="nc" id="L178">		this.setPrefSize(2. * rayon, 2. * rayon);</span>
+		
+<span class="nc" id="L180">		this.setShape(new Circle(rayon));</span>
+
+<span class="nc" id="L182">		getStyleClass().add(&quot;knobButton&quot;); // NOI18N.</span>
+<span class="nc" id="L183">		rgKnob.setPrefSize(2. * RAYON_REF, 2. * RAYON_REF);</span>
+<span class="nc" id="L184">		rgKnob.getStyleClass().add(&quot;knob&quot;);</span>
+<span class="nc" id="L185">		rgKnob.getTransforms().add(rotate);</span>
+<span class="nc" id="L186">		rgKnob.setShape(new Circle(RAYON_REF));</span>
+
+<span class="nc" id="L188">		rgKnob.setScaleX(rayon / RAYON_REF);</span>
+<span class="nc" id="L189">		rgKnob.setScaleY(rayon / RAYON_REF);</span>
+<span class="nc" id="L190">		setOnDragDetected((event) -&gt; {</span>
+			event.consume();
+		});
+<span class="nc" id="L193">		setOnDragOver((event) -&gt; {</span>
+			if (dragValid) {
+				traitePosAngle(event.getX(), event.getY());
+			}
+			event.consume();
+		});
+<span class="nc" id="L199">		setOnDragDropped((event) -&gt; {</span>
+			if (dragValid) {
+				traitePosAngle(event.getX(), event.getY());
+			}
+			event.consume();
+		});
+
+<span class="nc" id="L206">		setOnMousePressed((event) -&gt; {</span>
+			Log.getInstance().debug(
+					&quot;event MousePressed x=&quot; + event.getX() + &quot; y=&quot;
+							+ event.getY());
+			if ( event.getButton() == MouseButton.SECONDARY )
+			{
+				rightButtonPressed = true;
+				event.consume();
+				return;
+			}
+			dragValid = true;
+			dragOK = false;
+			if ( event.getButton() == MouseButton.SECONDARY )
+			{
+				rightButtonPressed = true;
+			}
+			traitePosAngle(event.getX(), event.getY());
+			event.consume();
+
+		});
+<span class="nc" id="L226">		setOnMouseDragged((event) -&gt; {</span>
+			Log.getInstance().debug(
+					&quot;event MouseDragged x=&quot; + event.getX() + &quot; y=&quot;
+							+ event.getY());
+			if (dragValid) {
+				traitePosAngle(event.getX(), event.getY());
+			}
+			event.consume();
+
+		});
+<span class="nc" id="L236">		setOnMouseReleased((event) -&gt; {</span>
+			Log.getInstance().debug(
+					&quot;event MouseReleased x=&quot; + event.getX() + &quot; y=&quot;
+							+ event.getY());
+			if ( event.getButton() == MouseButton.SECONDARY )
+			{
+				rightButtonPressed = false;
+				event.consume();
+				return;
+			}
+
+			long t = (new Date()).getTime();
+
+			if (t &gt;= timeRelease &amp;&amp; (t - timeRelease) &lt; 500) {
+				// double clic detecté
+				Log.getInstance().debug(&quot;Double Clic&quot;);
+				setValue(valueDef);
+			} else {
+				if (dragValid) {
+					traitePosAngle(event.getX(), event.getY());
+					dragOK = false;
+				}
+			}
+			timeRelease = t;
+			dragValid = false;
+			event.consume();
+
+		});
+<span class="nc" id="L264">		setOnMouseDragExited((event) -&gt; {</span>
+			Log.getInstance().debug(
+					&quot;event MouseDragExited x=&quot; + event.getX() + &quot; y=&quot;
+							+ event.getY());
+			if (dragValid) {
+				traitePosAngle(event.getX(), event.getY());
+				dragOK = false;
+				dragValid = false;
+			}
+			event.consume();
+
+		});
+<span class="nc" id="L276">		setOnScroll((event) -&gt; {</span>
+			double v = ((double) event.getDeltaY()) / 500.;
+			Log.getInstance().debug(
+					&quot;event OnScroll deltaY=&quot; + event.getDeltaY() + &quot; v=&quot; + v);
+			if ( rightButtonPressed )
+			{
+				v /= 10.;
+			}
+			addValue(v);
+			event.consume();
+		});
+
+<span class="nc" id="L288">		this.title.setText(initPot.getTitle());</span>
+<span class="nc" id="L289">		getChildren().add(this.title);</span>
+<span class="nc" id="L290">		getChildren().add(rgKnob);</span>
+<span class="nc" id="L291">		valueProperty().addListener(new ChangeListener&lt;Number&gt;() {</span>
+
+			@Override
+			public void changed(ObservableValue&lt;? extends Number&gt; arg0,
+					Number arg1, Number arg2) {
+
+<span class="nc" id="L297">				requestLayout();</span>
+<span class="nc" id="L298">			}</span>
+		});
+<span class="nc" id="L300">		setValue(valueDef);</span>
+
+<span class="nc" id="L302">	}</span>
+
+	/**
+	 * Adds the value.
+	 *
+	 * @param deltaAngle the delta angle
+	 */
+	private void addValue(double deltaAngle) {
+
+<span class="nc" id="L311">		Log.getInstance().trace(&quot;1deltaAngle=&quot; + deltaAngle);</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">		if (deltaAngle &gt; Math.PI) {</span>
+<span class="nc" id="L313">			deltaAngle -= 2. * Math.PI;</span>
+<span class="nc" id="L314">		} else {</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">			if (deltaAngle &lt; -Math.PI) {</span>
+<span class="nc" id="L316">				deltaAngle += 2. * Math.PI;</span>
+			}
+		}
+<span class="nc" id="L319">		Log.getInstance().trace(&quot;2deltaAngle=&quot; + deltaAngle);</span>
+
+<span class="nc" id="L321">		double angle = valueToAngle(val);</span>
+
+<span class="nc" id="L323">		Log.getInstance().trace(&quot;1value=&quot; + val);</span>
+
+<span class="nc" id="L325">		Log.getInstance().trace(&quot;1angle=&quot; + angle);</span>
+
+<span class="nc" id="L327">		angle += deltaAngle;</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">		if (angle &lt; minAngle) {</span>
+<span class="nc" id="L329">			angle = minAngle;</span>
+<span class="nc" id="L330">		} else {</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">			if (angle &gt; maxAngle) {</span>
+<span class="nc" id="L332">				angle = maxAngle;</span>
+			}
+
+		}
+<span class="nc" id="L336">		Log.getInstance().trace(&quot;2angle=&quot; + angle);</span>
+
+<span class="nc" id="L338">		val = angleToValue(angle);</span>
+
+<span class="nc bnc" id="L340" title="All 2 branches missed.">		if (isDiscret()) {</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">			if (discret(val) != getValue()) {</span>
+<span class="nc" id="L342">				value.set(discret(val));</span>
+			}
+<span class="nc" id="L344">		} else {</span>
+<span class="nc" id="L345">			value.set(val);</span>
+		}
+
+<span class="nc" id="L348">		Log.getInstance().trace(&quot;2value=&quot; + getValue());</span>
+
+<span class="nc" id="L350">	}</span>
+
+	/**
+	 * Discret.
+	 *
+	 * @param v the v
+	 * @return the double
+	 */
+	private double discret(double v) {
+<span class="nc" id="L359">		return Math.floor(v + 0.5);</span>
+	}
+
+	// makes an equivalent angle between -Math.PI and Math.PI
+	/**
+	 * Correct angle.
+	 *
+	 * @param angle the angle
+	 * @return the double
+	 */
+	private double correctAngle(double angle) {
+<span class="nc" id="L370">		double sens = Math.signum(angle);</span>
+<span class="nc" id="L371">		int n = (int) Math.floor(Math.abs(angle) / Math.PI);</span>
+
+<span class="nc" id="L373">		n = (n + 1) / 2;</span>
+
+<span class="nc" id="L375">		double correct = -sens * ((double) n) * 2. * Math.PI;</span>
+
+<span class="nc" id="L377">		return angle + correct;</span>
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void layoutChildren() {
+<span class="nc" id="L386">		super.layoutChildren();</span>
+
+<span class="nc" id="L388">		Log.getInstance().trace(&quot;layoutChildren()&quot;);</span>
+<span class="nc" id="L389">		double knobX = (getWidth() - rgKnob.getPrefWidth()) / 2.0;</span>
+<span class="nc" id="L390">		double knobY = (getHeight() - rgKnob.getPrefHeight()) / 2.0;</span>
+<span class="nc" id="L391">		rgKnob.setLayoutX(knobX);</span>
+<span class="nc" id="L392">		rgKnob.setLayoutY(knobY);</span>
+<span class="nc" id="L393">		double value = getValue();</span>
+<span class="nc" id="L394">		double angle = valueToAngle(value);</span>
+<span class="nc" id="L395">		affTickMarks();</span>
+<span class="nc" id="L396">		Log.getInstance().trace(&quot;value=&quot; + value + &quot; angle=&quot; + angle);</span>
+<span class="nc bnc" id="L397" title="All 4 branches missed.">		if (minAngle &lt;= angle &amp;&amp; angle &lt;= maxAngle) {</span>
+<span class="nc" id="L398">			rotate.setPivotX(rgKnob.getWidth() / 2.0);</span>
+<span class="nc" id="L399">			rotate.setPivotY(rgKnob.getHeight() / 2.0);</span>
+			// double locAngle = (angle &lt; -Math.PI) ? angle + 2. * Math.PI
+			// : (angle &gt; Math.PI) ? angle - 2. * Math.PI : angle;
+<span class="nc" id="L402">			double locAngle = correctAngle(angle);</span>
+<span class="nc" id="L403">			Log.getInstance().debug(&quot;locAngle=&quot; + locAngle);</span>
+<span class="nc" id="L404">			rotate.setAngle(180. * locAngle / Math.PI);</span>
+<span class="nc" id="L405">			val = value;</span>
+		}
+<span class="nc" id="L407">	}</span>
+
+	/** The flag aff tick marks. */
+<span class="nc" id="L410">	private AtomicBoolean flagAffTickMarks = new AtomicBoolean(false);</span>
+
+	/**
+	 * Aff tick marks.
+	 */
+	private void affTickMarks() {
+
+<span class="nc bnc" id="L417" title="All 2 branches missed.">		if (flagAffTickMarks.getAndSet(true))</span>
+<span class="nc" id="L418">			return;</span>
+
+<span class="nc" id="L420">		double centerX = getWidth() / 2.0;</span>
+<span class="nc" id="L421">		double centerY = getHeight() / 2.0;</span>
+
+<span class="nc bnc" id="L423" title="All 2 branches missed.">		if (isShowTickMarks()) {</span>
+
+<span class="nc" id="L425">			double rayonExt = rayon + rayon / 8.;</span>
+<span class="nc" id="L426">			double rayonExt2 = rayon + rayon / 12.;</span>
+<span class="nc" id="L427">			int nbmtu = 1;</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">			if (majorTickUnit != minorTickUnit) {</span>
+<span class="nc" id="L429">				nbmtu = (int) ((majorTickUnit + minorTickUnit / 2.) / minorTickUnit);</span>
+			}
+<span class="nc" id="L431">			int nb = 0;</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">			for (double v = minValue; v &lt;= (maxValue + minorTickUnit / 2.); v += minorTickUnit, nb++) {</span>
+
+<span class="nc" id="L434">				double ang = valueToAngle(v) - Math.PI / 2.;</span>
+<span class="nc" id="L435">				double debX = Math.cos(ang) * rayon + centerX;</span>
+<span class="nc" id="L436">				double debY = Math.sin(ang) * rayon + centerY;</span>
+<span class="nc" id="L437">				double endX = Math.cos(ang) * rayonExt + centerX;</span>
+<span class="nc" id="L438">				double endY = Math.sin(ang) * rayonExt + centerY;</span>
+<span class="nc bnc" id="L439" title="All 2 branches missed.">				if (nb % nbmtu != 0) {</span>
+<span class="nc" id="L440">					endX = Math.cos(ang) * rayonExt2 + centerX;</span>
+<span class="nc" id="L441">					endY = Math.sin(ang) * rayonExt2 + centerY;</span>
+				}
+<span class="nc" id="L443">				Line line = new Line();</span>
+<span class="nc" id="L444">				getChildren().add(line);</span>
+<span class="nc" id="L445">				line.setStartX(debX);</span>
+<span class="nc" id="L446">				line.setEndX(endX);</span>
+<span class="nc" id="L447">				line.setStartY(debY);</span>
+<span class="nc" id="L448">				line.setEndY(endY);</span>
+<span class="nc" id="L449">				Log.getInstance().trace(&quot;TRACE1&quot;);</span>
+<span class="nc bnc" id="L450" title="All 4 branches missed.">				if (isShowTickLabels() &amp;&amp; nb % nbmtu == 0) {</span>
+<span class="nc" id="L451">					Log.getInstance().trace(&quot;TRACE2&quot;);</span>
+<span class="nc" id="L452">					Text label = null;</span>
+<span class="nc bnc" id="L453" title="All 2 branches missed.">					if (Math.floor(majorTickUnit) == majorTickUnit)</span>
+<span class="nc" id="L454">						label = new Text(&quot;&quot; + (int) v);</span>
+					else
+<span class="nc" id="L456">						label = new Text(&quot;&quot; + v);</span>
+<span class="nc" id="L457">					getChildren().add(label);</span>
+<span class="nc" id="L458">					double d = 10;</span>
+
+<span class="nc" id="L460">					double x = Math.cos(ang) * (rayonExt + d) - 5 + centerX;</span>
+<span class="nc" id="L461">					double y = Math.sin(ang) * (rayonExt + d) + 5 + centerY;</span>
+<span class="nc" id="L462">					label.setTranslateX(x);</span>
+<span class="nc" id="L463">					label.setTranslateY(y);</span>
+
+				}
+
+			}
+		}
+<span class="nc" id="L469">	}</span>
+
+	/**
+	 * Value to angle.
+	 *
+	 * @param value the value
+	 * @return the double
+	 */
+	private double valueToAngle(double value) {
+<span class="nc" id="L478">		double angle = minAngle + (maxAngle - minAngle) * (value - minValue)</span>
+<span class="nc" id="L479">				/ (maxValue - minValue);</span>
+<span class="nc" id="L480">		return angle;</span>
+	}
+
+	/**
+	 * Angle to value.
+	 *
+	 * @param angle the angle
+	 * @return the double
+	 */
+	private double angleToValue(double angle) {
+<span class="nc" id="L490">		double value = minValue + (maxValue - minValue) * (angle - minAngle)</span>
+<span class="nc" id="L491">				/ (maxAngle - minAngle);</span>
+<span class="nc" id="L492">		value = Math.max(minValue, value);</span>
+<span class="nc" id="L493">		value = Math.min(maxValue, value);</span>
+<span class="nc" id="L494">		return value;</span>
+	}
+
+	/** The value. */
+<span class="nc" id="L498">	private final DoubleProperty value = new SimpleDoubleProperty(this,</span>
+<span class="nc" id="L499">			&quot;value&quot;, 0);</span>
+
+	/**
+	 * set the value.
+	 *
+	 * @param v            Value for initialization
+	 */
+	public final void setValue(double v) {
+<span class="nc" id="L507">		value.set(v);</span>
+<span class="nc" id="L508">		val = v;</span>
+<span class="nc" id="L509">	}</span>
+
+	/**
+	 * get the value.
+	 *
+	 * @return value
+	 */
+	public final double getValue() {
+<span class="nc" id="L517">		return value.get();</span>
+	}
+
+	/**
+	 * Value property.
+	 *
+	 * @return the value Property
+	 */
+	public final DoubleProperty valueProperty() {
+<span class="nc" id="L526">		return value;</span>
+	}
+
+	/**
+	 * get the minimum value.
+	 *
+	 * @return the minimum value
+	 */
+	public final double getMin() {
+<span class="nc" id="L535">		return minValue;</span>
+	}
+
+	/**
+	 * get the maximum value.
+	 *
+	 * @return the maximum value
+	 */
+	public final double getMax() {
+<span class="nc" id="L544">		return maxValue;</span>
+	}
+
+	/**
+	 * get the discret flag ( to have only integer values ).
+	 *
+	 * @return the discret flag
+	 */
+	public final boolean isDiscret() {
+<span class="nc" id="L553">		return discret;</span>
+	}
+
+	/**
+	 * get the number of spins.
+	 *
+	 * @return The spin number
+	 */
+	public double getNbSpins() {
+<span class="nc" id="L562">		return nbSpins;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

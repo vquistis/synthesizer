@@ -72,7 +72,7 @@ public class Mixer extends Circuit implements UnitSource {
      * 
      * @param NumberOfInputPort
      *   number of input port to instantiate
-     *   minimum 2 -> maximum 10
+     *   minimum 2  maximum 10
      */
 	public Mixer(Integer NumberOfInputPort) {	
 		

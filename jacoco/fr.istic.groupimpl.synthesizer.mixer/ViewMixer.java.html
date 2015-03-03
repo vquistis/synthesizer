@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewMixer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.mixer</a> &gt; <span class="el_source">ViewMixer.java</span></div><h1>ViewMixer.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package fr.istic.groupimpl.synthesizer.mixer;</span>
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.util.StringConverter;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
+import fr.istic.groupimpl.synthesizer.util.Potentiometre;
+import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
+
+/**
+ * View of mixer module.
+ *
+ * @author Team GroupImpl
+ */
+<span class="nc" id="L30">public class ViewMixer extends ViewComponent implements Initializable {</span>
+	
+	/** The Constant RED_BAR. */
+	private static final String RED_BAR    = &quot;red-bar&quot;;
+	
+	/** The Constant GREEN_BAR. */
+	private static final String GREEN_BAR  = &quot;green-bar&quot;;
+	
+	/** The Constant barColorStyleClasses. */
+<span class="nc" id="L39">	private static final String[] barColorStyleClasses = { RED_BAR, GREEN_BAR };</span>
+	  
+	/** The Number of input port. */
+<span class="nc" id="L42">	private Integer NumberOfInputPort = 4;</span>
+	
+	/** The root module pane. */
+	@FXML private Pane rootModulePane;
+	
+	/** The input h box. */
+	@FXML private HBox inputHBox;
+	
+	/** The close module fx. */
+	@FXML private ImageView closeModuleFx;
+	
+	/** The top. */
+	@FXML private GridPane top;
+	
+	/** The fx output. */
+	private ImageView fxOutput;
+	
+	/** The output gauge. */
+	private ProgressBar outputGauge;
+	
+	/** The controller. */
+	private ControllerMixer controller;
+	
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resource) {	
+<span class="nc" id="L70">		configurate();</span>
+<span class="nc" id="L71">	}</span>
+
+	/**
+	 * Set the number of input port generated.
+	 *
+	 * @return the number of input port
+	 */
+	public Integer getNumberOfInputPort() {
+<span class="nc" id="L79">		return NumberOfInputPort;</span>
+	}
+
+	/**
+	 * Set the number of input port to generate.
+	 *
+	 * @param numberOfInputPort the new number of input port
+	 */
+	public void setNumberOfInputPort(Integer numberOfInputPort) {
+<span class="nc" id="L88">		NumberOfInputPort = numberOfInputPort;</span>
+<span class="nc" id="L89">	}</span>
+	
+	/**
+	 * Get instance of the ouput gauge.
+	 *
+	 * @return ProgressBar
+	 */
+	public ProgressBar getOutputGauge() {
+<span class="nc" id="L97">		return outputGauge;</span>
+	}
+	
+	/**
+	 * Method to configurate the view.
+	 */
+	public void configurate() {
+<span class="nc" id="L104">		((Label) top.lookup(&quot;#titleModule&quot;)).setText(&quot;MIXER&quot;);</span>
+		
+<span class="nc" id="L106">		outputGauge = configureGaugeBar(&quot;#fxOutputGauge&quot;); </span>
+		
+		// Creation du controller
+<span class="nc" id="L109">		controller = new ControllerMixer(this, NumberOfInputPort);</span>
+		
+<span class="nc" id="L111">		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();</span>
+<span class="nc" id="L112">		knobFact.setMinValue(-60);</span>
+<span class="nc" id="L113">		knobFact.setMaxValue(12);</span>
+<span class="nc" id="L114">		knobFact.setValueDef(0);</span>
+<span class="nc" id="L115">		knobFact.setNbSpins(3);</span>
+<span class="nc" id="L116">		knobFact.setRayon(32);</span>
+		
+		// Generate input port
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for(int i = 0; i &lt; controller.getNumberOfInputPort(); i++)</span>
+        {
+    		// Add the input view to Mixer
+<span class="nc" id="L122">    		inputHBox.getChildren().add((HBox) createViewMixerInput(i, controller, knobFact));</span>
+        }
+        
+		// Listener output
+<span class="nc" id="L126">        fxOutput = (ImageView) inputHBox.lookup(&quot;#fxOutput&quot;);</span>
+<span class="nc" id="L127">        addPort(&quot;output&quot;,fxOutput);</span>
+<span class="nc" id="L128">		top.lookup(&quot;#closeModuleFx&quot;).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -&gt; {</span>
+			cleanup();
+			controller.handleViewClose();
+			Pane parent = (Pane) rootModulePane.getParent();
+			parent.getChildren().remove(rootModulePane);
+		});
+<span class="nc" id="L134">	}</span>
+	
+	/**
+	 *  Configure Gauge Bar.
+	 *
+	 * @param fxmlNodeName   Name of the xml node
+	 * @return ProgressBar
+	 */
+	private ProgressBar configureGaugeBar(String fxmlNodeName) {
+		ProgressBar gaugeBar;
+<span class="nc" id="L144">		gaugeBar = (ProgressBar) inputHBox.lookup(fxmlNodeName);</span>
+<span class="nc" id="L145">		gaugeBar.progressProperty().addListener(new ChangeListener&lt;Number&gt;() {</span>
+	        @Override public void changed(ObservableValue&lt;? extends Number&gt; observable, Number oldValue, Number newValue) {
+<span class="nc bnc" id="L147" title="All 2 branches missed.">	          double progress = newValue == null ? 0 : newValue.doubleValue();</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">	          if (progress &lt; 0.85) {</span>
+<span class="nc" id="L149">	            setBarStyleClass(gaugeBar, GREEN_BAR);</span>
+<span class="nc" id="L150">	          } else {</span>
+<span class="nc" id="L151">	            setBarStyleClass(gaugeBar, RED_BAR);</span>
+	          }
+<span class="nc" id="L153">	        }</span>
+
+	        private void setBarStyleClass(ProgressBar bar, String barStyleClass) {
+<span class="nc" id="L156">	          bar.getStyleClass().removeAll(barColorStyleClasses);</span>
+<span class="nc" id="L157">	          bar.getStyleClass().add(barStyleClass);</span>
+<span class="nc" id="L158">	        }</span>
+	      });
+<span class="nc" id="L160">		return gaugeBar;</span>
+	}
+	
+	/**
+	 * Generate the input view.
+	 *
+	 * @param index 	index of the input port
+	 * @param controller the controller
+	 * @param knobFact  PotentiometreFactory
+	 * @return the view mixer input
+	 */
+	private ViewMixerInput createViewMixerInput(Integer index, ControllerMixer controller, PotentiometreFactory knobFact) {
+		// faire table de knobVolume
+<span class="nc" id="L173">		Potentiometre knobVolume = knobFact.getPotentiometre();</span>
+	 
+		// Generate the input view
+<span class="nc" id="L176">		ViewMixerInput inputView = new ViewMixerInput(&quot;in-&quot; + (index + 1));</span>
+		// Add the knobVolume to the input view
+<span class="nc" id="L178">		inputView.getFxKnobVolumePane().getChildren().add(1,knobVolume);</span>
+		
+		// Add port to the ViewComponent
+<span class="nc" id="L181">		addPort(&quot;mixer_input&quot;+index,inputView.getFxInput());</span>
+		// Bind knob value and text field value
+<span class="nc" id="L183">		StringConverter&lt;Number&gt; converter = new DoubleStringConverter();</span>
+<span class="nc" id="L184">		Bindings.bindBidirectional(inputView.getFxValueVolume().textProperty(), knobVolume.valueProperty(), converter);</span>
+		// Listener volume
+<span class="nc" id="L186">		knobVolume.valueProperty().addListener((obsVal, oldVal, newVal) -&gt; controller.handleViewVolumeChange(index, newVal));</span>
+		// Listener mute
+<span class="nc" id="L188">		inputView.getFxMuteVolume().selectedProperty().addListener((obsVal, oldVal, newVal) -&gt; controller.handleViewMuteChange(index, newVal));</span>
+		// Listener input
+		//inputView.getFxInput().addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -&gt; controller.handleViewInputClick(index, inputX, inputY));
+		
+<span class="nc" id="L192">		addParameters(&quot;knobVolume&quot; + (index + 1), () -&gt; knobVolume.getValue(), (val) -&gt; knobVolume.setValue(val));</span>
+<span class="nc" id="L193">		addParameters(&quot;muteVolumeFx&quot;+ (index + 1), () -&gt; inputView.getFxMuteVolume().selectedProperty().get() ? 1.0 : 0.0, (val) -&gt; inputView.getFxMuteVolume().setSelected(val==1));	</span>
+		
+<span class="nc" id="L195">		return inputView;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
+	@Override
+	protected Pane getComponentRoot() {
+<span class="nc" id="L203">		return rootModulePane;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
+	@Override
+	protected ControllerComponent getController() {
+<span class="nc" id="L211">		return controller;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
+	@Override
+	public String getFilename() {
+<span class="nc" id="L219">		return &quot;fxml/mixer.fxml&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

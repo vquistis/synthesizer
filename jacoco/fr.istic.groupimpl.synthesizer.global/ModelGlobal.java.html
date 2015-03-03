@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelGlobal.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.global</a> &gt; <span class="el_source">ModelGlobal.java</span></div><h1>ModelGlobal.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.global;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.jsyn.JSyn;
+import com.jsyn.Synthesizer;
+import com.jsyn.devices.AudioDeviceManager;
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+import com.jsyn.util.WaveRecorder;
+
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
+import fr.istic.groupimpl.synthesizer.io.architecture.Port;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
+/**
+ * The Class ModelGlobal
+ * 
+ * @author Team groupImpl 
+ *
+ */
+public class ModelGlobal {
+
+	/** The unit generators. */
+<span class="fc" id="L33">	private List&lt;UnitGenerator&gt; unitGenerators = new ArrayList&lt;UnitGenerator&gt;();</span>
+
+	/** The synth. */
+	private Synthesizer synth;
+
+	/** The output connections. */
+	private Map&lt;UnitOutputPort, UnitInputPort&gt; outputConnections;
+
+	/** The input connections. */
+	private Map&lt;UnitInputPort, UnitOutputPort&gt; inputConnections;
+
+	/** The recorder. */
+	private WaveRecorder recorder;
+
+	/**
+	 * Instantiates the underlying JSyn synthesizer and starts it.
+	 */
+<span class="fc" id="L50">	public ModelGlobal() {</span>
+<span class="fc" id="L51">		this.outputConnections = new HashMap&lt;UnitOutputPort, UnitInputPort&gt;();</span>
+<span class="fc" id="L52">		this.inputConnections = new HashMap&lt;UnitInputPort, UnitOutputPort&gt;();</span>
+		
+<span class="fc" id="L54">		this.synth = JSyn.createSynthesizer();	</span>
+<span class="fc" id="L55">		synth.setRealTime( true );</span>
+<span class="fc" id="L56">		this.synth.start( 44100, AudioDeviceManager.USE_DEFAULT_DEVICE, 2, </span>
+<span class="fc" id="L57">				AudioDeviceManager.USE_DEFAULT_DEVICE,2);</span>
+		
+<span class="fc" id="L59">	}</span>
+
+	/**
+	 * Adds the given UnitGenerator to the underlying JSyn synthesizer.
+	 *
+	 * @param unitGen the unit gen
+	 */
+	public void addUnitGenerator(UnitGenerator unitGen) {
+<span class="fc" id="L67">		unitGenerators.add(unitGen);</span>
+<span class="fc" id="L68">		synth.add(unitGen);</span>
+<span class="fc" id="L69">	}</span>
+
+	/**
+	 * Adds the given UnitGenerator as an output module to the underlying
+	 * JSyn synthesizer.
+	 *
+	 * @param unitGen the unit gen
+	 */
+	public void addOutUnit(UnitGenerator unitGen) {
+<span class="fc" id="L78">		unitGenerators.add(unitGen);</span>
+<span class="fc" id="L79">		synth.add(unitGen);</span>
+<span class="fc" id="L80">		unitGen.start();</span>
+<span class="fc" id="L81">	}</span>
+
+	/**
+	 * Removes the given UnitGenerator from the underlying JSyn synthesizer.
+	 *
+	 * @param unitGen the unit gen
+	 */
+	public void removeUnitGenerator(UnitGenerator unitGen) {
+<span class="nc" id="L89">		synth.remove(unitGen);</span>
+<span class="nc" id="L90">		unitGenerators.remove(unitGen);</span>
+<span class="nc" id="L91">	}</span>
+
+	/**
+	 * Removes the out unit generator.
+	 *
+	 * @param unitGen the unit gen
+	 */
+	public void removeOutUnitGenerator(UnitGenerator unitGen) {
+<span class="nc" id="L99">		unitGen.stop();</span>
+<span class="nc" id="L100">		synth.remove(unitGen);</span>
+<span class="nc" id="L101">		unitGenerators.remove(unitGen);</span>
+<span class="nc" id="L102">	}</span>
+
+	/**
+	 * Checks if is port connected.
+	 *
+	 * @param port the port
+	 * @return true, if is port connected
+	 */
+	public boolean isPortConnected(UnitPort port) {
+<span class="nc bnc" id="L111" title="All 4 branches missed.">		return inputConnections.containsKey(port) || outputConnections.containsKey(port);</span>
+	}
+
+	/**
+	 * Gets the connected port.
+	 *
+	 * @param port the port
+	 * @return the connected port
+	 */
+	public UnitPort getConnectedPort(UnitPort port) {
+<span class="fc" id="L121">		UnitPort res = null;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if(inputConnections.containsKey(port)) {</span>
+<span class="fc" id="L123">			res = inputConnections.get(port);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		} else if(outputConnections.containsKey(port)) {</span>
+<span class="fc" id="L125">			res = outputConnections.get(port);</span>
+		}		
+<span class="fc" id="L127">		return res;</span>
+	}
+
+	/**
+	 * Connects the two given output and input ports.
+	 *
+	 * @param outputPort the output port
+	 * @param inputPort the input port
+	 */
+	public void connectPorts(UnitPort outputPort, UnitPort inputPort) {
+<span class="fc" id="L137">		UnitOutputPort out = (UnitOutputPort) outputPort;</span>
+<span class="fc" id="L138">		UnitInputPort in = (UnitInputPort) inputPort;</span>
+<span class="fc" id="L139">		out.connect(in);</span>
+<span class="fc" id="L140">		putOutputConnection(out, in);</span>
+<span class="fc" id="L141">		putInputConnection(in, out);</span>
+<span class="fc" id="L142">	}</span>
+
+	/**
+	 * Retrieves the output port connected to the given input port
+	 * and disconnects them.
+	 *
+	 * @param port the port
+	 */
+	public void disconnectInputPort(UnitInputPort port) {
+<span class="fc" id="L151">		UnitOutputPort out = inputConnections.get(port);</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if(out != null) {</span>
+<span class="fc" id="L153">			out.disconnect(port);</span>
+<span class="fc" id="L154">			inputConnections.remove(port);</span>
+<span class="fc" id="L155">			outputConnections.remove(out);</span>
+		}
+<span class="fc" id="L157">	}</span>
+
+	/**
+	 * Retrieves the input port connected to the given output port
+	 * and disconnects them.
+	 *
+	 * @param port the port
+	 */
+	public void disconnectOutputPort(UnitOutputPort port) {
+<span class="fc" id="L166">		UnitInputPort in = outputConnections.get(port);</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if(in != null) {</span>
+<span class="fc" id="L168">			port.disconnect(in);</span>
+<span class="fc" id="L169">			inputConnections.remove(in);</span>
+<span class="fc" id="L170">			outputConnections.remove(port);</span>
+		}
+<span class="fc" id="L172">	}</span>
+
+	/**
+	 * Adds an entry in the output connexions map with the output port as a key
+	 * and the input port as a value.
+	 *
+	 * @param outputPort the output port
+	 * @param inputPort the input port
+	 */
+	private void putOutputConnection(UnitOutputPort outputPort, UnitInputPort inputPort) {
+<span class="fc" id="L182">		outputConnections.put(outputPort, inputPort);</span>
+<span class="fc" id="L183">	}</span>
+
+	/**
+	 * Adds an entry in the input connections map with the output port as a key
+	 * and the output port as a value.
+	 *
+	 * @param inputPort the input port
+	 * @param outputPort the output port
+	 */
+	private void putInputConnection(UnitInputPort inputPort, UnitOutputPort outputPort) {
+<span class="fc" id="L193">		inputConnections.put(inputPort, outputPort);</span>
+<span class="fc" id="L194">	}</span>
+
+	/**
+	 * Removes every connection originating from each port in the given list.
+	 *
+	 * @param unitports the unitports
+	 */
+	public void removeAllConnections(Collection&lt;UnitPort&gt; unitports) {
+<span class="nc" id="L202">		unitports.forEach((p1) -&gt; {</span>
+			if(inputConnections.containsKey(p1)) {
+				disconnectInputPort((UnitInputPort) p1);
+			} else if(outputConnections.containsKey(p1)) {
+				disconnectOutputPort((UnitOutputPort) p1);
+			}
+		});
+<span class="nc" id="L209">	}</span>
+	
+	/**
+	 * Stop synth.
+	 */
+	public void stopSynth(){
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (synth.isRunning()) {</span>
+<span class="nc" id="L216">			synth.stop();</span>
+		}		
+<span class="nc" id="L218">	}</span>
+	
+	/**
+	 * Record wav file.
+	 *
+	 * @param file the file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void recordWavFile( File file) throws IOException{
+<span class="nc" id="L227">		recorder = new WaveRecorder(synth, file);</span>
+<span class="nc" id="L228">	}</span>
+	
+	/**
+	 * Start synth.
+	 */
+	public void startSynth(){
+<span class="nc" id="L234">		this.synth.start();</span>
+<span class="nc" id="L235">	}</span>
+	
+	/**
+	 * Start recoder.
+	 * 
+	 * @param moduleOut the module out
+	 */
+	public void startRecoder(List&lt;Module&gt; moduleOut){
+<span class="nc bnc" id="L243" title="All 2 branches missed.">		for (int i = 0; i &lt; moduleOut.size(); i++) {</span>
+<span class="nc" id="L244">			Module module = moduleOut.get(i);</span>
+			
+<span class="nc bnc" id="L246" title="All 2 branches missed.">			if (module.getParameters().get(&quot;muteVolumeFx&quot;) == 0) {</span>
+<span class="nc" id="L247">				List&lt;Port&gt; ports = module.getPorts();</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">				for (Port port : ports) {</span>
+<span class="nc" id="L249">					UnitPort unitPort = port.getUnitPort();</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">					if (unitPort instanceof UnitInputPort) {</span>
+<span class="nc" id="L251">						UnitInputPort unitIntputPort = (UnitInputPort)unitPort;</span>
+<span class="nc" id="L252">						UnitOutputPort unitOutputPort = (UnitOutputPort) getConnectedPort(unitIntputPort);</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">						if (unitOutputPort != null) {</span>
+<span class="nc" id="L254">							unitOutputPort.connect(0, recorder.getInput(), 0 );</span>
+						}					
+					}
+				}
+			}			
+		}
+<span class="nc" id="L260">		this.recorder.start();</span>
+<span class="nc" id="L261">	}</span>
+	
+	/**
+	 * Stop recorder.
+	 */
+	public void stopRecorder(){
+		try {
+<span class="nc" id="L268">			recorder.stop();</span>
+<span class="nc" id="L269">			recorder.close();</span>
+<span class="nc" id="L270">		} catch (IOException e) {</span>
+<span class="nc" id="L271">			Log.getInstance().error(&quot;Failed to stop Recording&quot;, e );</span>
+		}
+<span class="nc" id="L273">	}</span>
+	
+	/**
+	 * Gets the synth.
+	 *
+	 * @return the synth
+	 */
+	public Synthesizer getSynth(){
+<span class="nc" id="L281">		return synth;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

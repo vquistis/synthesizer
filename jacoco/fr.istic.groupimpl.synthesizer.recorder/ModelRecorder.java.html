@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelRecorder.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.recorder</a> &gt; <span class="el_source">ModelRecorder.java</span></div><h1>ModelRecorder.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.recorder;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Collection;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.recorder.jsyn.Recorder;
+
+/**
+ * Model of Recorder module.
+ *
+ * @author Team GroupImpl
+ */
+public class ModelRecorder extends ModelComponent {
+
+	/** The recorder. */
+	private Recorder recorder;
+	
+	/** The sample file name. */
+<span class="nc" id="L29">	private StringProperty sampleFileName = new SimpleStringProperty();</span>
+	
+	/**
+	 * Constructor.
+	 */
+	public ModelRecorder() {
+<span class="nc" id="L35">		super();</span>
+<span class="nc" id="L36">		recorder = new Recorder();</span>
+<span class="nc" id="L37">		recorder.getInput().setName(&quot;player_input&quot;);</span>
+<span class="nc" id="L38">	}</span>
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
+	@Override
+	public UnitGenerator getUnitGenerator() {
+<span class="nc" id="L45">		return recorder;</span>
+	}
+
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
+<span class="nc" id="L53">		return recorder.getInput();</span>
+	}
+
+	/**
+	 * Get the sample file name.
+	 * @return String
+	 */
+	public StringProperty getSampleFileName() {
+<span class="nc" id="L61">		return sampleFileName;</span>
+	}
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
+	@Override
+	public Collection&lt;UnitPort&gt; getAllPorts() {
+<span class="nc" id="L69">		return recorder.getPorts();</span>
+	}
+
+	/**
+	 * Prepare Wave file.
+	 *
+	 * @param fileName the file name
+	 */
+	public void prepareFile(String fileName) {
+<span class="nc" id="L78">		File sampleFile = new File( fileName );</span>
+<span class="nc" id="L79">		sampleFileName.set(sampleFile.getName());</span>
+		try {
+<span class="nc" id="L81">			recorder.prepareFile(sampleFile);</span>
+<span class="nc" id="L82">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L83">			sampleFileName.set(null);</span>
+		}
+<span class="nc" id="L85">	}</span>
+	
+	/**
+	 * Start recording.
+	 */
+	public void start() {
+<span class="nc" id="L91">		recorder.startRecording();</span>
+<span class="nc" id="L92">	}</span>
+
+	/**
+	 * Stop recording.
+	 */
+	public void stop() {
+		try {
+<span class="nc" id="L99">			recorder.stopRecording();</span>
+<span class="nc" id="L100">		} catch (IOException e) {</span>
+<span class="nc" id="L101">			sampleFileName.set(&quot;#ERROR# read the log file&quot;);</span>
+		}
+<span class="nc" id="L103">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelVca.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.vca</a> &gt; <span class="el_source">ModelVca.java</span></div><h1>ModelVca.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.vca;
+
+import java.util.Collection;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.vca.jsyn.JSynVCA;
+
+/**
+ * The Class Model Vca.
+ * 
+ * @author Team GroupImpl
+ * 
+ */
+public class ModelVca extends ModelComponent {
+
+	/** The vca Jsyn. */
+	private JSynVCA vcajSyn;
+
+	/**
+	 * Instantiates a new model vca.
+	 */
+	public ModelVca() {
+<span class="fc" id="L28">		super();</span>
+<span class="fc" id="L29">		vcajSyn = new JSynVCA();</span>
+<span class="fc" id="L30">	}</span>
+
+	/**
+	 * get VCA jsyn.
+	 *
+	 * @return the unit generator
+	 */
+	@Override
+	public UnitGenerator getUnitGenerator() {
+<span class="fc" id="L39">		return this.vcajSyn;</span>
+	}
+
+	/**
+	 * get input port.
+	 *
+	 * @param portName the port name
+	 * @return the input port
+	 */
+	public UnitInputPort getInputPort(String portName) {
+<span class="pc bpc" id="L49" title="4 of 10 branches missed.">		switch (portName) {</span>
+		case &quot;vca_input&quot;:
+<span class="fc" id="L51">			return vcajSyn.getInput();</span>
+		case &quot;vca_inputam&quot;:
+<span class="fc" id="L53">			return vcajSyn.getInputam();</span>
+		case &quot;vca_inputa0&quot;:
+<span class="fc" id="L55">			return vcajSyn.getInputa0();</span>
+		default:
+<span class="nc" id="L57">			return null;</span>
+		}
+	}
+
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
+<span class="nc" id="L66">		return vcajSyn.getOutput();</span>
+	}
+
+	/**
+	 * get all port
+	 */
+	@Override
+	public Collection&lt;UnitPort&gt; getAllPorts() {
+<span class="nc" id="L74">		return this.vcajSyn.getPorts();</span>
+	}
+	
+	/**
+	 * Sets the volt.
+	 *
+	 * @param volt the new volt
+	 */
+	protected void setVolt(double volt) {
+<span class="fc" id="L83">		vcajSyn.getInputa0().set(volt);</span>
+<span class="fc" id="L84">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

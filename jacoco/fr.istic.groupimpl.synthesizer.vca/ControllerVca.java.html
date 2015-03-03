@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControllerVca.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.vca</a> &gt; <span class="el_source">ControllerVca.java</span></div><h1>ControllerVca.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.vca;
+
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+
+/**
+ * Controller of Vca module
+ * 
+ * @author Team GroupImpl
+ * 
+ */
+public class ControllerVca extends ControllerComponent {
+	
+	/** The model vca. */
+	private ModelVca modelVca;
+	
+	/** The ctrl glob. */
+	private ControllerGlobal ctrlGlob;
+	
+	/**
+	 * Instantiates a new controller vca.
+	 */
+<span class="nc" id="L24">	public ControllerVca() {</span>
+<span class="nc" id="L25">		modelVca = new ModelVca();</span>
+<span class="nc" id="L26">		ctrlGlob = ControllerGlobal.getInstance();</span>
+<span class="nc" id="L27">		ctrlGlob.registerUnitGenerator(modelVca.getUnitGenerator());</span>
+<span class="nc" id="L28">	}</span>
+
+	/**
+	 * handle view close
+	 */
+	@Override
+	public void handleViewClose() {
+<span class="nc" id="L35">		ctrlGlob.removeAllConnections(modelVca.getAllPorts());</span>
+<span class="nc" id="L36">		ctrlGlob.unregisterUnitGenerator(modelVca.getUnitGenerator());</span>
+<span class="nc" id="L37">	}</span>
+
+	/**
+	 * Handle view volt amplitude change.
+	 *
+	 * @param volt the volt
+	 */
+	public void handleViewVoltChange(double volt) {
+<span class="nc" id="L45">		modelVca.setVolt(volt);</span>
+<span class="nc" id="L46">	}</span>
+
+
+	@Override
+	public ModelComponent getModel() {
+<span class="nc" id="L51">		return modelVca;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

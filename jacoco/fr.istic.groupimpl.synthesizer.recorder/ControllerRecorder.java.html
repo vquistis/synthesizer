@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControllerRecorder.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.recorder</a> &gt; <span class="el_source">ControllerRecorder.java</span></div><h1>ControllerRecorder.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.recorder;
+
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+
+/**
+ * 
+ * Controller of Recorder module
+ *  
+ * @author Team GroupImpl
+ *
+ */
+public class ControllerRecorder extends ControllerComponent {
+
+	/** The model. */
+<span class="nc" id="L17">	private ModelRecorder model = new ModelRecorder();</span>
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param viewRecorder the view recorder
+	 */
+<span class="nc" id="L24">	public ControllerRecorder(ViewRecorder viewRecorder) {</span>
+<span class="nc" id="L25">		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());</span>
+<span class="nc" id="L26">		viewRecorder.getFxSampleName().textProperty().bind(model.getSampleFileName());</span>
+<span class="nc" id="L27">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
+	@Override
+	public void handleViewClose() {
+<span class="nc" id="L34">		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());</span>
+<span class="nc" id="L35">		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());</span>
+<span class="nc" id="L36">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
+	@Override
+	public ModelComponent getModel() {
+<span class="nc" id="L43">		return model;</span>
+	}
+	
+	/**
+	 * Handle view start clicked.
+	 */
+	public void handleViewStartClicked() {
+<span class="nc" id="L50">		model.start();</span>
+<span class="nc" id="L51">	}</span>
+
+	/**
+	 * Handle view stop clicked.
+	 */
+	public void handleViewStopClicked() {
+<span class="nc" id="L57">		model.stop();</span>
+<span class="nc" id="L58">	}</span>
+	
+	/**
+	 * Gets the sample file name.
+	 *
+	 * @return the sample file name
+	 */
+	public String getSampleFileName(){
+<span class="nc" id="L66">		return model.getSampleFileName().get();</span>
+	}
+	
+	/**
+	 * Prepare file.
+	 *
+	 * @param absolutePath the absolute path
+	 */
+	public void prepareFile(String absolutePath){
+<span class="nc" id="L75">		model.prepareFile(absolutePath);</span>
+<span class="nc" id="L76">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

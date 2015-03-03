@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControllerVco.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.vco</a> &gt; <span class="el_source">ControllerVco.java</span></div><h1>ControllerVco.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.vco;
+
+import javafx.beans.property.StringProperty;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+
+/**
+ * Controller of vco module.
+ *
+ * @author Team GroupImpl
+ */
+public class ControllerVco extends ControllerComponent {
+
+	/** The model vco. */
+	private ModelVco modelVco;
+	
+	/** The ctrl glob. */
+	private ControllerGlobal ctrlGlob;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param uiFreqLabel the ui freq label
+	 */
+<span class="nc" id="L26">	public ControllerVco(StringProperty uiFreqLabel) {</span>
+<span class="nc" id="L27">		modelVco = new ModelVco();</span>
+<span class="nc" id="L28">		modelVco.setCommandProperty(&quot;freq&quot;, () -&gt;</span>
+		uiFreqLabel.set(modelVco.getValProperty(&quot;freq&quot;) + &quot; Hz&quot;)
+				);
+<span class="nc" id="L31">		modelVco.setOctave(0.0);</span>
+<span class="nc" id="L32">		ctrlGlob = ControllerGlobal.getInstance();</span>
+<span class="nc" id="L33">		ctrlGlob.registerUnitGenerator(modelVco.getUnitGenerator());</span>
+<span class="nc" id="L34">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
+	@Override
+	public void handleViewClose() {
+<span class="nc" id="L41">		ctrlGlob.removeAllConnections(modelVco.getAllPorts());</span>
+<span class="nc" id="L42">		ctrlGlob.unregisterUnitGenerator(modelVco.getUnitGenerator());</span>
+<span class="nc" id="L43">	}</span>
+
+	/**
+	 * Handle view octave change.
+	 *
+	 * @param octave The octave value (1 : 8) from the octave knob
+	 * @param precision The precision value (-1 : 1) from the precision knob
+	 * Computes the total octave value and changes it in the model
+	 */
+	public void handleViewOctaveChange(double octave, double precision) {
+<span class="nc" id="L53">		modelVco.setOctave(octave + precision);</span>
+<span class="nc" id="L54">	}</span>
+
+	/**
+	 * Handle view output type change.
+	 *
+	 * @param typeName : square | triangle | sawtooth
+	 * Sets in the model the type of output signal
+	 */
+	public void handleViewOutputTypeChange(String typeName) {
+<span class="nc" id="L63">		modelVco.setOutputType(typeName);</span>
+<span class="nc" id="L64">	}</span>
+
+	/**
+	 * Handle view base freq change.
+	 *
+	 * @param value The frequency to set (in Hz)
+	 * Sets in the model the base frequency
+	 */
+	public void handleViewBaseFreqChange(double value) {
+<span class="nc" id="L73">		modelVco.setBaseFreq(value);</span>
+<span class="nc" id="L74">	}</span>
+	
+	/**
+	 * Handle view amplitude change.
+	 *
+	 * @param value The amplitude to set (in V)
+	 * Sets in the model the amplitude
+	 */
+	public void handleViewAmplitudeChange(double value) {
+<span class="nc" id="L83">		modelVco.setAmplitude(value);</span>
+<span class="nc" id="L84">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
+	@Override
+	public ModelComponent getModel() {
+<span class="nc" id="L91">		return modelVco;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

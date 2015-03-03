@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelWhiteNoise.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.whitenoise</a> &gt; <span class="el_source">ModelWhiteNoise.java</span></div><h1>ModelWhiteNoise.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.whitenoise;
+
+import java.util.Collection;
+
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+import com.jsyn.unitgen.WhiteNoise;
+
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+
+/**
+ * Model of White Noise module.
+ *
+ * @author Team GroupImpl
+ */
+public class ModelWhiteNoise extends ModelComponent {
+
+	/** The white noise. */
+	private WhiteNoise whiteNoise;
+	
+	/**
+	 * Constructor.
+	 */
+	public ModelWhiteNoise() {
+<span class="nc" id="L26">		super();</span>
+<span class="nc" id="L27">		whiteNoise = new WhiteNoise();</span>
+<span class="nc" id="L28">		whiteNoise.output.setName(&quot;noise_output&quot;);</span>
+<span class="nc" id="L29">	}</span>
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
+	@Override
+	public UnitGenerator getUnitGenerator() {
+<span class="nc" id="L36">		return whiteNoise;</span>
+	}
+
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitInputPort
+	 */
+	public UnitOutputPort getOutputPort() {
+<span class="nc" id="L44">		return whiteNoise.getOutput();</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
+	@Override
+	public Collection&lt;UnitPort&gt; getAllPorts() {
+<span class="nc" id="L52">		return whiteNoise.getPorts();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

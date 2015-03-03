@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControllerRep.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.rep</a> &gt; <span class="el_source">ControllerRep.java</span></div><h1>ControllerRep.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.rep;
+
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+
+/**
+ * 
+ * Controller of REP module
+ *  
+ * @author Team GroupImpl
+ */
+public class ControllerRep extends ControllerComponent{
+	
+	/** The model rep. */
+	private ModelRep modelRep;
+	
+	/** The ctrl glob. */
+	private ControllerGlobal ctrlGlob;
+
+	/**
+	 * Constructor.
+	 */
+<span class="nc" id="L24">	public ControllerRep(){</span>
+<span class="nc" id="L25">		modelRep = new ModelRep();</span>
+<span class="nc" id="L26">		ctrlGlob = ControllerGlobal.getInstance();</span>
+<span class="nc" id="L27">		ctrlGlob.registerUnitGenerator(modelRep.getUnitGenerator());</span>
+<span class="nc" id="L28">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
+	@Override
+	public void handleViewClose() {
+<span class="nc" id="L35">		ctrlGlob.removeAllConnections(modelRep.getAllPorts());</span>
+<span class="nc" id="L36">		ctrlGlob.unregisterUnitGenerator(modelRep.getUnitGenerator());		</span>
+<span class="nc" id="L37">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
+	@Override
+	public ModelComponent getModel() {
+<span class="nc" id="L44">		return modelRep;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

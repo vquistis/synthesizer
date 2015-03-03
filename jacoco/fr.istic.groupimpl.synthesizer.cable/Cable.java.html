@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Cable.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.cable</a> &gt; <span class="el_source">Cable.java</span></div><h1>Cable.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.cable;
+
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.StrokeLineCap;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+/**
+ * 
+ * Connects two components by a cable
+ *    
+ * @author Team groupImpl
+ *
+ */
+public class Cable extends Path {
+
+	/** The binding. */
+	private ComputeDistance binding;
+	
+	/** The inner shadow. */
+	private InnerShadow innerShadow;
+	
+	/** The drop shadow. */
+	private DropShadow dropShadow;
+	
+	/** The curve. */
+	private CubicCurveTo curve;
+	
+	/** The move. */
+	private MoveTo move;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param color the color
+	 */
+<span class="nc" id="L43">	public Cable(Color color) {</span>
+<span class="nc" id="L44">		setMouseTransparent(true);</span>
+<span class="nc" id="L45">		setStroke(color);</span>
+<span class="nc" id="L46">		setStrokeWidth(10);</span>
+<span class="nc" id="L47">		setStrokeLineCap(StrokeLineCap.ROUND);</span>
+<span class="nc" id="L48">		curve = new CubicCurveTo();</span>
+<span class="nc" id="L49">		move = new MoveTo();</span>
+<span class="nc" id="L50">		binding = new ComputeDistance();</span>
+<span class="nc" id="L51">		getElements().addAll(move, curve);</span>
+		
+<span class="nc" id="L53">		innerShadow = new InnerShadow(BlurType.GAUSSIAN,</span>
+<span class="nc" id="L54">				Color.BLACK, 10, 0.25, 0, 0);</span>
+<span class="nc" id="L55">		dropShadow = new DropShadow(BlurType.GAUSSIAN,</span>
+<span class="nc" id="L56">				Color.ANTIQUEWHITE, 5, 0.5, 0, 0);</span>
+<span class="nc" id="L57">		dropShadow.setInput(innerShadow);</span>
+<span class="nc" id="L58">		setEffect(innerShadow);</span>
+		
+<span class="nc" id="L60">		hoverProperty().addListener((obs,oldVal,newVal) -&gt; {</span>
+			Log.getInstance().debug(&quot;CABLE HOVERED&quot;);
+			if(newVal) {
+				setEffect(dropShadow);
+			} else {
+				setEffect(innerShadow);
+			}
+		});
+<span class="nc" id="L68">	}</span>
+
+	/**
+	 * Connecting the end of the first module input port cable.
+	 *
+	 * @param endX the end x
+	 * @param endY the end y
+	 */
+	public void bindInput(DoubleProperty endX, DoubleProperty endY) {
+<span class="nc" id="L77">		curve.xProperty().bind(endX);</span>
+<span class="nc" id="L78">		curve.yProperty().bind(endY);</span>
+<span class="nc" id="L79">		curve.controlX2Property().bind(endX);</span>
+<span class="nc" id="L80">		curve.controlY2Property().bind(endY.add(binding));</span>
+<span class="nc" id="L81">	}</span>
+
+	/**
+	 * Cable connection to the beginning of the second module output port.
+	 *
+	 * @param startX the start x
+	 * @param startY the start y
+	 */
+	public void bindOutput(DoubleProperty startX, DoubleProperty startY) {
+<span class="nc" id="L90">		move.xProperty().bind(startX);</span>
+<span class="nc" id="L91">		move.yProperty().bind(startY);</span>
+<span class="nc" id="L92">		curve.controlX1Property().bind(startX);</span>
+<span class="nc" id="L93">		curve.controlY1Property().bind(startY.add(binding));</span>
+<span class="nc" id="L94">	}</span>
+
+	/**
+	 * Class for calculating the distance between two modules 
+	 * for the dangling end of the cable.
+	 */
+	private class ComputeDistance extends DoubleBinding {
+
+		/**
+		 * Constructor.
+		 */
+<span class="nc" id="L105">		public ComputeDistance() {</span>
+<span class="nc" id="L106">			super.bind(move.xProperty(),move.yProperty(),curve.xProperty(),curve.yProperty());</span>
+<span class="nc" id="L107">		}</span>
+
+		/* (non-Javadoc)
+		 * @see javafx.beans.binding.DoubleBinding#computeValue()
+		 */
+		@Override
+		protected double computeValue() {
+<span class="nc" id="L114">			double xCarre = Math.pow(move.xProperty().get()-curve.xProperty().get(), 2) ;</span>
+<span class="nc" id="L115">			double yCarre = Math.pow(move.yProperty().get()-curve.yProperty().get(), 2) ;</span>
+<span class="nc" id="L116">			return Math.sqrt(xCarre + yCarre)*0.50;</span>
+		}
+	};
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

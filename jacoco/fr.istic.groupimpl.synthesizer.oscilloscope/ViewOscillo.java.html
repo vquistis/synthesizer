@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewOscillo.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.oscilloscope</a> &gt; <span class="el_source">ViewOscillo.java</span></div><h1>ViewOscillo.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.oscilloscope;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.util.Oscilloscope;
+import fr.istic.groupimpl.synthesizer.util.OscilloscopeFactory;
+
+/**
+ * View of oscilloscope module.
+ *
+ * @author Team GroupImpl
+ */
+<span class="nc" id="L25">public class ViewOscillo extends ViewComponent implements Initializable {</span>
+
+	/** The root module pane. */
+	@FXML private Pane rootModulePane;
+	
+	/** The top pane. */
+	@FXML private GridPane top;
+	
+	/** The screen scope pane. */
+	@FXML private VBox screenScopePane;
+	
+	/** The in. */
+	@FXML private ImageView in;
+	
+	/** The out. */
+	@FXML private ImageView out;
+	
+	/** The refresh period slider. */
+	@FXML private Slider refreshPeriodSlider;
+	
+	/** The controller. */
+	private ControllerOscillo controller;
+
+
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resource) {
+<span class="nc" id="L54">		((Label) top.lookup(&quot;#titleModule&quot;)).setText(&quot;Oscilloscope&quot;);</span>
+		
+<span class="nc" id="L56">		OscilloscopeFactory scopeFact = OscilloscopeFactory.getFactoryInstance();</span>
+<span class="nc" id="L57">		scopeFact.setWidth(screenScopePane.getPrefWidth()-20);</span>
+<span class="nc" id="L58">		scopeFact.setHeight(screenScopePane.getPrefHeight()-20);</span>
+<span class="nc" id="L59">		scopeFact.setRefreshPeriod(1000);</span>
+<span class="nc" id="L60">		scopeFact.setCmdGetBuffer(()-&gt;{return controller.getbufferData();});</span>
+		
+		
+<span class="nc" id="L63">		Oscilloscope scope = scopeFact.getOscilloscope();</span>
+<span class="nc" id="L64">		screenScopePane.getChildren().add(scope);</span>
+		
+		// Creation du controller
+<span class="nc" id="L67">		controller = new ControllerOscillo(scope);</span>
+		
+<span class="nc" id="L69">		refreshPeriodSlider.valueProperty().addListener( (obsVal, oldVal, newVal) -&gt; controller.handleRefreshPeriodViewChange(newVal));</span>
+		// Listener mute);
+
+		// Listener close module
+<span class="nc" id="L73">		top.lookup(&quot;#closeModuleFx&quot;).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -&gt; {</span>
+			cleanup();			
+			controller.handleViewClose();
+			Pane parent = (Pane) rootModulePane.getParent();
+			parent.getChildren().remove(rootModulePane);
+		});
+		
+<span class="nc" id="L80">		addPort(&quot;oscillo_in&quot;, in);</span>
+<span class="nc" id="L81">		addPort(&quot;oscillo_out&quot;, out);</span>
+		
+<span class="nc" id="L83">		addParameters(&quot;refreshPeriodSlider&quot;, ()-&gt; {return  refreshPeriodSlider.getValue();}, (val)-&gt; refreshPeriodSlider.setValue(val));</span>
+<span class="nc" id="L84">		scope.start();</span>
+<span class="nc" id="L85">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
+	@Override
+	protected Pane getComponentRoot() {
+<span class="nc" id="L92">		return rootModulePane;</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
+	@Override
+	protected ControllerComponent getController() {
+<span class="nc" id="L100">		return controller;</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
+	@Override
+	public String getFilename() {
+<span class="nc" id="L108">		return &quot;fxml/oscillo.fxml&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

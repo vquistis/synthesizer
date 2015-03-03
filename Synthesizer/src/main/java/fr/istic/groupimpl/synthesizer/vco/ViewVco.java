@@ -24,7 +24,7 @@ import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
 /**
  * View of VCO module  .
  *
- * @authors GroupImpl
+ * @author GroupImpl
  */
 public class ViewVco extends ViewComponent implements Initializable {
 

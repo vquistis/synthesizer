@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelMixer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.mixer</a> &gt; <span class="el_source">ModelMixer.java</span></div><h1>ModelMixer.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.mixer;
+
+import java.util.Collection;
+
+import javafx.application.Platform;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.mixer.jsyn.Mixer;
+
+/**
+ * Model of mixer module.
+ *
+ * @author Team GroupImpl
+ */
+public class ModelMixer extends ModelComponent {
+
+	/** The mixer. */
+	private Mixer mixer;
+	
+	/** The refresh thread. */
+	private Thread refreshThread;
+	
+	/** The refresh period. */
+<span class="nc" id="L29">	private long refreshPeriod = 50;</span>
+	
+	/** The Output value. */
+<span class="nc" id="L32">	private double OutputValue = 0.00;</span>
+	
+	/** The decrease value increment. */
+<span class="nc" id="L35">	private double decreaseValueIncrement = 0.04;</span>
+	
+	/** The is active thread. */
+<span class="nc" id="L38">	private boolean isActiveThread=true;</span>
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param NumberOfInputPort the number of input port
+	 */
+	public ModelMixer(Integer NumberOfInputPort) {
+<span class="nc" id="L46">		super();</span>
+<span class="nc" id="L47">		mixer = new Mixer(NumberOfInputPort);</span>
+		
+<span class="nc" id="L49">		refreshThread = new Thread(() -&gt; {</span>
+			while (isActiveThread) {
+				try {
+					Thread.sleep(refreshPeriod);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
+				Platform.runLater(() -&gt; computeOutputGaugeBar());
+			}
+		});
+<span class="nc" id="L59">	}</span>
+
+	/**
+	 * To start the refresh thread.
+	 */
+	public void start() {
+<span class="nc" id="L65">		isActiveThread=true;</span>
+<span class="nc" id="L66">		refreshThread.start();</span>
+<span class="nc" id="L67">	}</span>
+
+	/**
+	 * To stop the refresh thread.
+	 */
+	public void stop() {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (refreshThread.isAlive()) {</span>
+<span class="nc" id="L74">			isActiveThread=false;</span>
+<span class="nc" id="L75">			refreshThread.interrupt();</span>
+		}
+<span class="nc" id="L77">	}</span>
+	
+	/**
+	 * Get the number of input port.
+	 *
+	 * @return Integer
+	 */
+	public Integer getNumberOfInputPort() {
+<span class="nc" id="L85">		return mixer.getNumberOfInputPort();</span>
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
+	@Override
+	public UnitGenerator getUnitGenerator() {
+<span class="nc" id="L94">		return mixer;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
+	@Override
+	public Collection&lt;UnitPort&gt; getAllPorts() {
+<span class="nc" id="L102">		return mixer.getPorts();</span>
+	}
+	
+	/**
+	 * Set an attenuation to the output signal of the index input.
+	 *
+	 * @param index 		Input index
+	 * @param dbValue the db value
+	 */
+	public void setAttenuation(Integer index, double dbValue) {
+<span class="nc" id="L112">		mixer.setAttenuation(index, dbValue);</span>
+<span class="nc" id="L113">	}</span>
+
+	/**
+	 * Set Mute to the output signal of the index input.
+	 *
+	 * @param index 		Input index
+	 * @param value     true|false
+	 */
+	public void setMute(Integer index, boolean value) {
+<span class="nc" id="L122">		mixer.setMute(index, value);</span>
+<span class="nc" id="L123">	}</span>
+	
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
+<span class="nc" id="L130">		return mixer.getOutput();</span>
+	}
+
+	/**
+	 * Get the jsyn average output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getAverageOutputValue() {
+<span class="nc" id="L138">		return mixer.getAverageOutputValue();</span>
+	}
+	
+	/**
+	 * Get the jsyn input port.
+	 *
+	 * @param index 		Input index
+	 * @return the input port
+	 */
+	public UnitInputPort getInputPort(Integer index) {
+<span class="nc" id="L148">		return mixer.getInput(index);</span>
+	}
+	
+	/**
+	 * Get the output level value.
+	 */
+	private void computeOutputGaugeBar() {
+<span class="nc" id="L155">		double getOutputValue = getAverageOutputValue().get();</span>
+		
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (getOutputValue &gt; OutputValue) {</span>
+<span class="nc" id="L158">			OutputValue = getOutputValue;</span>
+<span class="nc" id="L159">			this.setValProperty(&quot;OutputGaugeBar&quot;, OutputValue);</span>
+<span class="nc" id="L160">		} else {</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			if ((OutputValue &gt; 0.00) </span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">				 &amp;&amp; ((OutputValue - getOutputValue) &gt; decreaseValueIncrement)) {</span>
+<span class="nc" id="L163">				OutputValue = OutputValue - decreaseValueIncrement;</span>
+<span class="nc" id="L164">				this.setValProperty(&quot;OutputGaugeBar&quot;, OutputValue);</span>
+			}
+		}
+<span class="nc" id="L167">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

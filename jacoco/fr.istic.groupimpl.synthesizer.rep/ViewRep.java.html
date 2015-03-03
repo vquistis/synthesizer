@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewRep.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.rep</a> &gt; <span class="el_source">ViewRep.java</span></div><h1>ViewRep.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.rep;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+
+/**
+ * View of Rep module .
+ *
+ * @author Team GroupImpl
+ */
+<span class="nc" id="L21">public class ViewRep extends ViewComponent implements Initializable{</span>
+	
+	/** The root module pane. */
+	@FXML private Pane rootModulePane;
+	
+	/** The top. */
+	@FXML private GridPane top;
+	
+	/** The in. */
+	@FXML private ImageView in;
+	
+	/** The out3. */
+	@FXML private ImageView out1, out2, out3;
+	
+	/** The controller. */
+	private ControllerRep controller;
+
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+<span class="nc" id="L43">		((Label) top.lookup(&quot;#titleModule&quot;)).setText(&quot;REP&quot;);</span>
+		
+<span class="nc" id="L45">		controller = new ControllerRep();</span>
+		
+		// Listener close module
+<span class="nc" id="L48">		top.lookup(&quot;#closeModuleFx&quot;).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -&gt; {</span>
+			cleanup();			
+			controller.handleViewClose();
+			Pane parent = (Pane) rootModulePane.getParent();
+			parent.getChildren().remove(rootModulePane);
+		});
+		
+<span class="nc" id="L55">		addPort(&quot;rep_in&quot;, in);</span>
+<span class="nc" id="L56">		addPort(&quot;rep_out1&quot;, out1);</span>
+<span class="nc" id="L57">		addPort(&quot;rep_out2&quot;,out2);</span>
+<span class="nc" id="L58">		addPort(&quot;rep_out3&quot;, out3);</span>
+<span class="nc" id="L59">	}</span>
+	
+	/**
+	 * Handles the click on the close button.
+	 */
+	public void handleCloseClick() {
+<span class="nc" id="L65">		controller.handleViewClose();</span>
+<span class="nc" id="L66">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
+	@Override
+	protected Pane getComponentRoot() {
+<span class="nc" id="L73">		return rootModulePane;</span>
+	}
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
+	@Override
+	protected ControllerComponent getController() {
+<span class="nc" id="L81">		return controller;</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
+	@Override
+	public String getFilename() {
+<span class="nc" id="L89">		return &quot;fxml/rep.fxml&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PotentiometreFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.util</a> &gt; <span class="el_source">PotentiometreFactory.java</span></div><h1>PotentiometreFactory.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.util;
+
+/**
+ *  The Class PotentiometreFactory
+ *
+ *    The default values are :
+ *         private String title = &quot;&quot;
+ *         private double rayon = Potentiometre.RAYON_REF
+ *         private double minValue = 0
+ *         private double maxValue = 100
+ *         private boolean discret = false
+ *         private double nbSpins = 1
+ *         private boolean showTickMarks = false
+ *         private boolean showTickLabels = false
+ *         private double majorTickUnit = 5
+ *
+ * @author Team GroupImpl
+ *
+ */
+public class PotentiometreFactory {
+
+	/**
+	 * Constructor.
+	 */
+<span class="nc" id="L25">	private PotentiometreFactory() {</span>
+<span class="nc" id="L26">	}</span>
+
+	/**
+	 * Gets the factory instance.
+	 *
+	 * @return the factory instance
+	 */
+	static public PotentiometreFactory getFactoryInstance() {
+<span class="nc" id="L34">		return new PotentiometreFactory();</span>
+	}
+
+	/**
+	 * Gets the potentiometre.
+	 *
+	 * @return the potentiometre
+	 */
+	public Potentiometre getPotentiometre() {
+<span class="nc" id="L43">		return new Potentiometre(this);</span>
+	}
+
+	/** The title. */
+<span class="nc" id="L47">	private String title = &quot;&quot;;</span>
+	
+	/** The rayon. */
+<span class="nc" id="L50">	private double rayon = Potentiometre.RAYON_REF;</span>
+	
+	/** The min value. */
+<span class="nc" id="L53">	private double minValue = 0.;</span>
+	
+	/** The max value. */
+<span class="nc" id="L56">	private double maxValue = 100.;</span>
+	
+	/** The discret. */
+<span class="nc" id="L59">	private boolean discret = false;</span>
+	
+	/** The nb spins. */
+<span class="nc" id="L62">	private double nbSpins = 1.;</span>
+	
+	/** The value def. */
+	private double valueDef;
+	
+	/** The value def init. */
+	private boolean valueDefInit;
+
+	/** The show tick marks. */
+<span class="nc" id="L71">	private boolean showTickMarks = false;</span>
+	
+	/** The show tick labels. */
+<span class="nc" id="L74">	private boolean showTickLabels = false;</span>
+	
+	/** The major tick unit. */
+<span class="nc" id="L77">	private double majorTickUnit = 5.;</span>
+	
+	/** The minor tick unit. */
+<span class="nc" id="L80">	private double minorTickUnit = 5.;</span>
+	
+	/** The minor tick unit init. */
+<span class="nc" id="L83">	private boolean minorTickUnitInit = false;</span>
+
+	/**
+	 * Gets the minor tick unit.
+	 *
+	 * @return the minor tick unit
+	 */
+	public double getMinorTickUnit() {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if( minorTickUnitInit )</span>
+<span class="nc" id="L92">			return minorTickUnit;</span>
+		else
+<span class="nc" id="L94">			return majorTickUnit;</span>
+	}
+
+	/**
+	 * Sets the minor tick unit.
+	 *
+	 * @param minorTickUnit the new minor tick unit
+	 */
+	public void setMinorTickUnit(double minorTickUnit) {
+<span class="nc" id="L103">		this.minorTickUnit = minorTickUnit;</span>
+<span class="nc" id="L104">		minorTickUnitInit = true;</span>
+<span class="nc" id="L105">	}</span>
+
+	/**
+	 * get the minimum value.
+	 *
+	 * @return the minimum value
+	 */
+	public double getMinValue() {
+<span class="nc" id="L113">		return minValue;</span>
+	}
+
+	/**
+	 * set the minimum value.
+	 *
+	 * @param minValue            the minimum value
+	 */
+	public void setMinValue(double minValue) {
+<span class="nc" id="L122">		this.minValue = minValue;</span>
+<span class="nc" id="L123">	}</span>
+
+	/**
+	 * get the maximum value.
+	 *
+	 * @return the maximum value
+	 */
+	public double getMaxValue() {
+<span class="nc" id="L131">		return maxValue;</span>
+	}
+
+	/**
+	 * set the maximum value.
+	 *
+	 * @param maxValue            the maximum value
+	 */
+	public void setMaxValue(double maxValue) {
+<span class="nc" id="L140">		this.maxValue = maxValue;</span>
+<span class="nc" id="L141">	}</span>
+
+	/**
+	 * get the discret flag ( the discret flag allowed to have only integer
+	 * values).
+	 *
+	 * @return the discret flag
+	 */
+	public boolean isDiscret() {
+<span class="nc" id="L150">		return discret;</span>
+	}
+
+	/**
+	 * set the discret flag ( the discret flag allowed to have only integer
+	 * values).
+	 *
+	 * @param discret the new discret
+	 */
+	public void setDiscret(boolean discret) {
+<span class="nc" id="L160">		this.discret = discret;</span>
+<span class="nc" id="L161">	}</span>
+
+	/**
+	 * get the number of permit spins.
+	 *
+	 * @return the number of permits spins
+	 */
+	public double getNbSpins() {
+<span class="nc" id="L169">		return nbSpins;</span>
+	}
+
+	/**
+	 * set the number of permit spins.
+	 *
+	 * @param nbSpins            the number of permits spins
+	 */
+	public void setNbSpins(double nbSpins) {
+<span class="nc" id="L178">		this.nbSpins = nbSpins;</span>
+<span class="nc" id="L179">	}</span>
+
+	/**
+	 * get the default value, if this value is not initialize then the average
+	 * between min and max values is the default value.
+	 * 
+	 * @return default value
+	 */
+	public double getValueDef() {
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (valueDefInit)</span>
+<span class="nc" id="L189">			return valueDef;</span>
+		else {
+<span class="nc" id="L191">			double v = (minValue + maxValue) / 2.;</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (isDiscret()) {</span>
+<span class="nc" id="L193">				return Math.floor(v + 0.5);</span>
+			} else {
+<span class="nc" id="L195">				return v;</span>
+			}
+		}
+	}
+
+	/**
+	 * set the default value.
+	 *
+	 * @param valueDef the new value def
+	 */
+	public void setValueDef(double valueDef) {
+<span class="nc" id="L206">		this.valueDef = valueDef;</span>
+<span class="nc" id="L207">		valueDefInit = true;</span>
+<span class="nc" id="L208">	}</span>
+
+	/**
+	 * get the show tick marks flag.
+	 *
+	 * @return the show tick marks flag
+	 */
+	public boolean isShowTickMarks() {
+<span class="nc" id="L216">		return showTickMarks;</span>
+	}
+
+	/**
+	 * set the show tick marks flag.
+	 *
+	 * @param showTickMarks            the show tick marks flag
+	 */
+	public void setShowTickMarks(boolean showTickMarks) {
+<span class="nc" id="L225">		this.showTickMarks = showTickMarks;</span>
+<span class="nc" id="L226">	}</span>
+
+	/**
+	 * get the show tick labels flag.
+	 *
+	 * @return the show tick labels flag
+	 */
+	public boolean isShowTickLabels() {
+<span class="nc" id="L234">		return showTickLabels;</span>
+	}
+
+	/**
+	 * set the show tick labels flag.
+	 *
+	 * @param showTickLabels            the show tick labels flag
+	 */
+	public void setShowTickLabels(boolean showTickLabels) {
+<span class="nc" id="L243">		this.showTickLabels = showTickLabels;</span>
+<span class="nc" id="L244">	}</span>
+
+	/**
+	 * get the major tick unit.
+	 *
+	 * @return the major tick unit
+	 */
+	public double getMajorTickUnit() {
+<span class="nc" id="L252">		return majorTickUnit;</span>
+	}
+
+	/**
+	 * set the major tick unit.
+	 *
+	 * @param majorTickUnit            the major tick unit
+	 */
+	public void setMajorTickUnit(double majorTickUnit) {
+<span class="nc" id="L261">		this.majorTickUnit = majorTickUnit;</span>
+<span class="nc" id="L262">	}</span>
+
+	/**
+	 * get the title.
+	 *
+	 * @return the title
+	 */
+	public String getTitle() {
+<span class="nc" id="L270">		return title;</span>
+	}
+
+	/**
+	 * set the title.
+	 *
+	 * @param title            the title
+	 */
+	public void setTitle(String title) {
+<span class="nc" id="L279">		this.title = title;</span>
+<span class="nc" id="L280">	}</span>
+
+	/**
+	 * get the rayon.
+	 *
+	 * @return the rayon
+	 */
+	public double getRayon() {
+<span class="nc" id="L288">		return rayon;</span>
+	}
+
+	/**
+	 * set the rayon.
+	 *
+	 * @param rayon            the rayon
+	 */
+	public void setRayon(double rayon) {
+<span class="nc" id="L297">		this.rayon = rayon;</span>
+<span class="nc" id="L298">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

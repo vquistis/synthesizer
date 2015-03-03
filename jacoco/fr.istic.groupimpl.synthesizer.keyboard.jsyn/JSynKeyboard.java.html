@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JSynKeyboard.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.keyboard.jsyn</a> &gt; <span class="el_source">JSynKeyboard.java</span></div><h1>JSynKeyboard.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.keyboard.jsyn;
+
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
+
+/**
+ * The Class JSynKeyboard.
+ *
+ * @author Team GroupImpl
+ */
+public class JSynKeyboard extends UnitGenerator  {
+
+	/** The output cv. */
+	private UnitOutputPort outputCV;
+	
+	/** The output gate. */
+	private UnitOutputPort outputGate;
+	
+	/** The volt cv. */
+	private double voltCV;
+	
+	/** The volt gate. */
+	private double voltGate;
+	
+	/**
+	 * constructor.
+	 */
+<span class="nc" id="L30">	public JSynKeyboard() {</span>
+<span class="nc" id="L31">		addPort(outputCV = new UnitOutputPort(&quot;outputKeyCV&quot;));</span>
+<span class="nc" id="L32">		addPort(outputGate = new UnitOutputPort(&quot;outputKeyGate&quot;));</span>
+<span class="nc" id="L33">	}</span>
+	
+	/**
+	 * set volt.
+	 *
+	 * @param volt the new volt
+	 */
+	public void setVolt( double volt )
+	{
+<span class="nc" id="L42">		this.voltCV = volt;</span>
+<span class="nc" id="L43">	}</span>
+	
+	/**
+	 * set Volt of gate.
+	 *
+	 * @param press the new press
+	 */
+	public void setPress( boolean press )
+	{
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		voltGate = press ? 5/SignalUtil.COEF_VOLT : -5/SignalUtil.COEF_VOLT;</span>
+<span class="nc" id="L53">	}</span>
+	
+	
+	/**
+	 * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+	 */
+	@Override
+	public void generate(int start, int limit) {
+<span class="nc" id="L61">		double[] outputs_CV = outputCV.getValues();</span>
+<span class="nc" id="L62">		double[] outputs_Gate = outputGate.getValues();</span>
+
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (int i = start; i &lt; limit; i++) {</span>
+<span class="nc" id="L65">			outputs_CV[i] = voltCV;</span>
+<span class="nc" id="L66">			outputs_Gate[i] = voltGate;</span>
+		}
+<span class="nc" id="L68">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

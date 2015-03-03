@@ -20,8 +20,6 @@ public class ControllerVca extends ControllerComponent {
 	
 	/**
 	 * Instantiates a new controller vca.
-	 *
-	 * @param uiFreqLabel the ui freq label
 	 */
 	public ControllerVca() {
 		modelVca = new ModelVca();
@@ -30,7 +28,7 @@ public class ControllerVca extends ControllerComponent {
 	}
 
 	/**
-	 * @see fr.istic.groupimpl.synthesizer.component.IControllerComponent#handleViewClose()
+	 * handle view close
 	 */
 	@Override
 	public void handleViewClose() {
@@ -42,7 +40,6 @@ public class ControllerVca extends ControllerComponent {
 	 * Handle view volt amplitude change.
 	 *
 	 * @param volt the volt
-	 * @param precision the precision
 	 */
 	public void handleViewVoltChange(double volt) {
 		modelVca.setVolt(volt);

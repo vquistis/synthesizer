@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Log.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.logger</a> &gt; <span class="el_source">Log.java</span></div><h1>Log.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * The Class Log.
+ *
+ * @author Team GroupImpl
+ */
+<span class="fc" id="L11">public class Log {</span>
+
+	/** The log manager. */
+<span class="fc" id="L14">	private Logger logManager = LogManager.getLogger();</span>
+	
+	/** The log. */
+<span class="fc" id="L17">	static private Log log = new Log();</span>
+
+	/**
+	 * Gets the single instance of Log.
+	 *
+	 * @return single instance of Log
+	 */
+	public static Log getInstance() {
+<span class="fc" id="L25">		return log;</span>
+	}
+
+	/**
+	 * Trace.
+	 *
+	 * @param msg the msg
+	 */
+	public void trace(String msg) {
+<span class="fc" id="L34">		logManager.trace(msg);</span>
+<span class="fc" id="L35">	}</span>
+
+	/**
+	 * Debug.
+	 *
+	 * @param msg the msg
+	 */
+	public void debug(String msg) {
+<span class="nc" id="L43">		logManager.debug(msg);</span>
+<span class="nc" id="L44">	}</span>
+
+	/**
+	 * Info.
+	 *
+	 * @param msg the msg
+	 */
+	public void info(String msg) {
+<span class="nc" id="L52">		logManager.info(msg);</span>
+<span class="nc" id="L53">	}</span>
+
+	/**
+	 * Warn.
+	 *
+	 * @param msg the msg
+	 */
+	public void warn(String msg) {
+<span class="nc" id="L61">		logManager.warn(msg);</span>
+<span class="nc" id="L62">	}</span>
+
+	/**
+	 * Error.
+	 *
+	 * @param msg the msg
+	 */
+	public void error(String msg) {
+<span class="nc" id="L70">		logManager.error(msg);</span>
+<span class="nc" id="L71">	}</span>
+
+	/**
+	 * Fatal.
+	 *
+	 * @param msg the msg
+	 */
+	public void fatal(String msg) {
+<span class="nc" id="L79">		logManager.fatal(msg);</span>
+<span class="nc" id="L80">	}</span>
+	
+	/**
+	 * Trace.
+	 *
+	 * @param msg the msg
+	 * @param e the e
+	 */
+	public void trace(String msg, Exception e) {
+<span class="nc" id="L89">		logManager.trace(msg, e);</span>
+<span class="nc" id="L90">	}</span>
+
+	/**
+	 * Debug.
+	 *
+	 * @param msg the msg
+	 * @param e the e
+	 */
+	public void debug(String msg, Exception e) {
+<span class="nc" id="L99">		logManager.debug(msg, e);</span>
+<span class="nc" id="L100">	}</span>
+
+	/**
+	 * Info.
+	 *
+	 * @param msg the msg
+	 * @param e the e
+	 */
+	public void info(String msg, Exception e) {
+<span class="nc" id="L109">		logManager.info(msg, e);</span>
+<span class="nc" id="L110">	}</span>
+
+	/**
+	 * Warn.
+	 *
+	 * @param msg the msg
+	 * @param e the e
+	 */
+	public void warn(String msg, Exception e) {
+<span class="nc" id="L119">		logManager.warn(msg, e);</span>
+<span class="nc" id="L120">	}</span>
+
+	/**
+	 * Error.
+	 *
+	 * @param msg the msg
+	 * @param e the e
+	 */
+	public void error(String msg, Exception e) {
+<span class="fc" id="L129">		logManager.error(msg, e);</span>
+<span class="fc" id="L130">	}</span>
+
+	/**
+	 * error Fatal.
+	 *
+	 * @param msg the msg
+	 * @param e the e
+	 */
+	public void fatal(String msg, Exception e) {
+<span class="nc" id="L139">		logManager.fatal(msg, e);</span>
+<span class="nc" id="L140">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Oscilloscope.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.util</a> &gt; <span class="el_source">Oscilloscope.java</span></div><h1>Oscilloscope.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.util;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
+
+import javafx.application.Platform;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
+/**
+ * Oscilloscope module.
+ *
+ * @author GroupImpl
+ */
+public class Oscilloscope extends Region {
+
+	/** The time stability. */
+<span class="fc" id="L25">	private final long TIME_STABILITY=2500;</span>
+	
+	/** The Constant SIZE_BUFFER_READ. */
+	public static final int SIZE_BUFFER_READ = 2048;
+	
+	/** The nb data used. */
+<span class="fc" id="L31">	final int nbDataUsed = 1024;</span>
+
+	/** The is running. */
+<span class="fc" id="L34">	private boolean isRunning = false;</span>
+
+	/** The cmd get buffer. */
+	private final GetBuffer cmdGetBuffer;
+	
+	/** The refresh period. */
+	private long refreshPeriod;
+
+	/** The Constant MAX_REFRESH_PERIOD. */
+	public static final long MAX_REFRESH_PERIOD = 2000;
+	
+	/** The Constant MIN_REFRESH_PERIOD. */
+	public static final long MIN_REFRESH_PERIOD = 100;
+
+	/** The rectangle. */
+	private Rectangle rectangle;
+
+	/** The refresh thread. */
+	private Thread refreshThread;
+
+	/**
+	 * interface of the getBuffuer command.
+	 */
+	public interface GetBuffer {
+		
+		/**
+		 * Gets the buffer.
+		 *
+		 * @return the buffer
+		 */
+		double[] getBuffer();
+	}
+
+	/**
+	 * Instantiates a new oscilloscope.
+	 *
+	 * @param oscFact the osc fact
+	 */
+<span class="fc" id="L72">	Oscilloscope(OscilloscopeFactory oscFact) {</span>
+<span class="fc" id="L73">		setHeight(oscFact.getHeight());</span>
+<span class="fc" id="L74">		setWidth(oscFact.getWidth());</span>
+
+<span class="fc" id="L76">		cmdGetBuffer = oscFact.getCmdGetBuffer();</span>
+<span class="fc" id="L77">		refreshPeriod = oscFact.getRefreshPeriod();</span>
+<span class="fc" id="L78">		rectangle = new Rectangle(0, 0, getWidth(), getHeight());</span>
+<span class="fc" id="L79">		rectangle.setFill(Color.BLACK);</span>
+
+<span class="fc" id="L81">		getChildren().add(rectangle);</span>
+
+<span class="fc" id="L83">		rectangle.toFront();</span>
+
+<span class="fc" id="L85">		refreshThread = new Thread(() -&gt; {</span>
+			Log.getInstance().trace(&quot;Debut refreshThread&quot;);
+
+			while (isRunning) {
+				try {
+					Thread.sleep(refreshPeriod);
+				} catch (InterruptedException e) {
+					isRunning = false;
+					Thread.currentThread().interrupt();
+				}
+				Log.getInstance().trace(&quot;Boucle dans refreshThread&quot;);
+				Platform.runLater(() -&gt; affBuf());
+			}
+		});
+<span class="fc" id="L99">	}</span>
+
+	/**
+	 * The Class HistMax.
+	 */
+	private class HistMax
+	{
+		
+		/**
+		 * Instantiates a new hist max.
+		 *
+		 * @param t the t
+		 * @param v the v
+		 */
+<span class="nc" id="L113">		public HistMax(long t, double v) {</span>
+<span class="nc" id="L114">			super();</span>
+<span class="nc" id="L115">			this.t = t;</span>
+<span class="nc" id="L116">			this.v = v;</span>
+<span class="nc" id="L117">		}</span>
+		
+		/** The t. */
+		long t;
+		
+		/** The v. */
+		double v;
+	}
+	
+	/** The deque stability. */
+<span class="fc" id="L127">	private Deque&lt;HistMax&gt; dequeStability=new LinkedList&lt;&gt;();</span>
+	
+	/**
+	 * Stab add.
+	 *
+	 * @param v the v
+	 */
+	private void stabAdd(double v)
+	{
+<span class="nc" id="L136">		dequeStability.addLast(new HistMax((new Date()).getTime(), Math.abs(v)));</span>
+<span class="nc" id="L137">	}</span>
+	
+	/**
+	 * Stab get max.
+	 *
+	 * @return the double
+	 */
+	private double stabGetMax()
+	{
+<span class="nc" id="L146">		double res=0.;</span>
+<span class="nc" id="L147">		double memT=-1;</span>
+<span class="nc" id="L148">		boolean flagErr=false;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		for ( HistMax p:dequeStability)</span>
+		{
+<span class="nc" id="L151">			res = Math.max(p.v,res);</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">			if ( memT &gt; p.t )</span>
+			{
+				// anomalie du temps
+<span class="nc" id="L155">				flagErr=true;</span>
+			}
+<span class="nc" id="L157">			memT = p.t;</span>
+		}
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if( flagErr )</span>
+<span class="nc" id="L160">			dequeStability.clear();</span>
+<span class="nc" id="L161">		return res;</span>
+	}
+	
+	/**
+	 * Stab purge.
+	 */
+	private void stabPurge()
+	{
+<span class="nc" id="L169">		boolean flagCont=true;</span>
+<span class="nc" id="L170">		long borneT=(new Date()).getTime()-TIME_STABILITY;</span>
+<span class="nc bnc" id="L171" title="All 4 branches missed.">		while( flagCont &amp;&amp; !dequeStability.isEmpty() )</span>
+		{
+<span class="nc" id="L173">			HistMax hm = dequeStability.getFirst();</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			if ( hm.t &lt; borneT )</span>
+			{
+<span class="nc" id="L176">				dequeStability.removeFirst();</span>
+<span class="nc" id="L177">			}</span>
+			else
+			{
+<span class="nc" id="L180">				flagCont = false;</span>
+			}
+		}
+<span class="nc" id="L183">	}</span>
+
+	/**
+	 * Set the refresh period.
+	 *
+	 * @param v            Value of the period in seconds
+	 */
+	public void setRefreshPeriod(double v) {
+<span class="fc" id="L191">		refreshPeriod = (long) (v * 1000);</span>
+
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (refreshPeriod &lt; MIN_REFRESH_PERIOD)</span>
+<span class="fc" id="L194">			refreshPeriod = MIN_REFRESH_PERIOD;</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		if (refreshPeriod &gt; MAX_REFRESH_PERIOD)</span>
+<span class="fc" id="L196">			refreshPeriod = MAX_REFRESH_PERIOD;</span>
+<span class="fc" id="L197">	}</span>
+	/**
+	 * Get the refresh period
+	 *            Value of the period in seconds
+	 *  @return double
+	 */
+	public double getRefreshPeriod() {
+<span class="fc" id="L204">		return (double)refreshPeriod/1000.; </span>
+	}
+
+	/**
+	 * To start the refresh thread.
+	 */
+	public void start() {
+<span class="nc" id="L211">		Log.getInstance().trace(&quot;Oscilloscope : start&quot;);</span>
+<span class="nc" id="L212">		isRunning = true;</span>
+<span class="nc" id="L213">		refreshThread.start();</span>
+<span class="nc" id="L214">	}</span>
+
+	
+	
+	/**
+	 * To stop the refresh thread.
+	 */
+	public void stop() {
+<span class="nc" id="L222">		Log.getInstance().trace(&quot;Oscilloscope : stop&quot;);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (isRunning) {</span>
+<span class="nc" id="L224">			isRunning = false;</span>
+<span class="nc" id="L225">			refreshThread.interrupt();</span>
+		}
+
+<span class="nc" id="L228">		isRunning = false;</span>
+<span class="nc" id="L229">	}</span>
+
+	/** The mem line. */
+<span class="fc" id="L232">	private List&lt;Line&gt; memLine = new ArrayList&lt;&gt;();</span>
+
+	/** The middle line. */
+	private Line middleLine;
+	
+	/** The hight line. */
+	private Line hightLine;
+	
+	/** The low line. */
+	private Line lowLine;
+
+	/** The middle text. */
+	private Text middleText;
+	
+	/** The hight text. */
+	private Text hightText;
+	
+	/** The low text. */
+	private Text lowText;
+
+	/** The coef x. */
+	private double coefX;
+	
+	/** The coef y. */
+	private double coefY;
+	
+	/** The base y. */
+	private double baseY;
+
+	/**
+	 * Str volt.
+	 *
+	 * @param value the value
+	 * @return the string
+	 */
+	private String strVolt(double value) {
+<span class="nc bnc" id="L268" title="All 2 branches missed.">		if (value == Math.floor(value)) {</span>
+<span class="nc" id="L269">			return &quot;&quot; + ((int) value) + &quot; V&quot;;</span>
+		} else {
+<span class="nc" id="L271">			return &quot;&quot; + value + &quot; V&quot;;</span>
+		}
+
+	}
+	
+	/** The last h value. */
+<span class="fc" id="L277">	private double lastHValue=1.;</span>
+	
+	/**
+	 * Aff buf.
+	 */
+	private void affBuf() {
+
+<span class="nc" id="L284">		double[] buf = cmdGetBuffer.getBuffer();</span>
+<span class="nc" id="L285">		double moy = 0;</span>
+<span class="nc" id="L286">		double valMin = 100;</span>
+<span class="nc" id="L287">		double valMax = -100;</span>
+<span class="nc" id="L288">		int nbPassage = 0;</span>
+<span class="nc" id="L289">		int firstPassage = 0;</span>
+
+<span class="nc bnc" id="L291" title="All 2 branches missed.">		for (int i = 0; i &lt; buf.length; i++) {</span>
+<span class="nc" id="L292">			moy += buf[i];</span>
+<span class="nc bnc" id="L293" title="All 6 branches missed.">			if (i != 0 &amp;&amp; buf[i - 1] &lt;= 0. &amp;&amp; buf[i] &gt;= 0.) {</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">				if (nbPassage == 0) {</span>
+<span class="nc" id="L295">					firstPassage = i;</span>
+				}
+<span class="nc" id="L297">				nbPassage++;</span>
+			}
+<span class="nc" id="L299">			valMin = Math.min(buf[i], valMin);</span>
+<span class="nc" id="L300">			valMax = Math.max(buf[i], valMax);</span>
+		}
+<span class="nc" id="L302">		moy /= buf.length;</span>
+
+<span class="nc" id="L304">		Log.getInstance().trace(</span>
+<span class="nc" id="L305">				&quot;moy=&quot; + moy + &quot; valMin=&quot; + valMin + &quot; valMax=&quot; + valMax);</span>
+
+<span class="nc bnc" id="L307" title="All 2 branches missed.">		if (memLine.size() == 0) {</span>
+<span class="nc" id="L308">			middleLine = new Line(0, 0, 0, 0);</span>
+<span class="nc" id="L309">			middleLine.setStroke(Color.WHITE);</span>
+<span class="nc" id="L310">			getChildren().add(middleLine);</span>
+<span class="nc" id="L311">			lowLine = new Line(0, 0, 0, 0);</span>
+<span class="nc" id="L312">			lowLine.setStroke(Color.ORANGE);</span>
+<span class="nc" id="L313">			getChildren().add(lowLine);</span>
+<span class="nc" id="L314">			hightLine = new Line(0, 0, 0, 0);</span>
+<span class="nc" id="L315">			hightLine.setStroke(Color.ORANGE);</span>
+<span class="nc" id="L316">			getChildren().add(hightLine);</span>
+<span class="nc" id="L317">			int borne = nbDataUsed - 1;</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">			for (int i = 0; i &lt; borne; i++) {</span>
+				Line line;
+<span class="nc" id="L320">				memLine.add(line = new Line(0, 0, 0, 0));</span>
+<span class="nc" id="L321">				line.setStroke(Color.GREEN);</span>
+<span class="nc" id="L322">				getChildren().add(line);</span>
+			}
+<span class="nc" id="L324">			coefX = getWidth() / (nbDataUsed - 1);</span>
+
+<span class="nc" id="L326">			middleText = new Text(&quot;&quot;);</span>
+<span class="nc" id="L327">			middleText.setFill(Color.WHITE);</span>
+<span class="nc" id="L328">			getChildren().add(middleText);</span>
+
+<span class="nc" id="L330">			lowText = new Text(&quot;&quot;);</span>
+<span class="nc" id="L331">			lowText.setFill(Color.ORANGE);</span>
+<span class="nc" id="L332">			getChildren().add(lowText);</span>
+
+<span class="nc" id="L334">			hightText = new Text(&quot;&quot;);</span>
+<span class="nc" id="L335">			hightText.setFill(Color.ORANGE);</span>
+<span class="nc" id="L336">			getChildren().add(hightText);</span>
+
+		}
+<span class="nc bnc" id="L339" title="All 4 branches missed.">		if (nbPassage &lt; 2 || firstPassage &gt;= 1024 )</span>
+<span class="nc" id="L340">			firstPassage = 0;</span>
+
+<span class="nc" id="L342">		double hVjuste = Math.max(Math.abs(valMax), Math.abs(valMin));</span>
+<span class="nc" id="L343">		double hValue = Math.ceil(hVjuste);</span>
+
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		if (hValue == 1.) {</span>
+<span class="nc" id="L346">			double[] tabCoef = { 1., 2., 5., 10., 20., 50., 100. };</span>
+			int i;
+<span class="nc bnc" id="L348" title="All 2 branches missed.">			for (i = 1; i &lt; tabCoef.length; i++) {</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">				if (Math.ceil(hVjuste * tabCoef[i]) != 1.) {</span>
+<span class="nc" id="L350">					hValue = 1. / tabCoef[i - 1];</span>
+<span class="nc" id="L351">					break;</span>
+				}
+			}
+<span class="nc bnc" id="L354" title="All 2 branches missed.">			if (i == tabCoef.length) {</span>
+<span class="nc" id="L355">				hValue = 1. / tabCoef[i - 1];</span>
+			}
+		}
+
+<span class="nc bnc" id="L359" title="All 2 branches missed.">		if (hValue == 0.)</span>
+		{
+<span class="nc" id="L361">			hValue = lastHValue;</span>
+		}
+<span class="nc" id="L363">		stabAdd(hValue);</span>
+<span class="nc" id="L364">		hValue = stabGetMax();</span>
+<span class="nc" id="L365">		stabPurge();</span>
+		
+<span class="nc" id="L367">		coefY = -(getHeight() * 0.45) / hValue;</span>
+<span class="nc" id="L368">		baseY = getHeight() / 2.;</span>
+
+<span class="nc" id="L370">		middleText.setText(&quot;0 V&quot;);</span>
+<span class="nc" id="L371">		middleText.setTranslateX(0);</span>
+<span class="nc" id="L372">		middleText.setTranslateY(baseY+4);</span>
+<span class="nc" id="L373">		middleLine.setStartX(middleText.getLayoutBounds().getMaxX());</span>
+<span class="nc" id="L374">		middleLine.setStartY(baseY);</span>
+<span class="nc" id="L375">		middleLine.setEndX(getWidth());</span>
+<span class="nc" id="L376">		middleLine.setEndY(baseY);</span>
+
+<span class="nc" id="L378">		hightText.setTranslateX(0);</span>
+<span class="nc" id="L379">		hightText.setTranslateY(baseY + hValue * coefY+4);</span>
+<span class="nc" id="L380">		hightText.setText(strVolt(hValue));</span>
+<span class="nc" id="L381">		hightLine.setStartX(hightText.getLayoutBounds().getMaxX());</span>
+<span class="nc" id="L382">		hightLine.setStartY(baseY + hValue * coefY);</span>
+<span class="nc" id="L383">		hightLine.setEndX(getWidth());</span>
+<span class="nc" id="L384">		hightLine.setEndY(baseY + hValue * coefY);</span>
+
+<span class="nc" id="L386">		lowText.setTranslateX(0);</span>
+<span class="nc" id="L387">		lowText.setTranslateY(baseY - hValue * coefY+4);</span>
+<span class="nc" id="L388">		lowText.setText(&quot;-&quot; + strVolt(hValue));</span>
+<span class="nc" id="L389">		lowLine.setStartX(lowText.getLayoutBounds().getMaxX());</span>
+<span class="nc" id="L390">		lowLine.setStartY(baseY - hValue * coefY);</span>
+<span class="nc" id="L391">		lowLine.setEndX(getWidth());</span>
+<span class="nc" id="L392">		lowLine.setEndY(baseY - hValue * coefY);</span>
+
+<span class="nc" id="L394">		int borne = nbDataUsed - 1;</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		for (int ind = firstPassage, i = 0; i &lt; borne; ind++, i++) {</span>
+<span class="nc" id="L396">			Line line = memLine.get(i);</span>
+<span class="nc" id="L397">			line.setStartX(coefX * i);</span>
+<span class="nc" id="L398">			line.setStartY(baseY + coefY * buf[ind]);</span>
+<span class="nc" id="L399">			line.setEndX(coefX * (i + 1));</span>
+<span class="nc" id="L400">			line.setEndY(baseY + coefY * buf[ind + 1]);</span>
+
+		}
+		
+<span class="nc" id="L404">		lastHValue = hValue;</span>
+
+<span class="nc" id="L406">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

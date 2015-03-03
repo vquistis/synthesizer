@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JsynEchoCircuit.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.echo.jsyn</a> &gt; <span class="el_source">JsynEchoCircuit.java</span></div><h1>JsynEchoCircuit.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.echo.jsyn;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+/**
+ * Jsyn Echo Circuit.
+ *
+ * @author Team GroupImpl
+ */
+public class JsynEchoCircuit extends UnitGenerator {
+
+	/** The frame rate. */
+<span class="nc" id="L18">	private final int frameRate=44100;</span>
+	
+	/** The in. */
+	private UnitInputPort in; 		//Volt
+	
+	/** The output. */
+	private UnitOutputPort output; 		//Volt
+
+	/** The period nb. */
+<span class="nc" id="L27">	private AtomicInteger periodNb =new AtomicInteger();</span>
+	
+	/** The coef attenuation. */
+<span class="nc" id="L30">	private AtomicLong coefAttenuation=new AtomicLong(); // en fait c'est un double</span>
+	
+	/** The buffer. */
+	final private double [] buffer;
+	
+	/** The current index. */
+<span class="nc" id="L36">	int currentIndex=0;</span>
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param maxPeriod the max period
+	 */
+<span class="nc" id="L43">    public JsynEchoCircuit( double maxPeriod ) {</span>
+<span class="nc" id="L44">        addPort(in = new UnitInputPort(&quot;echo_in&quot;));</span>
+<span class="nc" id="L45">        addPort(output= new UnitOutputPort(&quot;echo_out&quot;));</span>
+            
+<span class="nc" id="L47">        int sizeBuffer = (int)maxPeriod*frameRate;</span>
+        
+<span class="nc" id="L49">        buffer = new double [sizeBuffer];</span>
+        
+<span class="nc" id="L51">        setPeriodValue(1.);</span>
+<span class="nc" id="L52">        setAttenuationValue(-6.);</span>
+<span class="nc" id="L53">      }</span>
+    
+    
+    /**
+     * set the period Value in seconds.
+     *
+     * @param period  value of the period in seconds
+     */
+    public void setPeriodValue( double period )
+    {
+<span class="nc" id="L63">    	int locPeriodNb = (int)(period*(double)frameRate);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">    	if ( locPeriodNb &gt;= buffer.length )</span>
+    	{
+<span class="nc" id="L66">    		locPeriodNb = buffer.length-1;</span>
+    	}
+<span class="nc" id="L68">    	periodNb.set(locPeriodNb);</span>
+    	
+<span class="nc" id="L70">    }</span>
+    
+    /**
+     * set the attenuation value ( decibel, allways negative ).
+     *
+     * @param v the new attenuation value
+     */
+    public void setAttenuationValue( double v )
+    {
+<span class="nc" id="L79">    	coefAttenuation.set(Double.doubleToLongBits(Math.pow(2.,v/6.)));</span>
+<span class="nc" id="L80">    }</span>
+    
+    
+     
+	/**
+	 * get the input port.
+	 *
+	 * @return  the input port
+	 */
+	public UnitInputPort getInput() {
+<span class="nc" id="L90">		return in;</span>
+	}
+
+	/**
+	 * get the output port.
+	 *
+	 * @return the output port
+	 */
+	public UnitOutputPort getOutput() {
+<span class="nc" id="L99">		return output;</span>
+	}
+
+
+    /**
+     * generate son
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
+    @Override
+    public void generate(int start, int limit) {
+<span class="nc" id="L109">        double[] inputs = in.getValues();</span>
+<span class="nc" id="L110">        double[] outputs = output.getValues();</span>
+<span class="nc" id="L111">        double coef = Double.longBitsToDouble(coefAttenuation.get());</span>
+<span class="nc" id="L112">        int moinsPerNb=buffer.length-periodNb.get();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        for (int i = start; i &lt; limit; i++) {        	</span>
+<span class="nc" id="L114">        	int attIndex = (currentIndex+moinsPerNb)%buffer.length;        	</span>
+<span class="nc" id="L115">        	buffer[currentIndex] = inputs[i] + buffer[attIndex]*coef;</span>
+<span class="nc" id="L116">         	outputs[i] = buffer[currentIndex++];</span>
+<span class="nc" id="L117">          	currentIndex %= buffer.length;</span>
+         }
+<span class="nc" id="L119">    }</span>
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

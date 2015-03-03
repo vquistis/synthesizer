@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DoubleDuodecimalStringConverter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.util</a> &gt; <span class="el_source">DoubleDuodecimalStringConverter.java</span></div><h1>DoubleDuodecimalStringConverter.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.util;
+
+import javafx.util.StringConverter;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
+/**
+ * Convert String to Double, string is in duodecimal format ( radix 12 ).
+ * the interest of this radix is that in this base 
+ * when one is one octave then 0.1 is one semitone.
+ *
+ * @author Team GrouplImpl
+ */
+<span class="fc" id="L13">public class DoubleDuodecimalStringConverter extends StringConverter&lt;Number&gt; {</span>
+	
+	/**
+	 * @see javafx.util.StringConverter#toString(java.lang.Object)
+	 */
+	@Override
+	public String toString(Number value) {
+
+<span class="fc" id="L21">		Double v = (Double) value;</span>
+
+<span class="fc" id="L23">		int valInt = (int) (v * Math.pow(12., 3.));</span>
+
+<span class="fc" id="L25">		String str = Integer.toString(Math.abs(valInt), 12);</span>
+
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		while (str.length() &lt; 4) {</span>
+<span class="fc" id="L28">			str = &quot;0&quot; + str;</span>
+		}
+<span class="fc" id="L30">		int ind = str.length() - 3;</span>
+<span class="fc" id="L31">		str = str.substring(0, ind) + &quot;.&quot; + str.substring(ind);</span>
+
+		// suppress of zero endings
+<span class="fc" id="L34">		boolean flagCont = true;</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">		while (flagCont) {</span>
+			
+<span class="fc" id="L37">			String last = str.substring(str.length() - 1);</span>
+<span class="pc bpc" id="L38" title="2 of 7 branches missed.">			switch (last) {</span>
+			case &quot;.&quot;:
+<span class="fc" id="L40">				flagCont = false;</span>
+				// NO BREAK  FALLS THROUGHT
+			case &quot;0&quot;:
+<span class="fc" id="L43">				str = str.substring(0, str.length() - 1);</span>
+<span class="fc" id="L44">				break;</span>
+			default:
+<span class="fc" id="L46">				flagCont = false;</span>
+			}
+		}
+
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (valInt &lt; 0) {</span>
+<span class="fc" id="L51">			str = &quot;-&quot; + str;</span>
+		}
+<span class="fc" id="L53">		return str;</span>
+	}
+
+	/**
+	 * @see javafx.util.StringConverter#fromString(java.lang.String)
+	 */
+	@Override
+	public Number fromString(String string) {
+<span class="fc" id="L61">		Log.getInstance().trace(&quot;DoubleDuoDecimal.fromString debut string=&quot;+string);</span>
+
+<span class="fc" id="L63">		double value = 0.;</span>
+<span class="fc" id="L64">		double sens = 1.;</span>
+
+<span class="fc" id="L66">		String code = &quot;0123456789ab&quot;;</span>
+
+<span class="fc" id="L68">		String str = string.toLowerCase();</span>
+
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if( str.length() &lt; 1 )</span>
+		{
+<span class="nc" id="L72">			return 0.;</span>
+		}
+		
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (str.substring(0, 1).equals(&quot;-&quot;)) {</span>
+<span class="fc" id="L76">			str = str.substring(1);</span>
+<span class="fc" id="L77">			sens = -1.;</span>
+<span class="fc" id="L78">			Log.getInstance().trace(&quot;DoubleDuoDecimal.fromString moins str=&quot;+str);</span>
+
+<span class="fc" id="L80">		} else {</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (str.substring(0, 1).equals(&quot;+&quot;)) {</span>
+<span class="nc" id="L82">				str = str.substring(1);</span>
+<span class="nc" id="L83">				sens = 1.;</span>
+			}
+		}
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if( str.length() &lt; 1 )</span>
+		{
+<span class="nc" id="L88">			return 0.;</span>
+		}
+
+<span class="fc" id="L91">		double vDiv = 0.;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (byte c : str.getBytes()) {</span>
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">			if (c == '.' &amp;&amp; vDiv == 0.) {</span>
+<span class="fc" id="L94">				vDiv = 1.;</span>
+<span class="fc" id="L95">				continue;</span>
+			}
+
+<span class="fc" id="L98">			value *= 12.;</span>
+<span class="fc" id="L99">			vDiv *= 12.;</span>
+
+<span class="fc" id="L101">			double v = code.indexOf(c);</span>
+
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">			if (v &lt; 0) {</span>
+<span class="nc" id="L104">				return 0;</span>
+			}
+<span class="fc" id="L106">			value += v;</span>
+
+		}
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (vDiv != 0) {</span>
+<span class="fc" id="L110">			value /= vDiv;</span>
+		}
+		
+<span class="fc" id="L113">		Log.getInstance().trace(&quot;DoubleDuoDecimal.fromString ret = &quot;+value * sens);</span>
+<span class="fc" id="L114">		return value * sens;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

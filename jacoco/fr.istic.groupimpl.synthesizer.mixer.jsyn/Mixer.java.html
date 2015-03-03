@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Mixer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.mixer.jsyn</a> &gt; <span class="el_source">Mixer.java</span></div><h1>Mixer.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.mixer.jsyn;
+
+import java.util.ArrayList;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.Circuit;
+import com.jsyn.unitgen.UnitSource;
+
+import fr.istic.groupimpl.synthesizer.util.jsyn.JsynAttenuationFilter;
+
+/**
+ * MIXER Circuit with decibels attenuation input.
+ * 
+ * Input audio is sent to the mixer sum audio device with an attenuation factor.
+ * 
+ * UnitGenerator included :
+ * - JsynAttenuationFilter
+ * - MixerSum
+ * 
+ * @author Team GroupImpl
+ * 
+ */
+public class Mixer extends Circuit implements UnitSource {	
+	/* Declare units that will be part of the circuit. */
+<span class="fc" id="L27">	private ArrayList&lt;JsynAttenuationFilter&gt; attenuators = new ArrayList&lt;JsynAttenuationFilter&gt;();</span>
+	private MixerSum mixerSum;
+
+	/* Declare ports. */
+<span class="fc" id="L31">	private ArrayList&lt;UnitInputPort&gt; unitInputPorts = new ArrayList&lt;UnitInputPort&gt;();</span>
+	private UnitOutputPort output;
+	private UnitOutputPort averageOutputValue;
+	
+    /**
+     * Get Number Of Input Port
+     * @return UnitInputPort
+     */
+    public Integer getNumberOfInputPort() {
+<span class="fc" id="L40">		return unitInputPorts.size();</span>
+	}
+    
+    /**
+     * Get the input of Mixer module
+     * 
+     * Input(index) [first index = 0]
+     * @return UnitInputPort
+     */
+    public UnitInputPort getInput(Integer index) {
+<span class="fc" id="L50">		return unitInputPorts.get(index);</span>
+	}
+	
+	@Override
+	/**
+	 * Get the output of Mixer module.
+	 */
+	public UnitOutputPort getOutput() {
+<span class="fc" id="L58">		return output;</span>
+	}
+
+	/**
+	 * Get the average output value of Mixer module.
+	 * It's a first try at smoothing the gauge value, 
+	 * will surely be improved in the future.
+	 */
+	public UnitOutputPort getAverageOutputValue() {
+<span class="fc" id="L67">		return averageOutputValue;</span>
+	}
+	
+    /**
+     * Constructor
+     * 
+     * @param NumberOfInputPort
+     *   number of input port to instantiate
+     *   minimum 2  maximum 10
+     */
+<span class="fc" id="L77">	public Mixer(Integer NumberOfInputPort) {	</span>
+		
+		// parameter's bounds
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (NumberOfInputPort&gt;10) {</span>
+<span class="fc" id="L81">			NumberOfInputPort=10;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		} else if (NumberOfInputPort&lt;2) {</span>
+<span class="fc" id="L83">			NumberOfInputPort = 2;</span>
+		}
+		
+		/* Create various unit generators. */
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        for(int i = 0; i &lt; NumberOfInputPort; i++)</span>
+        {
+<span class="fc" id="L89">         	attenuators.add(new JsynAttenuationFilter());</span>
+        	
+        	/* Add unit generators to circuit. */
+<span class="fc" id="L92">        	add(attenuators.get(i));</span>
+        	
+        	// default value of the attenuator
+<span class="fc" id="L95">        	attenuators.get(i).set(0);</span>
+        } 
+<span class="fc" id="L97">		mixerSum = new MixerSum(NumberOfInputPort);</span>
+		/* Add mixerSum unit to circuit. */
+<span class="fc" id="L99">		add(mixerSum);</span>
+		
+		/* Make ports on internal units appear as ports on circuit. */
+		/* Optionally give some circuit ports more meaningful names. */	
+<span class="fc" id="L103">    	Integer index = 0;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        for(int i = 0; i &lt; NumberOfInputPort; i++)</span>
+        {
+<span class="fc" id="L106">        	unitInputPorts.add((UnitInputPort) addNamedPort(attenuators.get(i).getInput(), &quot;mixer_input&quot; + index));</span>
+<span class="fc" id="L107">        	index = i + 1;</span>
+        } 
+				
+		/* Connect SynthUnits to make control signal path. */
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        for(int i = 0; i &lt; NumberOfInputPort; i++)</span>
+        {
+<span class="fc" id="L113">    		mixerSum.getInput(i).connect(attenuators.get(i).output);</span>
+        }
+		
+<span class="fc" id="L116">		output = (UnitOutputPort) addNamedPort(mixerSum.getOutput(), &quot;output&quot;);</span>
+<span class="fc" id="L117">		averageOutputValue = (UnitOutputPort) addNamedPort(mixerSum.getAverageOutputValue(), &quot;mixer_averageOutputValue&quot;);</span>
+<span class="fc" id="L118">	}</span>
+	
+	/**
+	 * Set an attenuation decibel value value to the input
+	 * 
+	 * @param index
+	 * 		index of the attenuator (first = 0)
+	 * @param dbValue    
+	 */
+	public void setAttenuation(Integer index, double dbValue) {
+<span class="fc" id="L128">		attenuators.get(index).set(dbValue);</span>
+<span class="fc" id="L129">	}</span>
+
+	/**
+	 * Set Mute to the output signal of the index input
+	 * @param index
+	 * 		Input index
+	 * @param value
+	 *     true|false
+	 */
+	public void setMute(Integer index, boolean value) {
+<span class="fc" id="L139">		attenuators.get(index).setMute(value);</span>
+<span class="fc" id="L140">	}</span>
+	
+	/**
+	 * 
+	 * add a named port to the circuit and return its instance
+	 * 
+	 * @param UnitPort
+	 *   instance to add
+	 * @param name
+	 *   Port Name
+	 * @return
+	 *   Instance named port
+	 */
+	private UnitPort addNamedPort(UnitPort UnitPort, String name) {
+<span class="fc" id="L154">		addPort(UnitPort, name);</span>
+<span class="fc" id="L155">		return getPortByName(name);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

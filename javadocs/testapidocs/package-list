@@ -1,0 +1,15 @@
+fr.istic.groupimpl.synthesizer.eg
+fr.istic.groupimpl.synthesizer.global
+fr.istic.groupimpl.synthesizer.mixer.jsyn
+fr.istic.groupimpl.synthesizer.out
+fr.istic.groupimpl.synthesizer.player
+fr.istic.groupimpl.synthesizer.player.jsyn
+fr.istic.groupimpl.synthesizer.recorder.jsyn
+fr.istic.groupimpl.synthesizer.rep
+fr.istic.groupimpl.synthesizer.util
+fr.istic.groupimpl.synthesizer.util.jsyn
+fr.istic.groupimpl.synthesizer.vca
+fr.istic.groupimpl.synthesizer.vca.jsyn
+fr.istic.groupimpl.synthesizer.vcf
+fr.istic.groupimpl.synthesizer.vco
+fr.istic.groupimpl.synthesizer.vco.jsyn

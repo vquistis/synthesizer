@@ -63,6 +63,9 @@ public abstract class ControllerComponent {
 	
 	/**
 	 * Handle port clicked
+	 * @param port the port jsyn
+	 * @param x the property
+	 * @param y the property
 	 */
 	public void handlePortClicked(UnitPort port, DoubleProperty x, DoubleProperty y) {
 		ControllerGlobal.getInstance().handlePortClicked(port, x, y);
@@ -71,10 +74,10 @@ public abstract class ControllerComponent {
 	/**
 	 * setup ports
 	 * 
-	 * @param portName
-	 * @param portNode
-	 * @param portX
-	 * @param portY
+	 * @param portName the port name
+	 * @param portNode the port node
+	 * @param portX port x
+	 * @param portY port y
 	 */
 	public void setupPort(String portName, Node portNode, DoubleProperty portX,	DoubleProperty portY) {
 		getModel().getAllPorts().forEach((p) -> {				

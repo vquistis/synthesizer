@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PlayerGate.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.player.jsyn</a> &gt; <span class="el_source">PlayerGate.java</span></div><h1>PlayerGate.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package fr.istic.groupimpl.synthesizer.player.jsyn;</span>
+
+import java.io.File;
+import java.io.IOException;
+
+import com.jsyn.data.FloatSample;
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.unitgen.VariableRateStereoReader;
+import com.jsyn.util.SampleLoader;
+
+import fr.istic.groupimpl.synthesizer.logger.Log;
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
+
+/**
+ * 
+ * Jsyn Play module
+ *  
+ * @author Team GroupImpl
+ */
+public class PlayerGate extends VariableRateStereoReader { //VariableRateMonoReader
+
+	/** The gate. */
+ private UnitInputPort gate; 		//Volt
+	
+	/** The sample. */
+	private FloatSample sample;
+	
+	/** The sig min front montant. */
+	private final double sigMinFrontMontant;
+	
+	/** The sig max front montant. */
+	private final double sigMaxFrontMontant;
+	
+	/**
+	 * The Enum State.
+	 */
+<span class="fc" id="L38">	private enum State </span>
+	{
+		
+<span class="fc" id="L41">		/** The attente min. */</span>
+<span class="fc" id="L42">		ATTENTE_MIN,</span>
+		
+<span class="fc" id="L44">		/** The attente max. */</span>
+<span class="fc" id="L45">		ATTENTE_MAX</span>
+	}
+	
+	/** The etat. */
+<span class="fc" id="L49">	private State etat=State.ATTENTE_MIN;</span>
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param sigMinFrontMontantVolt the sig min front montant volt
+	 * @param sigMaxFrontMontantVolt the sig max front montant volt
+	 */
+<span class="fc" id="L57">    public PlayerGate(double sigMinFrontMontantVolt, double sigMaxFrontMontantVolt) {</span>
+<span class="fc" id="L58">        addPort(gate = new UnitInputPort(&quot;player_gate&quot;));</span>
+        
+<span class="fc" id="L60">        sigMinFrontMontant = sigMinFrontMontantVolt/SignalUtil.COEF_VOLT;</span>
+<span class="fc" id="L61">        sigMaxFrontMontant = sigMaxFrontMontantVolt/SignalUtil.COEF_VOLT;</span>
+<span class="fc" id="L62">     }</span>
+    
+	/**
+	 * get the gate port.
+	 *
+	 * @return  the gate port
+	 */
+	public UnitInputPort getGate() {
+<span class="fc" id="L70">		return gate;</span>
+	}
+
+	/**
+	 * get the output port.
+	 *
+	 * @return the output port
+	 */
+	public UnitOutputPort getOutput() {
+<span class="fc" id="L79">		return output;</span>
+	}
+
+	/**
+	 * Play.
+	 */
+	public void play() {
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (sample!=null) {</span>
+			// player.dataQueue.queue(sample);
+			// player.dataQueue.queueOff( sample );
+<span class="fc" id="L89">			this.dataQueue.queueOn(sample);</span>
+		}
+<span class="fc" id="L91">	}</span>
+
+	/**
+	 * @see com.jsyn.unitgen.UnitGenerator#stop()
+	 */
+	public void stop() {
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (sample!=null) {</span>
+<span class="fc" id="L98">			this.dataQueue.clear();</span>
+		}
+<span class="fc" id="L100">	}</span>
+	
+	/**
+	 * Load sample.
+	 *
+	 * @param sampleFile the sample file
+	 */
+public void loadSample(File sampleFile) throws IOException {
+		// Load the sample and display its properties.
+<span class="fc" id="L109">		SampleLoader.setJavaSoundPreferred( false );</span>
+		try {
+<span class="fc" id="L111">			sample = SampleLoader.loadFloatSample(sampleFile);</span>
+<span class="fc" id="L112">		} catch (IOException e) {</span>
+<span class="fc" id="L113">			Log.getInstance().error(&quot;Failed to load sample&quot;, e );</span>
+<span class="fc" id="L114">			throw e;</span>
+		}
+				
+<span class="fc" id="L117">		this.rate.set(sample.getFrameRate());	</span>
+<span class="fc" id="L118">	}</span>
+	
+    /**
+     * @see com.jsyn.unitgen.VariableRateStereoReader#generate(int, int)
+     */
+    @Override
+    public void generate(int start, int limit) {
+<span class="fc" id="L125">		super.generate(start, limit);</span>
+<span class="fc" id="L126">	    double[] inputs = gate.getValues();</span>
+	
+<span class="fc bfc" id="L128" title="All 2 branches covered.">	    for (int i = start; i &lt; limit; i++) {</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">	    	if ( etat == State.ATTENTE_MIN ) {</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">	    		if ( inputs[i] &lt;= sigMinFrontMontant ) {</span>
+<span class="fc" id="L131">	    			etat = State.ATTENTE_MAX;</span>
+	    		}
+<span class="fc" id="L133">	    	} else 	{</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">	      		if ( inputs[i] &gt;= sigMaxFrontMontant ) {</span>
+<span class="fc" id="L135">	    			etat = State.ATTENTE_MIN;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">	    			if (sample!=null) {</span>
+<span class="fc" id="L137">	    				this.dataQueue.queueOn(sample);</span>
+	    			}
+	    		}
+	    	}
+	     }
+<span class="fc" id="L142">    }</span>
+ }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewVcfHP.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.vcf</a> &gt; <span class="el_source">ViewVcfHP.java</span></div><h1>ViewVcfHP.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.vcf;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.Initializable;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.util.Potentiometre;
+import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
+
+/**
+ * View vcf HighPass module.
+ *
+ * @author Team GroupImpl
+ */
+<span class="nc" id="L16">public class ViewVcfHP extends ViewVcf implements Initializable {</span>
+
+	/** The controller. */
+	private ControllerVcf controller;
+
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// Creation du controller
+<span class="nc" id="L27">		controller = new ControllerVcf(ModelVcf.Type.HP12);</span>
+
+		// Creation des potentiometres
+<span class="nc" id="L30">		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();</span>
+<span class="nc" id="L31">		knobFact.setRayon(32);</span>
+
+<span class="nc" id="L33">		knobFact.setMinValue(10);</span>
+<span class="nc" id="L34">		knobFact.setMaxValue(22000);</span>
+<span class="nc" id="L35">		knobFact.setValueDef(22000);</span>
+<span class="nc" id="L36">		knobFact.setNbSpins(3);</span>
+<span class="nc" id="L37">		Potentiometre knobCutoff = knobFact.getPotentiometre();</span>
+		
+<span class="nc" id="L39">		knobFact.setMinValue(0);</span>
+<span class="nc" id="L40">		knobFact.setMaxValue(10);</span>
+<span class="nc" id="L41">		knobFact.setValueDef(1);</span>
+<span class="nc" id="L42">		knobFact.setNbSpins(1);</span>
+<span class="nc" id="L43">		Potentiometre knobResonance = knobFact.getPotentiometre();</span>
+		
+<span class="nc" id="L45">		super.configurate(&quot;VCF - HP12&quot;, controller, knobCutoff, knobResonance);</span>
+<span class="nc" id="L46">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
+	@Override
+	protected ControllerComponent getController() {
+<span class="nc" id="L53">		return controller;</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
+	@Override
+	public String getFilename() {
+<span class="nc" id="L61">		return &quot;fxml/vcf-hp.fxml&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

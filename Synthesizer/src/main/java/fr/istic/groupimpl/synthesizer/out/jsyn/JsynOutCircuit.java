@@ -28,6 +28,7 @@ public class JsynOutCircuit extends Circuit {
 	
 	/**
 	 * Get the input of OUT module.
+	 * @return UnitInputPort
 	 */
 	public UnitInputPort getInput() {
 		return input;
@@ -52,6 +53,7 @@ public class JsynOutCircuit extends Circuit {
 	
 	/**
 	 * Set an attenuation decibel value
+	 * @param dbValue
 	 */
 	public void setAttenuation(double dbValue) {
 		attenuator.set(dbValue);

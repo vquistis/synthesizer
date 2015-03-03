@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Connection.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.io.architecture</a> &gt; <span class="el_source">Connection.java</span></div><h1>Connection.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.io.architecture;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ * The Class Connection.
+ * 
+ * @author Team groupImpl
+ * 
+ */
+@XmlRootElement(name=&quot;connection&quot;)
+<span class="nc" id="L12">public class Connection {</span>
+
+	/** The input port. */
+	private Port inputPort;
+	
+	/** The output port. */
+	private Port outputPort;
+	
+	/** The color. */
+	private String color;
+
+	/**
+	 * Gets the input port.
+	 *
+	 * @return the input port
+	 */
+	public Port getInputPort() {
+<span class="nc" id="L29">		return inputPort;</span>
+	}
+
+	/**
+	 * Sets the input port.
+	 *
+	 * @param inputPort the new input port
+	 */
+	public void setInputPort(Port inputPort) {
+<span class="nc" id="L38">		this.inputPort = inputPort;</span>
+<span class="nc" id="L39">	}</span>
+
+	/**
+	 * Gets the output port.
+	 *
+	 * @return the output port
+	 */
+	public Port getOutputPort() {
+<span class="nc" id="L47">		return outputPort;</span>
+	}
+
+	/**
+	 * Sets the output port.
+	 *
+	 * @param outputPort the new output port
+	 */
+	public void setOutputPort(Port outputPort) {
+<span class="nc" id="L56">		this.outputPort = outputPort;</span>
+<span class="nc" id="L57">	}</span>
+
+	/**
+	 * Gets the color.
+	 *
+	 * @return the color
+	 */
+	public String getColor() {
+<span class="nc" id="L65">		return color;</span>
+	}
+
+	/**
+	 * Sets the color.
+	 *
+	 * @param color the new color
+	 */
+	public void setColor(String color) {
+<span class="nc" id="L74">		this.color = color;</span>
+<span class="nc" id="L75">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

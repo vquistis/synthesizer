@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelVcf.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.vcf</a> &gt; <span class="el_source">ModelVcf.java</span></div><h1>ModelVcf.java</h1><pre class="source lang-java linenums"><span class="pc" id="L1">package fr.istic.groupimpl.synthesizer.vcf;</span>
+
+import java.util.Collection;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.vcf.jsyn.JsynVcfCircuit;
+
+/**
+ * Model of vcf module.
+ *
+ * @author Team GroupImpl
+ */
+public class ModelVcf extends ModelComponent {
+	
+	/** The circuit. */
+	private JsynVcfCircuit circuit;
+	
+	/**
+	 * The Enum Type.
+	 */
+<span class="fc" id="L26">	public static enum Type { </span>
+<span class="fc" id="L27"> /** The L p24. */</span>
+<span class="fc" id="L28"> LP24, </span>
+<span class="fc" id="L29"> /** The H p12. */</span>
+<span class="fc" id="L30"> HP12 }</span>
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param t : type
+	 */
+	public ModelVcf(Type t) {
+<span class="fc" id="L38">		super();</span>
+<span class="fc" id="L39">		circuit = new JsynVcfCircuit(t);</span>
+<span class="fc" id="L40">	}</span>
+
+	/**
+	 * Sets the cut frequency.
+	 *
+	 * @param freq the new cut frequency
+	 */
+	public void setCutFrequency(double freq) {
+<span class="fc" id="L48">		circuit.setCutFrequency(freq);</span>
+<span class="fc" id="L49">	}</span>
+	
+	/**
+	 * Sets the resonance.
+	 *
+	 * @param res the new resonance
+	 */
+	public void setResonance(double res) {
+<span class="fc" id="L57">		circuit.setResonance(res);</span>
+<span class="fc" id="L58">	}</span>
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
+	@Override
+	public UnitGenerator getUnitGenerator() {
+<span class="fc" id="L65">		return circuit;</span>
+	}
+
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
+<span class="fc" id="L73">		return circuit.getInput();</span>
+	}
+
+	/**
+	 * Get the jsyn input fm port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getFmPort() {
+<span class="nc" id="L81">		return circuit.getFm();</span>
+	}
+
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
+<span class="fc" id="L89">		return circuit.getOutput();</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
+	@Override
+	public Collection&lt;UnitPort&gt; getAllPorts() {
+<span class="nc" id="L97">		return circuit.getPorts();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

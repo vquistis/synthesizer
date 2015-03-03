@@ -82,10 +82,7 @@ public abstract class ViewComponent {
 	 * node of the component.
 	 * 
 	 * @param portNode The node to be added as a port.
-	 * @param portX The property that will be bounds to the x coordinate of the node in the
-	 * coordinate space of the parent node. 
-	 * @param portY The property that will be bounds to the y coordinate of the node in the
-	 * coordinate space of the parent node.
+	 * @param portName the port name
 	 */
 	@SuppressWarnings("unchecked")
 	final protected void addPort(String portName, Node portNode) {
@@ -319,13 +316,14 @@ public abstract class ViewComponent {
 	
 	/**
 	 * get name of file FXML
+	 * @return file name
 	 */
 	public abstract String getFilename();
 	
 	/**
 	 * get name of connection
 	 * 
-	 * @param inputName
+	 * @param inputName the input name
 	 * @return
 	 */
 	public Pair<DoubleProperty, DoubleProperty> getStuff(String inputName) {

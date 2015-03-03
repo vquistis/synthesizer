@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JsynEnvelopeADSR.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.eg.jsyn</a> &gt; <span class="el_source">JsynEnvelopeADSR.java</span></div><h1>JsynEnvelopeADSR.java</h1><pre class="source lang-java linenums"><span class="pc" id="L1">package fr.istic.groupimpl.synthesizer.eg.jsyn;</span>
+
+import com.jsyn.engine.SynthesisEngine;
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.unitgen.Circuit;
+import com.jsyn.unitgen.UnitGate;
+import com.jsyn.unitgen.UnitSource;
+
+/**
+ * The class JsynEnvelopeADSR
+ * 
+ * Four stage envelope similar to an ADSR. The envelope is triggered when the input goes above THRESHOLD. The
+ * envelope is released when the input goes below THRESHOLD. The THRESHOLD is currently 0.01 but may
+ * change so it would be best to use an input signal that went from 0 to 1. Mathematically an
+ * exponential Release will never reach 0.0. But when it reaches -96 dB the DAHDSR just sets its
+ * output to 0.0 and stops.
+ * 
+ * @author Team groupImpl
+ * 
+ */
+public class JsynEnvelopeADSR extends UnitGate implements UnitSource {
+    
+    /** The Constant MIN_DURATION. */
+    private static final double MIN_DURATION = (1.0 / 100000.0);
+
+    /**
+     * Time in seconds for the rising stage of the envelope to go from 0.0 to 1.0. The attack is a
+     * linear ramp.
+     */
+    public UnitInputPort attack;
+    /**
+     * Time in seconds for the falling stage to go from 0 dB to -90 dB. The decay stage will stop at
+     * the sustain level. But we calculate the time to fall to -90 dB so that the decay
+     * &lt;em&gt;rate&lt;/em&gt; will be unaffected by the sustain level.
+     */
+    public UnitInputPort decay;
+    /**
+     * Level for the sustain stage. The envelope will hold here until the input goes to zero or
+     * less. This should be set between 0.0 and 1.0.
+     */
+    public UnitInputPort sustain;
+    /**
+     * Time in seconds to go from 0 dB to -90 dB. This stage is triggered when the input goes to
+     * zero or less. The release stage will start from the sustain level. But we calculate the time
+     * to fall from full amplitude so that the release &lt;em&gt;rate&lt;/em&gt; will be unaffected by the
+     * sustain level.
+     */
+    public UnitInputPort release;
+    
+    /** The amplitude. */
+    public UnitInputPort amplitude;
+
+    /**
+     * The Enum State.
+     */
+<span class="fc" id="L57">    enum State {</span>
+        
+<span class="fc" id="L59">        /** The idle. */</span>
+<span class="fc" id="L60">        IDLE, </span>
+<span class="fc" id="L61"> /** The attacking. */</span>
+<span class="fc" id="L62"> ATTACKING, </span>
+<span class="fc" id="L63"> /** The decaying. */</span>
+<span class="fc" id="L64"> DECAYING, </span>
+<span class="fc" id="L65"> /** The sustaining. */</span>
+<span class="fc" id="L66"> SUSTAINING, </span>
+<span class="fc" id="L67"> /** The releasing. */</span>
+<span class="fc" id="L68"> RELEASING</span>
+    }
+
+    /** The state. */
+<span class="fc" id="L72">    private State state = State.IDLE;</span>
+    
+    /** The scaler. */
+<span class="fc" id="L75">    private double scaler = 1.0;</span>
+    
+    /** The level. */
+    private double level;
+    
+    /** The increment. */
+    private double increment;
+
+    /**
+     * Instantiates a new jsyn envelope adsr.
+     */
+    public JsynEnvelopeADSR() {
+<span class="fc" id="L87">        super();</span>
+<span class="fc" id="L88">        addPort(attack = new UnitInputPort(&quot;Attack&quot;, 0.1));</span>
+<span class="fc" id="L89">        attack.setup(0.01, 0.1, 8.0);</span>
+<span class="fc" id="L90">        addPort(decay = new UnitInputPort(&quot;Decay&quot;, 0.2));</span>
+<span class="fc" id="L91">        decay.setup(0.01, 0.2, 8.0);</span>
+<span class="fc" id="L92">        addPort(sustain = new UnitInputPort(&quot;Sustain&quot;, 0.5));</span>
+<span class="fc" id="L93">        sustain.setup(0.0, 0.5, 1.0);</span>
+<span class="fc" id="L94">        addPort(release = new UnitInputPort(&quot;Release&quot;, 0.3));</span>
+<span class="fc" id="L95">        release.setup(0.01, 0.3, 8.0);</span>
+<span class="fc" id="L96">        addPort(amplitude = new UnitInputPort(&quot;Amplitude&quot;, 1.0));</span>
+<span class="fc" id="L97">    }</span>
+
+    /* (non-Javadoc)
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
+    @Override
+    public void generate(int start, int limit) {
+<span class="fc" id="L104">        double[] sustains = sustain.getValues();</span>
+<span class="fc" id="L105">        double[] amplitudes = amplitude.getValues();</span>
+<span class="fc" id="L106">        double[] outputs = output.getValues();</span>
+
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        for (int i = start; i &lt; limit;) {</span>
+<span class="fc" id="L109">            boolean triggered = input.checkGate(i);</span>
+<span class="pc bpc" id="L110" title="1 of 6 branches missed.">            switch (state) {</span>
+                case IDLE:
+<span class="fc bfc" id="L112" title="All 2 branches covered.">                    for (; i &lt; limit; i++) {</span>
+<span class="fc" id="L113">                        outputs[i] = level * amplitudes[i];</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                        if (triggered) {</span>
+<span class="fc" id="L115">                            startAttack(i);</span>
+<span class="fc" id="L116">                            break;</span>
+                        }
+                    }
+<span class="fc" id="L119">                    break;</span>
+
+                case ATTACKING:
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                    for (; i &lt; limit; i++) {</span>
+                        // Increment first so we can render fast attacks.
+<span class="fc" id="L124">                        level += increment;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">                        if (level &gt;= 1.0) {</span>
+<span class="fc" id="L126">                            level = 1.0;</span>
+<span class="fc" id="L127">                            outputs[i] = level * amplitudes[i];</span>
+<span class="fc" id="L128">                            startDecay(i);</span>
+<span class="fc" id="L129">                            break;</span>
+                        } else {
+<span class="fc" id="L131">                            outputs[i] = level * amplitudes[i];</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">                            if (input.isOff()) {</span>
+<span class="nc" id="L133">                                startRelease(i);</span>
+<span class="nc" id="L134">                                break;</span>
+                            }
+                        }
+                    }
+<span class="fc" id="L138">                    break;</span>
+
+                case DECAYING:
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">                    for (; i &lt; limit; i++) {</span>
+<span class="fc" id="L142">                        level -= increment;</span>
+<span class="fc" id="L143">                        outputs[i] = level * amplitudes[i];</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">                        if (triggered) {</span>
+<span class="nc" id="L145">                            startAttack(i);</span>
+<span class="nc" id="L146">                            break;</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">                        } else if (level &lt; sustains[i]) {</span>
+<span class="fc" id="L148">                            level = sustains[i];</span>
+<span class="fc" id="L149">                            startSustain(i);</span>
+<span class="fc" id="L150">                            break;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">                        } else if (level &lt; SynthesisEngine.DB96) {</span>
+<span class="nc" id="L152">                            input.checkAutoDisable();</span>
+<span class="nc" id="L153">                            startIdle();</span>
+<span class="nc" id="L154">                            break;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">                        } else if (input.isOff()) {</span>
+<span class="nc" id="L156">                            startRelease(i);</span>
+<span class="nc" id="L157">                            break;</span>
+                        }
+                    }
+<span class="nc" id="L160">                    break;</span>
+
+                case SUSTAINING:
+<span class="fc bfc" id="L163" title="All 2 branches covered.">                    for (; i &lt; limit; i++) {</span>
+<span class="fc" id="L164">                        level = sustains[i];</span>
+<span class="fc" id="L165">                        outputs[i] = level * amplitudes[i];</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                        if (triggered) {</span>
+<span class="nc" id="L167">                            startAttack(i);</span>
+<span class="nc" id="L168">                            break;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">                        } else if (input.isOff()) {</span>
+<span class="fc" id="L170">                            startRelease(i);</span>
+<span class="fc" id="L171">                            break;</span>
+                        }
+                    }
+<span class="fc" id="L174">                    break;</span>
+
+                case RELEASING:
+<span class="fc bfc" id="L177" title="All 2 branches covered.">                    for (; i &lt; limit; i++) {</span>
+<span class="fc" id="L178">                        outputs[i] = level * amplitudes[i];</span>
+<span class="fc" id="L179">                        level *= scaler; // exponential decay</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">                        if (triggered) {</span>
+<span class="fc" id="L181">                            startAttack(i);</span>
+<span class="fc" id="L182">                            break;</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">                        } else if (level &lt; SynthesisEngine.DB96) {</span>
+<span class="fc" id="L184">                            input.checkAutoDisable();</span>
+<span class="fc" id="L185">                            startIdle();</span>
+<span class="fc" id="L186">                            break;</span>
+                        }
+                    }
+                    break;
+            }
+        }
+<span class="fc" id="L192">    }</span>
+
+    /**
+     * Start idle.
+     */
+    private void startIdle() {
+<span class="fc" id="L198">        state = State.IDLE;</span>
+<span class="fc" id="L199">        level = 0.0;</span>
+<span class="fc" id="L200">    }</span>
+
+    /**
+     * Start attack.
+     *
+     * @param i the i
+     */
+    private void startAttack(int i) {
+<span class="fc" id="L208">        double[] attacks = attack.getValues();</span>
+<span class="fc" id="L209">        double duration = attacks[i];</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if (duration &lt; MIN_DURATION) {</span>
+<span class="nc" id="L211">            level = 1.0;</span>
+<span class="nc" id="L212">            startSustain(i);</span>
+<span class="nc" id="L213">        } else {</span>
+<span class="fc" id="L214">            increment = getFramePeriod() / duration;</span>
+<span class="fc" id="L215">            state = State.ATTACKING;</span>
+        }
+<span class="fc" id="L217">    }</span>
+
+    /**
+     * Start decay.
+     *
+     * @param i the i
+     */
+    private void startDecay(int i) {
+<span class="fc" id="L225">        double[] decays = decay.getValues();</span>
+<span class="fc" id="L226">        double duration = decays[i];</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">        if (duration &lt; MIN_DURATION) {</span>
+<span class="nc" id="L228">            level = 1.0;</span>
+<span class="nc" id="L229">            startSustain(i);</span>
+<span class="nc" id="L230">        } else {</span>
+<span class="fc" id="L231">            increment = getFramePeriod() / duration;</span>
+<span class="fc" id="L232">            state = State.DECAYING;</span>
+        }
+<span class="fc" id="L234">    }</span>
+
+    /**
+     * Start sustain.
+     *
+     * @param i the i
+     */
+    private void startSustain(int i) {
+<span class="fc" id="L242">        state = State.SUSTAINING;</span>
+<span class="fc" id="L243">    }</span>
+
+    /**
+     * Start release.
+     *
+     * @param i the i
+     */
+    private void startRelease(int i) {
+<span class="fc" id="L251">        double[] releases = release.getValues();</span>
+<span class="fc" id="L252">        double duration = releases[i];</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">        if (duration &lt; MIN_DURATION) {</span>
+<span class="nc" id="L254">            duration = MIN_DURATION;</span>
+        }
+<span class="fc" id="L256">        scaler = getSynthesisEngine().convertTimeToExponentialScaler(duration);</span>
+<span class="fc" id="L257">        state = State.RELEASING;</span>
+<span class="fc" id="L258">    }</span>
+
+    /**
+     * Export.
+     *
+     * @param circuit the circuit
+     * @param prefix the prefix
+     */
+    public void export(Circuit circuit, String prefix) {
+<span class="nc" id="L267">        circuit.addPort(attack, prefix + attack.getName());</span>
+<span class="nc" id="L268">        circuit.addPort(decay, prefix + decay.getName());</span>
+<span class="nc" id="L269">        circuit.addPort(sustain, prefix + sustain.getName());</span>
+<span class="nc" id="L270">        circuit.addPort(release, prefix + release.getName());</span>
+<span class="nc" id="L271">    }</span>
+
+    /* (non-Javadoc)
+     * @see com.jsyn.unitgen.UnitGate#getOutput()
+     */
+    @Override
+    public UnitOutputPort getOutput() {
+<span class="nc" id="L278">        return output;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

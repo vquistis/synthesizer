@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControllerVcf.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.vcf</a> &gt; <span class="el_source">ControllerVcf.java</span></div><h1>ControllerVcf.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.vcf;
+
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+
+/**
+ * Controller of vcf module.
+ *
+ * @author Team GroupImpl
+ */
+public class ControllerVcf extends ControllerComponent {
+
+	/** The model. */
+	private ModelVcf model;
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param t the t
+	 */
+<span class="nc" id="L22">	public ControllerVcf(ModelVcf.Type t) {</span>
+<span class="nc" id="L23">		model = new ModelVcf(t);</span>
+<span class="nc" id="L24">		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());</span>
+<span class="nc" id="L25">	}</span>
+	
+	/**
+	 * Change listener frequency cutoff.
+	 * @param newVal - new frequency value
+	 */
+	public void handleViewCutoffChange(Number newVal) {
+<span class="nc" id="L32">		model.setCutFrequency((double) newVal);</span>
+<span class="nc" id="L33">	}</span>
+	
+	/**
+	 * Change listener resonance.
+	 * @param newVal - new resonance value
+	 */
+	public void handleViewResonanceChange(Number newVal) {
+<span class="nc" id="L40">		model.setResonance((double) newVal);</span>
+<span class="nc" id="L41">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
+	@Override
+	public void handleViewClose() {
+<span class="nc" id="L48">		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());</span>
+<span class="nc" id="L49">		ControllerGlobal.getInstance().unregisterUnitGenerator(model.getUnitGenerator());</span>
+<span class="nc" id="L50">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
+	@Override
+	public ModelComponent getModel() {
+<span class="nc" id="L57">		return model;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

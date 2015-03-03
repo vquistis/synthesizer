@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelComponent.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.component</a> &gt; <span class="el_source">ModelComponent.java</span></div><h1>ModelComponent.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.component;
+
+import java.util.Properties;
+
+import fr.istic.groupimpl.synthesizer.command.ICommand;
+
+/**
+ * The abstract class ModelComponent
+ * 
+ * @author Team groupImpl
+ *
+ */
+public abstract class ModelComponent implements IModelComponent {
+	
+	protected Properties propsVals;
+	protected Properties commands;
+	
+	/**
+	 * Constructor
+	 */
+<span class="fc" id="L21">	public ModelComponent() {</span>
+<span class="fc" id="L22">		propsVals = new Properties();</span>
+<span class="fc" id="L23">		commands = new Properties();</span>
+<span class="fc" id="L24">	}</span>
+	
+	/**
+	 * get property in propsVals
+	 */
+	public Object getValProperty(String prop) {
+<span class="nc" id="L30">		return propsVals.get(prop);</span>
+	}
+	
+	/**
+	 * add a property in propsVals
+	 */
+	public void setValProperty(String prop, Object val) {
+<span class="nc" id="L37">		propsVals.put(prop, val);</span>
+		
+		// Notifie les observers du changement de la propriété &quot;prop&quot; du modèle
+<span class="nc bnc" id="L40" title="All 2 branches missed.">		if (commands.containsKey(prop)) {</span>
+<span class="nc" id="L41">			ICommand cmd = (ICommand) commands.get(prop);</span>
+<span class="nc" id="L42">			cmd.execute();</span>
+		}
+<span class="nc" id="L44">	}</span>
+	
+	/**
+	 * add a property in commands
+	 */
+	public void setCommandProperty(String prop, ICommand cmd) {
+<span class="nc" id="L50">		commands.put(prop, cmd);</span>
+<span class="nc" id="L51">	}</span>
+		
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
