@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewEg.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.eg</a> &gt; <span class="el_source">ViewEg.java</span></div><h1>ViewEg.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.eg;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
+import fr.istic.groupimpl.synthesizer.util.Potentiometre;
+import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
+
+/**
+ * The Class ViewEg : view of EG component.
+ *
+ * @author Team groupImpl
+ */
+<span class="nc" id="L28">public class ViewEg extends ViewComponent implements Initializable {</span>
+
+	/** The root module pane. */
+	@FXML private Pane rootModulePane;
+	
+	/** The top. */
+	@FXML private GridPane top;
+	
+	/** The knob attack pane. */
+	@FXML private VBox knobAttackPane;
+	
+	/** The knob decay pane. */
+	@FXML private VBox knobDecayPane;
+	
+	/** The knob sustain pane. */
+	@FXML private VBox knobSustainPane;
+	
+	/** The knob release pane. */
+	@FXML private VBox knobReleasePane;
+	
+	/** The value attack fx. */
+	@FXML private TextField valueAttackFx;
+	
+	/** The value decay fx. */
+	@FXML private TextField valueDecayFx;
+	
+	/** The value sustain fx. */
+	@FXML private TextField valueSustainFx;
+	
+	/** The value release fx. */
+	@FXML private TextField valueReleaseFx;
+	
+	/** The input. */
+	@FXML private ImageView input;
+	
+	/** The output. */
+	@FXML private ImageView output;
+
+	/** The controller. */
+	private ControllerEg controller;
+	
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resource) {
+<span class="nc" id="L74">		((Label) top.lookup(&quot;#titleModule&quot;)).setText(&quot;EG&quot;);</span>
+		
+<span class="nc" id="L76">		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();</span>
+<span class="nc" id="L77">		knobFact.setMinValue(0);</span>
+<span class="nc" id="L78">		knobFact.setMaxValue(1);</span>
+<span class="nc" id="L79">		knobFact.setValueDef(0);</span>
+<span class="nc" id="L80">		knobFact.setNbSpins(1);</span>
+<span class="nc" id="L81">		knobFact.setRayon(32);</span>
+		
+		// Add knob to view
+<span class="nc" id="L84">		Potentiometre knobAttack = knobFact.getPotentiometre();</span>
+<span class="nc" id="L85">		knobAttackPane.getChildren().add(1,knobAttack);</span>
+<span class="nc" id="L86">		Potentiometre knobDecay = knobFact.getPotentiometre();</span>
+<span class="nc" id="L87">		knobDecayPane.getChildren().add(1,knobDecay);</span>
+<span class="nc" id="L88">		knobFact.setMaxValue(5);</span>
+<span class="nc" id="L89">		Potentiometre knobRelease = knobFact.getPotentiometre();</span>
+<span class="nc" id="L90">		knobReleasePane.getChildren().add(1,knobRelease);</span>
+<span class="nc" id="L91">		knobFact.setMinValue(-60);</span>
+<span class="nc" id="L92">		knobFact.setMaxValue(0);</span>
+<span class="nc" id="L93">		Potentiometre knobSustain = knobFact.getPotentiometre();</span>
+<span class="nc" id="L94">		knobSustainPane.getChildren().add(1,knobSustain);</span>
+		
+		// Bind knob value and text field value
+<span class="nc" id="L97">		StringConverter&lt;Number&gt; converter = new DoubleStringConverter();</span>
+<span class="nc" id="L98">		Bindings.bindBidirectional(valueAttackFx.textProperty(), knobAttack.valueProperty(), converter);</span>
+<span class="nc" id="L99">		Bindings.bindBidirectional(valueDecayFx.textProperty(), knobDecay.valueProperty(), converter);</span>
+<span class="nc" id="L100">		Bindings.bindBidirectional(valueSustainFx.textProperty(), knobSustain.valueProperty(), converter);</span>
+<span class="nc" id="L101">		Bindings.bindBidirectional(valueReleaseFx.textProperty(), knobRelease.valueProperty(), converter);</span>
+
+		// Creation du controller
+<span class="nc" id="L104">		controller = new ControllerEg();</span>
+
+		// Listener parameters
+<span class="nc" id="L107">		knobAttack.valueProperty().addListener((obsVal, oldVal, newVal) -&gt; controller.handleViewAttackChange(newVal));</span>
+<span class="nc" id="L108">		knobDecay.valueProperty().addListener((obsVal, oldVal, newVal) -&gt; controller.handleViewDecayChange(newVal));</span>
+<span class="nc" id="L109">		knobSustain.valueProperty().addListener((obsVal, oldVal, newVal) -&gt; controller.handleViewSustainChange(newVal));</span>
+<span class="nc" id="L110">		knobRelease.valueProperty().addListener((obsVal, oldVal, newVal) -&gt; controller.handleViewReleaseChange(newVal));</span>
+		
+		// Listener close module
+<span class="nc" id="L113">		top.lookup(&quot;#closeModuleFx&quot;).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -&gt; {</span>
+			cleanup();			
+			controller.handleViewClose();
+			Pane parent = (Pane) rootModulePane.getParent();
+			parent.getChildren().remove(rootModulePane);
+		});
+
+<span class="nc" id="L120">		addPort(&quot;eg_input&quot;, input);</span>
+<span class="nc" id="L121">		addPort(&quot;eg_output&quot;, output);</span>
+		
+<span class="nc" id="L123">		addParameters(&quot;knobAttack&quot;, () -&gt; knobAttack.getValue(), (val) -&gt; knobAttack.setValue(val));</span>
+<span class="nc" id="L124">		addParameters(&quot;knobDecay&quot;, () -&gt; knobDecay.getValue(), (val) -&gt; knobDecay.setValue(val));</span>
+<span class="nc" id="L125">		addParameters(&quot;knobSustain&quot;, () -&gt; knobSustain.getValue(), (val) -&gt; knobSustain.setValue(val));</span>
+<span class="nc" id="L126">		addParameters(&quot;knobRelease&quot;, () -&gt; knobRelease.getValue(), (val) -&gt; knobRelease.setValue(val));</span>
+<span class="nc" id="L127">	}</span>
+
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
+	@Override
+	protected Pane getComponentRoot() {
+<span class="nc" id="L134">		return rootModulePane;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
+	@Override
+	protected ControllerComponent getController() {
+<span class="nc" id="L142">		return controller;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
+	@Override
+	public String getFilename() {
+<span class="nc" id="L150">		return &quot;fxml/eg.fxml&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

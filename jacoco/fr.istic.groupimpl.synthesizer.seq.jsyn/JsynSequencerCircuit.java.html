@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JsynSequencerCircuit.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.seq.jsyn</a> &gt; <span class="el_source">JsynSequencerCircuit.java</span></div><h1>JsynSequencerCircuit.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package fr.istic.groupimpl.synthesizer.seq.jsyn;</span>
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
+
+/**
+ * Jsyn Sequencer Circuit.
+ *
+ * @author Team GroupImpl
+ */
+public class JsynSequencerCircuit extends UnitGenerator {
+
+	/**
+	 * The Enum State.
+	 */
+<span class="nc" id="L19">	private enum State </span>
+	{
+		
+<span class="nc" id="L22">		/** The attente min. */</span>
+<span class="nc" id="L23">		ATTENTE_MIN,</span>
+		
+<span class="nc" id="L25">		/** The attente max. */</span>
+<span class="nc" id="L26">		ATTENTE_MAX</span>
+	}
+	
+	/** The gate. */
+	private UnitInputPort gate; 		//Volt
+	
+	/** The output. */
+	private UnitOutputPort output; 		//Volt
+
+	/** The value. */
+	private final double [] value;
+	
+	/** The pas courant. */
+<span class="nc" id="L39">	private int pasCourant=0;</span>
+	
+	/** The sig min front montant. */
+	private final double sigMinFrontMontant;
+	
+	/** The sig max front montant. */
+	private final double sigMaxFrontMontant;
+	
+	/** The nb pas. */
+	private final int nbPas;
+	
+	
+	/** The etat. */
+<span class="nc" id="L52">	private State etat=State.ATTENTE_MIN;</span>
+	
+	
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param nbPas the nb pas
+	 * @param sigMinFrontMontantVolt the sig min front montant volt
+	 * @param sigMaxFrontMontantVolt the sig max front montant volt
+	 */
+<span class="nc" id="L63">    public JsynSequencerCircuit( int nbPas, double sigMinFrontMontantVolt, double sigMaxFrontMontantVolt ) {</span>
+<span class="nc" id="L64">        addPort(gate = new UnitInputPort(&quot;sequencer_gate&quot;));</span>
+<span class="nc" id="L65">        addPort(output= new UnitOutputPort(&quot;sequencer_out&quot;));</span>
+        
+        
+<span class="nc" id="L68">        sigMinFrontMontant = sigMinFrontMontantVolt/SignalUtil.COEF_VOLT;</span>
+<span class="nc" id="L69">        sigMaxFrontMontant = sigMaxFrontMontantVolt/SignalUtil.COEF_VOLT;</span>
+<span class="nc" id="L70">        this.nbPas = nbPas;</span>
+             
+<span class="nc" id="L72">        value = new double[nbPas];</span>
+<span class="nc" id="L73">     }</span>
+    
+    
+    /**
+     * set the value of a step.
+     *
+     * @param indice 	indice of the step from 0 to 7
+     * @param volt  value of the step from -1 to 1
+     */
+    public void setValue( int indice, double volt )
+    {
+<span class="nc" id="L84">    	value[indice] = volt/SignalUtil.COEF_VOLT;</span>
+<span class="nc" id="L85">    }</span>
+    
+    /**
+     * get the value of a step.
+     *
+     * @param indice 	indice of the step from 0 to 7
+     * @return  the value of the step
+     */
+    public double getValue( int indice )
+    {
+<span class="nc" id="L95">    	return value[indice]*SignalUtil.COEF_VOLT;</span>
+    }
+   
+    /**
+     * initalyse the step to 0.
+     */
+    public void resetPas()
+    {
+<span class="nc" id="L103">    	pasCourant = 0;</span>
+<span class="nc" id="L104">    }</span>
+    
+	/**
+	 * get the gate port.
+	 *
+	 * @return  the gate port
+	 */
+	public UnitInputPort getGate() {
+<span class="nc" id="L112">		return gate;</span>
+	}
+
+	/**
+	 * get the output port.
+	 *
+	 * @return the output port
+	 */
+	public UnitOutputPort getOutput() {
+<span class="nc" id="L121">		return output;</span>
+	}
+
+
+    /**
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
+    @Override
+    public void generate(int start, int limit) {
+<span class="nc" id="L130">        double[] inputs = gate.getValues();</span>
+<span class="nc" id="L131">        double[] outputs = output.getValues();</span>
+
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        for (int i = start; i &lt; limit; i++) { </span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        	if ( etat == State.ATTENTE_MIN )</span>
+        	{
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        		if ( inputs[i] &lt;= sigMinFrontMontant )</span>
+        		{
+<span class="nc" id="L138">        			etat = State.ATTENTE_MAX;</span>
+        		}
+<span class="nc" id="L140">        	}</span>
+        	else
+        	{
+        		// etat == State.ATTENTE_MAX
+<span class="nc bnc" id="L144" title="All 2 branches missed.">          		if ( inputs[i] &gt;= sigMaxFrontMontant )</span>
+        		{
+<span class="nc" id="L146">        			etat = State.ATTENTE_MIN;</span>
+<span class="nc" id="L147">        			pasCourant++;</span>
+<span class="nc" id="L148">        			pasCourant %= nbPas;</span>
+        		}
+        	}
+<span class="nc" id="L151">        	outputs[i] = value[pasCourant];</span>
+         }
+<span class="nc" id="L153">    }</span>
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

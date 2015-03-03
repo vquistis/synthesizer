@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControllerGlobal.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.global</a> &gt; <span class="el_source">ControllerGlobal.java</span></div><h1>ControllerGlobal.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package fr.istic.groupimpl.synthesizer.global;</span>
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javafx.beans.property.DoubleProperty;
+import javafx.stage.Stage;
+import javafx.util.Pair;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.cable.Cable;
+import fr.istic.groupimpl.synthesizer.io.architecture.Connection;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
+import fr.istic.groupimpl.synthesizer.io.architecture.Port;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
+/**
+ * The Class ControllerGlobal.
+ * 
+ * @author Team groupImpl
+ * 
+ */
+public class ControllerGlobal {
+
+	/** The instance. */
+	private static ControllerGlobal instance;
+
+	/**
+	 * Gets the single instance of ControllerGlobal.
+	 *
+	 * @return single instance of ControllerGlobal
+	 */
+	public static ControllerGlobal getInstance() {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		if(instance == null) {</span>
+<span class="nc" id="L45">			instance = new ControllerGlobal();</span>
+		}
+<span class="nc" id="L47">		return instance;</span>
+	}
+
+	/** The model. */
+	private ModelGlobal model;
+
+	/** The view. */
+	private ViewGlobal view;
+
+	/** The interaction mode. */
+<span class="nc" id="L57">	private InteractionMode interactionMode = InteractionMode.CableCreation_none;</span>
+	/*
+	 * By default, when the user clicks on a port, a new cable is created.
+	 * However, if the user clicks on an already connected port, the existing
+	 * cable should be in a &quot;move&quot; state.
+	 */
+	/** The previous port. */
+	private UnitPort previousPort;
+
+	/** The previous x. */
+	private DoubleProperty previousX;
+
+	/** The previous y. */
+	private DoubleProperty previousY;
+
+	/** The current port. */
+	private UnitPort currentPort;
+
+	/** The cables. */
+<span class="nc" id="L76">	private Map&lt;UnitPort,Cable&gt; cables = new HashMap&lt;UnitPort,Cable&gt;();</span>
+
+	/**
+	 * Instantiates a new controller global.
+	 */
+<span class="nc" id="L81">	private ControllerGlobal() {</span>
+<span class="nc" id="L82">		model = new ModelGlobal();</span>
+<span class="nc" id="L83">	}</span>
+
+	/**
+	 * Signals the model that the given UnitGenerator must be added
+	 * to the synthesizer.
+	 *
+	 * @param unitGen the unit gen
+	 */
+	public void registerUnitGenerator(UnitGenerator unitGen) {
+<span class="nc" id="L92">		model.addUnitGenerator(unitGen);</span>
+<span class="nc" id="L93">	}</span>
+
+	/**
+	 * Register out unit generator.
+	 *
+	 * @param unitGen the unit gen
+	 */
+	public void registerOutUnitGenerator(UnitGenerator unitGen) {
+<span class="nc" id="L101">		model.addOutUnit(unitGen);</span>
+<span class="nc" id="L102">	}</span>
+
+	/**
+	 * Signals the model that the given UnitGenerator must be removed
+	 * from the synthesizer.
+	 *
+	 * @param unitGen the unit gen
+	 */
+	public void unregisterUnitGenerator(UnitGenerator unitGen) {
+
+<span class="nc" id="L112">		model.removeUnitGenerator(unitGen);</span>
+<span class="nc" id="L113">	}</span>
+
+	/**
+	 * Unregister out unit generator.
+	 *
+	 * @param unitGen the unit gen
+	 */
+	public void unregisterOutUnitGenerator(UnitGenerator unitGen) {
+<span class="nc" id="L121">		model.removeOutUnitGenerator(unitGen);</span>
+<span class="nc" id="L122">	}</span>
+
+	/**
+	 * Signals the model that any connection originating from each port in
+	 * the given collection must be removed.
+	 *
+	 * @param unitports the unitports
+	 */
+	public void removeAllConnections(Collection&lt;UnitPort&gt; unitports) {
+<span class="nc" id="L131">		model.removeAllConnections(unitports);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		for(UnitPort p : unitports) {</span>
+<span class="nc" id="L133">			Cable c = cables.remove(p);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			if(c != null) {</span>
+<span class="nc" id="L135">				view.removeCable(c);</span>
+			}
+		}
+<span class="nc" id="L138">	}</span>
+
+	/**
+	 * Handle port clicked.
+	 *
+	 * @param port the port
+	 * @param x the x
+	 * @param y the y
+	 */
+	public void handlePortClicked(UnitPort port, DoubleProperty x, DoubleProperty y) {
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if(port instanceof UnitInputPort) {</span>
+<span class="nc" id="L149">			handleInputClicked((UnitInputPort)port, x, y);</span>
+<span class="nc" id="L150">		}</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		else if(port instanceof UnitOutputPort) {</span>
+<span class="nc" id="L152">			handleOutputClicked((UnitOutputPort)port, x, y);</span>
+		}
+<span class="nc" id="L154">	}</span>
+
+	/**
+	 * Handles the process of connection creation when an input port is clicked.
+	 *
+	 * @param port the port
+	 * @param x the x
+	 * @param y the y
+	 */
+	private void handleInputClicked(UnitInputPort port, DoubleProperty x, DoubleProperty y) {
+<span class="nc bnc" id="L164" title="All 4 branches missed.">		switch(interactionMode) {</span>
+		case CableDeletion:
+<span class="nc" id="L166">			view.enableCableDeletionMode(false);</span>
+<span class="nc" id="L167">			view.enableCableCreationMode(true);</span>
+<span class="nc" id="L168">			doStuff(port, x, y);</span>
+<span class="nc" id="L169">			break;</span>
+		case CableCreation_none:
+<span class="nc" id="L171">			doStuff(port, x, y);</span>
+<span class="nc" id="L172">			break;</span>
+		case CableCreation_out:
+			/*
+			 * An output port is connected to the cable. By clicking on an input port,
+			 * we should ask the model whether this input port is already part of a connection
+			 * or not. If it is, do nothing. If it isn't, create a new connection.
+			 */
+<span class="nc bnc" id="L179" title="All 2 branches missed.">			if(!model.isPortConnected(port)) {</span>
+<span class="nc" id="L180">				interactionMode = InteractionMode.CableCreation_none;</span>
+<span class="nc" id="L181">				view.enableDefaultMode(true);</span>
+<span class="nc" id="L182">				this.model.connectPorts(currentPort, port);</span>
+
+				//----------------------
+<span class="nc" id="L185">				Cable cable = cables.get(currentPort);</span>
+<span class="nc" id="L186">				cables.put(port,cable);</span>
+<span class="nc" id="L187">				cable.bindInput(x, y);</span>
+<span class="nc" id="L188">				Log.getInstance().debug(&quot;input X = &quot; + x.get() + &quot; ; &quot; + &quot;input Y = &quot; + y.get());</span>
+<span class="nc" id="L189">				Log.getInstance().debug(&quot;INPUT PORT CONNECTED TO OUTPUT PORT&quot;);</span>
+				//----------------------
+
+<span class="nc" id="L192">				currentPort = null;</span>
+<span class="nc" id="L193">				previousPort = null;</span>
+<span class="nc" id="L194">				previousX = null;</span>
+<span class="nc" id="L195">				previousY = null;</span>
+			}
+<span class="nc" id="L197">			break;</span>
+		default:
+			break;
+		}
+<span class="nc" id="L201">	}</span>
+
+	/**
+	 * Handles the process of connection creation when an output port is clicked.
+	 *
+	 * @param port the port
+	 * @param x the x
+	 * @param y the y
+	 */
+	private void handleOutputClicked(UnitOutputPort port, DoubleProperty x, DoubleProperty y) {
+<span class="nc bnc" id="L211" title="All 4 branches missed.">		switch(interactionMode) {</span>
+		case CableDeletion:
+<span class="nc" id="L213">			view.enableCableDeletionMode(false);</span>
+<span class="nc" id="L214">			view.enableCableCreationMode(true);</span>
+<span class="nc" id="L215">			doStuff(port, x, y);</span>
+<span class="nc" id="L216">			break;</span>
+		case CableCreation_none:
+<span class="nc" id="L218">			doStuff(port, x, y);</span>
+<span class="nc" id="L219">			break;</span>
+		case CableCreation_in:
+<span class="nc bnc" id="L221" title="All 2 branches missed.">			if(!model.isPortConnected(port)) {</span>
+<span class="nc" id="L222">				interactionMode = InteractionMode.CableCreation_none;</span>
+<span class="nc" id="L223">				view.enableDefaultMode(true);</span>
+<span class="nc" id="L224">				this.model.connectPorts(port, currentPort);</span>
+
+				//----------------------
+<span class="nc" id="L227">				Cable cable = cables.get(currentPort);</span>
+<span class="nc" id="L228">				cables.put(port,cable);</span>
+<span class="nc" id="L229">				cable.bindOutput(x, y);</span>
+<span class="nc" id="L230">				Log.getInstance().debug(&quot;input X = &quot; + x.get() + &quot; ; &quot; + &quot;input Y = &quot; + y.get());</span>
+				//----------------------
+
+<span class="nc" id="L233">				currentPort = null;</span>
+<span class="nc" id="L234">				previousPort = null;</span>
+<span class="nc" id="L235">				previousX = null;</span>
+<span class="nc" id="L236">				previousY = null;</span>
+			}
+<span class="nc" id="L238">			break;</span>
+		default:
+			break;
+		}
+<span class="nc" id="L242">	}</span>
+
+	/*
+	 * No connection is currently in the process of creation.
+	 * If the put port that was clicked is already part of a connection,
+	 * we should enter in a &quot;move&quot; move:
+	 *   - set the &quot;previousPort&quot; field to remember which port was connected, 
+	 *   in order to restore the connection in case of cancellation,
+	 *   - set the &quot;currentPort&quot; field to the port currently connected to the
+	 *   parameter &quot;port&quot;,
+	 *   - disconnect the currentPort and the previousPort in the model.
+	 *   - change mode accordingly.
+	 * If not, we should enter in a &quot;create&quot; mode.
+	 */
+	/**
+	 * Do stuff.
+	 *
+	 * @param port the port
+	 * @param x the x
+	 * @param y the y
+	 */
+	private void doStuff(UnitPort port, DoubleProperty x, DoubleProperty y) {
+<span class="nc" id="L264">		boolean isInput = port instanceof UnitInputPort;</span>
+<span class="nc" id="L265">		view.enableCableCreationMode(true);</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		if(model.isPortConnected(port)) {</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">			interactionMode = isInput ? InteractionMode.CableCreation_out : InteractionMode.CableCreation_in;</span>
+<span class="nc" id="L268">			currentPort = model.getConnectedPort(port);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">			if(isInput) {</span>
+<span class="nc" id="L270">				model.disconnectInputPort((UnitInputPort) port);</span>
+<span class="nc" id="L271">			} else {</span>
+<span class="nc" id="L272">				model.disconnectOutputPort((UnitOutputPort) port);</span>
+			}
+<span class="nc" id="L274">			previousPort = port;</span>
+<span class="nc" id="L275">			previousX = x;</span>
+<span class="nc" id="L276">			previousY = y;</span>
+
+			//----------------------
+<span class="nc" id="L279">			Cable cable = cables.get(port);</span>
+<span class="nc" id="L280">			cables.remove(port);</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">			if(isInput) {</span>
+<span class="nc" id="L282">				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());</span>
+<span class="nc" id="L283">				Log.getInstance().debug(&quot;INPUT PORT DISCONNECTED&quot;);</span>
+<span class="nc" id="L284">			} else {</span>
+<span class="nc" id="L285">				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());</span>
+<span class="nc" id="L286">				Log.getInstance().debug(&quot;OUTPUT PORT DISCONNECTED&quot;);</span>
+			}
+			//----------------------
+
+<span class="nc" id="L290">		} else {</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">			interactionMode = isInput ? InteractionMode.CableCreation_in : InteractionMode.CableCreation_out;</span>
+<span class="nc" id="L292">			currentPort = port;</span>
+
+			//----------------------
+<span class="nc" id="L295">			Cable cable = new Cable(view.getCableColor());</span>
+<span class="nc" id="L296">			cables.put(port, cable);</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">			if(isInput) {</span>
+<span class="nc" id="L298">				cable.bindInput(x, y);</span>
+<span class="nc" id="L299">				Log.getInstance().debug(&quot;input X = &quot; + x.get() + &quot; ; &quot; + &quot;input Y = &quot; + y.get());</span>
+<span class="nc" id="L300">				cable.bindOutput(view.mouseXProperty(), view.mouseYProperty());</span>
+<span class="nc" id="L301">				Log.getInstance().debug(&quot;CREATING CABLE FROM INPUT PORT&quot;);</span>
+<span class="nc" id="L302">			} else {</span>
+<span class="nc" id="L303">				cable.bindOutput(x, y);</span>
+<span class="nc" id="L304">				Log.getInstance().debug(&quot;output X = &quot; + x.get() + &quot; ; &quot; + &quot;output Y = &quot; + y.get());</span>
+<span class="nc" id="L305">				cable.bindInput(view.mouseXProperty(), view.mouseYProperty());</span>
+<span class="nc" id="L306">				Log.getInstance().debug(&quot;CREATING CABLE FROM OUTPUT PORT&quot;);</span>
+			}
+<span class="nc" id="L308">			view.addCable(cable);</span>
+			//----------------------
+		}
+<span class="nc" id="L311">	}</span>
+
+	/**
+	 * Aborts the connection creation process.
+	 */
+	public void handleRightButtonClicked() {
+<span class="nc bnc" id="L317" title="All 4 branches missed.">		switch(interactionMode) {</span>
+		case CableCreation_in:
+		case CableCreation_out:
+<span class="nc" id="L320">			cancelCableCreation();</span>
+<span class="nc" id="L321">			break;</span>
+		case CableDeletion:
+<span class="nc" id="L323">			view.enableCableDeletionMode(false);</span>
+<span class="nc" id="L324">			break;</span>
+		case CablePainting:
+<span class="nc" id="L326">			view.enableCablePaintingMode(false);</span>
+<span class="nc" id="L327">			break;</span>
+		default:
+			break;
+		}
+<span class="nc" id="L331">		view.enableDefaultMode(true);</span>
+<span class="nc" id="L332">		interactionMode = InteractionMode.CableCreation_none;</span>
+<span class="nc" id="L333">	}</span>
+
+	/**
+	 * Cancel cable creation.
+	 */
+	private void cancelCableCreation() {
+<span class="nc" id="L339">		Cable cable = cables.get(currentPort);</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">		if(cable != null) {</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">			if(previousPort != null) {</span>
+<span class="nc" id="L342">				cables.put(previousPort,cable);</span>
+<span class="nc bnc" id="L343" title="All 2 branches missed.">				if(previousPort instanceof UnitInputPort) {</span>
+<span class="nc" id="L344">					cable.bindInput(previousX, previousY);</span>
+<span class="nc" id="L345">					this.model.connectPorts(currentPort, previousPort);</span>
+<span class="nc" id="L346">				} else {</span>
+<span class="nc" id="L347">					cable.bindOutput(previousX, previousY);</span>
+<span class="nc" id="L348">					this.model.connectPorts(previousPort, currentPort);</span>
+				}
+<span class="nc" id="L350">			} else {</span>
+<span class="nc" id="L351">				cables.remove(currentPort);</span>
+<span class="nc" id="L352">				view.removeCable(cable);</span>
+			}
+		}
+<span class="nc" id="L355">		currentPort = null;</span>
+<span class="nc" id="L356">		previousPort = null;</span>
+<span class="nc" id="L357">		previousX = null;</span>
+<span class="nc" id="L358">		previousY = null;</span>
+<span class="nc" id="L359">	}</span>
+
+	/**
+	 * Handle click on cable.
+	 *
+	 * @param cable the cable
+	 */
+	public void handleClickOnCable(Cable cable) {
+<span class="nc bnc" id="L367" title="All 3 branches missed.">		switch(interactionMode) {</span>
+		case CableDeletion:
+<span class="nc" id="L369">			view.removeCable(cable);</span>
+<span class="nc" id="L370">			cables.forEach((k,v) -&gt; {</span>
+				if(v == cable) {
+					if(k instanceof UnitInputPort) {
+						model.disconnectInputPort((UnitInputPort) k);
+					} else if(k instanceof UnitOutputPort) {
+						model.disconnectOutputPort((UnitOutputPort) k);
+					}
+				}
+			});
+<span class="nc" id="L379">			break;</span>
+		case CablePainting:
+<span class="nc" id="L381">			cable.setStroke(view.getCableColor());</span>
+<span class="nc" id="L382">			break;</span>
+		default:
+			break;
+		}
+
+<span class="nc" id="L387">	}</span>
+
+	/**
+	 * Creates the connection.
+	 *
+	 * @param cable the cable
+	 * @param inputPos the input pos
+	 * @param outputPos the output pos
+	 * @param inputPort the input port
+	 * @param outputPort the output port
+	 */
+	public void createConnection(Cable cable, Pair&lt;DoubleProperty,DoubleProperty&gt; inputPos,
+			Pair&lt;DoubleProperty,DoubleProperty&gt; outputPos, UnitPort inputPort, UnitPort outputPort) {
+<span class="nc" id="L400">		cable.bindInput(inputPos.getKey(), inputPos.getValue());</span>
+<span class="nc" id="L401">		cable.bindOutput(outputPos.getKey(), outputPos.getValue());</span>
+<span class="nc" id="L402">		this.model.connectPorts(outputPort,inputPort);</span>
+<span class="nc" id="L403">		cables.put(inputPort,cable);</span>
+<span class="nc" id="L404">		cables.put(outputPort,cable);</span>
+<span class="nc" id="L405">		view.addCable(cable);</span>
+<span class="nc" id="L406">	}</span>
+
+	/**
+	 * Sets the view.
+	 *
+	 * @param view the new view
+	 */
+	public void setView(ViewGlobal view) {
+<span class="nc" id="L414">		this.view = view;</span>
+<span class="nc" id="L415">	}</span>
+
+	/**
+	 * Activate deletion mode.
+	 */
+	public void activateDeletionMode() {
+<span class="nc bnc" id="L421" title="All 5 branches missed.">		switch(interactionMode) {</span>
+		case CableCreation_none:
+<span class="nc" id="L423">			view.enableCableDeletionMode(true);</span>
+<span class="nc" id="L424">			break;</span>
+		case CableCreation_in:
+<span class="nc" id="L426">			cancelCableCreation();</span>
+<span class="nc" id="L427">			view.enableCableDeletionMode(true);</span>
+<span class="nc" id="L428">			break;</span>
+		case CableCreation_out:
+<span class="nc" id="L430">			cancelCableCreation();</span>
+<span class="nc" id="L431">			view.enableCableDeletionMode(true);</span>
+<span class="nc" id="L432">			break;</span>
+		case CablePainting:
+<span class="nc" id="L434">			view.enableCableDeletionMode(true);</span>
+<span class="nc" id="L435">			break;</span>
+		default:
+			break;
+		}
+<span class="nc" id="L439">		interactionMode = InteractionMode.CableDeletion;</span>
+<span class="nc" id="L440">	}</span>
+
+	/**
+	 * Activate painting mode.
+	 */
+	public void activatePaintingMode() {
+<span class="nc bnc" id="L446" title="All 5 branches missed.">		switch(interactionMode) {</span>
+		case CableCreation_none:
+<span class="nc" id="L448">			view.enableCablePaintingMode(true);</span>
+<span class="nc" id="L449">			break;</span>
+		case CableCreation_in:
+<span class="nc" id="L451">			cancelCableCreation();</span>
+<span class="nc" id="L452">			view.enableCablePaintingMode(true);</span>
+<span class="nc" id="L453">			break;</span>
+		case CableCreation_out:
+<span class="nc" id="L455">			cancelCableCreation();</span>
+<span class="nc" id="L456">			view.enableCablePaintingMode(true);</span>
+<span class="nc" id="L457">			break;</span>
+		case CablePainting:
+<span class="nc" id="L459">			view.enableCablePaintingMode(true);</span>
+<span class="nc" id="L460">			break;</span>
+		default:
+			break;
+		}
+<span class="nc" id="L464">		interactionMode = InteractionMode.CablePainting;</span>
+<span class="nc" id="L465">	}</span>
+
+	/**
+	 * Checks if is port connected.
+	 *
+	 * @param port the port
+	 * @return true, if is port connected
+	 */
+	public boolean isPortConnected(UnitPort port){
+<span class="nc" id="L474">		return model.isPortConnected(port);</span>
+	}
+
+	/**
+	 * The Enum InteractionMode.
+	 */
+<span class="nc" id="L480">	private enum InteractionMode {</span>
+
+<span class="nc" id="L482">		/** The Cable creation_none. */</span>
+<span class="nc" id="L483">		CableCreation_none,</span>
+<span class="nc" id="L484">		/** The Cable creation_in. */</span>
+<span class="nc" id="L485">		CableCreation_in,</span>
+<span class="nc" id="L486">		/** The Cable creation_out. */</span>
+<span class="nc" id="L487">		CableCreation_out,</span>
+<span class="nc" id="L488">		/** The Cable deletion. */</span>
+<span class="nc" id="L489">		CableDeletion,</span>
+<span class="nc" id="L490">		/** The Cable painting. */</span>
+<span class="nc" id="L491">		CablePainting</span>
+	}
+
+
+	/**
+	 * Gets the port.
+	 *
+	 * @param unitPort the unit port
+	 * @return the port
+	 */
+	public Port getPort(UnitPort unitPort){
+<span class="nc" id="L502">		view.getModules();</span>
+<span class="nc" id="L503">		List&lt;Module&gt; modules = view.getModules();</span>
+<span class="nc bnc" id="L504" title="All 2 branches missed.">		for (Module module : modules) {</span>
+<span class="nc" id="L505">			List&lt;Port&gt; ports = module.getPorts();</span>
+<span class="nc bnc" id="L506" title="All 2 branches missed.">			for (Port port : ports) {</span>
+<span class="nc bnc" id="L507" title="All 2 branches missed.">				if (port.getUnitPort().equals(unitPort)) {</span>
+<span class="nc" id="L508">					return port;</span>
+				}
+			}
+		}
+<span class="nc" id="L512">		return null;</span>
+	}
+
+	/**
+	 * Gets the module.
+	 *
+	 * @param unitPort the unit port
+	 * @return the module
+	 */
+	public Module getModule(UnitPort unitPort){
+<span class="nc" id="L522">		List&lt;Module&gt; modules = view.getModules();</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">		for (Module module : modules) {</span>
+<span class="nc" id="L524">			List&lt;Port&gt; ports = module.getPorts();</span>
+<span class="nc bnc" id="L525" title="All 2 branches missed.">			for (Port port : ports) {</span>
+<span class="nc bnc" id="L526" title="All 2 branches missed.">				if (port.getUnitPort().equals(unitPort)) {</span>
+<span class="nc" id="L527">					return module;</span>
+				}
+			}
+		}
+<span class="nc" id="L531">		return null;</span>
+	}
+
+	/**
+	 * Gets the connection list.
+	 *
+	 * @return the connection list
+	 */
+	public List&lt;Connection&gt; getConnectionList(){
+<span class="nc" id="L540">		List&lt;Connection&gt; connections =new ArrayList&lt;Connection&gt;();</span>
+
+<span class="nc" id="L542">		Set&lt;UnitPort&gt; unitPorts = cables.keySet();</span>
+<span class="nc bnc" id="L543" title="All 2 branches missed.">		for (UnitPort unitPort : unitPorts) {</span>
+<span class="nc" id="L544">			Connection connection =new Connection();</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">			if (unitPort instanceof UnitInputPort) {</span>
+<span class="nc" id="L546">				UnitPort portConnected = model.getConnectedPort(unitPort);</span>
+<span class="nc bnc" id="L547" title="All 2 branches missed.">				if (portConnected != null) {</span>
+<span class="nc" id="L548">					Port portInput = getPort(unitPort);</span>
+<span class="nc" id="L549">					Port portOutput = getPort(portConnected);					</span>
+<span class="nc" id="L550">					connection.setInputPort(portInput);					</span>
+<span class="nc" id="L551">					connection.setOutputPort(portOutput);</span>
+<span class="nc" id="L552">					connection.getInputPort().setIdModule(getModule(unitPort).getId());</span>
+<span class="nc" id="L553">					connection.getOutputPort().setIdModule(getModule(portConnected).getId());</span>
+<span class="nc" id="L554">					connection.setColor(cables.get(unitPort).getStroke().toString());</span>
+<span class="nc" id="L555">					connections.add(connection);</span>
+				}				
+			}			
+		}
+<span class="nc" id="L559">		return connections;</span>
+	}
+
+	/**
+	 * Clear all component.
+	 */
+	public void resetWorkbench(){
+<span class="nc" id="L566">		view.getSuppliers().clear();</span>
+<span class="nc" id="L567">		model.stopSynth();</span>
+<span class="nc" id="L568">		cables.forEach((k,v) -&gt; {</span>
+			view.removeCable(v);
+		});
+<span class="nc" id="L571">		cables.clear();</span>
+<span class="nc" id="L572">		model = new ModelGlobal();</span>
+<span class="nc" id="L573">	}</span>
+
+
+	/**
+	 * Gets the stage.
+	 *
+	 * @return the stage
+	 */
+	public Stage getStage(){
+<span class="nc" id="L582">		return view.getStage();</span>
+	}
+	
+	/**
+	 * Handle start synth.
+	 */
+	public void handleStartSynth(){
+<span class="nc" id="L589">		model.startSynth();</span>
+<span class="nc" id="L590">	}</span>
+	
+	/**
+	 * Handle stop synth.
+	 */
+	public void handleStopSynth(){
+<span class="nc" id="L596">		model.stopSynth();</span>
+<span class="nc" id="L597">	}</span>
+	
+	/**
+	 * Handle create record synth.
+	 *
+	 * @param file the file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void handleCreateRecordSynth(File file) throws IOException{
+<span class="nc" id="L606">		model.recordWavFile(file);</span>
+<span class="nc" id="L607">	}</span>
+	
+	/**
+	 * Handle start record synth.
+	 */
+	public void handleStartRecordSynth(List&lt;Module&gt; moduleOut){
+<span class="nc" id="L613">		model.startRecoder(moduleOut);</span>
+<span class="nc" id="L614">	}</span>
+	
+	/**
+	 * Handle stop record synth.
+	 */
+	public void handleStopRecordSynth(){
+<span class="nc" id="L620">		model.stopRecorder();</span>
+<span class="nc" id="L621">	}</span>
+	
+	/**
+	 * Checks if is record started.
+	 *
+	 * @return true, if is record started
+	 */
+	public boolean isRecordStarted() {
+<span class="nc" id="L629">		return view.isRecordStarted();</span>
+	}
+	
+	/**
+	 * Handle stop view.
+	 */
+	public void handleStopView(){
+<span class="nc" id="L636">		view.handleStop();</span>
+<span class="nc" id="L637">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

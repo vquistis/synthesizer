@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelEg.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.eg</a> &gt; <span class="el_source">ModelEg.java</span></div><h1>ModelEg.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.eg;
+
+import java.util.Collection;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.eg.jsyn.JsynEnvelopeADSR;
+
+/**
+ * The Class ModelEg : model of EG component.
+ *
+ * @author Team groupImpl
+ */
+public class ModelEg extends ModelComponent {
+
+	/** The adsr. */
+	private JsynEnvelopeADSR adsr;
+
+	/**
+	 * Constructor.
+	 */
+	public ModelEg() {
+<span class="fc" id="L27">		super();</span>
+<span class="fc" id="L28">		adsr = new JsynEnvelopeADSR();</span>
+<span class="fc" id="L29">		adsr.input.setName(&quot;eg_input&quot;);</span>
+<span class="fc" id="L30">		adsr.output.setName(&quot;eg_output&quot;);</span>
+<span class="fc" id="L31">	}</span>
+
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
+	@Override
+	public UnitGenerator getUnitGenerator() {
+<span class="fc" id="L38">		return adsr;</span>
+	}
+
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
+<span class="fc" id="L46">		return adsr.input;</span>
+	}
+
+	/**
+	 * Gets the output port.
+	 *
+	 * @return the output port
+	 */
+	public UnitOutputPort getOutputPort() {
+<span class="fc" id="L55">		return adsr.output;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
+	@Override
+	public Collection&lt;UnitPort&gt; getAllPorts() {
+<span class="nc" id="L63">		return adsr.getPorts();</span>
+	}
+
+	/**
+	 * Sets the attack.
+	 *
+	 * @param attack Delay in seconds of attack
+	 * Sets the attack time to the ADSR
+	 */
+	public void setAttack(double attack) {
+<span class="fc" id="L73">		adsr.attack.set(attack);</span>
+<span class="fc" id="L74">	}</span>
+
+	/**
+	 * Sets the decay.
+	 *
+	 * @param decay Delay in seconds of the decay
+	 * Sets THE decay time to the ADSR
+	 */
+	public void setDecay(double decay) {
+<span class="fc" id="L83">		adsr.decay.set(decay);</span>
+<span class="fc" id="L84">	}</span>
+
+	/**
+	 * Sets the sustain.
+	 *
+	 * @param sustainDb Value in dB of the sustain
+	 * Sets the decibels sustain to the ADSR
+	 */
+	public void setSustain(double sustainDb) {
+<span class="fc" id="L93">		adsr.sustain.set(Math.pow(2, sustainDb/6));</span>
+<span class="fc" id="L94">	}</span>
+
+	/**
+	 * Sets the release.
+	 *
+	 * @param release Delay in seconds of the release
+	 * Sets the release time to the ADSR
+	 */
+	public void setRelease(double release) {
+<span class="fc" id="L103">		adsr.release.set(release);</span>
+<span class="fc" id="L104">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

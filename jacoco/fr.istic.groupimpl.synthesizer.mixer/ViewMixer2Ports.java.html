@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewMixer2Ports.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.mixer</a> &gt; <span class="el_source">ViewMixer2Ports.java</span></div><h1>ViewMixer2Ports.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.mixer;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+/**
+ * Tip to instantiate a module with configuration.
+ *
+ * @author groupimpl Team
+ */
+<span class="nc" id="L11">public class ViewMixer2Ports extends ViewMixer {</span>
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.mixer.ViewMixer#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resource) {
+		// Change configuration
+<span class="nc" id="L19">		setNumberOfInputPort(2);</span>
+<span class="nc" id="L20">		configurate();</span>
+<span class="nc" id="L21">	}</span>
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.mixer.ViewMixer#getFilename()
+	 */
+	@Override
+	public String getFilename() {
+<span class="nc" id="L28">		return &quot;fxml/mixer2.fxml&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

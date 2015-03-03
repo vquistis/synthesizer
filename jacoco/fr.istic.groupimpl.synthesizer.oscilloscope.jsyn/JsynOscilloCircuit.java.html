@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JsynOscilloCircuit.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.oscilloscope.jsyn</a> &gt; <span class="el_source">JsynOscilloCircuit.java</span></div><h1>JsynOscilloCircuit.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.oscilloscope.jsyn;
+
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.util.SignalUtil;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class of Jsyn oscilloscope module.
+ *
+ * @author Team GroupImpl
+ */
+public class JsynOscilloCircuit extends UnitGenerator {
+
+	/** The input volt. */
+	private UnitInputPort input; 		
+	
+	/** The output Volt. */
+	private UnitOutputPort output; 	
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param nbBuf the nb buf
+	 * @param sizeBuf the size buf
+	 */
+<span class="nc" id="L32">    public JsynOscilloCircuit( int nbBuf, int sizeBuf ) {</span>
+<span class="nc" id="L33">        addPort(input = new UnitInputPort(&quot;oscillo_in&quot;));</span>
+<span class="nc" id="L34">        addPort(output= new UnitOutputPort(&quot;oscillo_out&quot;));</span>
+        
+<span class="nc" id="L36">        buf = new double[nbBuf][sizeBuf];</span>
+<span class="nc" id="L37">        blocBuf = new AtomicBoolean[nbBuf];</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        for ( int i = 0 ; i &lt; nbBuf ; i++ )</span>
+        {
+<span class="nc" id="L40">        	blocBuf[i] = new AtomicBoolean(false);</span>
+        }
+<span class="nc" id="L42">        indice = 0;</span>
+<span class="nc" id="L43">        indBuf = 0;</span>
+<span class="nc" id="L44">        blocBuf[0].set(true);</span>
+<span class="nc" id="L45">    }</span>
+    
+    /**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInput() {
+<span class="nc" id="L52">		return input;</span>
+	}
+
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutput() {
+<span class="nc" id="L60">		return output;</span>
+	}
+
+	/** The buf. */
+	private final double [][] buf;
+	
+	/** The bloc buf. */
+	private final AtomicBoolean [] blocBuf;
+	
+	/** The ind buf. */
+	private int indBuf;
+	
+	/** The indice. */
+	private int indice;
+	
+	/**
+	 * Makes a new index which was free while blocking.
+	 *
+	 * @return indice
+	 */
+	private int newIndBuf()
+	{
+<span class="nc" id="L82">		int ind = indBuf;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		for ( int i = 0 ; i &lt; blocBuf.length ; i++ )</span>
+		{
+<span class="nc" id="L85">			ind++;</span>
+<span class="nc" id="L86">			ind %= blocBuf.length;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			if ( !blocBuf[ind].getAndSet(true) )</span>
+			{
+<span class="nc" id="L89">				return ind;</span>
+			}
+		}
+<span class="nc" id="L92">		return -1;</span>
+	}
+
+	/**
+	 * Makes a given buffer read recently.
+	 *
+	 * @return the buffer
+	 */
+	public double [] getBuffer()
+	{
+<span class="nc" id="L102">		int ind = newIndBuf();</span>
+		
+<span class="nc" id="L104">		double [] ret = Arrays.copyOf(buf[ind], buf[ind].length);</span>
+		
+<span class="nc" id="L106">		blocBuf[ind].set(false);</span>
+		
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		for ( int i = 0 ; i &lt; ret.length ; i++ )</span>
+		{
+<span class="nc" id="L110">			ret[i] *= SignalUtil.COEF_VOLT;</span>
+		}
+<span class="nc" id="L112">		return ret;</span>
+	}	
+		
+    /**
+     * Stores a given element.
+     *
+     * @param v 	buffer of data
+     */
+    private void storeBuf( double v )
+    {
+<span class="nc" id="L122">    	buf[indBuf][indice++] = v;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">    	if ( indice &gt;= buf[indBuf].length )</span>
+    	{
+<span class="nc" id="L125">    		int oldIndBuf = indBuf;</span>
+<span class="nc" id="L126">     		indBuf = newIndBuf();</span>
+<span class="nc" id="L127">       		blocBuf[oldIndBuf].set(false);</span>
+<span class="nc" id="L128">    		indice = 0;</span>
+    	}
+<span class="nc" id="L130">    }</span>
+    
+
+    /**
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
+    @Override
+    public void generate(int start, int limit) {
+<span class="nc" id="L138">        double[] inputs = input.getValues();</span>
+<span class="nc" id="L139">        double[] outputs = output.getValues();</span>
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        for (int i = start; i &lt; limit; i++) {    	</span>
+        	//       	outputs[i] = SignalUtil.verifyAmplitude(inputs[i]);
+        	// pas de verification de l'amplitude pour l'oscilloscope
+<span class="nc" id="L144">        	outputs[i] = inputs[i];</span>
+<span class="nc" id="L145">        	storeBuf(outputs[i]);</span>
+         }
+<span class="nc" id="L147">    }</span>
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

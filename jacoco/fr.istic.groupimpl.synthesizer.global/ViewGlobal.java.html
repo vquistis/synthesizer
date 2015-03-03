@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewGlobal.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.global</a> &gt; <span class="el_source">ViewGlobal.java</span></div><h1>ViewGlobal.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package fr.istic.groupimpl.synthesizer.global;</span>
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.function.Supplier;
+
+import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import fr.istic.groupimpl.synthesizer.cable.Cable;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.io.FileUtil;
+import fr.istic.groupimpl.synthesizer.io.architecture.Configuration;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
+
+/**
+ * The Class ViewGlobal.
+ * Implements all the FXML components and sets them their corresponding commands.
+ *
+ * @author Team groupImpl
+ * 
+ */
+<span class="nc" id="L64">public class ViewGlobal implements Initializable {</span>
+
+	/** The borderpane. */
+	@FXML private BorderPane borderpane; 
+
+	/** The contentpane. */
+	@FXML private Pane contentpane;
+
+	/** The scrollpane. */
+	@FXML private ScrollPane scrollpane;
+
+	/** The splitpane. */
+	@FXML private SplitPane splitpane;
+
+	/** The hb1. */
+	@FXML private HBox hb1;
+
+	/** The hb2. */
+	@FXML private HBox hb2;
+
+	/** The hb3. */
+	@FXML private HBox hb3;
+
+	/** The colorpicker. */
+	@FXML private ColorPicker colorpicker; 
+	
+	/** The look and feel. */
+	@FXML private ComboBox&lt;String&gt; lookAndFeel; 
+
+	/** The mouse x. */
+<span class="nc" id="L94">	private DoubleProperty mouseX = new SimpleDoubleProperty(0);</span>
+
+	/** The mouse y. */
+<span class="nc" id="L97">	private DoubleProperty mouseY = new SimpleDoubleProperty(0);</span>
+
+	/** The ctl. */
+	private ControllerGlobal ctl;
+
+	/** The suppliers. */
+<span class="nc" id="L103">	private List&lt;Supplier&lt;Module&gt;&gt; suppliers = new ArrayList&lt;Supplier&lt;Module&gt;&gt;();</span>
+
+	/** The stage. */
+	private Stage stage;	
+	
+	/** The play. */
+	@FXML
+	private Button play;
+	
+	/** The chrono label. */
+	@FXML
+	private Label chronoLabel;
+	
+	/** The record. */
+	@FXML
+	private Button record;
+	
+	/** The stop. */
+	@FXML
+	private Button stop;
+	
+	/** The chronometre timer. */
+	private Timer chronometreTimer;
+	
+	/** The date start record. */
+	private Date dateStartRecord;
+	
+	/** The date format. */
+<span class="nc" id="L131">	private SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;mm:ss&quot;);</span>
+	
+	/** The record started. */
+	private boolean recordStarted;
+
+	/**
+	 * Adds the cable.
+	 *
+	 * @param cable the cable
+	 */
+	public void addCable(Cable cable) {
+<span class="nc" id="L142">		contentpane.getChildren().add(contentpane.getChildren().size()-1, cable);</span>
+<span class="nc" id="L143">		cable.setOnMouseClicked((event) -&gt; {</span>
+			if(event.getButton() == MouseButton.PRIMARY) {
+				ctl.handleClickOnCable(cable);
+			}
+		});
+<span class="nc" id="L148">		cable.toFront();</span>
+<span class="nc" id="L149">	}</span>
+
+	/**
+	 * Removes the cable.
+	 *
+	 * @param cable the cable
+	 */
+	public void removeCable(Cable cable) {
+<span class="nc" id="L157">		contentpane.getChildren().remove(cable);</span>
+<span class="nc" id="L158">	}</span>
+
+	/**
+	 * Initializes the controller class.
+	 * This method is automatically called after the FXML file has been loaded. It creates a new view and set all the button with new created buttons.
+	 *
+	 * @param url the url
+	 * @param resourceBundle the resourceBundle
+	 */
+	@Override
+	public void initialize(URL url, ResourceBundle resourceBundle) {
+
+<span class="nc" id="L170">		ctl = ControllerGlobal.getInstance();</span>
+<span class="nc" id="L171">		splitpane.setDividerPositions(0.33f, 0.66f);</span>
+<span class="nc" id="L172">		splitpane.getDividers().forEach((div) -&gt; {</span>
+			div.positionProperty().addListener((a,b,c) -&gt; {
+				hb1.requestLayout();
+				hb2.requestLayout();
+				hb3.requestLayout();
+			});
+		});
+
+<span class="nc" id="L180">		splitpane.getItems().forEach((hb) -&gt; {</span>
+<span class="nc" id="L181">			((HBox) hb).getChildren().addListener( new ListChangeListener&lt;Node&gt;() {</span>
+				@Override
+				public void onChanged(javafx.collections.ListChangeListener.Change&lt;? extends Node&gt; c) {
+<span class="nc" id="L184">					c.next();</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">					if (c.wasRemoved()) {</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">						if (c.getList().size()== 0) {</span>
+<span class="nc" id="L187">							splitpane.setDividerPositions(0.33f, 0.66f);</span>
+						}
+					}
+<span class="nc" id="L190">				};</span>
+			});
+		});
+<span class="nc" id="L193">		colorpicker.valueProperty().set(Color.BLUEVIOLET);</span>
+
+<span class="nc" id="L195">		contentpane.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -&gt; {</span>
+			if(event.getButton() == MouseButton.SECONDARY) {
+				event.consume();
+				ctl.handleRightButtonClicked();
+				contentpane.setCursor(Cursor.DEFAULT);
+				for(Node n : contentpane.getChildren()) {
+					if(n instanceof Cable) {
+						n.setMouseTransparent(true);
+					}
+				}
+			}
+		});
+
+		// automatic resizing
+<span class="nc" id="L209">		scrollpane.widthProperty().addListener((obs, oldWidth, newWidth) -&gt; {</span>
+			splitpane.setPrefWidth((double) newWidth);
+		});
+<span class="nc" id="L212">		scrollpane.heightProperty().addListener((obs, oldHeight, newHeight) -&gt; {</span>
+			splitpane.setPrefHeight((double) newHeight);
+		});
+
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		for(Node n : splitpane.getItems()) {</span>
+<span class="nc" id="L217">			n.setOnDragOver((e) -&gt; {</span>
+				e.acceptTransferModes(TransferMode.ANY);
+				e.consume();
+			});
+<span class="nc" id="L221">			n.setOnDragDropped((e) -&gt; {</span>
+				e.acceptTransferModes(TransferMode.ANY);
+				e.consume();				
+				Dragboard db = e.getDragboard();
+				if (db.hasString()) {
+					Log.getInstance().debug(&quot;DROP DONE&quot;);
+					String []pos=db.getString().split(&quot;;&quot;);
+					Node node = ((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().get(Integer.parseInt(pos[1]));
+					HBox box=(HBox) n;
+					((HBox)splitpane.getItems().get(Integer.parseInt(pos[0]))).getChildren().remove(Integer.parseInt(pos[1]));
+					int index =0;
+					for(Node child : box.getChildren()){	
+						if (child.contains(e.getX(), e.getY())) {
+							break;
+						}
+						index++;
+					}
+					box.getChildren().add(index,node);
+				}
+			});
+		}
+
+<span class="nc" id="L243">		splitpane.setOnMouseMoved((e) -&gt; {</span>
+			mouseX.set(e.getX());
+			mouseY.set(e.getY());
+		});
+
+<span class="nc" id="L248">		scrollpane.addEventFilter(DragEvent.ANY, (e) -&gt; {</span>
+			double spXMin = scrollpane.getViewportBounds().getMinX();
+			double spYMin = scrollpane.getViewportBounds().getMinY();
+			double spXMax = scrollpane.getViewportBounds().getMaxX();
+			double spYMax = scrollpane.getViewportBounds().getMaxY();
+			double x = e.getX();
+			double y = e.getY();
+
+			if (y &gt;= spYMin  &amp;&amp; y &lt;= (spYMin + 100)) {
+				scrollpane.setVvalue(scrollpane.getVvalue() - 0.05);
+			}
+
+			if (y &lt;= spYMax  &amp;&amp; y &gt;= (spYMax - 100)) {
+				scrollpane.setVvalue(scrollpane.getVvalue() + 0.05);
+			}
+
+			if (x &gt;= spXMin  &amp;&amp; x &lt;= (spXMin + 100)) {
+				scrollpane.setHvalue(scrollpane.getHvalue() - 0.05);
+			}
+
+			if (x &lt;= spXMax  &amp;&amp; x &gt;= (spXMax - 100)) {
+				scrollpane.setHvalue(scrollpane.getHvalue() + 0.05);
+			}
+
+		});
+
+<span class="nc" id="L274">		ctl.setView(this);</span>
+<span class="nc" id="L275">		record.setDisable(false);</span>
+<span class="nc" id="L276">		play.setDisable(true);</span>
+//		pause.setDisable(true);
+<span class="nc" id="L278">		stop.setDisable(true);</span>
+		
+<span class="nc" id="L280">		record.setGraphic(new ImageView(&quot;/img/record/record.png&quot;));</span>
+<span class="nc" id="L281">		play.setGraphic(new ImageView(&quot;/img/record/play.png&quot;));</span>
+<span class="nc" id="L282">		stop.setGraphic(new ImageView(&quot;/img/record/stop.png&quot;));</span>
+//		pause.setGraphic(new ImageView(&quot;/img/record/pause.png&quot;));
+<span class="nc" id="L284">	}</span>
+
+	/**
+	 * Inits the.
+	 */
+	public void init() {
+		//primaryStage = (Stage) borderpane.getScene().getWindow();
+		
+<span class="nc" id="L292">		lookAndFeel.getItems().addAll(&quot;metal&quot;, &quot;wood&quot;);</span>
+<span class="nc" id="L293">		lookAndFeel.getSelectionModel().selectFirst();</span>
+<span class="nc" id="L294">		lookAndFeel.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -&gt; {</span>
+			URL cssURL = getClass().getClassLoader().getResource(&quot;css/&quot;+newVal+&quot;.css&quot;);
+			stage.getScene().getStylesheets().clear();
+			stage.getScene().getStylesheets().add(cssURL.toExternalForm());
+		});
+		// Default css
+<span class="nc" id="L300">		URL cssURL = getClass().getClassLoader().getResource(&quot;css/metal.css&quot;);</span>
+<span class="nc" id="L301">		stage.getScene().getStylesheets().add(cssURL.toExternalForm());</span>
+		
+<span class="nc" id="L303">		createModule(&quot;fxml/out.fxml&quot;);</span>
+<span class="nc" id="L304">	}</span>
+
+	/**
+	 * Creates a new module.
+	 *
+	 * @param filename the filename component fxml
+	 * @param module the module
+	 * @return the view component
+	 */
+
+	/**
+	 * Creates a new module.
+	 *
+	 * @param filename the filename component fxml
+	 */
+	public ViewComponent createModule(String filename, Module module) {
+<span class="nc" id="L320">		ViewComponent res = null;</span>
+		try {
+<span class="nc" id="L322">			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(filename));</span>
+<span class="nc" id="L323">			Node root = loader.load();</span>
+<span class="nc" id="L324">			ViewComponent view = loader.getController();			</span>
+<span class="nc" id="L325">			root.parentProperty().addListener((obs,oldVal,newVal) -&gt; {</span>
+				if(oldVal != null) {
+					hb1.heightProperty().removeListener(view.getListener());
+					hb2.heightProperty().removeListener(view.getListener());
+					hb3.heightProperty().removeListener(view.getListener());
+				}
+				if(newVal != null) {
+					hb1.heightProperty().addListener(view.getListener());
+					hb2.heightProperty().addListener(view.getListener());
+					hb3.heightProperty().addListener(view.getListener());
+				}
+			});
+<span class="nc" id="L337">			res = view;</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">			if (module != null) {</span>
+<span class="nc" id="L339">				HBox hb = (HBox) splitpane.getItems().get(module.getPosY());</span>
+<span class="nc" id="L340">				hb.getChildren().add(root);</span>
+<span class="nc" id="L341">				enableDrag(root);</span>
+<span class="nc" id="L342">				view.initComponent(module);</span>
+<span class="nc" id="L343">			} else {</span>
+<span class="nc" id="L344">				HBox hb = (HBox) splitpane.getItems().get(0);</span>
+<span class="nc" id="L345">				hb.getChildren().add(root);</span>
+<span class="nc" id="L346">				enableDrag(root);</span>
+			}			
+			
+<span class="nc" id="L349">			suppliers.add(view.getSaveSupplier());</span>
+<span class="nc" id="L350">			view.setOnCloseCmd(() -&gt; {</span>
+				suppliers.remove(view.getSaveSupplier());
+			});
+<span class="nc" id="L353">		} catch (IOException e) {</span>
+<span class="nc" id="L354">			Log.getInstance().error(&quot;Creates a new module failed&quot;, e );</span>
+		}
+		
+<span class="nc" id="L357">		return res;</span>
+	}
+	
+	/**
+	 * Creates the module.
+	 *
+	 * @param filename the filename
+	 */
+	public void createModule(String filename) {
+<span class="nc" id="L366">		createModule(filename, null);</span>
+<span class="nc" id="L367">	}</span>
+	
+	
+
+	/**
+	 * This method is used to return the position of a component in the container splitPane.
+	 *
+	 * @param node the node
+	 * @return the string. position the component
+	 */
+	private String getString(Node node) {
+<span class="nc" id="L378">		int i=0;</span>
+<span class="nc" id="L379">		String res = &quot;&quot;;</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">		for(Node hbox : splitpane.getItems()) {</span>
+<span class="nc" id="L381">			ObservableList&lt;Node&gt; nodes = ((HBox) hbox).getChildren();</span>
+<span class="nc bnc" id="L382" title="All 2 branches missed.">			if(nodes.contains(node)) {</span>
+<span class="nc" id="L383">				res = res + i + &quot;;&quot; + nodes.indexOf(node);</span>
+<span class="nc" id="L384">				break;</span>
+			}
+<span class="nc" id="L386">			i++;</span>
+		}
+<span class="nc" id="L388">		return res;</span>
+	}
+
+	/**
+	 * Add enableDrag event to a node.
+	 * This event is called when the drag event is enabled
+	 *
+	 * @param node the node
+	 */
+	private void enableDrag(Node node) {
+<span class="nc" id="L398">		node.setOnDragDetected((event) -&gt; {</span>
+			ClipboardContent content = new ClipboardContent();
+			content.putString(getString(node));
+			Dragboard db = scrollpane.startDragAndDrop(TransferMode.ANY);
+			db.setContent(content);
+			event.consume();
+		});
+<span class="nc" id="L405">	}</span>
+
+	/**
+	 * Gets the cable color.
+	 *
+	 * @return the cable color
+	 */
+	public Color getCableColor() {
+<span class="nc" id="L413">		return colorpicker.getValue();</span>
+	}
+
+	/**
+	 * Handle add replicator. This method adds a new Rep component 
+	 */
+	@FXML
+	public void handleAddRep(){
+<span class="nc" id="L421">		createModule(&quot;fxml/rep.fxml&quot;);		</span>
+<span class="nc" id="L422">	}</span>
+
+
+	/**
+	 * Handle add vco. This method adds a new VCO component
+	 */
+	@FXML
+	public void handleAddVco(){
+<span class="nc" id="L430">		createModule(&quot;fxml/vco.fxml&quot;);		</span>
+<span class="nc" id="L431">	}</span>
+
+	/**
+	 * Handle add vca. This method adds a new VCA component
+	 */
+	@FXML
+	public void handleAddVca(){
+<span class="nc" id="L438">		createModule(&quot;fxml/vca.fxml&quot;);	</span>
+<span class="nc" id="L439">	}</span>
+
+	/**
+	 * Handle add out. This method adds a new OUT component
+	 */
+	@FXML
+	public void handleAddOut(){
+<span class="nc" id="L446">		createModule(&quot;fxml/out.fxml&quot;);		</span>
+<span class="nc" id="L447">	}</span>
+
+	/**
+	 * Handle add scope. This method adds a new Scope component
+	 */
+	@FXML
+	public void handleAddScope(){
+<span class="nc" id="L454">		createModule(&quot;fxml/oscillo.fxml&quot;);		</span>
+<span class="nc" id="L455">	}</span>
+
+	/**
+	 * Handle add eg. This method adds a new EG component
+	 */
+	@FXML
+	public void handleAddEg(){
+<span class="nc" id="L462">		createModule(&quot;fxml/eg.fxml&quot;);		</span>
+<span class="nc" id="L463">	}</span>
+
+	/**
+	 * Handle add vcf lp. This method adds a new VCF lp component
+	 */
+	@FXML
+	public void handleAddVcfLp(){
+<span class="nc" id="L470">		createModule(&quot;fxml/vcf-lp.fxml&quot;);		</span>
+<span class="nc" id="L471">	}</span>
+	
+	/**
+	 * Handle add vcf hp. This method adds a new VCF hp component
+	 */
+	@FXML
+	public void handleAddVcfHp(){
+<span class="nc" id="L478">		createModule(&quot;fxml/vcf-hp.fxml&quot;);		</span>
+<span class="nc" id="L479">	}</span>
+	
+	/**
+	 * Handle add mixer. This method adds a new Mixer component
+	 */
+	@FXML
+	public void handleAddMixer4(){
+<span class="nc" id="L486">		createModule(&quot;fxml/mixer4.fxml&quot;);		</span>
+<span class="nc" id="L487">	}</span>
+
+	/**
+	 * Handle add mixer. This method adds a new Mixer component
+	 */
+	@FXML
+	public void handleAddMixer2(){
+<span class="nc" id="L494">		createModule(&quot;fxml/mixer2.fxml&quot;);		</span>
+<span class="nc" id="L495">	}</span>
+	
+	/**
+	 * Handle add whiteNoise. This method adds a new WhiteNoise component
+	 */
+	@FXML
+	public void handleAddWhiteNoise(){
+<span class="nc" id="L502">		createModule(&quot;fxml/whiteNoise.fxml&quot;);		</span>
+<span class="nc" id="L503">	}</span>
+
+	/**
+	 * Handle add player. This method adds a new Player component
+	 */
+	@FXML
+	public void handleAddPlayer(){
+<span class="nc" id="L510">		createModule(&quot;fxml/player.fxml&quot;);		</span>
+<span class="nc" id="L511">	}</span>
+
+	/**
+	 * Handle add recorder. This method adds a new Recorder component
+	 */
+	@FXML
+	public void handleAddRecorder(){
+<span class="nc" id="L518">		createModule(&quot;fxml/recorder.fxml&quot;);		</span>
+<span class="nc" id="L519">	}</span>
+	
+	/**
+	 * Handle add Line In. This method adds a new Line In component
+	 */
+	@FXML
+	public void handleAddLineIn(){
+<span class="nc" id="L526">		createModule(&quot;fxml/LineIn.fxml&quot;);		</span>
+<span class="nc" id="L527">	}</span>
+
+	/**
+	 * Handle add sequencer. This method adds a new Sequencer component
+	 */
+	@FXML
+	public void handleAddSeq(){
+<span class="nc" id="L534">		createModule(&quot;fxml/seq.fxml&quot;);		</span>
+<span class="nc" id="L535">	}</span>
+	
+	/**
+	 * Handle add echo. This method adds a new Echo component
+	 */
+	@FXML
+	public void handleAddEcho(){
+<span class="nc" id="L542">		createModule(&quot;fxml/echo.fxml&quot;);		</span>
+<span class="nc" id="L543">	}</span>
+	
+	/**
+	 * Handle add sequencer. This method adds a new Sequencer component
+	 */
+	@FXML
+	public void handleAddKeyboard(){
+<span class="nc" id="L550">		createModule(&quot;fxml/keyboard.fxml&quot;);		</span>
+<span class="nc" id="L551">	}</span>
+
+	/**
+	 * Mouse x property.
+	 *
+	 * @return the double property
+	 */
+	public DoubleProperty mouseXProperty() {
+<span class="nc" id="L559">		return mouseX;</span>
+	}
+
+	/**
+	 * Mouse y property.
+	 *
+	 * @return the double property
+	 */
+	public DoubleProperty mouseYProperty() {
+<span class="nc" id="L568">		return mouseY;</span>
+	}
+
+	/**
+	 * Handle delete.
+	 */
+	@FXML
+	public void handleDelete() {
+<span class="nc" id="L576">		ctl.activateDeletionMode();</span>
+<span class="nc" id="L577">	}</span>
+
+
+	/**
+	 * Handle paint.
+	 */
+	@FXML
+	public void handlePaint() {
+<span class="nc" id="L585">		ctl.activatePaintingMode();</span>
+<span class="nc" id="L586">	}</span>
+
+	/**
+	 * Enable cable deletion mode.
+	 *
+	 * @param enable the enable
+	 */
+	public void enableCableDeletionMode(boolean enable) {
+<span class="nc bnc" id="L594" title="All 2 branches missed.">		for(Node n : contentpane.getChildren()) {</span>
+<span class="nc bnc" id="L595" title="All 2 branches missed.">			if(n instanceof Cable) {</span>
+<span class="nc bnc" id="L596" title="All 2 branches missed.">				n.setMouseTransparent(!enable);</span>
+<span class="nc" id="L597">			} else {</span>
+<span class="nc" id="L598">				n.setMouseTransparent(enable);</span>
+			}
+		}
+<span class="nc bnc" id="L601" title="All 2 branches missed.">		if(enable) {</span>
+<span class="nc" id="L602">			contentpane.setCursor(new ImageCursor(new Image(&quot;img/delete.png&quot;)));</span>
+		}
+<span class="nc" id="L604">	}</span>
+
+	/**
+	 * Enable cable creation mode.
+	 *
+	 * @param enable the enable
+	 */
+	public void enableCableCreationMode(boolean enable) {
+<span class="nc bnc" id="L612" title="All 2 branches missed.">		if(enable) {</span>
+<span class="nc" id="L613">			contentpane.setCursor(Cursor.DISAPPEAR);</span>
+		}
+<span class="nc" id="L615">	}</span>
+
+	/**
+	 * Enable default mode.
+	 *
+	 * @param enable the enable
+	 */
+	public void enableDefaultMode(boolean enable) {
+<span class="nc bnc" id="L623" title="All 2 branches missed.">		if(enable) {</span>
+<span class="nc" id="L624">			contentpane.setCursor(Cursor.DEFAULT);</span>
+		}
+<span class="nc" id="L626">	}</span>
+
+	/**
+	 * Enable cable painting mode.
+	 *
+	 * @param enable the enable
+	 */
+	public void enableCablePaintingMode(boolean enable) {
+<span class="nc bnc" id="L634" title="All 2 branches missed.">		for(Node n : contentpane.getChildren()) {</span>
+<span class="nc bnc" id="L635" title="All 2 branches missed.">			if(n instanceof Cable) {</span>
+<span class="nc bnc" id="L636" title="All 2 branches missed.">				n.setMouseTransparent(!enable);</span>
+<span class="nc" id="L637">			} else {</span>
+<span class="nc" id="L638">				n.setMouseTransparent(enable);</span>
+			}
+		}
+<span class="nc bnc" id="L641" title="All 2 branches missed.">		if(enable) {</span>
+<span class="nc" id="L642">			contentpane.setCursor(Cursor.HAND);</span>
+		}
+<span class="nc" id="L644">	}</span>
+
+	/**
+	 * Handle menu devmode node hierarchy_1.
+	 */
+	@FXML
+	public void handleMenuDevmodeNodeHierarchy_1() {
+<span class="nc" id="L651">		DebugJFXTools debugJFXTools = new DebugJFXTools();</span>
+<span class="nc" id="L652">		debugJFXTools.GenerateNodeHierarchy(borderpane, &quot;synthjfx_1.dmp&quot;);</span>
+<span class="nc" id="L653">	}</span>
+	
+	/**
+	 * Handle menu devmode node hierarchy_2.
+	 */
+	@FXML
+	public void handleMenuDevmodeNodeHierarchy_2() {
+<span class="nc" id="L660">		DebugJFXTools debugJFXTools = new DebugJFXTools();</span>
+<span class="nc" id="L661">		debugJFXTools.GenerateNodeHierarchy(borderpane, &quot;synthjfx_2.dmp&quot;);</span>
+<span class="nc" id="L662">	}</span>
+
+	/**
+	 * Handle save configuration.
+	 */
+	@FXML
+	public void  handleSaveConfiguration(){
+<span class="nc" id="L669">		 FileChooser fileChooser = new FileChooser();</span>
+		  
+         //Set extension filter
+<span class="nc" id="L672">         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(&quot;synthlab file (*.sl)&quot;, &quot;*.sl&quot;);</span>
+<span class="nc" id="L673">         fileChooser.getExtensionFilters().add(extFilter);</span>
+         
+         //Show save file dialog
+<span class="nc" id="L676">         File file = fileChooser.showSaveDialog(stage);</span>
+         
+<span class="nc bnc" id="L678" title="All 2 branches missed.">         if(file != null){</span>
+<span class="nc" id="L679">        	Configuration configuration = new Configuration();     		</span>
+<span class="nc" id="L680">     		configuration.setModules(getModules());</span>
+<span class="nc" id="L681">     		configuration.setConnections(ControllerGlobal.getInstance().getConnectionList());</span>
+<span class="nc" id="L682">     		FileUtil.saveFile(configuration, file);</span>
+         }	
+<span class="nc" id="L684">	}</span>
+
+	/**
+	 * Gets the modules.
+	 *
+	 * @return the modules
+	 */
+	public List&lt;Module&gt; getModules() {
+<span class="nc" id="L692">		List&lt;Module&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L693">		int index=0;</span>
+<span class="nc bnc" id="L694" title="All 2 branches missed.">		for (Supplier&lt;Module&gt; supplier : suppliers) {</span>
+<span class="nc" id="L695">			Module module = supplier.get();</span>
+<span class="nc" id="L696">			module.setId(&quot;Module&quot;+index);</span>
+<span class="nc" id="L697">			list.add(module);</span>
+<span class="nc" id="L698">			index++;</span>
+		}
+<span class="nc" id="L700">		return list;</span>
+	}
+	/**
+	 * Handle load configuration.
+	 */
+	@FXML
+	public void handleLoadConfiguration(){
+<span class="nc" id="L707">		 FileChooser fileChooser = new FileChooser();         </span>
+         //Set extension filter
+<span class="nc" id="L709">         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(&quot;synthlab file (*.sl)&quot;, &quot;*.sl&quot;);</span>
+<span class="nc" id="L710">         fileChooser.getExtensionFilters().add(extFilter);</span>
+          
+<span class="nc" id="L712">         Map&lt;String,ViewComponent&gt; views = new HashMap&lt;&gt;();</span>
+         
+         //Show save file dialog
+<span class="nc" id="L715">         File file = fileChooser.showOpenDialog(stage);</span>
+<span class="nc bnc" id="L716" title="All 2 branches missed.">         if(file != null){</span>
+        	 	// traitement        	 
+<span class="nc" id="L718">        	 clearAllComponent();        	 </span>
+<span class="nc" id="L719">        	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);</span>
+<span class="nc" id="L720">        	 Collections.sort(configuration.getModules(), new Module());</span>
+        	 // configue component
+<span class="nc" id="L722">        	 configuration.getModules().forEach((module) -&gt;{</span>
+        		 views.put(module.getId(),createModule(module.getFilename(), module));
+        	 });
+        	 
+<span class="nc" id="L726">        	 configuration.getConnections().forEach((connection) -&gt; {</span>
+        		 Cable cable = new Cable(Color.valueOf(connection.getColor()));
+        		 ViewComponent viewIn = views.get(connection.getInputPort().getIdModule());
+        		 ViewComponent viewOut = views.get(connection.getOutputPort().getIdModule());
+        		 ControllerGlobal.getInstance().createConnection(cable, viewIn.getStuff(connection.getInputPort().getName()),
+        				 viewOut.getStuff(connection.getOutputPort().getName()), viewIn.getPort(connection.getInputPort().getName()),
+        				 viewOut.getPort(connection.getOutputPort().getName()));
+        	 });
+        	 
+         }
+
+<span class="nc" id="L737">	}</span>
+
+	/**
+	 * Clear all component.
+	 */
+	private void clearAllComponent() {
+<span class="nc" id="L743">		ControllerGlobal.getInstance().resetWorkbench();</span>
+<span class="nc bnc" id="L744" title="All 2 branches missed.">		for (Node node : splitpane.getItems()) {</span>
+<span class="nc" id="L745">			((HBox) node).getChildren().clear();</span>
+		}
+<span class="nc" id="L747">	}</span>
+
+	/**
+	 * Sets the stage.
+	 *
+	 * @param primaryStage the new stage
+	 */
+	public void setStage(Stage primaryStage) {
+<span class="nc" id="L755">		this.stage=primaryStage;</span>
+<span class="nc" id="L756">	}</span>
+
+	/**
+	 * Gets the stage.
+	 *
+	 * @return the stage
+	 */
+	public Stage getStage() {
+<span class="nc" id="L764">		return stage;</span>
+	}
+
+	/**
+	 * Gets the suppliers.
+	 *
+	 * @return the suppliers
+	 */
+	public List&lt;Supplier&lt;Module&gt;&gt; getSuppliers() {
+<span class="nc" id="L773">		return suppliers;</span>
+	}
+
+	/**
+	 * Sets the suppliers.
+	 *
+	 * @param suppliers the new suppliers
+	 */
+	public void setSuppliers(List&lt;Supplier&lt;Module&gt;&gt; suppliers) {
+<span class="nc" id="L782">		this.suppliers = suppliers;</span>
+<span class="nc" id="L783">	}</span>
+	
+	
+	/**
+	 * Handle start record.
+	 */
+	public void handleStart(){
+<span class="nc" id="L790">		ControllerGlobal.getInstance().handleStartRecordSynth(getAllModulesOut());</span>
+<span class="nc" id="L791">		setLabelTimer(0);</span>
+<span class="nc" id="L792">		dateStartRecord = new Date();</span>
+<span class="nc" id="L793">		chronometreTimer.scheduleAtFixedRate(new ChronometreTimer(), 0, 1000);</span>
+<span class="nc" id="L794">		play.setDisable(true);</span>
+<span class="nc" id="L795">		stop.setDisable(false);</span>
+<span class="nc" id="L796">		record.setDisable(true);</span>
+<span class="nc" id="L797">		recordStarted = true;</span>
+<span class="nc" id="L798">	}</span>
+	
+	/**
+	 * Handle stop record.
+	 */
+	public void handleStop(){
+<span class="nc" id="L804">		ControllerGlobal.getInstance().handleStopRecordSynth();	</span>
+<span class="nc" id="L805">		chronometreTimer.cancel();</span>
+<span class="nc" id="L806">		play.setDisable(true);</span>
+<span class="nc" id="L807">		stop.setDisable(true);</span>
+<span class="nc" id="L808">		record.setDisable(false);</span>
+<span class="nc" id="L809">		recordStarted = false;</span>
+<span class="nc" id="L810">	}</span>
+	
+	/**
+	 * Handle record.
+	 */
+	public void handleRecord(){	
+		try {
+<span class="nc" id="L817">			FileChooser fileChooser = new FileChooser();         </span>
+		     //Set extension filter
+<span class="nc" id="L819">		     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(&quot;music wave file (*.wav)&quot;, &quot;*.wav&quot;);</span>
+<span class="nc" id="L820">		     fileChooser.getExtensionFilters().add(extFilter);</span>
+		     
+		     //Show save file dialog
+<span class="nc" id="L823">		     File file = fileChooser.showSaveDialog(null);</span>
+<span class="nc bnc" id="L824" title="All 2 branches missed.">		     if(file != null){</span>
+<span class="nc" id="L825">		    	ControllerGlobal.getInstance().handleCreateRecordSynth(file); </span>
+<span class="nc" id="L826">		    	chronometreTimer = new Timer();</span>
+<span class="nc" id="L827">		    	setLabelTimer(0);</span>
+<span class="nc" id="L828">		    	play.setDisable(false);</span>
+<span class="nc" id="L829">		 		stop.setDisable(true);</span>
+<span class="nc" id="L830">		 		record.setDisable(false);</span>
+<span class="nc" id="L831">		 		recordStarted = false;</span>
+		     }			
+			
+<span class="nc" id="L834">		} catch (IOException e) {</span>
+<span class="nc" id="L835">			Log.getInstance().error(&quot;Failed to handle recording&quot;, e );</span>
+		}	
+<span class="nc" id="L837">	}</span>
+	
+	/**
+	 * Gets the all modules out.
+	 *
+	 * @return the all modules out
+	 */
+	public List&lt;Module&gt; getAllModulesOut(){
+<span class="nc" id="L845">		List&lt;Module&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L846" title="All 2 branches missed.">		for (Module module : getModules()) {</span>
+<span class="nc bnc" id="L847" title="All 2 branches missed.">			if (&quot;fxml/out.fxml&quot;.equalsIgnoreCase(module.getFilename())) {</span>
+<span class="nc" id="L848">				list.add(module);</span>
+			}
+		}		
+<span class="nc" id="L851">		return list;</span>
+	}
+	
+	/**
+	 * Sets the label timer.
+	 *
+	 * @param diff the new label timer
+	 */
+	private void setLabelTimer(long diff) {
+<span class="nc" id="L860">		Date date = new Date();</span>
+<span class="nc" id="L861">		  date.setTime(diff);</span>
+<span class="nc" id="L862">		  Platform.runLater(()-&gt;{</span>
+			  chronoLabel.setText(dateFormat.format(date));
+		  });
+<span class="nc" id="L865">	}	</span>
+	
+	/**
+	 * The Class ChronometreTimer.
+	 */
+<span class="nc" id="L870">	class ChronometreTimer extends TimerTask {</span>
+	    
+    	/* (non-Javadoc)
+    	 * @see java.util.TimerTask#run()
+    	 */
+    	public void run() {
+<span class="nc" id="L876">	      long diff = (new Date().getTime() - dateStartRecord.getTime());</span>
+<span class="nc" id="L877">	      setLabelTimer(diff);	    </span>
+<span class="nc" id="L878">	  }</span>
+	}
+
+	/**
+	 * Checks if is record started.
+	 *
+	 * @return true, if is record started
+	 */
+	public boolean isRecordStarted() {
+<span class="nc" id="L887">		return recordStarted;</span>
+	}
+
+	/**
+	 * Sets the record started.
+	 *
+	 * @param recordStarted the new record started
+	 */
+	public void setRecordStarted(boolean recordStarted) {
+<span class="nc" id="L896">		this.recordStarted = recordStarted;</span>
+<span class="nc" id="L897">	}</span>
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewEcho.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.echo</a> &gt; <span class="el_source">ViewEcho.java</span></div><h1>ViewEcho.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.echo;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
+import fr.istic.groupimpl.synthesizer.util.Potentiometre;
+import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
+
+/**
+ * @author GroupImpl
+ * ECHO module - JavaFX Controller
+ */
+<span class="nc" id="L28">public class ViewEcho extends ViewComponent implements Initializable {</span>
+
+	@FXML
+	private BorderPane paneEcho;
+	/** The top. */
+	@FXML private GridPane top;
+	@FXML
+	private VBox knobPeriod;
+	@FXML
+	private VBox knobAttenuation;
+	@FXML
+	private TextField tfPeriod;
+	@FXML
+	private TextField tfAttenuation;
+	@FXML
+	private ImageView inEcho;
+	@FXML
+	private ImageView outEcho;
+
+	private ControllerEcho echoController;
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+<span class="nc" id="L51">		((Label) top.lookup(&quot;#titleModule&quot;)).setText(&quot;Echo chamber&quot;);</span>
+		
+		// EchoController creation and listeners on knob values
+<span class="nc" id="L54">		echoController = new ControllerEcho();</span>
+
+		
+<span class="nc" id="L57">		PotentiometreFactory pf = PotentiometreFactory.getFactoryInstance();</span>
+
+		// Period knob
+<span class="nc" id="L60">		pf.setMinValue(0);</span>
+<span class="nc" id="L61">		pf.setMaxValue(echoController.getMaxPeriod());</span>
+<span class="nc" id="L62">		pf.setDiscret(false);</span>
+<span class="nc" id="L63">		pf.setNbSpins(2);</span>
+<span class="nc" id="L64">		pf.setRayon(32);</span>
+<span class="nc" id="L65">		pf.setValueDef(1.);		</span>
+<span class="nc" id="L66">		Potentiometre periodKnob = pf.getPotentiometre();</span>
+<span class="nc" id="L67">		knobPeriod.getChildren().add(periodKnob);</span>
+
+		// Attenuation knob
+<span class="nc" id="L70">		pf.setNbSpins(2);</span>
+<span class="nc" id="L71">		pf.setMinValue(-24);</span>
+<span class="nc" id="L72">		pf.setMaxValue(0);</span>
+<span class="nc" id="L73">		pf.setValueDef(-6);</span>
+
+<span class="nc" id="L75">		Potentiometre attenuationKnob = pf.getPotentiometre();</span>
+<span class="nc" id="L76">		knobAttenuation.getChildren().add(attenuationKnob);</span>
+		
+		// to Bind knob value and text field values
+<span class="nc" id="L79">		StringConverter&lt;Number&gt; converter = new DoubleStringConverter();</span>
+
+<span class="nc" id="L81">		periodKnob.valueProperty().addListener(</span>
+<span class="nc" id="L82">				(p, oldVal, newVal) -&gt;{</span>
+					echoController.handlePeriodViewChange( newVal );});
+<span class="nc" id="L84">		attenuationKnob.valueProperty().addListener(</span>
+<span class="nc" id="L85">				(p, oldVal, newVal) -&gt;{</span>
+					echoController.handleAttenuationViewChange( newVal );});
+
+<span class="nc" id="L88">		Bindings.bindBidirectional(tfPeriod.textProperty(), periodKnob.valueProperty(), converter);</span>
+<span class="nc" id="L89">		Bindings.bindBidirectional(tfAttenuation.textProperty(), attenuationKnob.valueProperty(), converter);</span>
+		
+<span class="nc" id="L91">		addParameters(&quot;knobEchoPeriod&quot;, () -&gt; periodKnob.getValue(), (val) -&gt; periodKnob.setValue(val));</span>
+<span class="nc" id="L92">		addParameters(&quot;knobEchoAttenuation&quot;, () -&gt; attenuationKnob.getValue(), (val) -&gt; attenuationKnob.setValue(val));</span>
+
+		
+		// Listener close module
+<span class="nc" id="L96">		top.lookup(&quot;#closeModuleFx&quot;).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -&gt; {</span>
+			cleanup();			
+			echoController.handleViewClose();
+			Pane parent = (Pane) paneEcho.getParent();
+			parent.getChildren().remove(paneEcho);
+		});
+		
+
+<span class="nc" id="L104">		addPort(&quot;echo_in&quot;,inEcho);</span>
+<span class="nc" id="L105">		addPort(&quot;echo_out&quot;,outEcho);		</span>
+<span class="nc" id="L106">	}</span>
+
+	@Override
+	protected Pane getComponentRoot() {
+<span class="nc" id="L110">		return paneEcho;</span>
+	}
+
+	@Override
+	protected ControllerComponent getController() {
+<span class="nc" id="L115">		return echoController;</span>
+	}
+
+	@Override
+	public String getFilename() {
+<span class="nc" id="L120">		return &quot;fxml/echo.fxml&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelSeq.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.seq</a> &gt; <span class="el_source">ModelSeq.java</span></div><h1>ModelSeq.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.seq;
+
+import java.util.Collection;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.seq.jsyn.JsynSequencerCircuit;
+
+/**
+ * Model of Seq module.
+ *
+ * @author Team GroupImpl
+ */
+public class ModelSeq extends ModelComponent {
+
+	/** The sig min. */
+<span class="nc" id="L21">	private final double sigMin = 0.00001;</span>
+	
+	/** The sig max. */
+<span class="nc" id="L24">	private final double sigMax = 0.1;</span>
+	
+	/** The circuit. */
+	private JsynSequencerCircuit circuit;
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param nbPas the nb pas
+	 */
+	public ModelSeq( int nbPas ) {
+<span class="nc" id="L35">		super();</span>
+
+<span class="nc" id="L37">		circuit = new JsynSequencerCircuit( nbPas,sigMin,sigMax);</span>
+<span class="nc" id="L38">	}</span>
+
+	
+	
+	/**
+	 * Initialize a value for a step.
+	 *
+	 * @param indice 	from 0 to 7 ( inclusive )
+	 * @param newVal  new Value for -1. to 1.
+	 */
+	public void setValue(int indice, Double newVal)
+	{
+<span class="nc" id="L50">		circuit.setValue(indice,newVal);</span>
+<span class="nc" id="L51">	}</span>
+	
+	/**
+	 * Initialize the step to 0.
+	 */
+	public void initBegin()
+	{
+<span class="nc" id="L58">		circuit.resetPas();</span>
+<span class="nc" id="L59">	}</span>
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
+	@Override
+	public UnitGenerator getUnitGenerator() {
+<span class="nc" id="L66">		return circuit;</span>
+	}
+
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getGatePort() {
+<span class="nc" id="L74">		return circuit.getGate();</span>
+	}
+
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
+<span class="nc" id="L82">		return circuit.getOutput();</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
+	@Override
+	public Collection&lt;UnitPort&gt; getAllPorts() {
+<span class="nc" id="L90">		return circuit.getPorts();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

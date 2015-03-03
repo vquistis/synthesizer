@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewMixerInput.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.mixer</a> &gt; <span class="el_source">ViewMixerInput.java</span></div><h1>ViewMixerInput.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.mixer;
+
+import java.io.IOException;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
+/**
+ * View of Mixer module.
+ *
+ * @author Team GroupImpl
+ */
+public class ViewMixerInput extends HBox {
+	
+	/** The fx input. */
+	@FXML private ImageView fxInput;
+	
+	/** The fx label input. */
+	@FXML private Label fxLabelInput;
+	
+	/** The fx knob volume pane. */
+	@FXML private VBox fxKnobVolumePane;
+	
+	/** The fx value volume. */
+	@FXML private TextField fxValueVolume;
+	
+	/** The fx mute volume. */
+	@FXML private CheckBox fxMuteVolume;
+	
+	/**
+	 * Get the instance of the Input Image View.
+	 *
+	 * @return ImageView
+	 */
+	public ImageView getFxInput() {
+<span class="nc" id="L43">		return fxInput;</span>
+	}
+
+	/**
+	 * Get the instance of the Input Label.
+	 *
+	 * @return Label
+	 */
+	public Label getFxLabelInput() {
+<span class="nc" id="L52">		return fxLabelInput;</span>
+	}
+
+	/**
+	 * Get the instance of the Volume Knob.
+	 *
+	 * @return VBox
+	 */
+	public VBox getFxKnobVolumePane() {
+<span class="nc" id="L61">		return fxKnobVolumePane;</span>
+	}
+
+	/**
+	 * Get the instance of the Volume TextField.
+	 *
+	 * @return TextField
+	 */
+	public TextField getFxValueVolume() {
+<span class="nc" id="L70">		return fxValueVolume;</span>
+	}
+
+	/**
+	 * Get the instance of the Mute Volume CheckBox.
+	 *
+	 * @return CheckBox
+	 */
+	public CheckBox getFxMuteVolume() {
+<span class="nc" id="L79">		return fxMuteVolume;</span>
+	}
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param label 
+	 */
+<span class="nc" id="L87">	public ViewMixerInput(String label) {</span>
+	    try {
+<span class="nc" id="L89">	        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(&quot;fxml/mixerInput.fxml&quot;));</span>
+<span class="nc" id="L90">	        loader.setController(this);</span>
+<span class="nc" id="L91">	        loader.setRoot(this);</span>
+<span class="nc" id="L92">	        loader.load();</span>
+<span class="nc" id="L93">	        fxLabelInput.setText(label);</span>
+<span class="nc" id="L94">	    } catch (IOException e) {</span>
+<span class="nc" id="L95">			Log.getInstance().error(&quot;Failed to initialize mixer&quot;, e );</span>
+	    }
+<span class="nc" id="L97">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

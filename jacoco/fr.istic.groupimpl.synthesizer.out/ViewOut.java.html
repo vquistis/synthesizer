@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewOut.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.out</a> &gt; <span class="el_source">ViewOut.java</span></div><h1>ViewOut.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.out;
+
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
+import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
+import fr.istic.groupimpl.synthesizer.util.Potentiometre;
+import fr.istic.groupimpl.synthesizer.util.PotentiometreFactory;
+
+/**
+ * 
+ * View of out module
+ *  
+ * @author Team GroupImpl
+ */
+<span class="nc" id="L35">public class ViewOut extends ViewComponent implements Initializable {</span>
+
+	/** The root module pane. */
+	@FXML private Pane rootModulePane;
+	
+	/** The top. */
+	@FXML private GridPane top;
+	
+	/** The knob volume pane. */
+	@FXML private VBox knobVolumePane;
+	
+	/** The value volume fx. */
+	@FXML private TextField valueVolumeFx;
+	
+	/** The mute volume fx. */
+	@FXML private CheckBox muteVolumeFx;
+	
+	/** The input. */
+	@FXML private ImageView input;
+
+	/** The controller. */
+	private ControllerOut controller;
+
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resource) {
+<span class="nc" id="L63">		((Label) top.lookup(&quot;#titleModule&quot;)).setText(&quot;OUT&quot;);</span>
+		
+		// Creation du controller
+<span class="nc" id="L66">		controller = new ControllerOut();</span>
+		
+<span class="nc" id="L68">		addPort(&quot;out_input&quot;, input);</span>
+		
+<span class="nc" id="L70">		PotentiometreFactory knobFact = PotentiometreFactory.getFactoryInstance();</span>
+<span class="nc" id="L71">		knobFact.setMinValue(-60);</span>
+<span class="nc" id="L72">		knobFact.setMaxValue(12);</span>
+<span class="nc" id="L73">		knobFact.setValueDef(0);</span>
+<span class="nc" id="L74">		knobFact.setNbSpins(3);</span>
+<span class="nc" id="L75">		knobFact.setRayon(32);</span>
+<span class="nc" id="L76">		Potentiometre knobVolume = knobFact.getPotentiometre();</span>
+<span class="nc" id="L77">		knobVolumePane.getChildren().add(1,knobVolume);</span>
+		
+		// Bind knob value and text field value
+<span class="nc" id="L80">		StringConverter&lt;Number&gt; converter = new DoubleStringConverter();</span>
+<span class="nc" id="L81">		Bindings.bindBidirectional(valueVolumeFx.textProperty(), knobVolume.valueProperty(), converter);</span>
+
+		// Listener volume
+<span class="nc" id="L84">		knobVolume.valueProperty().addListener((obsVal, oldVal, newVal) -&gt; controller.handleViewVolumeChange(newVal));</span>
+		// Listener mute
+<span class="nc" id="L86">		muteVolumeFx.selectedProperty().addListener((obsVal, oldVal, newVal) -&gt;{</span>
+//			if (ControllerGlobal.getInstance().isRecordStarted()) {
+//				Alert alert = new Alert(AlertType.CONFIRMATION);
+//				alert.setTitle(&quot;Synthesizer&quot;);
+//				alert.setHeaderText(&quot;Voulez-vous vraiment arrêter l'enregistrement de son ?&quot;);
+//				Optional&lt;ButtonType&gt; result = alert.showAndWait();
+//				if (result.get() == ButtonType.OK){
+//					controller.handleViewMuteChange(newVal);
+//					ControllerGlobal.getInstance().handleStopView();
+//				} else {
+//					muteVolumeFx.setSelected(oldVal);;
+//				}
+//			} else {
+				controller.handleViewMuteChange(newVal);
+//			}
+		});
+
+		// Listener close module
+<span class="nc" id="L104">		top.lookup(&quot;#closeModuleFx&quot;).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -&gt; {</span>
+			if (ControllerGlobal.getInstance().isRecordStarted()) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle(&quot;Synthesizer&quot;);
+				alert.setHeaderText(&quot;Voulez-vous vraiment arrêter l'enregistrement de son ?&quot;);
+				Optional&lt;ButtonType&gt; result = alert.showAndWait();
+				if (result.get() == ButtonType.OK){
+					handleCloseModule();
+					ControllerGlobal.getInstance().handleStopView();
+				}
+			} else {
+				handleCloseModule();
+			}
+		});
+
+<span class="nc" id="L119">		addParameters(&quot;knobVolume&quot;, () -&gt; knobVolume.getValue(), (val) -&gt; knobVolume.setValue(val));</span>
+<span class="nc" id="L120">		addParameters(&quot;muteVolumeFx&quot;, () -&gt; muteVolumeFx.selectedProperty().get() ? 1.0 : 0.0, (val) -&gt; muteVolumeFx.setSelected(val==1));</span>
+<span class="nc" id="L121">	}</span>
+
+	/**
+	 * Handle close module.
+	 */
+	private void handleCloseModule() {
+<span class="nc" id="L127">		cleanup();			</span>
+<span class="nc" id="L128">		controller.handleViewClose();</span>
+<span class="nc" id="L129">		Pane parent = (Pane) rootModulePane.getParent();</span>
+<span class="nc" id="L130">		parent.getChildren().remove(rootModulePane);</span>
+<span class="nc" id="L131">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
+	@Override
+	protected Pane getComponentRoot() {
+<span class="nc" id="L138">		return rootModulePane;</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
+	@Override
+	protected ControllerComponent getController() {
+<span class="nc" id="L146">		return controller;</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
+	@Override
+	public String getFilename() {
+<span class="nc" id="L154">		return &quot;fxml/out.fxml&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

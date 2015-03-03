@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControllerMixer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.mixer</a> &gt; <span class="el_source">ControllerMixer.java</span></div><h1>ControllerMixer.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.mixer;
+
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+
+/**
+ * Controller of mixer module.
+ *
+ * @author Team GroupImpl
+ */
+public class ControllerMixer extends ControllerComponent {
+	
+	/** The model. */
+	private ModelMixer model;
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param view the view
+	 * @param NumberOfInputPort the number of input port
+	 */
+	
+<span class="nc" id="L24">	public ControllerMixer(ViewMixer view, Integer NumberOfInputPort) {</span>
+<span class="nc" id="L25">		model = new ModelMixer(NumberOfInputPort);</span>
+<span class="nc" id="L26">		ControllerGlobal.getInstance().registerUnitGenerator(model.getUnitGenerator());</span>
+		
+<span class="nc" id="L28">		model.setCommandProperty(&quot;OutputGaugeBar&quot;, () -&gt; {</span>
+			view.getOutputGauge().setProgress((double) model.getValProperty(&quot;OutputGaugeBar&quot;));
+		});		
+<span class="nc" id="L31">		model.start();</span>
+<span class="nc" id="L32">	}</span>
+	
+	/**
+	 * Get the number of input port.
+	 *
+	 * @return Integer
+	 */
+	public Integer getNumberOfInputPort() {
+<span class="nc" id="L40">		return model.getNumberOfInputPort();</span>
+	}
+	
+	/**
+	 * Change listener for sound attenuation (volume).
+	 * @param index
+	 * 		index input port
+	 * @param newVal - new value of attenuation in db
+	 */
+	public void handleViewVolumeChange(Integer index, Number newVal) {
+<span class="nc" id="L50">		model.setAttenuation(index, (double) newVal);</span>
+<span class="nc" id="L51">	}</span>
+
+	/**
+	 * Change listener for mute choice.
+	 *
+	 * @param index 		index input port
+	 * @param newVal - true for mute
+	 */
+	public void handleViewMuteChange(Integer index, Boolean newVal) {
+<span class="nc" id="L60">		model.setMute(index, newVal);</span>
+<span class="nc" id="L61">	}</span>
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#handleViewClose()
+	 */
+	@Override
+	public void handleViewClose() {
+<span class="nc" id="L68">		model.stop();</span>
+<span class="nc" id="L69">		ControllerGlobal.getInstance().removeAllConnections(model.getAllPorts());</span>
+<span class="nc" id="L70">		ControllerGlobal.getInstance().unregisterOutUnitGenerator(model.getUnitGenerator());</span>
+<span class="nc" id="L71">	}</span>
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
+	 */
+	@Override
+	public ModelComponent getModel() {
+<span class="nc" id="L78">		return model;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

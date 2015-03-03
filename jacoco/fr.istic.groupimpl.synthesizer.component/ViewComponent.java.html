@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewComponent.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.component</a> &gt; <span class="el_source">ViewComponent.java</span></div><h1>ViewComponent.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.component;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.util.Pair;
+
+import com.jsyn.ports.UnitPort;
+
+import fr.istic.groupimpl.synthesizer.command.ICommand;
+import fr.istic.groupimpl.synthesizer.io.architecture.Module;
+import fr.istic.groupimpl.synthesizer.io.architecture.Port;
+import fr.istic.groupimpl.synthesizer.logger.Log;
+
+/**
+ * The abstract Class ViewComponent.
+ * 
+ * @author Team groupImpl 
+ */
+<span class="nc" id="L33">public abstract class ViewComponent {</span>
+
+	/** The Constant COMPONENT_HEIGHT. */
+	public static final double COMPONENT_HEIGHT = 300;
+
+	/** The port bindings. */
+	@SuppressWarnings(&quot;rawtypes&quot;)
+<span class="nc" id="L40">	private List&lt;ChangeListener&gt; portBindings = new ArrayList&lt;ChangeListener&gt;();</span>
+	
+	/** The save action map. */
+<span class="nc" id="L43">	private Map&lt;String, Supplier&lt;Double&gt;&gt; saveActionMap = new HashMap&lt;&gt;();</span>
+	
+	/** The load action map. */
+<span class="nc" id="L46">	private Map&lt;String, Consumer&lt;Double&gt;&gt; loadActionMap = new HashMap&lt;&gt;();</span>
+	
+<span class="nc" id="L48">	private Map&lt;String, Pair&lt;DoubleProperty, DoubleProperty&gt;&gt; cablesProperties= new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L50">	private final Supplier&lt;Module&gt; sup = (() -&gt; getConfiguration());</span>
+	
+	/** The debug. */
+<span class="nc" id="L53">	private static boolean debug = false;</span>
+	
+<span class="nc" id="L55">	private ChangeListener&lt;? super Number&gt; listener = (a,b,c) -&gt; {refreshComponent();};</span>
+
+	private ICommand cmd;
+
+	public ChangeListener&lt;? super Number&gt; getListener() {
+<span class="nc" id="L60">		return listener;</span>
+	}
+	
+	/**
+	 * This method should return the root Pane of the component.
+	 * @return The root Pane of the component
+	 */
+	protected abstract Pane getComponentRoot();
+
+	/**
+	 * Refresh component.
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public void refreshComponent() {
+<span class="nc" id="L74">		portBindings.forEach((c) -&gt; {</span>
+			c.changed(null, null, null);
+		});
+<span class="nc" id="L77">	}</span>
+
+	/**
+	 * This method adds the given node of the component as a port, and binds
+	 * the portX and portY properties to the position of the port in the parent
+	 * node of the component.
+	 * 
+	 * @param portNode The node to be added as a port.
+	 * @param portName the port name
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+	final protected void addPort(String portName, Node portNode) {
+		
+<span class="nc" id="L90">		DoubleProperty portX = new SimpleDoubleProperty(0);</span>
+<span class="nc" id="L91">		DoubleProperty portY = new SimpleDoubleProperty(0);</span>
+<span class="nc" id="L92">		Pair&lt;DoubleProperty, DoubleProperty&gt; prop = new Pair&lt;&gt;(portX, portY);</span>
+<span class="nc" id="L93">		cablesProperties.put(portName, prop);</span>
+
+<span class="nc" id="L95">		ControllerComponent ctl = getController();</span>
+<span class="nc" id="L96">		ctl.setupPort(portName, portNode, portX, portY);</span>
+				
+		@SuppressWarnings(&quot;rawtypes&quot;)
+<span class="nc" id="L99">		ChangeListener posChangeListener = ((a,b,c) -&gt; {</span>
+			Point2D point2D = computeNodeCenter(portNode);
+
+			cablesProperties.get(portName).getKey().set(point2D.getX());
+			cablesProperties.get(portName).getValue().set(point2D.getY());
+			if(debug) {
+				Log.getInstance().debug(&quot;[Port Position Recomputed : X = &quot; + point2D.getX() + &quot; ; Y = &quot; + point2D.getY() + &quot;]&quot;);
+			}
+		});
+
+<span class="nc" id="L109">		portBindings.add(posChangeListener);</span>
+<span class="nc" id="L110">		Node root = getComponentRoot();</span>
+
+<span class="nc" id="L112">		root.parentProperty().addListener(posChangeListener);</span>
+<span class="nc" id="L113">		root.boundsInParentProperty().addListener(posChangeListener);</span>
+<span class="nc" id="L114">	}</span>
+
+	
+	/**
+	 * Cleanup ports.
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+	final protected void cleanup() {
+<span class="nc" id="L122">		Node root = getComponentRoot();</span>
+<span class="nc" id="L123">		cmd.execute();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		for(@SuppressWarnings(&quot;rawtypes&quot;) ChangeListener c : portBindings) {</span>
+<span class="nc" id="L125">			root.parentProperty().removeListener(c);</span>
+<span class="nc" id="L126">			root.boundsInParentProperty().removeListener(c);</span>
+		}
+<span class="nc" id="L128">	}</span>
+
+	/**
+	 * Gets the node bounds in component.
+	 *
+	 * @param node the node
+	 * @return the node bounds in component
+	 */
+	private Bounds getNodeBoundsInComponent(Node node) {
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if(debug) {</span>
+<span class="nc" id="L138">			Log.getInstance().debug(&quot;getNodeBoundsInComponent : &quot; + node.getId());</span>
+<span class="nc" id="L139">			Log.getInstance().debug(&quot;   [Scene] &quot; + node.getScene());</span>
+<span class="nc" id="L140">			Log.getInstance().debug(&quot;   [node-getBoundsInParent] = &quot; + node.getBoundsInParent());</span>
+<span class="nc" id="L141">			Log.getInstance().debug(&quot;   [node-getBoundsInLocal]  = &quot; + node.getBoundsInLocal());</span>
+<span class="nc" id="L142">			Log.getInstance().debug(&quot;   [node-getLayoutBounds]   = &quot; + node.getLayoutBounds());</span>
+<span class="nc" id="L143">			Log.getInstance().debug(&quot;   [node-localToScene]      = &quot; + node.localToScene(node.getBoundsInParent()));</span>
+<span class="nc" id="L144">			Log.getInstance().debug(&quot;   [node-getLayoutX_Y]      = &quot; + node.getLayoutX() + &quot; &quot; + node.getLayoutY());</span>
+		}
+<span class="nc" id="L146">		Bounds res = node.getBoundsInParent();</span>
+
+<span class="nc" id="L148">		Node componentParent = getComponentRoot();</span>
+<span class="nc" id="L149">		Node currentParent = node.getParent();</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if(debug) {</span>
+<span class="nc" id="L151">			Log.getInstance().debug(&quot;   [currentParent] = &quot; + currentParent);</span>
+<span class="nc" id="L152">			Log.getInstance().debug(&quot;      [currentParent-getBoundsInParent] = &quot; + currentParent.getBoundsInParent());</span>
+<span class="nc" id="L153">			Log.getInstance().debug(&quot;      [currentParent-getBoundsInLocal]  = &quot; + currentParent.getBoundsInLocal());</span>
+<span class="nc" id="L154">			Log.getInstance().debug(&quot;      [currentParent-getLayoutBounds]   = &quot; + currentParent.getLayoutBounds());</span>
+		}
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if(currentParent != null) {</span>
+<span class="nc" id="L157">			Bounds bounds = currentParent.localToParent(node.getBoundsInParent());</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if(debug) {</span>
+<span class="nc" id="L159">				Log.getInstance().debug(&quot;      [bounds] = &quot; + bounds);</span>
+			}
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			while(currentParent != componentParent) {</span>
+<span class="nc" id="L162">				currentParent = currentParent.getParent();</span>
+<span class="nc" id="L163">				bounds = currentParent.localToParent(bounds);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">				if(debug) {</span>
+<span class="nc" id="L165">					Log.getInstance().debug(&quot;   [currentParent] = &quot; + currentParent);</span>
+<span class="nc" id="L166">					Log.getInstance().debug(&quot;      [currentParent-getBoundsInParent] = &quot; + currentParent.getBoundsInParent());</span>
+<span class="nc" id="L167">					Log.getInstance().debug(&quot;      [currentParent-getBoundsInLocal]  = &quot; + currentParent.getBoundsInLocal());</span>
+<span class="nc" id="L168">					Log.getInstance().debug(&quot;      [currentParent-getLayoutBounds]   = &quot; + currentParent.getLayoutBounds());</span>
+<span class="nc" id="L169">					Log.getInstance().debug(&quot;      [bounds] = &quot; + bounds);</span>
+				}
+			}
+
+			// if connected 
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			if(currentParent.getParent() != null) {</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">				if(debug) {</span>
+<span class="nc" id="L176">					Log.getInstance().debug(&quot;   [CONNECTED]&quot;);</span>
+				}
+				// recomputes the bounds of the node in the HBox containing the component
+<span class="nc" id="L179">				currentParent = currentParent.getParent();</span>
+<span class="nc" id="L180">				bounds = currentParent.localToParent(bounds);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">				if(debug) {</span>
+<span class="nc" id="L182">					Log.getInstance().debug(&quot;   [currentParent] = &quot; + currentParent);</span>
+<span class="nc" id="L183">					Log.getInstance().debug(&quot;      [currentParent-getBoundsInParent] = &quot; + currentParent.getBoundsInParent());</span>
+<span class="nc" id="L184">					Log.getInstance().debug(&quot;      [currentParent-getBoundsInLocal]  = &quot; + currentParent.getBoundsInLocal());</span>
+<span class="nc" id="L185">					Log.getInstance().debug(&quot;      [currentParent-getLayoutBounds]   = &quot; + currentParent.getLayoutBounds());</span>
+<span class="nc" id="L186">					Log.getInstance().debug(&quot;      [bounds] = &quot; + bounds);</span>
+				}
+				// recomputes the bounds of the node in the SplitPane containing HBox containing the component
+<span class="nc bnc" id="L189" title="All 2 branches missed.">				if(currentParent.getParent() != null) {</span>
+<span class="nc" id="L190">					currentParent = currentParent.getParent();</span>
+<span class="nc" id="L191">					bounds = currentParent.localToParent(bounds);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">					if(debug) {</span>
+<span class="nc" id="L193">						Log.getInstance().debug(&quot;   [currentParent] = &quot; + currentParent);</span>
+<span class="nc" id="L194">						Log.getInstance().debug(&quot;      [currentParent-getBoundsInParent] = &quot; + currentParent.getBoundsInParent());</span>
+<span class="nc" id="L195">						Log.getInstance().debug(&quot;      [currentParent-getBoundsInLocal]  = &quot; + currentParent.getBoundsInLocal());</span>
+<span class="nc" id="L196">						Log.getInstance().debug(&quot;      [currentParent-getLayoutBounds]   = &quot; + currentParent.getLayoutBounds());</span>
+<span class="nc" id="L197">						Log.getInstance().debug(&quot;      [bounds] = &quot; + bounds);</span>
+					}
+				}
+<span class="nc" id="L200">			} else {</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">				if(debug) {</span>
+<span class="nc" id="L202">					Log.getInstance().debug(&quot;   [UNCONNECTED]&quot;);</span>
+				}
+			}
+<span class="nc" id="L205">			res = bounds;</span>
+		} 
+<span class="nc" id="L207">		return res;</span>
+	}
+
+	/**
+	 * Compute node center.
+	 *
+	 * @param node the node
+	 * @return the point2 d
+	 */
+	private Point2D computeNodeCenter(Node node) {
+<span class="nc" id="L217">		Bounds bounds = getNodeBoundsInComponent(node);</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if(debug) {</span>
+<span class="nc" id="L219">			Log.getInstance().debug(&quot;computeNodeCenter : &quot; + node.getId());</span>
+<span class="nc" id="L220">			Log.getInstance().debug(&quot; computeNodeCenter &quot; + bounds);</span>
+<span class="nc" id="L221">			Log.getInstance().debug(&quot; computeNodeCenter &quot; + new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2));</span>
+		}
+<span class="nc" id="L223">		return new Point2D(bounds.getMinX()+bounds.getWidth()/2, bounds.getMinY()+bounds.getHeight()/2);</span>
+	}
+	
+	/**
+	 * Gets the save supplier.
+	 *
+	 * @return the save supplier
+	 */
+	public final Supplier&lt;Module&gt; getSaveSupplier() {
+<span class="nc" id="L232">		return sup;</span>
+	}
+	
+	/**
+	 * Gets the position x.
+	 *
+	 * @return the position x
+	 */
+	public final int getPositionX(){
+<span class="nc" id="L241">		Node node =  getComponentRoot();</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">		if (node.getParent() !=null) {</span>
+<span class="nc" id="L243">			return ((HBox)node.getParent()).getChildren().indexOf(node);</span>
+		} else {
+<span class="nc" id="L245">			return 0;</span>
+		}
+		
+	}
+	
+	/**
+	 * Gets the position y.
+	 *
+	 * @return the position y
+	 */
+	public final int getPositionY(){
+<span class="nc" id="L256">		Node node =  getComponentRoot();</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">		if (node.getParent() != null) {</span>
+<span class="nc" id="L258">			HBox hbox = ((HBox)node.getParent());		</span>
+<span class="nc" id="L259">			SplitPane splitPane = ((SplitPane)hbox.getParent().getParent());		</span>
+<span class="nc" id="L260">			return splitPane.getItems().indexOf(hbox);</span>
+		} else {
+<span class="nc" id="L262">			return 0;</span>
+		}
+		
+	}
+	
+	/**
+	 * Adds the parameters.
+	 *
+	 * @param parameterName the parameter name
+	 * @param saveAction the save action
+	 * @param loadAction the load action
+	 */
+	protected final void addParameters(String parameterName, Supplier&lt;Double&gt; saveAction, Consumer&lt;Double&gt; loadAction){
+<span class="nc" id="L275">		saveActionMap.put(parameterName, saveAction);</span>
+<span class="nc" id="L276">		loadActionMap.put(parameterName, loadAction);		</span>
+<span class="nc" id="L277">	}</span>
+	
+	/**
+	 * Gets the controller.
+	 *
+	 * @return the controller
+	 */
+	protected abstract ControllerComponent getController();
+	
+	/**
+	 * Gets the configuration.
+	 *
+	 * @return the configuration
+	 */
+	protected final Module getConfiguration() {
+<span class="nc" id="L292">		Module module= new Module();</span>
+<span class="nc" id="L293">		Map&lt;String, Double&gt; parameters = module.getParameters();</span>
+<span class="nc" id="L294">		saveActionMap.forEach((k,v) -&gt; {</span>
+			parameters.put(k, v.get());
+		});
+		
+<span class="nc" id="L298">		module.setFilename(getFilename());</span>
+
+<span class="nc" id="L300">		module.setPorts(getController().getAllPort());;</span>
+<span class="nc" id="L301">		module.setPosX(getPositionX());</span>
+<span class="nc" id="L302">		module.setPosY(getPositionY());</span>
+<span class="nc" id="L303">		return module;</span>
+	}
+
+	/**
+	 * Inits the component.
+	 *
+	 * @param module the module
+	 */
+	public void initComponent(Module module){
+<span class="nc" id="L312">		loadActionMap.forEach((k, v)-&gt;{</span>
+			v.accept(module.getParameters().get(k));
+		});
+<span class="nc" id="L315">	}</span>
+	
+	/**
+	 * get name of file FXML
+	 * @return file name
+	 */
+	public abstract String getFilename();
+	
+	/**
+	 * get name of connection
+	 * 
+	 * @param inputName the input name
+	 * @return
+	 */
+	public Pair&lt;DoubleProperty, DoubleProperty&gt; getStuff(String inputName) {
+<span class="nc" id="L330">		return cablesProperties.get(inputName);</span>
+	}
+	
+	/**
+	 * get a port
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public UnitPort getPort(String name) {
+<span class="nc" id="L340">		UnitPort res = null;</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">		for(Port p : getController().getAllPort()) {</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">			if(p.getName().equals(name)) {</span>
+<span class="nc" id="L343">				return p.getUnitPort();</span>
+			}
+		}
+<span class="nc" id="L346">		return res;</span>
+	}
+
+	/**
+	 * set command to close a component
+	 * @param cmd
+	 */
+	public void setOnCloseCmd(ICommand cmd) {
+<span class="nc" id="L354">		this.cmd = cmd;</span>
+<span class="nc" id="L355">	}</span>
+
+	public void printStuff() {
+<span class="nc" id="L358">		Log.getInstance().error(&quot;Map = &quot; + cablesProperties);</span>
+<span class="nc" id="L359">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ViewPlayer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.player</a> &gt; <span class="el_source">ViewPlayer.java</span></div><h1>ViewPlayer.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.player;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import fr.istic.groupimpl.synthesizer.component.ControllerComponent;
+import fr.istic.groupimpl.synthesizer.component.ViewComponent;
+
+/**
+ * 
+ * View of player module
+ *  
+ * @author Team GroupImpl
+ */
+<span class="nc" id="L23">public class ViewPlayer extends ViewComponent implements Initializable {</span>
+
+	/** The root module pane. */
+	@FXML private Pane rootModulePane;
+	
+	/** The top. */
+	@FXML private GridPane top;
+	
+	/** The output. */
+	@FXML private ImageView output;
+	
+	/** The gate. */
+	@FXML private ImageView gate;
+	
+	/** The fx sample name. */
+	@FXML private Label fxSampleName;
+	
+	/** The fx btn load. */
+	@FXML private Button fxBtnLoad;
+	
+	/** The fx btn play. */
+	@FXML private Button fxBtnPlay;
+	
+	/** The fx btn stop. */
+	@FXML private Button fxBtnStop;
+
+	/** The controller. */
+	private ControllerPlayer controller;
+
+	/**
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resource) {
+<span class="nc" id="L57">		((Label) top.lookup(&quot;#titleModule&quot;)).setText(&quot;Player&quot;);</span>
+		
+		// implementation of controller
+<span class="nc" id="L60">		controller = new ControllerPlayer(this);</span>
+		
+<span class="nc" id="L62">		addPort(&quot;player_output&quot;, output);	</span>
+<span class="nc" id="L63">		addPort(&quot;player_gate&quot;, gate);	</span>
+		
+		// Listener close module
+<span class="nc" id="L66">		top.lookup(&quot;#closeModuleFx&quot;).addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -&gt; {</span>
+			cleanup();			
+			controller.handleViewClose();
+			Pane parent = (Pane) rootModulePane.getParent();
+			parent.getChildren().remove(rootModulePane);
+		});
+		
+<span class="nc" id="L73">   	 	fxBtnPlay.setDisable(true);</span>
+<span class="nc" id="L74">   	 	fxBtnStop.setDisable(true);</span>
+<span class="nc" id="L75">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getComponentRoot()
+	 */
+	@Override
+	protected Pane getComponentRoot() {
+<span class="nc" id="L82">		return rootModulePane;</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getController()
+	 */
+	@Override
+	protected ControllerComponent getController() {
+<span class="nc" id="L90">		return controller;</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.ViewComponent#getFilename()
+	 */
+	@Override
+	public String getFilename() {
+<span class="nc" id="L98">		return &quot;fxml/player.fxml&quot;;</span>
+	}
+	
+	/**
+	 * Handles the click on the play button.
+	 */
+	@FXML
+	public void handlePlayClicked() {
+<span class="nc" id="L106">		controller.handleViewPlayClicked();</span>
+<span class="nc" id="L107">	}</span>
+
+	/**
+	 * Handles the click on the stop button.
+	 */
+	@FXML
+	public void handleStopClicked() {
+<span class="nc" id="L114">		controller.handleViewStopClicked();</span>
+<span class="nc" id="L115">	}</span>
+	
+	/**
+	 * Handles the click on the load button.
+	 */
+	@FXML
+	public void handleLoadClicked() {
+<span class="nc" id="L122">   	 	controller.loadSample();</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">   	 	if (fxSampleName.getText()!=null) {</span>
+<span class="nc" id="L124">	   	 	fxBtnPlay.setDisable(false);</span>
+<span class="nc" id="L125">	   	 	fxBtnStop.setDisable(false);</span>
+   	 	}
+<span class="nc" id="L127">	}</span>
+	
+	/**
+	 * Gets the fx sample name.
+	 *
+	 * @return the fx sample name
+	 */
+	public Label getFxSampleName() {
+<span class="nc" id="L135">		return fxSampleName;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

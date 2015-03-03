@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SelectFrom3Input.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.vco.jsyn</a> &gt; <span class="el_source">SelectFrom3Input.java</span></div><h1>SelectFrom3Input.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.vco.jsyn;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+/**
+ * SelectUnit unit. Select Input1 or Input2 or Input3 based on value on inputSelect port.
+ * 
+ * &lt;pre&gt;
+ * output = switch inputSelects {
+ *                case 1:  Input1
+ *                case 2:  Input2
+ *                case 3:  Input3
+ *                default: Input1
+ *            }
+ * &lt;/pre&gt;
+ * 
+ * @author Team GroupImpl
+ */
+
+public class SelectFrom3Input extends UnitGenerator {
+	
+	/** The input1. */
+	private UnitInputPort input1;
+	
+	/** The input2. */
+	private UnitInputPort input2;
+	
+	/** The input3. */
+	private UnitInputPort input3;
+	
+	/** The input select. */
+	private UnitInputPort inputSelect;  // 1 | 2 | 3
+	
+	/** The output. */
+	private UnitOutputPort output;
+    
+    /**
+     * Input 1.
+     *
+     * @return the input1
+     */
+    public UnitInputPort getInput1() {
+<span class="fc" id="L45">		return input1;</span>
+	}
+	
+	/**
+	 * Input 2.
+	 *
+	 * @return the input2
+	 */
+	public UnitInputPort getInput2() {
+<span class="fc" id="L54">		return input2;</span>
+	}
+
+	/**
+	 * Input 3.
+	 *
+	 * @return the input3
+	 */
+	public UnitInputPort getInput3() {
+<span class="fc" id="L63">		return input3;</span>
+	}
+
+	/**
+	 * Input source selected.
+	 *
+	 * @return the input select
+	 */
+	public UnitInputPort getInputSelect() {
+<span class="fc" id="L72">		return inputSelect;</span>
+	}
+
+	/**
+	 * Output selected source.
+	 *
+	 * @return the output
+	 */
+	public UnitOutputPort getOutput() {
+<span class="fc" id="L81">		return output;</span>
+	}
+
+    /**
+     * Constructor.
+     */
+<span class="fc" id="L87">    public SelectFrom3Input() {</span>
+<span class="fc" id="L88">        addPort(input1 = new UnitInputPort(&quot;Input1&quot;));</span>
+<span class="fc" id="L89">        addPort(input2 = new UnitInputPort(&quot;Input2&quot;));</span>
+<span class="fc" id="L90">        addPort(input3 = new UnitInputPort(&quot;Input3&quot;));</span>
+<span class="fc" id="L91">        addPort(inputSelect = new UnitInputPort(&quot;InputSelect&quot;));</span>
+<span class="fc" id="L92">        addPort(output = new UnitOutputPort(&quot;Output&quot;));</span>
+<span class="fc" id="L93">    }</span>
+
+    /**
+     * @see com.jsyn.unitgen.UnitGenerator#generate(int, int)
+     */
+    @Override
+    public void generate(int start, int limit) {
+<span class="fc" id="L100">        double[] input1s = input1.getValues();</span>
+<span class="fc" id="L101">        double[] input2s = input2.getValues();</span>
+<span class="fc" id="L102">        double[] input3s = input3.getValues();</span>
+<span class="fc" id="L103">        double[] inputSelects = inputSelect.getValues();</span>
+<span class="fc" id="L104">        double[] outputs = output.getValues();</span>
+
+        
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        for (int i = start; i &lt; limit; i++) {</span>
+<span class="fc bfc" id="L108" title="All 4 branches covered.">             switch ((int)inputSelects[i]) {</span>
+<span class="fc" id="L109">                 case 1:  outputs[i] = input1s[i];</span>
+<span class="fc" id="L110">                          break;</span>
+<span class="fc" id="L111">                 case 2:  outputs[i] = input2s[i];</span>
+<span class="fc" id="L112">                          break;</span>
+<span class="fc" id="L113">                 case 3:  outputs[i] = input3s[i];</span>
+<span class="fc" id="L114">                          break;</span>
+<span class="fc" id="L115">                 default: outputs[i] = input1s[i];</span>
+                          break;
+             }
+        }
+<span class="fc" id="L119">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

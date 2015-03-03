@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OscilloscopeFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.util</a> &gt; <span class="el_source">OscilloscopeFactory.java</span></div><h1>OscilloscopeFactory.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.util;
+
+/**
+ * The class OscilloscopeFactory.
+ *
+ * @author GroupImpl
+ */
+public class OscilloscopeFactory {
+	
+	
+	/**
+	 * Instantiates a new oscilloscope factory.
+	 */
+<span class="fc" id="L14">	private OscilloscopeFactory() {</span>
+<span class="fc" id="L15">	}</span>
+
+	/**
+	 * get an oscilloscope factory method.
+	 *
+	 * @return 	an oscilloscope factory method
+	 */
+	static public OscilloscopeFactory getFactoryInstance() {
+<span class="fc" id="L23">		return new OscilloscopeFactory();</span>
+	}
+
+	/**
+	 * get an oscilloscope instance.
+	 *
+	 * @return an oscilloscope instance
+	 */
+	public Oscilloscope getOscilloscope() {
+<span class="fc" id="L32">		return new Oscilloscope(this);</span>
+	}
+
+	
+	
+	/** The height. */
+	private double height;
+	
+	/** The width. */
+	private double width;
+	
+	/** The cmd get buffer. */
+	private Oscilloscope.GetBuffer cmdGetBuffer;
+	
+	/** The refresh period. */
+<span class="fc" id="L47">	private long refreshPeriod=1000;</span>
+
+	/**
+	 * get refresh period.
+	 *
+	 * @return 	refresh period
+	 */
+	public long getRefreshPeriod() {
+<span class="fc" id="L55">		return refreshPeriod;</span>
+	}
+	
+	/**
+	 * set the refresh period.
+	 *
+	 * @param refreshPeriod 	the refresh period
+	 */
+	public void setRefreshPeriod(long refreshPeriod) {
+<span class="nc" id="L64">		this.refreshPeriod = refreshPeriod;</span>
+<span class="nc" id="L65">	}</span>
+	
+	/**
+	 * get the get buffer command.
+	 *
+	 * @return 	the  get buffer command
+	 */
+	public Oscilloscope.GetBuffer getCmdGetBuffer() {
+<span class="fc" id="L73">		return cmdGetBuffer;</span>
+	}
+	
+	/**
+	 * set the get buffer command.
+	 *
+	 * @param cmdGetBuffer  the get buffer command
+	 */
+	public void setCmdGetBuffer(Oscilloscope.GetBuffer cmdGetBuffer) {
+<span class="fc" id="L82">		this.cmdGetBuffer = cmdGetBuffer;</span>
+<span class="fc" id="L83">	}</span>
+	
+	/**
+	 * get the height.
+	 *
+	 * @return 		the height
+	 */
+	public double getHeight() {
+<span class="fc" id="L91">		return height;</span>
+	}
+	
+	/**
+	 * set the height.
+	 *
+	 * @param height 	the height
+	 */
+	public void setHeight(double height) {
+<span class="nc" id="L100">		this.height = height;</span>
+<span class="nc" id="L101">	}</span>
+	
+	/**
+	 * get the width.
+	 *
+	 * @return 		the width
+	 */
+	public double getWidth() {
+<span class="fc" id="L109">		return width;</span>
+	}
+	
+	/**
+	 * set the width.
+	 *
+	 * @param width 		the width
+	 */
+	public void setWidth(double width) {
+<span class="nc" id="L118">		this.width = width;</span>
+<span class="nc" id="L119">	}</span>
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

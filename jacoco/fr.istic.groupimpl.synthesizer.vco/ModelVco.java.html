@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelVco.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.vco</a> &gt; <span class="el_source">ModelVco.java</span></div><h1>ModelVco.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.vco;
+
+import java.util.Collection;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.util.DoubleStringConverter;
+import fr.istic.groupimpl.synthesizer.vco.jsyn.VCOCircuit;
+
+/**
+ * Model of vco module.
+ *
+ * @author Team GroupImpl
+ */
+public class ModelVco extends ModelComponent {
+
+	/** The vco circ. */
+	private VCOCircuit vcoCirc;
+	
+	/** The f0. */
+<span class="fc" id="L25">	private double f0 = 1.0;</span>
+
+	/**
+	 * Constructor.
+	 */
+	public ModelVco() {
+<span class="fc" id="L31">		super();		</span>
+<span class="fc" id="L32">		vcoCirc = new VCOCircuit();</span>
+<span class="fc" id="L33">		vcoCirc.getInputF0().set(f0); // Default F0</span>
+<span class="fc" id="L34">		vcoCirc.getInputShape().set(3); // Default type : square</span>
+<span class="fc" id="L35">	}</span>
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
+	@Override
+	public UnitGenerator getUnitGenerator() {
+<span class="fc" id="L42">		return this.vcoCirc;</span>
+	}
+
+	/**
+	 * Sets the octave.
+	 *
+	 * @param octave Sets the octave value to the VCO Circuit
+	 */
+	protected void setOctave(double octave) {
+<span class="nc" id="L51">		vcoCirc.getInputOctave().set(octave);</span>
+<span class="nc" id="L52">		computeFrequency(octave);</span>
+<span class="nc" id="L53">	}</span>
+
+	/**
+	 * Sets the output type.
+	 *
+	 * @param typeName The name of the output type : square | triangle | sawtooth
+	 * Sets the type of output signal
+	 */
+	protected void setOutputType(String typeName) {		
+<span class="nc bnc" id="L62" title="All 10 branches missed.">		switch(typeName) {</span>
+		case &quot;square&quot;:
+<span class="nc" id="L64">			vcoCirc.getInputShape().set(3);</span>
+<span class="nc" id="L65">			break;</span>
+		case &quot;triangle&quot;:
+<span class="nc" id="L67">			vcoCirc.getInputShape().set(1);</span>
+<span class="nc" id="L68">			break;</span>
+		case &quot;sawtooth&quot;:
+<span class="nc" id="L70">			vcoCirc.getInputShape().set(2);</span>
+			break;
+		}
+<span class="nc" id="L73">	}</span>
+
+	/**
+	 * Get the jsyn input port.
+	 * @return UnitInputPort
+	 */
+	public UnitInputPort getInputPort() {
+<span class="nc" id="L80">		return vcoCirc.getInputFM();</span>
+	}
+
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitOutputPort
+	 */
+	public UnitOutputPort getOutputPort() {
+<span class="fc" id="L88">		return vcoCirc.getOutput();</span>
+	}
+
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
+	@Override
+	public Collection&lt;UnitPort&gt; getAllPorts() {
+<span class="nc" id="L96">		return this.vcoCirc.getPorts();</span>
+	}
+
+	/**
+	 * Compute frequency.
+	 *
+	 * @param octave the octave
+	 */
+	private void computeFrequency(double octave) {
+<span class="nc" id="L105">		double frequency = f0 * Math.pow(2, octave);</span>
+<span class="nc" id="L106">		DoubleStringConverter dsc = new DoubleStringConverter();</span>
+<span class="nc" id="L107">		this.setValProperty(&quot;freq&quot;, dsc.toString(frequency));</span>
+<span class="nc" id="L108">	}</span>
+
+	/**
+	 * Sets the base freq.
+	 *
+	 * @param value The frequency to set (in Hz)
+	 * Sets the base frequency of the VCO
+	 */
+	public void setBaseFreq(double value) {
+<span class="nc" id="L117">		f0 = value;</span>
+<span class="nc" id="L118">		vcoCirc.getInputF0().set(value);</span>
+<span class="nc" id="L119">		computeFrequency(vcoCirc.getInputOctave().get());</span>
+<span class="nc" id="L120">	}</span>
+	
+	/**
+	 * Sets the amplitude.
+	 *
+	 * @param value The amplitude in volt
+	 * Sets the amplitude of signal
+	 */
+	public void setAmplitude(double value) {
+<span class="nc" id="L129">		vcoCirc.setAmplitude(value);</span>
+<span class="nc" id="L130">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

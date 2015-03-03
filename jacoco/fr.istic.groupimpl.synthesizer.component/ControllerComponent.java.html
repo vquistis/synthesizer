@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControllerComponent.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.component</a> &gt; <span class="el_source">ControllerComponent.java</span></div><h1>ControllerComponent.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.component;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javafx.beans.property.DoubleProperty;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
+
+import com.jsyn.ports.UnitInputPort;
+import com.jsyn.ports.UnitPort;
+
+import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
+import fr.istic.groupimpl.synthesizer.io.architecture.Port;
+import fr.istic.groupimpl.synthesizer.io.architecture.Type;
+
+/**
+ * The Class ControllerComponent.
+ * 
+ * @author Team groupImpl 
+ */
+<span class="nc" id="L23">public abstract class ControllerComponent {	</span>
+	
+	/**
+	 * Click listener for close the component.
+	 */
+	public  abstract void handleViewClose();
+	
+
+	/**
+	 * Gets the model.
+	 *
+	 * @return the model
+	 */
+	public abstract ModelComponent getModel();
+	
+	/**
+	 * Gets the all port.
+	 *
+	 * @return the all port
+	 */
+	public final List&lt;Port&gt; getAllPort(){
+<span class="nc" id="L44">		List&lt;Port&gt; ports =new ArrayList&lt;&gt;();</span>
+		
+<span class="nc" id="L46">		Collection&lt;UnitPort&gt;  list = getModel().getAllPorts();				</span>
+		
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		for (UnitPort unitPort : list) {</span>
+<span class="nc" id="L49">			Port port = new Port();</span>
+<span class="nc" id="L50">			port.setName(unitPort.getName());</span>
+			
+<span class="nc bnc" id="L52" title="All 2 branches missed.">			if (unitPort instanceof UnitInputPort) {</span>
+<span class="nc" id="L53">				port.setType(Type.IN);</span>
+<span class="nc" id="L54">			} else {</span>
+<span class="nc" id="L55">				port.setType(Type.OUT);</span>
+			}
+<span class="nc" id="L57">			port.setConnected(ControllerGlobal.getInstance().isPortConnected(unitPort));	</span>
+<span class="nc" id="L58">			port.setUnitPort(unitPort);</span>
+<span class="nc" id="L59">			ports.add(port);</span>
+		}		
+<span class="nc" id="L61">		return ports;</span>
+	}
+	
+	/**
+	 * Handle port clicked
+	 * @param port the port jsyn
+	 * @param x the property
+	 * @param y the property
+	 */
+	public void handlePortClicked(UnitPort port, DoubleProperty x, DoubleProperty y) {
+<span class="nc" id="L71">		ControllerGlobal.getInstance().handlePortClicked(port, x, y);</span>
+<span class="nc" id="L72">	}</span>
+
+	/**
+	 * setup ports
+	 * 
+	 * @param portName the port name
+	 * @param portNode the port node
+	 * @param portX port x
+	 * @param portY port y
+	 */
+	public void setupPort(String portName, Node portNode, DoubleProperty portX,	DoubleProperty portY) {
+<span class="nc" id="L83">		getModel().getAllPorts().forEach((p) -&gt; {				</span>
+			if(p.getName().equals(portName)) {
+				portNode.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -&gt; {
+					handlePortClicked(p, portX, portY);
+				});
+			}
+		});
+<span class="nc" id="L90">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

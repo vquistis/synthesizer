@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelPlayer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Synthesizer</a> &gt; <a href="index.source.html" class="el_package">fr.istic.groupimpl.synthesizer.player</a> &gt; <span class="el_source">ModelPlayer.java</span></div><h1>ModelPlayer.java</h1><pre class="source lang-java linenums">package fr.istic.groupimpl.synthesizer.player;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import com.jsyn.ports.UnitOutputPort;
+import com.jsyn.ports.UnitPort;
+import com.jsyn.unitgen.UnitGenerator;
+
+import fr.istic.groupimpl.synthesizer.component.ModelComponent;
+import fr.istic.groupimpl.synthesizer.player.jsyn.PlayerGate;
+
+/**
+ * Model of Player module.
+ *
+ * @author Team GroupImpl
+ */
+public class ModelPlayer extends ModelComponent {
+
+	/** The player. */
+	private PlayerGate player;
+	
+	/** The sample file name. */
+<span class="fc" id="L28">	private StringProperty sampleFileName = new SimpleStringProperty();</span>
+	
+	/** The sig min. */
+<span class="fc" id="L31">	private final double sigMin = 0.00001;</span>
+	
+	/** The sig max. */
+<span class="fc" id="L34">	private final double sigMax = 0.1;</span>
+	
+	/**
+	 * Constructor.
+	 */
+	public ModelPlayer() {
+<span class="fc" id="L40">		super();</span>
+<span class="fc" id="L41">		player = new PlayerGate(sigMin, sigMax);</span>
+<span class="fc" id="L42">		player.output.setName(&quot;player_output&quot;);</span>
+<span class="fc" id="L43">		player.getGate().setName(&quot;player_gate&quot;);</span>
+<span class="fc" id="L44">	}</span>
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
+	 */
+	@Override
+	public UnitGenerator getUnitGenerator() {
+<span class="fc" id="L51">		return player;</span>
+	}
+
+	/**
+	 * Get the jsyn output port.
+	 * @return UnitInputPort
+	 */
+	public UnitOutputPort getOutputPort() {
+<span class="fc" id="L59">		return player.getOutput();</span>
+	}
+
+	/**
+	 * Get the sample file name.
+	 * @return String
+	 */
+	public StringProperty getSampleFileName() {
+<span class="fc" id="L67">		return sampleFileName;</span>
+	}
+	
+	/**
+	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getAllPorts()
+	 */
+	@Override
+	public Collection&lt;UnitPort&gt; getAllPorts() {
+<span class="nc" id="L75">		return player.getPorts();</span>
+	}
+
+	/**
+	 * Load wav file sample.
+	 *
+	 * @param fileName the file name
+	 */
+	public void loadSample(String fileName) {
+<span class="fc" id="L84">		File sampleFile = new File( fileName);</span>
+<span class="fc" id="L85">		sampleFileName.set(sampleFile.getName());</span>
+		try {
+<span class="fc" id="L87">			player.loadSample(sampleFile);</span>
+<span class="fc" id="L88">		} catch (IOException e) {</span>
+<span class="fc" id="L89">			sampleFileName.set(null);</span>
+		}
+<span class="fc" id="L91">	}</span>
+	
+	/**
+	 * Play the sample.
+	 */
+	public void play() {
+<span class="fc" id="L97">		player.play();</span>
+<span class="fc" id="L98">	}</span>
+
+	/**
+	 * Stop playing the sample.
+	 */
+	public void stop() {
+<span class="fc" id="L104">		player.stop();</span>
+<span class="fc" id="L105">	}</span>
+
+	/**
+	 * Checks if is play running.
+	 *
+	 * @return true, if is play running
+	 */
+	public boolean isPlayRunning() {
+<span class="fc" id="L113">		return player.dataQueue.hasMore();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
