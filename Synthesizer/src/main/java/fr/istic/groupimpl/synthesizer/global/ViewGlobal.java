@@ -672,6 +672,11 @@ public class ViewGlobal implements Initializable {
          FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("synthlab file (*.sl)", "*.sl");
          fileChooser.getExtensionFilters().add(extFilter);
          
+         
+         if ( initialDirectory != null )
+         {
+        	 fileChooser.setInitialDirectory(initialDirectory);
+         }
          //Show save file dialog
          File file = fileChooser.showSaveDialog(stage);
          
@@ -680,6 +685,7 @@ public class ViewGlobal implements Initializable {
      		configuration.setModules(getModules());
      		configuration.setConnections(ControllerGlobal.getInstance().getConnectionList());
      		FileUtil.saveFile(configuration, file);
+     		initialDirectory = file.getParentFile();
          }	
 	}
 
@@ -702,6 +708,7 @@ public class ViewGlobal implements Initializable {
 	/**
 	 * Handle load configuration.
 	 */
+	private File initialDirectory=null;
 	@FXML
 	public void handleLoadConfiguration(){
 		 FileChooser fileChooser = new FileChooser();         
@@ -710,6 +717,11 @@ public class ViewGlobal implements Initializable {
          fileChooser.getExtensionFilters().add(extFilter);
           
          Map<String,ViewComponent> views = new HashMap<>();
+         
+         if ( initialDirectory != null )
+         {
+        	 fileChooser.setInitialDirectory(initialDirectory);
+         }
          
          //Show save file dialog
          File file = fileChooser.showOpenDialog(stage);
@@ -731,6 +743,8 @@ public class ViewGlobal implements Initializable {
         				 viewOut.getStuff(connection.getOutputPort().getName()), viewIn.getPort(connection.getInputPort().getName()),
         				 viewOut.getPort(connection.getOutputPort().getName()));
         	 });
+        	 
+        	 initialDirectory = file.getParentFile();
         	 
          }
 
