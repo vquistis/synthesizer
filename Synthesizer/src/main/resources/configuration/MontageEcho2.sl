@@ -1,122 +1,137 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <configuration>
     <connections>
-        <color>0x8a2be2ff</color>
+        <color>0x4d804dff</color>
         <inputPort>
             <connected>true</connected>
-            <idModule>Module0</idModule>
-            <name>vco_inputFm</name>
+            <idModule>Module9</idModule>
+            <name>mixer_input0</name>
             <type>IN</type>
         </inputPort>
         <outputPort>
             <connected>true</connected>
-            <idModule>Module1</idModule>
-            <name>rep_out3</name>
+            <idModule>Module5</idModule>
+            <name>outputAmplitude</name>
             <type>OUT</type>
         </outputPort>
     </connections>
     <connections>
-        <color>0x8a2be2ff</color>
+        <color>0x4d804dff</color>
         <inputPort>
             <connected>true</connected>
-            <idModule>Module7</idModule>
-            <name>echo_in</name>
+            <idModule>Module9</idModule>
+            <name>mixer_input1</name>
+            <type>IN</type>
+        </inputPort>
+        <outputPort>
+            <connected>true</connected>
+            <idModule>Module0</idModule>
+            <name>outputAmplitude</name>
+            <type>OUT</type>
+        </outputPort>
+    </connections>
+    <connections>
+        <color>0xffff4dff</color>
+        <inputPort>
+            <connected>true</connected>
+            <idModule>Module0</idModule>
+            <name>vco_inputFm</name>
             <type>IN</type>
         </inputPort>
         <outputPort>
             <connected>true</connected>
             <idModule>Module6</idModule>
-            <name>vcf_output</name>
-            <type>OUT</type>
-        </outputPort>
-    </connections>
-    <connections>
-        <color>0x8a2be2ff</color>
-        <inputPort>
-            <connected>true</connected>
-            <idModule>Module4</idModule>
-            <name>vca_input</name>
-            <type>IN</type>
-        </inputPort>
-        <outputPort>
-            <connected>true</connected>
-            <idModule>Module2</idModule>
-            <name>outputAmplitude</name>
-            <type>OUT</type>
-        </outputPort>
-    </connections>
-    <connections>
-        <color>0x8a2be2ff</color>
-        <inputPort>
-            <connected>true</connected>
-            <idModule>Module4</idModule>
-            <name>vca_inputam</name>
-            <type>IN</type>
-        </inputPort>
-        <outputPort>
-            <connected>true</connected>
-            <idModule>Module3</idModule>
-            <name>eg_output</name>
-            <type>OUT</type>
-        </outputPort>
-    </connections>
-    <connections>
-        <color>0x8a2be2ff</color>
-        <inputPort>
-            <connected>true</connected>
-            <idModule>Module1</idModule>
-            <name>rep_in</name>
-            <type>IN</type>
-        </inputPort>
-        <outputPort>
-            <connected>true</connected>
-            <idModule>Module0</idModule>
-            <name>outputAmplitude</name>
-            <type>OUT</type>
-        </outputPort>
-    </connections>
-    <connections>
-        <color>0x8a2be2ff</color>
-        <inputPort>
-            <connected>true</connected>
-            <idModule>Module2</idModule>
-            <name>vco_inputFm</name>
-            <type>IN</type>
-        </inputPort>
-        <outputPort>
-            <connected>true</connected>
-            <idModule>Module1</idModule>
             <name>rep_out1</name>
             <type>OUT</type>
         </outputPort>
     </connections>
     <connections>
+        <color>0xffff4dff</color>
+        <inputPort>
+            <connected>true</connected>
+            <idModule>Module5</idModule>
+            <name>vco_inputFm</name>
+            <type>IN</type>
+        </inputPort>
+        <outputPort>
+            <connected>true</connected>
+            <idModule>Module6</idModule>
+            <name>rep_out2</name>
+            <type>OUT</type>
+        </outputPort>
+    </connections>
+    <connections>
+        <color>0x4d804dff</color>
+        <inputPort>
+            <connected>true</connected>
+            <idModule>Module7</idModule>
+            <name>oscillo_in</name>
+            <type>IN</type>
+        </inputPort>
+        <outputPort>
+            <connected>true</connected>
+            <idModule>Module3</idModule>
+            <name>vca_output</name>
+            <type>OUT</type>
+        </outputPort>
+    </connections>
+    <connections>
         <color>0x8a2be2ff</color>
         <inputPort>
             <connected>true</connected>
-            <idModule>Module3</idModule>
+            <idModule>Module8</idModule>
             <name>eg_input</name>
             <type>IN</type>
         </inputPort>
         <outputPort>
             <connected>true</connected>
             <idModule>Module1</idModule>
-            <name>rep_out2</name>
+            <name>outputKeyGate</name>
             <type>OUT</type>
         </outputPort>
     </connections>
     <connections>
-        <color>0x8a2be2ff</color>
+        <color>0x4d804dff</color>
         <inputPort>
             <connected>true</connected>
-            <idModule>Module5</idModule>
+            <idModule>Module2</idModule>
             <name>out_input</name>
             <type>IN</type>
         </inputPort>
         <outputPort>
             <connected>true</connected>
             <idModule>Module7</idModule>
-            <name>echo_out</name>
+            <name>oscillo_out</name>
+            <type>OUT</type>
+        </outputPort>
+    </connections>
+    <connections>
+        <color>0x4d804dff</color>
+        <inputPort>
+            <connected>true</connected>
+            <idModule>Module3</idModule>
+            <name>vca_input</name>
+            <type>IN</type>
+        </inputPort>
+        <outputPort>
+            <connected>true</connected>
+            <idModule>Module9</idModule>
+            <name>output</name>
+            <type>OUT</type>
+        </outputPort>
+    </connections>
+    <connections>
+        <color>0xffff4dff</color>
+        <inputPort>
+            <connected>true</connected>
+            <idModule>Module6</idModule>
+            <name>rep_in</name>
+            <type>IN</type>
+        </inputPort>
+        <outputPort>
+            <connected>true</connected>
+            <idModule>Module1</idModule>
+            <name>outputKeyCV</name>
             <type>OUT</type>
         </outputPort>
     </connections>
@@ -124,14 +139,14 @@
         <color>0x8a2be2ff</color>
         <inputPort>
             <connected>true</connected>
-            <idModule>Module6</idModule>
-            <name>vcf_input</name>
+            <idModule>Module3</idModule>
+            <name>vca_inputam</name>
             <type>IN</type>
         </inputPort>
         <outputPort>
             <connected>true</connected>
-            <idModule>Module4</idModule>
-            <name>vca_output</name>
+            <idModule>Module8</idModule>
+            <name>eg_output</name>
             <type>OUT</type>
         </outputPort>
     </connections>
@@ -141,11 +156,11 @@
         <parameters>
             <entry>
                 <key>octave</key>
-                <value>2.0</value>
+                <value>3.0</value>
             </entry>
             <entry>
                 <key>typeOutput</key>
-                <value>2.0</value>
+                <value>1.0</value>
             </entry>
             <entry>
                 <key>precision</key>
@@ -153,7 +168,7 @@
             </entry>
             <entry>
                 <key>choiceBaseFreq</key>
-                <value>0.0</value>
+                <value>2.0</value>
             </entry>
             <entry>
                 <key>choiceAmplitude</key>
@@ -209,8 +224,177 @@
         <posY>0</posY>
     </modules>
     <modules>
-        <filename>fxml/rep.fxml</filename>
+        <filename>fxml/keyboard.fxml</filename>
         <id>Module1</id>
+        <parameters/>
+        <ports>
+            <connected>true</connected>
+            <name>outputKeyCV</name>
+            <type>OUT</type>
+        </ports>
+        <ports>
+            <connected>true</connected>
+            <name>outputKeyGate</name>
+            <type>OUT</type>
+        </ports>
+        <posX>0</posX>
+        <posY>1</posY>
+    </modules>
+    <modules>
+        <filename>fxml/out.fxml</filename>
+        <id>Module2</id>
+        <parameters>
+            <entry>
+                <key>muteVolumeFx</key>
+                <value>0.0</value>
+            </entry>
+            <entry>
+                <key>knobVolume</key>
+                <value>9.346295260515646</value>
+            </entry>
+        </parameters>
+        <ports>
+            <connected>true</connected>
+            <name>out_input</name>
+            <type>IN</type>
+        </ports>
+        <posX>1</posX>
+        <posY>1</posY>
+    </modules>
+    <modules>
+        <filename>fxml/vca.fxml</filename>
+        <id>Module3</id>
+        <parameters>
+            <entry>
+                <key>amplitudeKnod</key>
+                <value>0.0</value>
+            </entry>
+        </parameters>
+        <ports>
+            <connected>true</connected>
+            <name>vca_input</name>
+            <type>IN</type>
+        </ports>
+        <ports>
+            <connected>true</connected>
+            <name>vca_inputam</name>
+            <type>IN</type>
+        </ports>
+        <ports>
+            <connected>false</connected>
+            <name>vca_inputa0</name>
+            <type>IN</type>
+        </ports>
+        <ports>
+            <connected>true</connected>
+            <name>vca_output</name>
+            <type>OUT</type>
+        </ports>
+        <posX>1</posX>
+        <posY>0</posY>
+    </modules>
+    <modules>
+        <filename>fxml/echo.fxml</filename>
+        <id>Module4</id>
+        <parameters>
+            <entry>
+                <key>knobEchoPeriod</key>
+                <value>0.08936063113987755</value>
+            </entry>
+            <entry>
+                <key>knobEchoAttenuation</key>
+                <value>-2.0215745963544443</value>
+            </entry>
+        </parameters>
+        <ports>
+            <connected>false</connected>
+            <name>echo_in</name>
+            <type>IN</type>
+        </ports>
+        <ports>
+            <connected>false</connected>
+            <name>echo_out</name>
+            <type>OUT</type>
+        </ports>
+        <posX>2</posX>
+        <posY>1</posY>
+    </modules>
+    <modules>
+        <filename>fxml/vco.fxml</filename>
+        <id>Module5</id>
+        <parameters>
+            <entry>
+                <key>octave</key>
+                <value>4.0</value>
+            </entry>
+            <entry>
+                <key>typeOutput</key>
+                <value>2.0</value>
+            </entry>
+            <entry>
+                <key>precision</key>
+                <value>0.0</value>
+            </entry>
+            <entry>
+                <key>choiceBaseFreq</key>
+                <value>2.0</value>
+            </entry>
+            <entry>
+                <key>choiceAmplitude</key>
+                <value>1.0</value>
+            </entry>
+        </parameters>
+        <ports>
+            <connected>true</connected>
+            <name>vco_inputFm</name>
+            <type>IN</type>
+        </ports>
+        <ports>
+            <connected>false</connected>
+            <name>inputf0</name>
+            <type>IN</type>
+        </ports>
+        <ports>
+            <connected>false</connected>
+            <name>inputOctave</name>
+            <type>IN</type>
+        </ports>
+        <ports>
+            <connected>false</connected>
+            <name>inputSelectShape</name>
+            <type>IN</type>
+        </ports>
+        <ports>
+            <connected>false</connected>
+            <name>inputAmplitude</name>
+            <type>IN</type>
+        </ports>
+        <ports>
+            <connected>true</connected>
+            <name>outputAmplitude</name>
+            <type>OUT</type>
+        </ports>
+        <ports>
+            <connected>false</connected>
+            <name>vco_outputSquare</name>
+            <type>OUT</type>
+        </ports>
+        <ports>
+            <connected>false</connected>
+            <name>vco_outputSawTooth</name>
+            <type>OUT</type>
+        </ports>
+        <ports>
+            <connected>false</connected>
+            <name>vco_outputTriangle</name>
+            <type>OUT</type>
+        </ports>
+        <posX>2</posX>
+        <posY>0</posY>
+    </modules>
+    <modules>
+        <filename>fxml/rep.fxml</filename>
+        <id>Module6</id>
         <parameters/>
         <ports>
             <connected>true</connected>
@@ -228,105 +412,54 @@
             <type>OUT</type>
         </ports>
         <ports>
-            <connected>true</connected>
+            <connected>false</connected>
             <name>rep_out3</name>
             <type>OUT</type>
         </ports>
-        <posX>0</posX>
+        <posX>3</posX>
         <posY>1</posY>
     </modules>
     <modules>
-        <filename>fxml/vco.fxml</filename>
-        <id>Module2</id>
+        <filename>fxml/oscillo.fxml</filename>
+        <id>Module7</id>
         <parameters>
             <entry>
-                <key>octave</key>
+                <key>refreshPeriodSlider</key>
                 <value>0.0</value>
-            </entry>
-            <entry>
-                <key>typeOutput</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>precision</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>choiceBaseFreq</key>
-                <value>3.0</value>
-            </entry>
-            <entry>
-                <key>choiceAmplitude</key>
-                <value>1.0</value>
             </entry>
         </parameters>
         <ports>
             <connected>true</connected>
-            <name>vco_inputFm</name>
-            <type>IN</type>
-        </ports>
-        <ports>
-            <connected>false</connected>
-            <name>inputf0</name>
-            <type>IN</type>
-        </ports>
-        <ports>
-            <connected>false</connected>
-            <name>inputOctave</name>
-            <type>IN</type>
-        </ports>
-        <ports>
-            <connected>false</connected>
-            <name>inputSelectShape</name>
-            <type>IN</type>
-        </ports>
-        <ports>
-            <connected>false</connected>
-            <name>inputAmplitude</name>
+            <name>oscillo_in</name>
             <type>IN</type>
         </ports>
         <ports>
             <connected>true</connected>
-            <name>outputAmplitude</name>
+            <name>oscillo_out</name>
             <type>OUT</type>
         </ports>
-        <ports>
-            <connected>false</connected>
-            <name>vco_outputSquare</name>
-            <type>OUT</type>
-        </ports>
-        <ports>
-            <connected>false</connected>
-            <name>vco_outputSawTooth</name>
-            <type>OUT</type>
-        </ports>
-        <ports>
-            <connected>false</connected>
-            <name>vco_outputTriangle</name>
-            <type>OUT</type>
-        </ports>
-        <posX>1</posX>
+        <posX>3</posX>
         <posY>0</posY>
     </modules>
     <modules>
         <filename>fxml/eg.fxml</filename>
-        <id>Module3</id>
+        <id>Module8</id>
         <parameters>
             <entry>
                 <key>knobDecay</key>
-                <value>0.15327266324178143</value>
+                <value>0.028673019580364823</value>
             </entry>
             <entry>
                 <key>knobSustain</key>
-                <value>-2.6138512993982914</value>
+                <value>-2.162998072366733</value>
             </entry>
             <entry>
                 <key>knobAttack</key>
-                <value>0.17893629440596168</value>
+                <value>0.061002782866857425</value>
             </entry>
             <entry>
                 <key>knobRelease</key>
-                <value>1.4859836568331406</value>
+                <value>0.281860746216345</value>
             </entry>
         </parameters>
         <ports>
@@ -364,117 +497,77 @@
             <name>Amplitude</name>
             <type>IN</type>
         </ports>
-        <posX>1</posX>
-        <posY>1</posY>
+        <posX>4</posX>
+        <posY>0</posY>
     </modules>
     <modules>
-        <filename>fxml/vca.fxml</filename>
-        <id>Module4</id>
+        <filename>fxml/mixer4.fxml</filename>
+        <id>Module9</id>
         <parameters>
             <entry>
-                <key>amplitudeKnod</key>
-                <value>1.2004348790002464</value>
+                <key>muteVolumeFx4</key>
+                <value>0.0</value>
+            </entry>
+            <entry>
+                <key>muteVolumeFx3</key>
+                <value>0.0</value>
+            </entry>
+            <entry>
+                <key>muteVolumeFx2</key>
+                <value>0.0</value>
+            </entry>
+            <entry>
+                <key>muteVolumeFx1</key>
+                <value>0.0</value>
+            </entry>
+            <entry>
+                <key>knobVolume4</key>
+                <value>0.0</value>
+            </entry>
+            <entry>
+                <key>knobVolume3</key>
+                <value>0.0</value>
+            </entry>
+            <entry>
+                <key>knobVolume2</key>
+                <value>-0.37632029107012244</value>
+            </entry>
+            <entry>
+                <key>knobVolume1</key>
+                <value>0.12674909764100306</value>
             </entry>
         </parameters>
         <ports>
             <connected>true</connected>
-            <name>vca_input</name>
+            <name>mixer_input0</name>
             <type>IN</type>
         </ports>
         <ports>
             <connected>true</connected>
-            <name>vca_inputam</name>
+            <name>mixer_input1</name>
             <type>IN</type>
         </ports>
         <ports>
             <connected>false</connected>
-            <name>vca_inputa0</name>
-            <type>IN</type>
-        </ports>
-        <ports>
-            <connected>true</connected>
-            <name>vca_output</name>
-            <type>OUT</type>
-        </ports>
-        <posX>2</posX>
-        <posY>1</posY>
-    </modules>
-    <modules>
-        <filename>fxml/out.fxml</filename>
-        <id>Module5</id>
-        <parameters>
-            <entry>
-                <key>muteVolumeFx</key>
-                <value>1.0</value>
-            </entry>
-            <entry>
-                <key>knobVolume</key>
-                <value>-0.10739801714500885</value>
-            </entry>
-        </parameters>
-        <ports>
-            <connected>true</connected>
-            <name>out_input</name>
-            <type>IN</type>
-        </ports>
-        <posX>3</posX>
-        <posY>1</posY>
-    </modules>
-    <modules>
-        <filename>fxml/vcf-lp.fxml</filename>
-        <id>Module6</id>
-        <parameters>
-            <entry>
-                <key>knobCutoff</key>
-                <value>796.5626618158399</value>
-            </entry>
-            <entry>
-                <key>knobResonance</key>
-                <value>1.0</value>
-            </entry>
-        </parameters>
-        <ports>
-            <connected>true</connected>
-            <name>vcf_input</name>
+            <name>mixer_input2</name>
             <type>IN</type>
         </ports>
         <ports>
             <connected>false</connected>
-            <name>vcf_fm</name>
+            <name>mixer_input3</name>
             <type>IN</type>
         </ports>
         <ports>
             <connected>true</connected>
-            <name>vcf_output</name>
+            <name>output</name>
             <type>OUT</type>
         </ports>
-        <posX>2</posX>
-        <posY>0</posY>
-    </modules>
-    <modules>
-        <filename>fxml/echo.fxml</filename>
-        <id>Module7</id>
-        <parameters>
-            <entry>
-                <key>knobEchoPeriod</key>
-                <value>0.2902532206339826</value>
-            </entry>
-            <entry>
-                <key>knobEchoAttenuation</key>
-                <value>-3.5241774288184757</value>
-            </entry>
-        </parameters>
         <ports>
-            <connected>true</connected>
-            <name>echo_in</name>
-            <type>IN</type>
-        </ports>
-        <ports>
-            <connected>true</connected>
-            <name>echo_out</name>
+            <connected>false</connected>
+            <name>mixer_averageOutputValue</name>
             <type>OUT</type>
         </ports>
-        <posX>3</posX>
-        <posY>0</posY>
+        <posX>4</posX>
+        <posY>1</posY>
     </modules>
 </configuration>

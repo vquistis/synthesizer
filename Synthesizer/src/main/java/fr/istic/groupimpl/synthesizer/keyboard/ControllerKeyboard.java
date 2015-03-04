@@ -36,8 +36,14 @@ public class ControllerKeyboard extends ControllerComponent {
 	/**
 	 * Release of key.
 	 */
-	public void handleViewkeyReleaseEvent() {
-		model.setPress(false);
+	String strRef = "QZSEDFTGYHUJK";
+	public void handleViewkeyReleaseEvent(String key) {
+		
+		int indKey = strRef.indexOf(key);
+		if ( indKey == model.getKey() )
+		{
+			model.setPress(false);
+		}
 	}
 
 	/**
@@ -47,9 +53,8 @@ public class ControllerKeyboard extends ControllerComponent {
 	 */
 	public void handleViewkeyEvent(String key) {
 
-		String str = "QZSEDFTGYHUJK";
 
-		int indKey = str.indexOf(key);
+		int indKey = strRef.indexOf(key);
 		if (indKey >= 0) {
 			model.setKey(indKey);
 			model.setPress(true);

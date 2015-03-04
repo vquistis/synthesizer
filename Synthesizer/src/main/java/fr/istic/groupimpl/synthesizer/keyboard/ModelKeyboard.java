@@ -29,6 +29,8 @@ public class ModelKeyboard extends ModelComponent {
 	/** The octave. */
 	private int octave; // from -9 to +9
 	
+	private int numKey;
+	
 	/**
 	 * Constructor.
 	 */
@@ -80,6 +82,14 @@ public class ModelKeyboard extends ModelComponent {
 		double v = (double)octave + ((double)n)/12.;
 		v /=SignalUtil.COEF_VOLT;
 		keyboard.setVolt(v);
+		numKey = n;
+	}
+	/**
+	 * get the last press key of the keyboard.
+	 *
+	 */
+	public int getKey() {
+		return numKey;
 	}
 	
 	/**
