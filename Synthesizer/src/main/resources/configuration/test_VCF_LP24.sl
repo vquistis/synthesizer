@@ -4,44 +4,14 @@
         <color>0x8a2be2ff</color>
         <inputPort>
             <connected>true</connected>
-            <idModule>Module4</idModule>
-            <name>mixer_input0</name>
-            <type>IN</type>
-        </inputPort>
-        <outputPort>
-            <connected>true</connected>
-            <idModule>Module2</idModule>
-            <name>outputAmplitude</name>
-            <type>OUT</type>
-        </outputPort>
-    </connections>
-    <connections>
-        <color>0x8a2be2ff</color>
-        <inputPort>
-            <connected>true</connected>
-            <idModule>Module1</idModule>
-            <name>rep_in</name>
-            <type>IN</type>
-        </inputPort>
-        <outputPort>
-            <connected>true</connected>
-            <idModule>Module4</idModule>
-            <name>output</name>
-            <type>OUT</type>
-        </outputPort>
-    </connections>
-    <connections>
-        <color>0x8a2be2ff</color>
-        <inputPort>
-            <connected>true</connected>
-            <idModule>Module8</idModule>
-            <name>vcf_input</name>
+            <idModule>Module3</idModule>
+            <name>oscillo_in</name>
             <type>IN</type>
         </inputPort>
         <outputPort>
             <connected>true</connected>
             <idModule>Module1</idModule>
-            <name>rep_out2</name>
+            <name>rep_out1</name>
             <type>OUT</type>
         </outputPort>
     </connections>
@@ -64,14 +34,29 @@
         <color>0x8a2be2ff</color>
         <inputPort>
             <connected>true</connected>
-            <idModule>Module4</idModule>
-            <name>mixer_input1</name>
+            <idModule>Module5</idModule>
+            <name>oscillo_in</name>
             <type>IN</type>
         </inputPort>
         <outputPort>
             <connected>true</connected>
-            <idModule>Module6</idModule>
-            <name>outputAmplitude</name>
+            <idModule>Module8</idModule>
+            <name>vcf_output</name>
+            <type>OUT</type>
+        </outputPort>
+    </connections>
+    <connections>
+        <color>0x8a2be2ff</color>
+        <inputPort>
+            <connected>true</connected>
+            <idModule>Module8</idModule>
+            <name>vcf_input</name>
+            <type>IN</type>
+        </inputPort>
+        <outputPort>
+            <connected>true</connected>
+            <idModule>Module1</idModule>
+            <name>rep_out2</name>
             <type>OUT</type>
         </outputPort>
     </connections>
@@ -94,14 +79,14 @@
         <color>0x8a2be2ff</color>
         <inputPort>
             <connected>true</connected>
-            <idModule>Module3</idModule>
-            <name>oscillo_in</name>
+            <idModule>Module1</idModule>
+            <name>rep_in</name>
             <type>IN</type>
         </inputPort>
         <outputPort>
             <connected>true</connected>
-            <idModule>Module1</idModule>
-            <name>rep_out1</name>
+            <idModule>Module4</idModule>
+            <name>output</name>
             <type>OUT</type>
         </outputPort>
     </connections>
@@ -109,14 +94,29 @@
         <color>0x8a2be2ff</color>
         <inputPort>
             <connected>true</connected>
-            <idModule>Module5</idModule>
-            <name>oscillo_in</name>
+            <idModule>Module4</idModule>
+            <name>mixer_input0</name>
             <type>IN</type>
         </inputPort>
         <outputPort>
             <connected>true</connected>
-            <idModule>Module8</idModule>
-            <name>vcf_output</name>
+            <idModule>Module2</idModule>
+            <name>outputAmplitude</name>
+            <type>OUT</type>
+        </outputPort>
+    </connections>
+    <connections>
+        <color>0x8a2be2ff</color>
+        <inputPort>
+            <connected>true</connected>
+            <idModule>Module4</idModule>
+            <name>mixer_input1</name>
+            <type>IN</type>
+        </inputPort>
+        <outputPort>
+            <connected>true</connected>
+            <idModule>Module6</idModule>
+            <name>outputAmplitude</name>
             <type>OUT</type>
         </outputPort>
     </connections>
@@ -481,7 +481,7 @@
         <parameters>
             <entry>
                 <key>knobCutoff</key>
-                <value>10.0</value>
+                <value>309.0867120222779</value>
             </entry>
             <entry>
                 <key>knobResonance</key>
