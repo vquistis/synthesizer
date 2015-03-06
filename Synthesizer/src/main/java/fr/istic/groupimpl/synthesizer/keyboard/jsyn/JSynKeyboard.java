@@ -32,6 +32,14 @@ public class JSynKeyboard extends UnitGenerator  {
 		addPort(outputGate = new UnitOutputPort("outputKeyGate"));
 	}
 	
+	public UnitOutputPort getOutputCV() {
+		return outputCV;
+	}
+
+	public UnitOutputPort getOutputGate() {
+		return outputGate;
+	}
+
 	/**
 	 * set volt.
 	 *
