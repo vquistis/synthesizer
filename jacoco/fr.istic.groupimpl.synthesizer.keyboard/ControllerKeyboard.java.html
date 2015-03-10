@@ -36,9 +36,15 @@ public class ControllerKeyboard extends ControllerComponent {
 	/**
 	 * Release of key.
 	 */
-	public void handleViewkeyReleaseEvent() {
-<span class="nc" id="L40">		model.setPress(false);</span>
-<span class="nc" id="L41">	}</span>
+<span class="nc" id="L39">	String strRef = &quot;QZSEDFTGYHUJK&quot;;</span>
+	public void handleViewkeyReleaseEvent(String key) {
+		
+<span class="nc" id="L42">		int indKey = strRef.indexOf(key);</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if ( indKey == model.getKey() )</span>
+		{
+<span class="nc" id="L45">			model.setPress(false);</span>
+		}
+<span class="nc" id="L47">	}</span>
 
 	/**
 	 * handle key pressed.
@@ -47,28 +53,27 @@ public class ControllerKeyboard extends ControllerComponent {
 	 */
 	public void handleViewkeyEvent(String key) {
 
-<span class="nc" id="L50">		String str = &quot;QZSEDFTGYHUJK&quot;;</span>
 
-<span class="nc" id="L52">		int indKey = str.indexOf(key);</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (indKey &gt;= 0) {</span>
-<span class="nc" id="L54">			model.setKey(indKey);</span>
-<span class="nc" id="L55">			model.setPress(true);</span>
-<span class="nc" id="L56">		} else {</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">			if (key.equals(&quot;X&quot;)) {</span>
-<span class="nc" id="L58">				model.incOctave();</span>
+<span class="nc" id="L57">		int indKey = strRef.indexOf(key);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (indKey &gt;= 0) {</span>
+<span class="nc" id="L59">			model.setKey(indKey);</span>
+<span class="nc" id="L60">			model.setPress(true);</span>
+<span class="nc" id="L61">		} else {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">			if (key.equals(&quot;X&quot;)) {</span>
+<span class="nc" id="L63">				model.incOctave();</span>
 			}
-<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (key.equals(&quot;W&quot;)) {</span>
-<span class="nc" id="L61">				model.decOctave();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">			if (key.equals(&quot;W&quot;)) {</span>
+<span class="nc" id="L66">				model.decOctave();</span>
 			}
 		}
-<span class="nc" id="L64">	}</span>
+<span class="nc" id="L69">	}</span>
 
 	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.ControllerComponent#getModel()
 	 */
 	@Override
 	public ModelComponent getModel() {
-<span class="nc" id="L71">		return model;</span>
+<span class="nc" id="L76">		return model;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

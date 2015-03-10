@@ -1,5 +1,6 @@
 fr.istic.groupimpl.synthesizer.eg
 fr.istic.groupimpl.synthesizer.global
+fr.istic.groupimpl.synthesizer.keyboard.jsyn
 fr.istic.groupimpl.synthesizer.mixer.jsyn
 fr.istic.groupimpl.synthesizer.out
 fr.istic.groupimpl.synthesizer.player

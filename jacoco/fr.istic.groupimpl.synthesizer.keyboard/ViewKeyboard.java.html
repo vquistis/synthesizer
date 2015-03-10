@@ -73,7 +73,7 @@ import fr.istic.groupimpl.synthesizer.global.ControllerGlobal;
 		}); 
 		// Recovery keyboards keys when key is released
 <span class="nc" id="L75">		ControllerGlobal.getInstance().getStage().addEventHandler(KeyEvent.KEY_RELEASED, (event) -&gt;  {</span>
-			controller.handleViewkeyReleaseEvent();
+			controller.handleViewkeyReleaseEvent(event.getCode().toString());
 
 		}); 
 <span class="nc" id="L79">	}</span>

@@ -672,16 +672,22 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 <span class="nc" id="L672">         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(&quot;synthlab file (*.sl)&quot;, &quot;*.sl&quot;);</span>
 <span class="nc" id="L673">         fileChooser.getExtensionFilters().add(extFilter);</span>
          
-         //Show save file dialog
-<span class="nc" id="L676">         File file = fileChooser.showSaveDialog(stage);</span>
          
-<span class="nc bnc" id="L678" title="All 2 branches missed.">         if(file != null){</span>
-<span class="nc" id="L679">        	Configuration configuration = new Configuration();     		</span>
-<span class="nc" id="L680">     		configuration.setModules(getModules());</span>
-<span class="nc" id="L681">     		configuration.setConnections(ControllerGlobal.getInstance().getConnectionList());</span>
-<span class="nc" id="L682">     		FileUtil.saveFile(configuration, file);</span>
+<span class="nc bnc" id="L676" title="All 2 branches missed.">         if ( initialDirectory != null )</span>
+         {
+<span class="nc" id="L678">        	 fileChooser.setInitialDirectory(initialDirectory);</span>
+         }
+         //Show save file dialog
+<span class="nc" id="L681">         File file = fileChooser.showSaveDialog(stage);</span>
+         
+<span class="nc bnc" id="L683" title="All 2 branches missed.">         if(file != null){</span>
+<span class="nc" id="L684">        	Configuration configuration = new Configuration();     		</span>
+<span class="nc" id="L685">     		configuration.setModules(getModules());</span>
+<span class="nc" id="L686">     		configuration.setConnections(ControllerGlobal.getInstance().getConnectionList());</span>
+<span class="nc" id="L687">     		FileUtil.saveFile(configuration, file);</span>
+<span class="nc" id="L688">     		initialDirectory = file.getParentFile();</span>
          }	
-<span class="nc" id="L684">	}</span>
+<span class="nc" id="L690">	}</span>
 
 	/**
 	 * Gets the modules.
@@ -689,41 +695,47 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 	 * @return the modules
 	 */
 	public List&lt;Module&gt; getModules() {
-<span class="nc" id="L692">		List&lt;Module&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L693">		int index=0;</span>
-<span class="nc bnc" id="L694" title="All 2 branches missed.">		for (Supplier&lt;Module&gt; supplier : suppliers) {</span>
-<span class="nc" id="L695">			Module module = supplier.get();</span>
-<span class="nc" id="L696">			module.setId(&quot;Module&quot;+index);</span>
-<span class="nc" id="L697">			list.add(module);</span>
-<span class="nc" id="L698">			index++;</span>
+<span class="nc" id="L698">		List&lt;Module&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L699">		int index=0;</span>
+<span class="nc bnc" id="L700" title="All 2 branches missed.">		for (Supplier&lt;Module&gt; supplier : suppliers) {</span>
+<span class="nc" id="L701">			Module module = supplier.get();</span>
+<span class="nc" id="L702">			module.setId(&quot;Module&quot;+index);</span>
+<span class="nc" id="L703">			list.add(module);</span>
+<span class="nc" id="L704">			index++;</span>
 		}
-<span class="nc" id="L700">		return list;</span>
+<span class="nc" id="L706">		return list;</span>
 	}
 	/**
 	 * Handle load configuration.
 	 */
+<span class="nc" id="L711">	private File initialDirectory=null;</span>
 	@FXML
 	public void handleLoadConfiguration(){
-<span class="nc" id="L707">		 FileChooser fileChooser = new FileChooser();         </span>
+<span class="nc" id="L714">		 FileChooser fileChooser = new FileChooser();         </span>
          //Set extension filter
-<span class="nc" id="L709">         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(&quot;synthlab file (*.sl)&quot;, &quot;*.sl&quot;);</span>
-<span class="nc" id="L710">         fileChooser.getExtensionFilters().add(extFilter);</span>
+<span class="nc" id="L716">         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(&quot;synthlab file (*.sl)&quot;, &quot;*.sl&quot;);</span>
+<span class="nc" id="L717">         fileChooser.getExtensionFilters().add(extFilter);</span>
           
-<span class="nc" id="L712">         Map&lt;String,ViewComponent&gt; views = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L719">         Map&lt;String,ViewComponent&gt; views = new HashMap&lt;&gt;();</span>
+         
+<span class="nc bnc" id="L721" title="All 2 branches missed.">         if ( initialDirectory != null )</span>
+         {
+<span class="nc" id="L723">        	 fileChooser.setInitialDirectory(initialDirectory);</span>
+         }
          
          //Show save file dialog
-<span class="nc" id="L715">         File file = fileChooser.showOpenDialog(stage);</span>
-<span class="nc bnc" id="L716" title="All 2 branches missed.">         if(file != null){</span>
+<span class="nc" id="L727">         File file = fileChooser.showOpenDialog(stage);</span>
+<span class="nc bnc" id="L728" title="All 2 branches missed.">         if(file != null){</span>
         	 	// traitement        	 
-<span class="nc" id="L718">        	 clearAllComponent();        	 </span>
-<span class="nc" id="L719">        	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);</span>
-<span class="nc" id="L720">        	 Collections.sort(configuration.getModules(), new Module());</span>
+<span class="nc" id="L730">        	 clearAllComponent();        	 </span>
+<span class="nc" id="L731">        	 Configuration configuration = (Configuration) FileUtil.loadFile(file, Configuration.class);</span>
+<span class="nc" id="L732">        	 Collections.sort(configuration.getModules(), new Module());</span>
         	 // configue component
-<span class="nc" id="L722">        	 configuration.getModules().forEach((module) -&gt;{</span>
+<span class="nc" id="L734">        	 configuration.getModules().forEach((module) -&gt;{</span>
         		 views.put(module.getId(),createModule(module.getFilename(), module));
         	 });
         	 
-<span class="nc" id="L726">        	 configuration.getConnections().forEach((connection) -&gt; {</span>
+<span class="nc" id="L738">        	 configuration.getConnections().forEach((connection) -&gt; {</span>
         		 Cable cable = new Cable(Color.valueOf(connection.getColor()));
         		 ViewComponent viewIn = views.get(connection.getInputPort().getIdModule());
         		 ViewComponent viewOut = views.get(connection.getOutputPort().getIdModule());
@@ -732,19 +744,21 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
         				 viewOut.getPort(connection.getOutputPort().getName()));
         	 });
         	 
+<span class="nc" id="L747">        	 initialDirectory = file.getParentFile();</span>
+        	 
          }
 
-<span class="nc" id="L737">	}</span>
+<span class="nc" id="L751">	}</span>
 
 	/**
 	 * Clear all component.
 	 */
 	private void clearAllComponent() {
-<span class="nc" id="L743">		ControllerGlobal.getInstance().resetWorkbench();</span>
-<span class="nc bnc" id="L744" title="All 2 branches missed.">		for (Node node : splitpane.getItems()) {</span>
-<span class="nc" id="L745">			((HBox) node).getChildren().clear();</span>
+<span class="nc" id="L757">		ControllerGlobal.getInstance().resetWorkbench();</span>
+<span class="nc bnc" id="L758" title="All 2 branches missed.">		for (Node node : splitpane.getItems()) {</span>
+<span class="nc" id="L759">			((HBox) node).getChildren().clear();</span>
 		}
-<span class="nc" id="L747">	}</span>
+<span class="nc" id="L761">	}</span>
 
 	/**
 	 * Sets the stage.
@@ -752,8 +766,8 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 	 * @param primaryStage the new stage
 	 */
 	public void setStage(Stage primaryStage) {
-<span class="nc" id="L755">		this.stage=primaryStage;</span>
-<span class="nc" id="L756">	}</span>
+<span class="nc" id="L769">		this.stage=primaryStage;</span>
+<span class="nc" id="L770">	}</span>
 
 	/**
 	 * Gets the stage.
@@ -761,7 +775,7 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 	 * @return the stage
 	 */
 	public Stage getStage() {
-<span class="nc" id="L764">		return stage;</span>
+<span class="nc" id="L778">		return stage;</span>
 	}
 
 	/**
@@ -770,7 +784,7 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 	 * @return the suppliers
 	 */
 	public List&lt;Supplier&lt;Module&gt;&gt; getSuppliers() {
-<span class="nc" id="L773">		return suppliers;</span>
+<span class="nc" id="L787">		return suppliers;</span>
 	}
 
 	/**
@@ -779,62 +793,62 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 	 * @param suppliers the new suppliers
 	 */
 	public void setSuppliers(List&lt;Supplier&lt;Module&gt;&gt; suppliers) {
-<span class="nc" id="L782">		this.suppliers = suppliers;</span>
-<span class="nc" id="L783">	}</span>
+<span class="nc" id="L796">		this.suppliers = suppliers;</span>
+<span class="nc" id="L797">	}</span>
 	
 	
 	/**
 	 * Handle start record.
 	 */
 	public void handleStart(){
-<span class="nc" id="L790">		ControllerGlobal.getInstance().handleStartRecordSynth(getAllModulesOut());</span>
-<span class="nc" id="L791">		setLabelTimer(0);</span>
-<span class="nc" id="L792">		dateStartRecord = new Date();</span>
-<span class="nc" id="L793">		chronometreTimer.scheduleAtFixedRate(new ChronometreTimer(), 0, 1000);</span>
-<span class="nc" id="L794">		play.setDisable(true);</span>
-<span class="nc" id="L795">		stop.setDisable(false);</span>
-<span class="nc" id="L796">		record.setDisable(true);</span>
-<span class="nc" id="L797">		recordStarted = true;</span>
-<span class="nc" id="L798">	}</span>
+<span class="nc" id="L804">		ControllerGlobal.getInstance().handleStartRecordSynth(getAllModulesOut());</span>
+<span class="nc" id="L805">		setLabelTimer(0);</span>
+<span class="nc" id="L806">		dateStartRecord = new Date();</span>
+<span class="nc" id="L807">		chronometreTimer.scheduleAtFixedRate(new ChronometreTimer(), 0, 1000);</span>
+<span class="nc" id="L808">		play.setDisable(true);</span>
+<span class="nc" id="L809">		stop.setDisable(false);</span>
+<span class="nc" id="L810">		record.setDisable(true);</span>
+<span class="nc" id="L811">		recordStarted = true;</span>
+<span class="nc" id="L812">	}</span>
 	
 	/**
 	 * Handle stop record.
 	 */
 	public void handleStop(){
-<span class="nc" id="L804">		ControllerGlobal.getInstance().handleStopRecordSynth();	</span>
-<span class="nc" id="L805">		chronometreTimer.cancel();</span>
-<span class="nc" id="L806">		play.setDisable(true);</span>
-<span class="nc" id="L807">		stop.setDisable(true);</span>
-<span class="nc" id="L808">		record.setDisable(false);</span>
-<span class="nc" id="L809">		recordStarted = false;</span>
-<span class="nc" id="L810">	}</span>
+<span class="nc" id="L818">		ControllerGlobal.getInstance().handleStopRecordSynth();	</span>
+<span class="nc" id="L819">		chronometreTimer.cancel();</span>
+<span class="nc" id="L820">		play.setDisable(true);</span>
+<span class="nc" id="L821">		stop.setDisable(true);</span>
+<span class="nc" id="L822">		record.setDisable(false);</span>
+<span class="nc" id="L823">		recordStarted = false;</span>
+<span class="nc" id="L824">	}</span>
 	
 	/**
 	 * Handle record.
 	 */
 	public void handleRecord(){	
 		try {
-<span class="nc" id="L817">			FileChooser fileChooser = new FileChooser();         </span>
+<span class="nc" id="L831">			FileChooser fileChooser = new FileChooser();         </span>
 		     //Set extension filter
-<span class="nc" id="L819">		     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(&quot;music wave file (*.wav)&quot;, &quot;*.wav&quot;);</span>
-<span class="nc" id="L820">		     fileChooser.getExtensionFilters().add(extFilter);</span>
+<span class="nc" id="L833">		     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(&quot;music wave file (*.wav)&quot;, &quot;*.wav&quot;);</span>
+<span class="nc" id="L834">		     fileChooser.getExtensionFilters().add(extFilter);</span>
 		     
 		     //Show save file dialog
-<span class="nc" id="L823">		     File file = fileChooser.showSaveDialog(null);</span>
-<span class="nc bnc" id="L824" title="All 2 branches missed.">		     if(file != null){</span>
-<span class="nc" id="L825">		    	ControllerGlobal.getInstance().handleCreateRecordSynth(file); </span>
-<span class="nc" id="L826">		    	chronometreTimer = new Timer();</span>
-<span class="nc" id="L827">		    	setLabelTimer(0);</span>
-<span class="nc" id="L828">		    	play.setDisable(false);</span>
-<span class="nc" id="L829">		 		stop.setDisable(true);</span>
-<span class="nc" id="L830">		 		record.setDisable(false);</span>
-<span class="nc" id="L831">		 		recordStarted = false;</span>
+<span class="nc" id="L837">		     File file = fileChooser.showSaveDialog(null);</span>
+<span class="nc bnc" id="L838" title="All 2 branches missed.">		     if(file != null){</span>
+<span class="nc" id="L839">		    	ControllerGlobal.getInstance().handleCreateRecordSynth(file); </span>
+<span class="nc" id="L840">		    	chronometreTimer = new Timer();</span>
+<span class="nc" id="L841">		    	setLabelTimer(0);</span>
+<span class="nc" id="L842">		    	play.setDisable(false);</span>
+<span class="nc" id="L843">		 		stop.setDisable(true);</span>
+<span class="nc" id="L844">		 		record.setDisable(false);</span>
+<span class="nc" id="L845">		 		recordStarted = false;</span>
 		     }			
 			
-<span class="nc" id="L834">		} catch (IOException e) {</span>
-<span class="nc" id="L835">			Log.getInstance().error(&quot;Failed to handle recording&quot;, e );</span>
+<span class="nc" id="L848">		} catch (IOException e) {</span>
+<span class="nc" id="L849">			Log.getInstance().error(&quot;Failed to handle recording&quot;, e );</span>
 		}	
-<span class="nc" id="L837">	}</span>
+<span class="nc" id="L851">	}</span>
 	
 	/**
 	 * Gets the all modules out.
@@ -842,13 +856,13 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 	 * @return the all modules out
 	 */
 	public List&lt;Module&gt; getAllModulesOut(){
-<span class="nc" id="L845">		List&lt;Module&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L846" title="All 2 branches missed.">		for (Module module : getModules()) {</span>
-<span class="nc bnc" id="L847" title="All 2 branches missed.">			if (&quot;fxml/out.fxml&quot;.equalsIgnoreCase(module.getFilename())) {</span>
-<span class="nc" id="L848">				list.add(module);</span>
+<span class="nc" id="L859">		List&lt;Module&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L860" title="All 2 branches missed.">		for (Module module : getModules()) {</span>
+<span class="nc bnc" id="L861" title="All 2 branches missed.">			if (&quot;fxml/out.fxml&quot;.equalsIgnoreCase(module.getFilename())) {</span>
+<span class="nc" id="L862">				list.add(module);</span>
 			}
 		}		
-<span class="nc" id="L851">		return list;</span>
+<span class="nc" id="L865">		return list;</span>
 	}
 	
 	/**
@@ -857,25 +871,25 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 	 * @param diff the new label timer
 	 */
 	private void setLabelTimer(long diff) {
-<span class="nc" id="L860">		Date date = new Date();</span>
-<span class="nc" id="L861">		  date.setTime(diff);</span>
-<span class="nc" id="L862">		  Platform.runLater(()-&gt;{</span>
+<span class="nc" id="L874">		Date date = new Date();</span>
+<span class="nc" id="L875">		  date.setTime(diff);</span>
+<span class="nc" id="L876">		  Platform.runLater(()-&gt;{</span>
 			  chronoLabel.setText(dateFormat.format(date));
 		  });
-<span class="nc" id="L865">	}	</span>
+<span class="nc" id="L879">	}	</span>
 	
 	/**
 	 * The Class ChronometreTimer.
 	 */
-<span class="nc" id="L870">	class ChronometreTimer extends TimerTask {</span>
+<span class="nc" id="L884">	class ChronometreTimer extends TimerTask {</span>
 	    
     	/* (non-Javadoc)
     	 * @see java.util.TimerTask#run()
     	 */
     	public void run() {
-<span class="nc" id="L876">	      long diff = (new Date().getTime() - dateStartRecord.getTime());</span>
-<span class="nc" id="L877">	      setLabelTimer(diff);	    </span>
-<span class="nc" id="L878">	  }</span>
+<span class="nc" id="L890">	      long diff = (new Date().getTime() - dateStartRecord.getTime());</span>
+<span class="nc" id="L891">	      setLabelTimer(diff);	    </span>
+<span class="nc" id="L892">	  }</span>
 	}
 
 	/**
@@ -884,7 +898,7 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 	 * @return true, if is record started
 	 */
 	public boolean isRecordStarted() {
-<span class="nc" id="L887">		return recordStarted;</span>
+<span class="nc" id="L901">		return recordStarted;</span>
 	}
 
 	/**
@@ -893,8 +907,8 @@ import fr.istic.groupimpl.synthesizer.util.DebugJFXTools;
 	 * @param recordStarted the new record started
 	 */
 	public void setRecordStarted(boolean recordStarted) {
-<span class="nc" id="L896">		this.recordStarted = recordStarted;</span>
-<span class="nc" id="L897">	}</span>
+<span class="nc" id="L910">		this.recordStarted = recordStarted;</span>
+<span class="nc" id="L911">	}</span>
 	
 	
 }

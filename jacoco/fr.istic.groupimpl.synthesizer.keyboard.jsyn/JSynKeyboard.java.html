@@ -27,11 +27,19 @@ public class JSynKeyboard extends UnitGenerator  {
 	/**
 	 * constructor.
 	 */
-<span class="nc" id="L30">	public JSynKeyboard() {</span>
-<span class="nc" id="L31">		addPort(outputCV = new UnitOutputPort(&quot;outputKeyCV&quot;));</span>
-<span class="nc" id="L32">		addPort(outputGate = new UnitOutputPort(&quot;outputKeyGate&quot;));</span>
-<span class="nc" id="L33">	}</span>
+<span class="fc" id="L30">	public JSynKeyboard() {</span>
+<span class="fc" id="L31">		addPort(outputCV = new UnitOutputPort(&quot;outputKeyCV&quot;));</span>
+<span class="fc" id="L32">		addPort(outputGate = new UnitOutputPort(&quot;outputKeyGate&quot;));</span>
+<span class="fc" id="L33">	}</span>
 	
+	public UnitOutputPort getOutputCV() {
+<span class="fc" id="L36">		return outputCV;</span>
+	}
+
+	public UnitOutputPort getOutputGate() {
+<span class="fc" id="L40">		return outputGate;</span>
+	}
+
 	/**
 	 * set volt.
 	 *
@@ -39,8 +47,8 @@ public class JSynKeyboard extends UnitGenerator  {
 	 */
 	public void setVolt( double volt )
 	{
-<span class="nc" id="L42">		this.voltCV = volt;</span>
-<span class="nc" id="L43">	}</span>
+<span class="fc" id="L50">		this.voltCV = volt;</span>
+<span class="fc" id="L51">	}</span>
 	
 	/**
 	 * set Volt of gate.
@@ -49,8 +57,8 @@ public class JSynKeyboard extends UnitGenerator  {
 	 */
 	public void setPress( boolean press )
 	{
-<span class="nc bnc" id="L52" title="All 2 branches missed.">		voltGate = press ? 5/SignalUtil.COEF_VOLT : -5/SignalUtil.COEF_VOLT;</span>
-<span class="nc" id="L53">	}</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		voltGate = press ? 5/SignalUtil.COEF_VOLT : -5/SignalUtil.COEF_VOLT;</span>
+<span class="fc" id="L61">	}</span>
 	
 	
 	/**
@@ -58,14 +66,14 @@ public class JSynKeyboard extends UnitGenerator  {
 	 */
 	@Override
 	public void generate(int start, int limit) {
-<span class="nc" id="L61">		double[] outputs_CV = outputCV.getValues();</span>
-<span class="nc" id="L62">		double[] outputs_Gate = outputGate.getValues();</span>
+<span class="fc" id="L69">		double[] outputs_CV = outputCV.getValues();</span>
+<span class="fc" id="L70">		double[] outputs_Gate = outputGate.getValues();</span>
 
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (int i = start; i &lt; limit; i++) {</span>
-<span class="nc" id="L65">			outputs_CV[i] = voltCV;</span>
-<span class="nc" id="L66">			outputs_Gate[i] = voltGate;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		for (int i = start; i &lt; limit; i++) {</span>
+<span class="fc" id="L73">			outputs_CV[i] = voltCV;</span>
+<span class="fc" id="L74">			outputs_Gate[i] = voltGate;</span>
 		}
-<span class="nc" id="L68">	}</span>
+<span class="fc" id="L76">	}</span>
 	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

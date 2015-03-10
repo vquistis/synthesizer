@@ -29,21 +29,23 @@ public class ModelKeyboard extends ModelComponent {
 	/** The octave. */
 	private int octave; // from -9 to +9
 	
+	private int numKey;
+	
 	/**
 	 * Constructor.
 	 */
 	public ModelKeyboard() {
-<span class="nc" id="L36">		super();</span>
-<span class="nc" id="L37">		keyboard = new JSynKeyboard();</span>
-<span class="nc" id="L38">		octave = 0;</span>
-<span class="nc" id="L39">	}</span>
+<span class="nc" id="L38">		super();</span>
+<span class="nc" id="L39">		keyboard = new JSynKeyboard();</span>
+<span class="nc" id="L40">		octave = 0;</span>
+<span class="nc" id="L41">	}</span>
 	
 	/**
 	 * @see fr.istic.groupimpl.synthesizer.component.IModelComponent#getUnitGenerator()
 	 */
 	@Override
 	public UnitGenerator getUnitGenerator() {
-<span class="nc" id="L46">		return keyboard;</span>
+<span class="nc" id="L48">		return keyboard;</span>
 	}
 
 	
@@ -52,7 +54,7 @@ public class ModelKeyboard extends ModelComponent {
 	 */
 	@Override
 	public Collection&lt;UnitPort&gt; getAllPorts() {
-<span class="nc" id="L55">		return keyboard.getPorts();</span>
+<span class="nc" id="L57">		return keyboard.getPorts();</span>
 	}
 
 	/**
@@ -60,16 +62,16 @@ public class ModelKeyboard extends ModelComponent {
 	 */
 	public void incOctave()
 	{
-<span class="nc" id="L63">		octave = Math.min(MAX_OCTAVE, octave+1);</span>
-<span class="nc" id="L64">	}</span>
+<span class="nc" id="L65">		octave = Math.min(MAX_OCTAVE, octave+1);</span>
+<span class="nc" id="L66">	}</span>
 	
 	/**
 	 * decrease 1 octave.
 	 */
 	public void decOctave()
 	{
-<span class="nc" id="L71">		octave = Math.max(MIN_OCTAVE, octave-1);</span>
-<span class="nc" id="L72">	}</span>
+<span class="nc" id="L73">		octave = Math.max(MIN_OCTAVE, octave-1);</span>
+<span class="nc" id="L74">	}</span>
 	
 	/**
 	 * sets the key of the keyboard.
@@ -77,10 +79,18 @@ public class ModelKeyboard extends ModelComponent {
 	 * @param n the new key
 	 */
 	public void setKey(int n) {
-<span class="nc" id="L80">		double v = (double)octave + ((double)n)/12.;</span>
-<span class="nc" id="L81">		v /=SignalUtil.COEF_VOLT;</span>
-<span class="nc" id="L82">		keyboard.setVolt(v);</span>
-<span class="nc" id="L83">	}</span>
+<span class="nc" id="L82">		double v = (double)octave + ((double)n)/12.;</span>
+<span class="nc" id="L83">		v /=SignalUtil.COEF_VOLT;</span>
+<span class="nc" id="L84">		keyboard.setVolt(v);</span>
+<span class="nc" id="L85">		numKey = n;</span>
+<span class="nc" id="L86">	}</span>
+	/**
+	 * get the last press key of the keyboard.
+	 *
+	 */
+	public int getKey() {
+<span class="nc" id="L92">		return numKey;</span>
+	}
 	
 	/**
 	 * to know if a key is pressed.
@@ -89,7 +99,7 @@ public class ModelKeyboard extends ModelComponent {
 	 */
 	public void setPress( boolean press )
 	{
-<span class="nc" id="L92">		keyboard.setPress(press);</span>
-<span class="nc" id="L93">	}</span>
+<span class="nc" id="L102">		keyboard.setPress(press);</span>
+<span class="nc" id="L103">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -26,7 +26,7 @@ Synthesizer,fr.istic.groupimpl.synthesizer.component,ControllerComponent,71,0,4,
 Synthesizer,fr.istic.groupimpl.synthesizer.echo,ControllerEcho,65,0,0,0,16,0,6,0,6,0
 Synthesizer,fr.istic.groupimpl.synthesizer.echo,ViewEcho,136,0,0,0,34,0,5,0,5,0
 Synthesizer,fr.istic.groupimpl.synthesizer.echo,ModelEcho,34,0,0,0,11,0,7,0,7,0
-Synthesizer,fr.istic.groupimpl.synthesizer.keyboard.jsyn,JSynKeyboard,63,0,4,0,14,0,6,0,4,0
+Synthesizer,fr.istic.groupimpl.synthesizer.keyboard.jsyn,JSynKeyboard,0,69,0,4,0,16,0,8,0,6
 Synthesizer,fr.istic.groupimpl.synthesizer.oscilloscope,ControllerOscillo,45,0,0,0,13,0,5,0,5,0
 Synthesizer,fr.istic.groupimpl.synthesizer.oscilloscope,ModelOscillo,29,0,0,0,8,0,6,0,6,0
 Synthesizer,fr.istic.groupimpl.synthesizer.oscilloscope,ViewOscillo,90,0,0,0,20,0,5,0,5,0
@@ -46,8 +46,8 @@ Synthesizer,fr.istic.groupimpl.synthesizer.out,ModelOut,4,23,0,0,1,8,1,4,1,4
 Synthesizer,fr.istic.groupimpl.synthesizer.out,ControllerOut,47,0,2,0,15,0,6,0,5,0
 Synthesizer,fr.istic.groupimpl.synthesizer.cable,Cable,131,0,0,0,27,0,3,0,3,0
 Synthesizer,fr.istic.groupimpl.synthesizer.cable,Cable.ComputeDistance,69,0,0,0,6,0,2,0,2,0
-Synthesizer,fr.istic.groupimpl.synthesizer.keyboard,ModelKeyboard,65,0,0,0,18,0,7,0,7,0
-Synthesizer,fr.istic.groupimpl.synthesizer.keyboard,ControllerKeyboard,64,0,6,0,24,0,8,0,5,0
+Synthesizer,fr.istic.groupimpl.synthesizer.keyboard,ModelKeyboard,71,0,0,0,20,0,8,0,8,0
+Synthesizer,fr.istic.groupimpl.synthesizer.keyboard,ControllerKeyboard,76,0,8,0,26,0,9,0,5,0
 Synthesizer,fr.istic.groupimpl.synthesizer.keyboard,ViewKeyboard,54,0,0,0,12,0,5,0,5,0
 Synthesizer,fr.istic.groupimpl.synthesizer.logger,Log,55,24,0,0,20,8,10,5,10,5
 Synthesizer,fr.istic.groupimpl.synthesizer.recorder,ModelRecorder,67,0,0,0,21,0,8,0,8,0
@@ -63,7 +63,7 @@ Synthesizer,fr.istic.groupimpl.synthesizer.global,ModelGlobal,141,158,19,5,36,44
 Synthesizer,fr.istic.groupimpl.synthesizer.global,ControllerGlobal.InteractionMode,80,0,0,0,12,0,4,0,4,0
 Synthesizer,fr.istic.groupimpl.synthesizer.global,ViewGlobal.new ListChangeListener() {...},31,0,4,0,7,0,4,0,2,0
 Synthesizer,fr.istic.groupimpl.synthesizer.global,ControllerGlobal,909,0,75,0,230,0,75,0,31,0
-Synthesizer,fr.istic.groupimpl.synthesizer.global,ViewGlobal,885,0,42,0,224,0,73,0,52,0
+Synthesizer,fr.istic.groupimpl.synthesizer.global,ViewGlobal,910,0,46,0,231,0,75,0,52,0
 Synthesizer,fr.istic.groupimpl.synthesizer.global,ViewGlobal.ChronometreTimer,21,0,0,0,4,0,2,0,2,0
 Synthesizer,fr.istic.groupimpl.synthesizer.vcf.jsyn,JsynVcfCircuit,3,143,1,2,1,30,2,7,1,6
 Synthesizer,fr.istic.groupimpl.synthesizer.mixer,ViewMixer2Ports,12,0,0,0,5,0,3,0,3,0
