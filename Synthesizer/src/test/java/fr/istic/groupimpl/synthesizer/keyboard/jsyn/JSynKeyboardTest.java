@@ -1,17 +1,14 @@
 package fr.istic.groupimpl.synthesizer.keyboard.jsyn;
 
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
 import org.junit.Before;
+import org.junit.Test;
 
 import com.jsyn.engine.SynthesisEngine;
 
-import fr.istic.groupimpl.synthesizer.keyboard.jsyn.JSynKeyboard;
-import fr.istic.groupimpl.synthesizer.rep.jsyn.JsynRepCircuit;
 import fr.istic.groupimpl.synthesizer.util.SignalUtil;
 
 /**
