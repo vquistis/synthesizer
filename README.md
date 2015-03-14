@@ -12,7 +12,7 @@ Dépôt des sources du projet "Synthesizer" (M2 GL) de l'équipe GroupImpl.
 - Anthony LHOMME
 
 ## Documentation
- - [Rapport de conception](https://bitbucket.org/groupimpl/projectsynthesizer/src/8a012d4d0b3efa99e19e53e803454f1e607d1a90/Synthetiseur-Conception.pdf?at=master)
- - [Rapport d'organisation](https://bitbucket.org/groupimpl/projectsynthesizer/src/8a012d4d0b3efa99e19e53e803454f1e607d1a90/Rapportdorganisation.pdf?at=master)
- - [Manuel utilisateur](https://bitbucket.org/groupimpl/projectsynthesizer/src/8a012d4d0b3efa99e19e53e803454f1e607d1a90/ManuelUtilisateurSynthesizer.pdf?at=master)
- - [Rapport de tests](https://bitbucket.org/groupimpl/projectsynthesizer/src/8a012d4d0b3efa99e19e53e803454f1e607d1a90/Rapportdetest.pdf?at=master)
+ - [Rapport de conception](https://bitbucket.org/groupimpl/projectsynthesizer/src/307c9b2ec06929a3d7486a91e6b701ed0f0be84b/rapports/Synthetiseur-Conception.pdf?at=master)
+ - [Rapport d'organisation](https://bitbucket.org/groupimpl/projectsynthesizer/src/307c9b2ec06929a3d7486a91e6b701ed0f0be84b/rapports/Rapportdorganisation.pdf?at=master)
+ - [Manuel utilisateur](https://bitbucket.org/groupimpl/projectsynthesizer/src/307c9b2ec06929a3d7486a91e6b701ed0f0be84b/rapports/ManuelUtilisateurSynthesizer.pdf?at=master)
+ - [Rapport de tests](https://bitbucket.org/groupimpl/projectsynthesizer/src/307c9b2ec06929a3d7486a91e6b701ed0f0be84b/rapports/Rapportdetest.pdf?at=master)
