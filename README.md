@@ -1,7 +1,18 @@
 # GroupImpl - Projet "Synthétiseur"
+Dépôt des sources du projet "Synthesizer" (M2 GL) de l'équipe GroupImpl.
 
-Dépôt des sources du projet "Synthétiseur" de l'équipe GroupImpl.
+## Equipe
+- Vincente NATTA
+- Dorian LEROY
+- Kheireddine BOURAHLI
+- Guillaume DARVES
+- Yves MOCQUARD
+- Caroline LAVAURE
+- Robin HACAULT
+- Anthony LHOMME
 
-### Liens utiles
-- [Groupe de discussion](https://groups.google.com/forum/?hl=fr#!forum/groupimpl)
-- [Sujet du projet et User Stories](http://etudiant.istic.univ-rennes1.fr/current/m2infopro/ProjetGL)
+## Documentation
+ - [Rapport de conception](./Synthetiseur-Conception.pdf)
+ - [Rapport d'organisation](./Rapportdorganisation.pdf)
+ - [Manuel utilisateur](./ManuelUtilisateurSynthesizer.pdf)
+ - [Rapport de tests](./Rapportdetest.pdf)
